@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Edit — interactive app prototype</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#efece7; --card:#ffffff; --ink:#1c1a17; --sub:#8f8a80; --faint:#b3aea4;
+    --line:#e6e3dd; --line2:#cfccc4; --accent:#c8503a;
+    --ui:'Hanken Grotesk',system-ui,-apple-system,sans-serif; --serif:'Instrument Serif',Georgia,serif; --mono:'Space Mono',monospace;
+  }
+  body.masc{ --accent:#5f7a86; }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  html,body{margin:0;min-height:100vh;font-family:var(--ui);color:var(--ink);
+    background:radial-gradient(130% 90% at 50% -10%, #f7f4ef 0%, var(--paper) 55%, #e7e3dc 100%);}
+  .stage{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:34px 16px 60px;}
+  .brandline{font-family:var(--mono);font-size:11px;letter-spacing:5px;text-transform:uppercase;color:var(--sub);margin-bottom:4px;}
+  .brandline b{color:var(--accent);}
+  .tagline{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink);margin-bottom:22px;}
+
+  /* phone */
+  .phone{width:352px;height:740px;background:var(--card);border:1.5px solid #2a2a2a;border-radius:40px;overflow:hidden;position:relative;display:flex;flex-direction:column;
+    box-shadow:0 24px 60px rgba(40,30,20,.22), 0 4px 14px rgba(0,0,0,.12);}
+  .notch{position:absolute;top:0;left:50%;transform:translateX(-50%);width:130px;height:26px;background:#2a2a2a;border-radius:0 0 16px 16px;z-index:40;}
+  .stat{height:42px;flex:none;display:flex;align-items:flex-end;justify-content:space-between;padding:0 22px 5px;font-family:var(--mono);font-size:11px;font-weight:700;color:var(--ink);}
+  .body{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;min-height:0;}
+  .scroll{flex:1;overflow-y:auto;min-height:0;-webkit-overflow-scrolling:touch;}
+  .scroll::-webkit-scrollbar{width:0;}
+
+  .word{font-family:var(--serif);font-style:italic;font-size:22px;color:var(--ink);line-height:1;}
+  .eye{font-family:var(--mono);font-size:8.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);}
+  .h{font-family:var(--serif);font-size:23px;line-height:1.1;color:var(--ink);}
+  .h2{font-size:14px;font-weight:600;color:var(--ink);}
+  .sub{font-size:11px;line-height:1.45;color:var(--sub);}
+  .avatar{width:30px;height:30px;border-radius:999px;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-size:9px;font-weight:700;}
+
+  .chip{font-size:11.5px;font-weight:600;padding:8px 13px;border-radius:999px;border:1.3px solid var(--line2);color:#5a5650;background:#fff;white-space:nowrap;cursor:pointer;transition:.14s;user-select:none;}
+  .chip.on{background:var(--ink);color:#fff;border-color:var(--ink);}
+  .chip.aes{border-color:var(--accent);color:var(--accent);}
+  .chip.aes.on{background:var(--accent);color:#fff;border-color:var(--accent);}
+  .dot{width:22px;height:22px;border-radius:999px;flex:none;cursor:pointer;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);}
+  .dot.on{box-shadow:0 0 0 2px #fff,0 0 0 4px var(--ink);}
+  .row{display:flex;align-items:center;}
+  .btn{text-align:center;font-size:13px;font-weight:700;padding:14px;border-radius:14px;background:var(--ink);color:#fff;cursor:pointer;transition:.14s;border:none;font-family:var(--ui);}
+  .btn:active{transform:scale(.985);}
+  .btn.gh{background:#fff;color:#3a3630;border:1.4px solid var(--line2);}
+  .btn.acc{background:var(--accent);}
+  .prog{height:4px;border-radius:999px;background:#e4e1db;overflow:hidden;}
+  .prog i{display:block;height:100%;background:var(--ink);transition:width .4s ease;}
+
+  /* product card */
+  .pcard{cursor:pointer;break-inside:avoid;margin-bottom:12px;}
+  .frame{position:relative;width:100%;border-radius:12px;overflow:hidden;background:#eee;border:1px solid rgba(0,0,0,.05);}
+  .frame svg{display:block;width:100%;height:100%;}
+  .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .heart{position:absolute;top:8px;right:8px;width:27px;height:27px;border-radius:999px;background:rgba(255,255,255,.9);display:flex;align-items:center;justify-content:center;font-size:13px;color:#8a8a8a;box-shadow:0 1px 5px rgba(0,0,0,.14);cursor:pointer;}
+  .heart.on{color:var(--accent);}
+  .drop{position:absolute;top:8px;left:8px;font-family:var(--mono);font-size:8.5px;font-weight:700;padding:3px 6px;border-radius:6px;background:var(--ink);color:#fff;}
+  .pbrand{font-family:var(--mono);font-size:8px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin:7px 1px 2px;}
+  .ptitle{font-size:12px;color:var(--ink);line-height:1.25;margin:0 1px 2px;}
+  .pprice{font-family:var(--mono);font-size:11.5px;font-weight:700;margin:0 1px;}
+  .pprice s{color:var(--faint);font-weight:400;font-size:10px;margin-left:5px;}
+
+  /* nav */
+  .nav{height:60px;flex:none;border-top:1px solid var(--line);display:flex;background:#fbfaf8;}
+  .nav>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;font-size:8.5px;font-weight:600;color:var(--faint);cursor:pointer;}
+  .nav>div.on{color:var(--ink);}
+  .ni{width:19px;height:19px;}
+  .ni.grid{border:1.9px solid currentColor;border-radius:4px;position:relative;}
+  .ni.grid::after{content:"";position:absolute;inset:2.5px;background:linear-gradient(currentColor,currentColor) center/1.5px 100% no-repeat,linear-gradient(currentColor,currentColor) center/100% 1.5px no-repeat;}
+  .ni.sr{border:1.9px solid currentColor;border-radius:999px;width:14px;height:14px;position:relative;margin:1px;}
+  .ni.sr::after{content:"";position:absolute;right:-4px;bottom:-3px;width:7px;height:1.9px;background:currentColor;transform:rotate(45deg);border-radius:2px;}
+  .ni.bk{width:14px;height:17px;border:1.9px solid currentColor;border-bottom:none;border-radius:2px 2px 0 0;position:relative;}
+  .ni.bk::after{content:"";position:absolute;left:-1.9px;right:-1.9px;bottom:-1px;height:6px;background:linear-gradient(45deg,transparent 49%,currentColor 49% 55%,transparent 55%),linear-gradient(-45deg,transparent 49%,currentColor 49% 55%,transparent 55%);}
+  .ni.cog{border:1.9px solid currentColor;border-radius:999px;position:relative;}
+  .ni.cog::after{content:"";position:absolute;inset:4.5px;border:1.9px solid currentColor;border-radius:999px;}
+
+  .toast{position:absolute;left:50%;bottom:78px;transform:translateX(-50%) translateY(10px);background:var(--ink);color:#fff;font-size:11.5px;font-weight:600;padding:10px 16px;border-radius:11px;opacity:0;pointer-events:none;transition:.28s;z-index:50;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.25);}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+  .sheet{position:absolute;left:0;right:0;bottom:0;background:#fff;border-top:1.5px solid #2a2a2a;border-radius:22px 22px 0 0;padding:16px 18px 20px;box-shadow:0 -8px 30px rgba(0,0,0,.18);transform:translateY(110%);transition:.32s cubic-bezier(.2,.8,.2,1);z-index:45;}
+  .sheet.show{transform:translateY(0);}
+  .grip{width:36px;height:4px;border-radius:999px;background:#d8d5cf;margin:0 auto 14px;}
+  .scrim{position:absolute;inset:0;background:rgba(20,15,10,.28);opacity:0;pointer-events:none;transition:.25s;z-index:44;}
+  .scrim.show{opacity:1;pointer-events:auto;}
+
+  .fadein{animation:fade .35s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:none;}}
+  .caption{margin-top:20px;font-size:12px;color:var(--sub);text-align:center;max-width:352px;line-height:1.5;}
+  .hint{font-family:var(--mono);font-size:10px;color:var(--faint);letter-spacing:.08em;}
+</style>
+</head>
+<body class="fem">
+<div class="stage">
+  <div class="brandline"><b>THE&nbsp;EDIT</b> · INTERACTIVE PROTOTYPE</div>
+  <div class="tagline">One aesthetic, every brand</div>
+  <div class="phone" id="phone">
+    <div class="notch"></div>
+    <div class="stat"><span>9:41</span><span>●●● &nbsp;▮</span></div>
+    <div class="body" id="app"></div>
+    <div class="toast" id="toast"></div>
+  </div>
+  <div class="caption" id="caption">Tap through it like a real app — onboarding flows into the feed, cards open, tabs switch, saves stick.</div>
+</div>
+
+<script>
+/* ================= DATA ================= */
+const COLORMAPS = {
+  fem: {
+    cream:{hex:'#EFE3D2',on:'#7A6E5E',name:'Cream'}, rose:{hex:'#E2B7B0',on:'#7E4F49',name:'Rose'},
+    clay:{hex:'#C98A6A',on:'#5C3A28',name:'Clay'}, butter:{hex:'#E8CD79',on:'#7A6326',name:'Butter'},
+    sage:{hex:'#AEB59A',on:'#474D3A',name:'Sage'}, ink:{hex:'#3A332C',on:'#D9CFC2',name:'Ink'},
+  },
+  masc: {
+    stone:{hex:'#C9C5BC',on:'#6B675E',name:'Stone'}, slate:{hex:'#6E7A82',on:'#EAF0F2',name:'Slate'},
+    olive:{hex:'#7C7A58',on:'#EFEEDD',name:'Olive'}, rust:{hex:'#A65A3C',on:'#F6E7DF',name:'Rust'},
+    sand:{hex:'#C7B295',on:'#665736',name:'Sand'}, ink:{hex:'#2A2A28',on:'#C9C5BC',name:'Ink'},
+  }
+};
+const CATALOG = {
+  fem:[
+    {id:'f1',brand:'Reformation',title:'Linen slip dress',cat:'dresses',price:148,was:198,color:'cream',h:200},
+    {id:'f3',brand:'With Jéan',title:'Lace baby tee',cat:'tops',price:59,color:'rose',h:150},
+    {id:'f9',brand:'Ganni',title:'Layered organza midi',cat:'dresses',price:148,was:198,color:'butter',h:210},
+    {id:'f5',brand:'Sézane',title:'Bias silk midi skirt',cat:'skirts',price:135,color:'clay',h:170},
+    {id:'f2',brand:'Djerf Avenue',title:'Cloud knit cardigan',cat:'knitwear',price:120,color:'butter',h:160},
+    {id:'f7',brand:'Reformation',title:'Ruffle wrap blouse',cat:'tops',price:98,was:128,color:'rose',h:150},
+    {id:'f11',brand:'Djerf Avenue',title:'Oversized blazer',cat:'outerwear',price:210,was:260,color:'sage',h:200},
+    {id:'f10',brand:'Sézane',title:'Suede mary janes',cat:'shoes',price:185,color:'clay',h:140},
+    {id:'f16',brand:'Reformation',title:'Knit column skirt',cat:'skirts',price:110,color:'sage',h:180},
+    {id:'f8',brand:'Aritzia',title:'Cropped rib cardigan',cat:'knitwear',price:78,color:'cream',h:150},
+    {id:'f14',brand:'Ganni',title:'Soft wool beanie',cat:'accessories',price:85,color:'ink',h:130},
+    {id:'f12',brand:'With Jéan',title:'Satin slip skirt',cat:'skirts',price:72,color:'rose',h:170},
+  ],
+  masc:[
+    {id:'m1',brand:'Carhartt WIP',title:'Detroit jacket',cat:'outerwear',price:228,was:268,color:'rust',h:200},
+    {id:'m2',brand:'Stüssy',title:'Heavyweight tee',cat:'tops',price:65,color:'stone',h:150},
+    {id:'m3',brand:'Our Legacy',title:'Pleated trouser',cat:'trousers',price:260,color:'slate',h:190},
+    {id:'m5',brand:'Norse Projects',title:'Merino crew knit',cat:'knitwear',price:145,color:'olive',h:160},
+    {id:'m4',brand:'A.P.C.',title:'Petit New Standard',cat:'denim',price:215,color:'ink',h:200},
+    {id:'m9',brand:'Our Legacy',title:'Box short shirt',cat:'tops',price:230,color:'slate',h:150},
+    {id:'m15',brand:'Our Legacy',title:'Suede overshirt',cat:'outerwear',price:340,color:'sand',h:190},
+    {id:'m11',brand:'A.P.C.',title:'Suede court sneaker',cat:'shoes',price:310,color:'sand',h:140},
+    {id:'m7',brand:'Carhartt WIP',title:'Regular cargo pant',cat:'trousers',price:128,color:'olive',h:180},
+    {id:'m6',brand:'Aimé Leon Dore',title:'Logo hoodie',cat:'tops',price:190,was:220,color:'sand',h:160},
+    {id:'m8',brand:'Stüssy',title:'Stock bucket hat',cat:'accessories',price:55,color:'stone',h:130},
+    {id:'m16',brand:'A.P.C.',title:'Lambswool crew',cat:'knitwear',price:175,color:'slate',h:170},
+  ]
+};
+const AES = {
+  fem:{ label:'Soft Romance ’26', short:'Soft Romance', base:'rose', desc:'Warm neutrals + butter yellow' },
+  masc:{ label:'Quiet Utility ’26', short:'Quiet Utility', base:'slate', desc:'Cool stone, slate, olive' },
+};
+const PRESETS=[
+  {name:'Soft Romance',mode:'fem'},{name:'Quiet Utility',mode:'masc'},
+  {name:'Street Edit',mode:'masc'},{name:'Dark Academia',mode:'masc'},{name:'Coastal',mode:'fem'},
+];
+
+/* ============ GARMENT SILHOUETTES ============ */
+function shapeKey(cat){return ({tops:'tee',knitwear:'knit',dresses:'dress',skirts:'skirt',trousers:'pants',denim:'pants',shorts:'shorts',shoes:'shoe',outerwear:'coat',accessories:'bag'})[cat]||'tee';}
+const PATHS={
+  tee:'M38,24 Q50,32 62,24 L75,31 L85,44 L74,52 L67,45 L67,98 L33,98 L33,45 L26,52 L15,44 L25,31 Z',
+  knit:'M36,26 Q50,34 64,26 L80,32 L89,66 L78,71 L69,46 L69,99 L31,99 L31,46 L22,71 L11,66 L20,32 Z',
+  dress:'M38,24 Q50,32 62,24 L74,31 L84,44 L73,52 L67,45 L69,62 L81,106 L19,106 L31,62 L33,45 L27,52 L16,44 L26,31 Z',
+  skirt:'M34,34 L66,34 L78,104 L22,104 Z',
+  pants:'M31,28 L69,28 L67,104 L54,104 L50,58 L46,104 L33,104 Z',
+  shorts:'M31,32 L69,32 L66,72 L54,72 L50,52 L46,72 L34,72 Z',
+  shoe:'M16,82 Q14,64 34,62 L60,62 Q80,64 86,82 Q86,90 77,90 L23,90 Q16,90 16,82 Z',
+  coat:'M36,24 Q50,32 64,24 L79,31 L88,47 L77,54 L71,46 L71,105 L53,105 L53,42 L47,42 L47,105 L29,105 L29,46 L23,54 L12,47 L21,31 Z',
+  bag:'M30,52 L70,52 L74,98 L26,98 Z'
+};
+function shade(hex,a){const n=parseInt(hex.slice(1),16);let r=(n>>16)+a,g=((n>>8)&255)+a,b=(n&255)+a;r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));return '#'+(1<<24|r<<16|g<<8|b).toString(16).slice(1);}
+function garment(item){
+  const cm=COLORMAPS[state.mode][item.color]; const k=shapeKey(item.cat); const id='g'+item.id;
+  const extra=k==='bag'?'<path d="M38,52 Q38,33 50,33 Q62,33 62,52" fill="none" stroke="'+cm.on+'" stroke-opacity="0.5" stroke-width="2.4"/>':k==='skirt'?'<line x1="34" y1="40" x2="66" y2="40" stroke="'+cm.on+'" stroke-opacity="0.35" stroke-width="1.6"/>':'';
+  return '<svg viewBox="0 0 100 120" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">'
+    +'<defs><linearGradient id="'+id+'" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="'+cm.hex+'"/><stop offset="1" stop-color="'+shade(cm.hex,-13)+'"/></linearGradient>'
+    +'<radialGradient id="'+id+'l" cx="0.3" cy="0.15" r="0.9"><stop offset="0" stop-color="#fff" stop-opacity="0.3"/><stop offset="0.55" stop-color="#fff" stop-opacity="0"/></radialGradient></defs>'
+    +'<rect width="100" height="120" fill="url(#'+id+')"/><rect width="100" height="120" fill="url(#'+id+'l)"/>'
+    +'<path d="'+PATHS[k]+'" fill="'+cm.on+'" fill-opacity="0.12" stroke="'+cm.on+'" stroke-opacity="0.4" stroke-width="1.5" stroke-linejoin="round"/>'+extra+'</svg>';
+}
+
+/* ================= STATE ================= */
+const state={ screen:'ob1', mode:'fem', base:'rose', budget:300, saved:new Set(), currentId:null,
+  obPreset:'Soft Romance', obColors:new Set(['rose','cream','butter']), query:'', dropAlerts:true, board:null };
+const app=document.getElementById('phone');
+const $app=document.getElementById('app');
+
+function pieceById(id){ for(const m of ['fem','masc']){const p=CATALOG[m].find(x=>x.id===id); if(p)return p;} }
+function toast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(t._t); t._t=setTimeout(()=>t.classList.remove('show'),1500); }
+
+/* ================= CARD ================= */
+function card(p){
+  const saved=state.saved.has(p.id)?' on':'';
+  const drop=p.was?'<div class="drop">↓ '+Math.round((1-p.price/p.was)*100)+'%</div>':'';
+  return '<div class="pcard" data-open="'+p.id+'">'
+    +'<div class="frame" style="height:'+p.h+'px">'+garment(p)+drop
+    +'<div class="heart'+saved+'" data-save="'+p.id+'">'+(saved?'♥':'♡')+'</div></div>'
+    +'<div class="pbrand">'+p.brand+'</div><div class="ptitle">'+p.title+'</div>'
+    +'<div class="pprice">$'+p.price+(p.was?' <s>$'+p.was+'</s>':'')+'</div></div>';
+}
+function curatedList(){
+  const base=state.base, cm=COLORMAPS[state.mode];
+  const neutrals = state.mode==='fem'?['cream','ink']:['stone','sand','ink'];
+  const score=p=>p.color===base?0:(neutrals.includes(p.color)?1:2);
+  return CATALOG[state.mode].slice().sort((a,b)=>score(a)-score(b));
+}
+
+/* ================= SCREENS ================= */
+function paletteDots(active, size){
+  const cm=COLORMAPS[state.mode]; size=size||16;
+  return Object.keys(cm).map(k=>'<div class="dot'+(k===active?' on':'')+'" data-pal="'+k+'" style="background:'+cm[k].hex+';width:'+size+'px;height:'+size+'px"></div>').join('');
+}
+function nav(active){
+  const item=(k,cls,lab)=>'<div class="'+(active===k?'on':'')+'" data-tab="'+k+'"><div class="ni '+cls+'"></div>'+lab+'</div>';
+  return '<div class="nav">'+item('feed','grid','Feed')+item('search','sr','Search')+item('boards','bk','Boards')+item('settings','cog','Settings')+'</div>';
+}
+
+// ---- onboarding ----
+function ob1(){
+  return '<div class="scroll fadein" style="padding:26px 22px;display:flex;flex-direction:column;height:100%">'
+    +'<div class="word" style="margin-bottom:4px">The Edit</div>'
+    +'<div class="eye" style="margin-bottom:14px">Step 1 of 3</div>'
+    +'<div class="prog" style="margin-bottom:22px"><i style="width:33%"></i></div>'
+    +'<div class="h" style="margin-bottom:7px">What\'s your aesthetic?</div>'
+    +'<div class="sub" style="margin-bottom:14px">Describe it however you want — the agent reads between the lines.</div>'
+    +'<textarea id="vibe" placeholder="Soft romance, lots of layering, mostly neutrals but a pop of butter yellow…" style="border:1.3px solid var(--line2);border-radius:14px;padding:12px;min-height:80px;font-family:var(--ui);font-size:12px;color:var(--ink);resize:none;outline:none;margin-bottom:16px">'+(state.vibe||'')+'</textarea>'
+    +'<div class="eye" style="margin-bottom:9px">or start from a preset</div>'
+    +'<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:auto">'
+    +PRESETS.map(p=>'<div class="chip aes'+(state.obPreset===p.name?' on':'')+'" data-preset="'+p.name+'" data-mode="'+p.mode+'">'+p.name+'</div>').join('')+'</div>'
+    +'<div class="btn" data-go="ob2" style="margin:16px 0 12px">Continue</div>'
+    +'<div class="row" style="justify-content:space-between">'
+    +'<div class="sub" style="text-decoration:underline;cursor:pointer" data-ai="1">Let the AI choose for me</div>'
+    +'<div class="sub" style="text-decoration:underline;cursor:pointer" data-go="feed">Skip</div></div></div>';
+}
+function ob2(){
+  const bg=[150,300,500,1000];
+  return '<div class="scroll fadein" style="padding:26px 22px;display:flex;flex-direction:column;height:100%">'
+    +'<div class="eye" style="margin-bottom:12px">Step 2 of 3</div>'
+    +'<div class="prog" style="margin-bottom:24px"><i style="width:66%"></i></div>'
+    +'<div class="h" style="margin-bottom:5px">Pick your palette</div>'
+    +'<div class="sub" style="margin-bottom:16px">Feeds and filters lock to these tones.</div>'
+    +'<div class="row" style="gap:13px;flex-wrap:wrap;margin-bottom:28px">'
+    +Object.keys(COLORMAPS[state.mode]).map(k=>'<div class="dot'+(state.obColors.has(k)?' on':'')+'" data-obcol="'+k+'" style="background:'+COLORMAPS[state.mode][k].hex+';width:26px;height:26px"></div>').join('')+'</div>'
+    +'<div class="h" style="margin-bottom:5px">Budget ceiling</div>'
+    +'<div class="sub" style="margin-bottom:14px">Max for a complete look.</div>'
+    +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:auto">'
+    +bg.map(v=>'<div class="chip'+(state.budget===v?' on':'')+'" data-budget="'+v+'" style="text-align:center;padding:14px">$'+v+(v===1000?'+':'')+'</div>').join('')+'</div>'
+    +'<div class="row" style="gap:10px;margin-top:16px"><div class="btn gh" data-go="ob1" style="flex:none;padding:14px 20px">Back</div><div class="btn" data-go="ob3" style="flex:1">Continue</div></div></div>';
+}
+function ob3(){
+  const a=AES[state.mode];
+  return '<div class="scroll fadein" style="padding:26px 22px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;height:100%">'
+    +'<div class="eye" style="margin-bottom:14px">Step 3 of 3</div>'
+    +'<div style="width:92px;height:92px;border-radius:999px;overflow:hidden;margin-bottom:22px;border:1px solid var(--line)">'+garment(CATALOG[state.mode][0])+'</div>'
+    +'<div class="h" style="font-size:26px;margin-bottom:8px">Your edit is ready</div>'
+    +'<div class="sub" style="max-width:230px;margin-bottom:22px">We assembled a cohesive feed across brands from your profile.</div>'
+    +'<div style="width:100%;border:1.3px solid var(--line);border-radius:14px;padding:16px;text-align:left;margin-bottom:26px;background:#fbfaf7">'
+    +'<div class="eye" style="margin-bottom:8px">Your edit</div><div class="h2" style="font-size:15px;margin-bottom:4px">'+a.label+'</div>'
+    +'<div class="sub">'+a.desc+' · up to $'+state.budget+'</div></div>'
+    +'<div class="btn acc" data-go="feed" style="width:100%">Start exploring</div></div>';
+}
+
+// ---- feed ----
+function feed(){
+  const a=AES[state.mode];
+  const cards=curatedList().map(card).join('');
+  return '<div class="body" style="display:flex;flex-direction:column;height:100%">'
+    +'<div style="padding:12px 18px 0;flex:none">'
+    +'<div class="row" style="justify-content:space-between;margin-bottom:12px"><div class="word">The Edit</div><div class="avatar">AL</div></div>'
+    +'<div class="row" style="gap:8px;overflow-x:auto;margin-bottom:12px;padding-bottom:2px">'
+    +'<div class="chip aes'+(state.mode==='fem'?' on':'')+'" data-mode="fem">Soft Romance ’26</div>'
+    +'<div class="chip aes'+(state.mode==='masc'?' on':'')+'" data-mode="masc">Quiet Utility</div>'
+    +'<div class="chip aes" data-add="1">＋</div></div>'
+    +'<div class="row" style="gap:8px;align-items:center;margin-bottom:14px"><div class="eye" style="margin-right:2px">Palette</div>'
+    +paletteDots(state.base,16)+'</div></div>'
+    +'<div class="scroll" style="padding:0 18px 14px"><div style="columns:2;column-gap:11px">'+cards+'</div></div>'
+    +nav('feed')+'</div>';
+}
+// ---- detail ----
+function detail(){
+  const p=pieceById(state.currentId); const a=AES[state.mode];
+  const neutrals=state.mode==='fem'?['cream','ink']:['stone','sand','ink'];
+  const like=CATALOG[state.mode].filter(x=>x.id!==p.id && (x.color===p.color||x.cat===p.cat)).slice(0,3);
+  const saved=state.saved.has(p.id);
+  const drop=p.was?'<div class="drop" style="left:14px;top:14px">↓ '+Math.round((1-p.price/p.was)*100)+'%</div>':'';
+  return '<div class="body" style="height:100%"><div class="scroll">'
+    +'<div class="frame" style="height:300px;border-radius:0">'+garment(p)
+    +'<div class="row" style="position:absolute;top:14px;left:14px;right:14px;justify-content:space-between">'
+    +'<div class="heart" style="position:static" data-go="feed">‹</div>'
+    +'<div class="heart'+(saved?' on':'')+'" style="position:static" data-save="'+p.id+'">'+(saved?'♥':'♡')+'</div></div>'+drop+'</div>'
+    +'<div style="padding:16px 18px">'
+    +'<div class="eye" style="margin-bottom:6px">'+p.brand+' · '+p.cat+'</div>'
+    +'<div class="h" style="margin-bottom:6px">'+p.title+'</div>'
+    +'<div style="font-family:var(--mono);font-size:14px;font-weight:700;margin-bottom:13px">'+(p.was?'<s style="color:var(--faint);font-weight:400">$'+p.was+'</s> &nbsp;':'')+'$'+p.price+'</div>'
+    +'<div class="sub" style="margin-bottom:16px">A '+p.cat.replace(/s$/,'')+' piece from the '+a.label+' edit — chosen to layer into one cohesive wardrobe.</div>'
+    +'<div class="row" style="gap:10px;margin-bottom:20px"><div class="btn" style="flex:1" data-sheet="'+p.id+'">Save to board ♡</div><div class="btn gh" style="flex:none;padding:14px 20px" data-buy="1">Buy</div></div>'
+    +'<div class="eye" style="margin-bottom:10px">More like this</div>'
+    +'<div class="row" style="gap:9px">'+like.map(x=>'<div class="pcard" data-open="'+x.id+'" style="flex:1;margin:0"><div class="frame" style="height:110px">'+garment(x)+'</div></div>').join('')+'</div>'
+    +'</div></div>'
+    +'<div class="scrim" id="scrim"></div>'
+    +'<div class="sheet" id="sheet"><div class="grip"></div><div class="h2" style="margin-bottom:12px">Save to board</div>'
+    +'<div class="row" style="gap:10px">'
+    +'<div style="flex:1;cursor:pointer" data-board-save="Soft Romance"><div class="frame" style="height:58px">'+garment(CATALOG[state.mode][1])+'</div><div class="sub" style="margin-top:5px">'+AES[state.mode].short+'</div></div>'
+    +'<div style="flex:1;cursor:pointer" data-board-save="Summer edit"><div class="frame" style="height:58px">'+garment(CATALOG[state.mode][3])+'</div><div class="sub" style="margin-top:5px">Summer edit</div></div>'
+    +'<div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.3px dashed var(--line2);border-radius:12px;height:58px;color:var(--sub);font-size:20px;cursor:pointer" data-board-save="New board">＋</div>'
+    +'</div></div></div>';
+}
+// ---- search ----
+function search(){
+  const q=state.query.trim().toLowerCase();
+  let pool=CATALOG[state.mode];
+  let results = q? pool.filter(p=>(p.title+' '+p.brand+' '+p.cat+' '+COLORMAPS[state.mode][p.color].name).toLowerCase().includes(q)) : pool.slice(0,6);
+  if(q && results.length===0) results=pool.slice(0,4);
+  const stylist = q
+    ? 'For “'+state.query.trim()+'”, I pulled '+results.length+' pieces that stay inside your '+AES[state.mode].short+' palette — leaning on the tones you already wear so anything here layers with the rest.'
+    : 'Tell me what you\'re after in plain words — “butter-yellow knits”, “linen for Europe”, “office minimal” — and I\'ll pull only what fits your edit.';
+  const sugg=['Butter-yellow knits','Linen for Europe','Office minimal'];
+  return '<div class="body" style="display:flex;flex-direction:column;height:100%">'
+    +'<div style="padding:14px 18px 0;flex:none">'
+    +'<div class="eye" style="margin-bottom:9px">Search</div>'
+    +'<div class="row" style="border:1.3px solid var(--line2);border-radius:12px;padding:10px 13px;gap:9px;margin-bottom:12px"><span style="color:var(--faint)">⌕</span>'
+    +'<input id="q" placeholder="Describe what you want…" value="'+state.query.replace(/"/g,'&quot;')+'" style="flex:1;border:none;outline:none;font-family:var(--ui);font-size:12.5px;color:var(--ink);background:transparent"></div>'
+    +'<div class="row" style="gap:8px;flex-wrap:wrap;margin-bottom:13px">'+sugg.map(s=>'<div class="chip" data-q="'+s+'">'+s+'</div>').join('')+'</div>'
+    +'<div style="border:1.3px solid var(--line);border-radius:12px;padding:13px;margin-bottom:14px;background:#faf9f6">'
+    +'<div class="eye" style="margin-bottom:8px;color:var(--accent)">AI stylist</div><div class="sub" style="color:#4a463f;line-height:1.5">'+stylist+'</div></div>'
+    +'</div>'
+    +'<div class="scroll" style="padding:0 18px 14px"><div class="eye" style="margin-bottom:10px">Results · '+results.length+' pieces</div>'
+    +'<div style="columns:2;column-gap:11px">'+results.map(card).join('')+'</div></div>'
+    +nav('search')+'</div>';
+}
+// ---- boards ----
+function boards(){
+  const list=[
+    {name:AES[state.mode].label,ids:curatedList().slice(0,3).map(p=>p.id),n:14},
+    {name:'Work wardrobe',ids:CATALOG[state.mode].slice(4,7).map(p=>p.id),n:8},
+    {name:'Summer edit',ids:CATALOG[state.mode].slice(7,10).map(p=>p.id),n:21},
+  ];
+  const savedCount=state.saved.size;
+  if(savedCount) list.unshift({name:'Saved by you',ids:[...state.saved].slice(0,3),n:savedCount});
+  const cover=ids=>'<div class="row" style="gap:4px;height:86px"><div class="frame" style="width:50%;height:86px">'+garment(pieceById(ids[0])||CATALOG[state.mode][0])+'</div>'
+    +'<div style="flex:1;display:flex;flex-direction:column;gap:4px"><div class="frame" style="height:41px">'+garment(pieceById(ids[1])||CATALOG[state.mode][1])+'</div><div class="frame" style="height:41px">'+garment(pieceById(ids[2])||CATALOG[state.mode][2])+'</div></div></div>';
+  return '<div class="body" style="display:flex;flex-direction:column;height:100%">'
+    +'<div style="padding:16px 18px 10px;flex:none"><div class="row" style="justify-content:space-between;align-items:baseline"><div class="h">Your boards</div><div class="chip" data-new="1">＋ New</div></div>'
+    +'<div class="eye" style="margin-top:7px">'+list.length+' boards · '+(list.reduce((s,b)=>s+b.n,0))+' pieces</div></div>'
+    +'<div class="scroll" style="padding:0 18px 14px"><div style="display:flex;flex-direction:column;gap:15px">'
+    +list.map(b=>'<div>'+cover(b.ids)+'<div class="row" style="justify-content:space-between;margin-top:7px"><div class="h2">'+b.name+'</div><div class="sub">'+b.n+'</div></div></div>').join('')
+    +'</div></div>'+nav('boards')+'</div>';
+}
+// ---- settings ----
+function settings(){
+  const a=AES[state.mode];
+  const rowc=(l,r)=>'<div class="row" style="justify-content:space-between;padding:13px 0;border-bottom:1px solid #f2f0ec"><div style="font-size:13px;font-weight:500">'+l+'</div><span class="sub">'+r+'</span></div>';
+  const toggle='<div class="row" style="justify-content:space-between;padding:13px 0;border-bottom:1px solid #f2f0ec"><div style="font-size:13px;font-weight:500">Price-drop alerts</div>'
+    +'<div data-toggle="1" style="width:34px;height:19px;border-radius:999px;background:'+(state.dropAlerts?'var(--accent)':'#cfccc4')+';position:relative;cursor:pointer;transition:.2s"><div style="position:absolute;top:2px;'+(state.dropAlerts?'right:2px':'left:2px')+';width:15px;height:15px;border-radius:999px;background:#fff;transition:.2s"></div></div></div>';
+  return '<div class="body" style="display:flex;flex-direction:column;height:100%">'
+    +'<div style="padding:18px 18px 8px;flex:none"><div class="h">Settings</div></div>'
+    +'<div class="scroll" style="padding:0 18px 14px">'
+    +'<div class="row" style="gap:12px;padding:14px 0;border-bottom:1px solid #eeece7"><div class="avatar" style="width:44px;height:44px;font-size:12px">AL</div><div><div class="h2">Aria Lane</div><div class="sub">'+a.label+' · edit account</div></div></div>'
+    +'<div class="eye" style="margin:16px 0 6px">Your taste</div>'+rowc('Your aesthetics','3 ›')+rowc('Palette preferences','›')+rowc('Budget ceiling','$'+state.budget+' ›')
+    +'<div class="eye" style="margin:16px 0 6px">Brands & drops</div>'+rowc('Followed brands','12 ›')+toggle+rowc('Notifications','›')
+    +'<div class="sub" style="text-decoration:underline;padding:16px 0 8px;cursor:pointer" data-go="ob1">Sign out</div>'
+    +'</div>'+nav('settings')+'</div>';
+}
+
+/* ================= RENDER + EVENTS ================= */
+const SCREENS={ob1,ob2,ob3,feed,detail,search,boards,settings};
+const CAPTIONS={
+  ob1:'Onboarding — the USP: describe a vibe in plain words, or tap a preset.',
+  ob2:'Palette and budget become first-class filters everywhere else.',
+  ob3:'The app names your edit — the artifact everything orbits.',
+  feed:'The curated masonry feed. Switch the aesthetic pill and the whole feed re-curates. Tap any piece.',
+  detail:'Product detail — save to a board, or buy. “More like this” keeps the loop going.',
+  search:'Type a vibe or tap a suggestion — the AI stylist responds and fills the grid.',
+  boards:'Boards are named, saved edits. Save pieces and a “Saved by you” board appears.',
+  settings:'Profile, taste, followed brands and the price-drop toggle live here.',
+};
+function render(){
+  $app.innerHTML = SCREENS[state.screen]();
+  document.getElementById('caption').textContent = CAPTIONS[state.screen]||'';
+  const v=document.getElementById('vibe'); if(v) v.addEventListener('input',e=>state.vibe=e.target.value);
+  const q=document.getElementById('q'); if(q){ q.addEventListener('input',e=>{state.query=e.target.value; renderKeepFocus();}); }
+}
+let keepFocus=false;
+function renderKeepFocus(){ // re-render search without stealing focus/caret
+  const val=state.query; render();
+  const q=document.getElementById('q'); if(q){ q.focus(); q.value=val; q.setSelectionRange(val.length,val.length); }
+}
+function go(screen){ state.screen=screen; render(); app.querySelector('.scroll')&&(app.querySelector('.scroll').scrollTop=0); }
+
+app.addEventListener('click',e=>{
+  const t=e.target.closest('[data-go],[data-tab],[data-open],[data-save],[data-mode],[data-preset],[data-ai],[data-budget],[data-obcol],[data-pal],[data-q],[data-sheet],[data-board-save],[data-buy],[data-toggle],[data-new],[data-add]');
+  if(!t)return;
+  const d=t.dataset;
+  if(d.go){ if(d.go==='ob2'||d.go==='ob3'||d.go==='feed'){ if(state.screen==='ob1'){ const pm=PRESETS.find(p=>p.name===state.obPreset); if(pm){state.mode=pm.mode; state.base=AES[state.mode].base;} } }
+    go(d.go); return; }
+  if(d.tab){ go(d.tab); return; }
+  if(d.add){ toast('More aesthetics coming soon'); return; }
+  if(d.open){ state.currentId=d.open; go('detail'); return; }
+  if(d.save!==undefined && d.save!==''){ const id=d.save; if(state.saved.has(id)){state.saved.delete(id); toast('Removed');} else {state.saved.add(id); toast('Saved to board ♥');} render(); return; }
+  if(d.mode){ if(state.mode!==d.mode){ state.mode=d.mode; state.base=AES[d.mode].base; toast('Re-curating '+AES[d.mode].short+'…'); } go(state.screen==='detail'?'feed':state.screen); return; }
+  if(d.preset){ state.obPreset=d.preset; state.mode=d.mode; state.base=AES[state.mode].base; state.obColors=new Set(Object.keys(COLORMAPS[state.mode]).slice(0,3)); render(); return; }
+  if(d.ai){ const keys=Object.keys(COLORMAPS[state.mode]); state.obColors=new Set(keys.slice(0,3)); toast('The agent picked your palette'); go('ob2'); return; }
+  if(d.budget){ state.budget=+d.budget; render(); return; }
+  if(d.obcol!==undefined){ const k=d.obcol; state.obColors.has(k)?state.obColors.delete(k):state.obColors.add(k); render(); return; }
+  if(d.pal){ state.base=d.pal; toast(COLORMAPS[state.mode][d.pal].name+' — reordering feed'); render(); return; }
+  if(d.q){ state.query=d.q; render(); return; }
+  if(d.sheet){ document.getElementById('sheet').classList.add('show'); document.getElementById('scrim').classList.add('show'); return; }
+  if(d.boardSave){ document.getElementById('sheet').classList.remove('show'); document.getElementById('scrim').classList.remove('show'); if(state.currentId)state.saved.add(state.currentId); toast('Saved to '+d.boardSave+' ♥'); render(); return; }
+  if(d.buy){ toast('Opening brand checkout…'); return; }
+  if(d.toggle){ state.dropAlerts=!state.dropAlerts; render(); return; }
+  if(d.new){ toast('New board'); return; }
+});
+// tap scrim to close sheet
+app.addEventListener('click',e=>{ if(e.target.id==='scrim'){ document.getElementById('sheet').classList.remove('show'); e.target.classList.remove('show'); } });
+
+render();
+</script>
+</body>
+</html>

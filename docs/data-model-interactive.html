@@ -1,0 +1,345 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Edit — Data Model</title>
+<style>
+  :root {
+    --paper:#E9E7E1; --paper-2:#E2DFD7; --surface:#FBFAF7; --surface-2:#F2EFE8;
+    --ink:#24221E; --ink-soft:#413D36; --muted:#6E6A60; --faint:#98938896;
+    --hair:#D6D2C8; --hair-strong:#C2BCAF;
+    --accent:#A65A3C; --accent-2:#8A6BA0; --accent-soft:#EBD8CE;
+    --catalog:#7C7A58; --account:#4E6A74; --hold:#A65A3C; --curate:#8A6BA0;
+    --wire:#B9B2A4; --wire-hot:#A65A3C;
+    --shadow-sm:0 1px 2px rgba(36,34,30,.05);
+    --shadow:0 2px 4px rgba(36,34,30,.05), 0 10px 30px rgba(36,34,30,.09);
+    --serif:Georgia,"Times New Roman",serif;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,"Liberation Mono",monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper:#151412; --paper-2:#1B1A17; --surface:#232120; --surface-2:#2B2926;
+      --ink:#EBE7DF; --ink-soft:#CFC9BE; --muted:#9A958A; --faint:#6b675c66;
+      --hair:#35322D; --hair-strong:#484338;
+      --accent:#CD8663; --accent-2:#B79BCB; --accent-soft:#3A2A22;
+      --catalog:#B4B184; --account:#82A2AD; --hold:#CD8663; --curate:#B79BCB;
+      --wire:#4A463E; --wire-hot:#CD8663;
+      --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+      --shadow:0 2px 4px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#E9E7E1; --paper-2:#E2DFD7; --surface:#FBFAF7; --surface-2:#F2EFE8;
+    --ink:#24221E; --ink-soft:#413D36; --muted:#6E6A60;
+    --hair:#D6D2C8; --hair-strong:#C2BCAF;
+    --accent:#A65A3C; --accent-2:#8A6BA0; --accent-soft:#EBD8CE;
+    --catalog:#7C7A58; --account:#4E6A74; --hold:#A65A3C; --curate:#8A6BA0;
+    --wire:#B9B2A4; --wire-hot:#A65A3C;
+    --shadow-sm:0 1px 2px rgba(36,34,30,.05);
+    --shadow:0 2px 4px rgba(36,34,30,.05), 0 10px 30px rgba(36,34,30,.09);
+  }
+  :root[data-theme="dark"]{
+    --paper:#151412; --paper-2:#1B1A17; --surface:#232120; --surface-2:#2B2926;
+    --ink:#EBE7DF; --ink-soft:#CFC9BE; --muted:#9A958A;
+    --hair:#35322D; --hair-strong:#484338;
+    --accent:#CD8663; --accent-2:#B79BCB; --accent-soft:#3A2A22;
+    --catalog:#B4B184; --account:#82A2AD; --hold:#CD8663; --curate:#B79BCB;
+    --wire:#4A463E; --wire-hot:#CD8663;
+    --shadow-sm:0 1px 2px rgba(0,0,0,.3);
+    --shadow:0 2px 4px rgba(0,0,0,.3), 0 12px 34px rgba(0,0,0,.4);
+  }
+
+  * { box-sizing:border-box; }
+  body { margin:0; }
+  .page {
+    background:
+      radial-gradient(1200px 620px at 82% -8%, color-mix(in srgb,var(--accent) 8%, transparent), transparent 60%),
+      var(--paper);
+    color:var(--ink); font-family:var(--sans); line-height:1.5; min-height:100vh;
+    padding:clamp(20px,4.5vw,52px) clamp(16px,4.5vw,44px) 60px; -webkit-font-smoothing:antialiased;
+  }
+  .wrap { max-width:1240px; margin:0 auto; }
+
+  /* Masthead */
+  .mast { display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+          border-bottom:2px solid var(--ink); padding-bottom:18px; flex-wrap:wrap; }
+  .mast-l { max-width:64ch; }
+  .kicker { font-family:var(--mono); font-size:11px; letter-spacing:.24em; text-transform:uppercase; color:var(--accent); margin:0 0 12px; }
+  .mast h1 { font-family:var(--serif); font-weight:400; font-style:italic; font-size:clamp(32px,6vw,56px);
+             line-height:1.0; margin:0; letter-spacing:-.015em; text-wrap:balance; }
+  .mast .sub { font-family:var(--serif); font-size:clamp(14px,2.2vw,18px); color:var(--muted); margin:12px 0 0; }
+  .mast-r { font-family:var(--mono); font-size:11px; color:var(--muted); text-transform:uppercase; letter-spacing:.08em;
+            text-align:right; display:flex; flex-direction:column; gap:5px; }
+  .mast-r b { color:var(--ink); font-weight:600; font-size:20px; font-family:var(--serif); font-style:italic; letter-spacing:0; }
+
+  /* Toolbar / legend */
+  .bar { display:flex; flex-wrap:wrap; gap:12px 26px; align-items:center; margin:20px 0 6px; }
+  .keys { display:flex; flex-wrap:wrap; gap:8px 16px; }
+  .dkey { display:inline-flex; align-items:center; gap:7px; font-size:12.5px; color:var(--muted); font-family:var(--mono); letter-spacing:.02em; }
+  .dot { width:11px; height:11px; border-radius:3px; }
+  .hint { margin-left:auto; font-family:var(--serif); font-style:italic; font-size:13px; color:var(--muted); }
+  .hint b { color:var(--accent); font-style:normal; font-family:var(--mono); font-size:11px; letter-spacing:.04em; }
+
+  /* Canvas */
+  .canvas { overflow-x:auto; overflow-y:hidden; margin-top:14px; padding-bottom:6px; }
+  .board { position:relative; display:flex; gap:clamp(26px,3.4vw,54px); align-items:flex-start; min-width:940px; padding:8px 4px 4px; }
+  .col { flex:1 1 0; min-width:196px; display:flex; flex-direction:column; gap:16px; }
+  .col.accounts { justify-content:center; align-self:stretch; }
+
+  svg.wires { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:0; overflow:visible; }
+  svg.wires path { fill:none; stroke:var(--wire); stroke-width:1.4; opacity:.55; transition:stroke .18s, opacity .18s, stroke-width .18s; }
+  svg.wires .glyph { fill:var(--muted); font-family:var(--mono); font-size:11px; font-weight:600; opacity:0; transition:opacity .18s; }
+  .board.tracing svg.wires path { opacity:.13; }
+  .board.tracing svg.wires path.on { opacity:1; stroke:var(--wire-hot); stroke-width:2; }
+  .board.tracing svg.wires .glyph.on { opacity:1; fill:var(--accent); }
+
+  /* Entity cards */
+  .entity { position:relative; z-index:1; background:var(--surface); border:1px solid var(--hair);
+            border-radius:12px; box-shadow:var(--shadow-sm); border-top:3px solid var(--dc);
+            transition:box-shadow .18s, transform .18s, opacity .18s, border-color .18s; }
+  .entity:focus-visible { outline:2px solid var(--accent); outline-offset:3px; }
+  .entity .eh { display:flex; align-items:baseline; justify-content:space-between; gap:8px; padding:10px 13px 8px; border-bottom:1px solid var(--hair); }
+  .entity .en { font-family:var(--mono); font-size:13px; font-weight:600; letter-spacing:.02em; color:var(--ink); }
+  .entity .ehint { font-family:var(--serif); font-style:italic; font-size:10.5px; color:var(--muted); }
+  .entity.hub { box-shadow:var(--shadow); }
+  .entity.hub .en::after { content:"HUB"; margin-left:8px; font-family:var(--mono); font-size:8px; font-weight:700;
+            letter-spacing:.12em; color:var(--dc); border:1px solid currentColor; padding:1px 4px; border-radius:3px; vertical-align:1.5px; }
+  ul.at { list-style:none; margin:0; padding:5px 0 6px; }
+  ul.at li { display:flex; align-items:center; gap:7px; padding:3.5px 13px; font-size:12px; }
+  ul.at li + li { border-top:1px solid color-mix(in srgb,var(--hair) 50%, transparent); }
+  .an { font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); }
+  .an.k { color:var(--ink); font-weight:600; }
+  .at-type { margin-left:auto; font-family:var(--mono); font-size:10px; color:var(--muted); letter-spacing:.02em; }
+  .kb { font-family:var(--mono); font-size:8px; font-weight:700; letter-spacing:.03em; padding:1px 4px; border-radius:3px;
+        text-transform:uppercase; flex:none; min-width:22px; text-align:center; }
+  .kb.pk { color:#FCFAF6; background:#9A6B3F; }
+  .kb.fk { color:#FCFAF6; background:#566E7A; }
+  .kb.jn { color:var(--muted); border:1px solid var(--hair-strong); }
+  .kb.sp { visibility:hidden; }
+
+  /* trace states */
+  .board.tracing .entity { opacity:.34; }
+  .board.tracing .entity.rel { opacity:1; }
+  .board.tracing .entity.active { opacity:1; box-shadow:var(--shadow); transform:translateY(-1px); }
+
+  .foot { margin-top:30px; padding-top:14px; border-top:1px solid var(--hair); display:flex; justify-content:space-between;
+          flex-wrap:wrap; gap:8px; font-family:var(--mono); font-size:11px; color:var(--muted); letter-spacing:.05em; text-transform:uppercase; }
+  @media (prefers-reduced-motion: reduce) { * { transition:none !important; } }
+</style>
+
+<div class="page"><div class="wrap">
+  <header class="mast">
+    <div class="mast-l">
+      <p class="kicker">The Edit · Data Model · v1</p>
+      <h1>Entity–Relationship Diagram</h1>
+      <p class="sub">One aesthetic, every brand — the schema behind curated cross-brand pieces, the looks people save, the brands they follow, and the curation engine underneath.</p>
+    </div>
+    <div class="mast-r">
+      <span><b>18</b></span><span>entities</span>
+      <span style="margin-top:6px"><b>4</b></span><span>domains</span>
+    </div>
+  </header>
+
+  <div class="bar">
+    <div class="keys">
+      <span class="dkey"><span class="dot" style="background:var(--catalog)"></span>Catalog</span>
+      <span class="dkey"><span class="dot" style="background:var(--account)"></span>Accounts</span>
+      <span class="dkey"><span class="dot" style="background:var(--hold)"></span>Hold the look</span>
+      <span class="dkey"><span class="dot" style="background:var(--curate)"></span>Curate &amp; act</span>
+    </div>
+    <div class="hint"><b>HOVER</b> or focus an entity to trace its relationships</div>
+  </div>
+
+  <div class="canvas">
+    <div class="board" id="board">
+      <svg class="wires" id="wires" aria-hidden="true"></svg>
+    </div>
+  </div>
+
+  <footer class="foot">
+    <span>The Edit — ER Diagram · v1</span>
+    <span>Derived from PRD v1 · July 2026 · working draft</span>
+  </footer>
+</div></div>
+
+<script>
+(function () {
+  var A = function (n,t,key) { return { n:n, t:t, key:key||'' }; };
+  // key: 'pk' | 'fk' | 'jn' | ''
+  var ENT = {
+    // Catalog
+    PRODUCT:{dom:'catalog', hub:true, hint:'piece', at:[A('product_id','uuid','pk'),A('brand_id','uuid','fk'),A('category_id','uuid','fk'),A('aesthetic_id','uuid','fk'),A('color_id','uuid','fk'),A('title','text'),A('price','decimal'),A('image_url','text'),A('product_url','text'),A('in_stock','bool')]},
+    BRAND:{dom:'catalog', at:[A('brand_id','uuid','pk'),A('name','text'),A('affiliate_network','text'),A('affiliate_tag','text'),A('is_partner','bool')]},
+    AESTHETIC:{dom:'catalog', hint:'Muse · STACK', at:[A('aesthetic_id','uuid','pk'),A('name','text'),A('wordmark','text'),A('display_font','text'),A('description','text')]},
+    COLOR:{dom:'catalog', hint:'palette', at:[A('color_id','uuid','pk'),A('aesthetic_id','uuid','fk'),A('name','text'),A('hex','char(7)'),A('family','text')]},
+    CATEGORY:{dom:'catalog', at:[A('category_id','uuid','pk'),A('name','text'),A('slug','text')]},
+    PRICE_HISTORY:{dom:'catalog', hint:'for drops', at:[A('price_point_id','uuid','pk'),A('product_id','uuid','fk'),A('price','decimal'),A('recorded_at','ts')]},
+    // Accounts
+    USER:{dom:'account', hub:true, at:[A('user_id','uuid','pk'),A('active_aesthetic_id','uuid','fk'),A('email','text'),A('display_name','text'),A('avatar_url','text'),A('created_at','ts')]},
+    // Hold the look
+    BOARD:{dom:'hold', hint:'mood board', at:[A('board_id','uuid','pk'),A('user_id','uuid','fk'),A('name','text'),A('share_token','text'),A('is_public','bool')]},
+    BOARD_ITEM:{dom:'hold', hint:'save · join', at:[A('board_id','uuid','jn'),A('product_id','uuid','jn'),A('added_at','ts')]},
+    FOLLOW:{dom:'hold', hint:'join', at:[A('user_id','uuid','jn'),A('brand_id','uuid','jn'),A('followed_at','ts')]},
+    PRICE_ALERT:{dom:'hold', at:[A('alert_id','uuid','pk'),A('user_id','uuid','fk'),A('product_id','uuid','fk'),A('threshold_pct','int')]},
+    NOTIFICATION:{dom:'hold', at:[A('notification_id','uuid','pk'),A('user_id','uuid','fk'),A('product_id','uuid','fk'),A('type','enum'),A('sent_at','ts'),A('read_at','ts')]},
+    // Curate & act
+    CURATOR_BRIEF:{dom:'curate', hint:'goal in', at:[A('brief_id','uuid','pk'),A('user_id','uuid','fk'),A('aesthetic_id','uuid','fk'),A('budget','decimal'),A('occasion','text')]},
+    BRIEF_CATEGORY:{dom:'curate', hint:'join', at:[A('brief_id','uuid','jn'),A('category_id','uuid','jn')]},
+    CURATED_SET:{dom:'curate', hint:'look out', at:[A('set_id','uuid','pk'),A('brief_id','uuid','fk'),A('created_at','ts')]},
+    CURATED_ITEM:{dom:'curate', hint:'piece + why', at:[A('set_id','uuid','jn'),A('product_id','uuid','jn'),A('rationale','text'),A('position','int')]},
+    INTERACTION:{dom:'curate', hint:'learning loop', at:[A('interaction_id','uuid','pk'),A('user_id','uuid','fk'),A('product_id','uuid','fk'),A('type','enum'),A('created_at','ts')]},
+    OUTBOUND_CLICK:{dom:'curate', hint:'attribution', at:[A('click_id','uuid','pk'),A('user_id','uuid','fk'),A('product_id','uuid','fk'),A('clicked_at','ts'),A('affiliate_tag','text')]}
+  };
+
+  // parent (the "one") -> child (the "many")
+  var REL = [
+    ['BRAND','PRODUCT'],['CATEGORY','PRODUCT'],['AESTHETIC','PRODUCT'],['COLOR','PRODUCT'],
+    ['AESTHETIC','COLOR'],['AESTHETIC','USER'],['PRODUCT','PRICE_HISTORY'],
+    ['USER','BOARD'],['BOARD','BOARD_ITEM'],['PRODUCT','BOARD_ITEM'],
+    ['USER','FOLLOW'],['BRAND','FOLLOW'],['USER','PRICE_ALERT'],['PRODUCT','PRICE_ALERT'],
+    ['USER','NOTIFICATION'],['PRODUCT','NOTIFICATION'],
+    ['USER','CURATOR_BRIEF'],['AESTHETIC','CURATOR_BRIEF'],
+    ['CURATOR_BRIEF','BRIEF_CATEGORY'],['CATEGORY','BRIEF_CATEGORY'],
+    ['CURATOR_BRIEF','CURATED_SET'],['CURATED_SET','CURATED_ITEM'],['PRODUCT','CURATED_ITEM'],
+    ['USER','INTERACTION'],['PRODUCT','INTERACTION'],['USER','OUTBOUND_CLICK'],['PRODUCT','OUTBOUND_CLICK']
+  ];
+
+  var COLS = [
+    { cls:'hold',     ids:['BOARD','BOARD_ITEM','FOLLOW','PRICE_ALERT','NOTIFICATION'] },
+    { cls:'accounts', ids:['USER'] },
+    { cls:'catalog',  ids:['PRODUCT','BRAND','AESTHETIC','COLOR','CATEGORY','PRICE_HISTORY'] },
+    { cls:'curate',   ids:['CURATOR_BRIEF','BRIEF_CATEGORY','CURATED_SET','CURATED_ITEM','INTERACTION','OUTBOUND_CLICK'] }
+  ];
+  var DOMVAR = { catalog:'var(--catalog)', account:'var(--account)', hold:'var(--hold)', curate:'var(--curate)' };
+
+  var board = document.getElementById('board');
+  var wires = document.getElementById('wires');
+  var SVGNS = 'http://www.w3.org/2000/svg';
+  var cardEl = {};
+
+  function el(tag, cls, txt) { var e=document.createElement(tag); if(cls)e.className=cls; if(txt!=null)e.textContent=txt; return e; }
+
+  // Build cards
+  COLS.forEach(function (col) {
+    var c = el('div', 'col ' + col.cls);
+    col.ids.forEach(function (id) {
+      var d = ENT[id];
+      var card = el('div', 'entity' + (d.hub ? ' hub' : ''));
+      card.style.setProperty('--dc', DOMVAR[d.dom]);
+      card.tabIndex = 0;
+      card.dataset.id = id;
+      var head = el('div', 'eh');
+      head.appendChild(el('span', 'en', id));
+      if (d.hint) head.appendChild(el('span', 'ehint', d.hint));
+      card.appendChild(head);
+      var ul = el('ul', 'at');
+      d.at.forEach(function (a) {
+        var li = el('li');
+        var kb = el('span', 'kb ' + (a.key || 'sp'), a.key ? a.key.toUpperCase() : '·');
+        li.appendChild(kb);
+        li.appendChild(el('span', 'an' + (a.key ? ' k' : ''), a.n));
+        li.appendChild(el('span', 'at-type', a.t));
+        ul.appendChild(li);
+      });
+      card.appendChild(ul);
+      c.appendChild(card);
+      cardEl[id] = card;
+    });
+    board.appendChild(c);
+  });
+
+  // adjacency
+  var adj = {};
+  REL.forEach(function (r, i) { adj[r[0]] = adj[r[0]] || []; adj[r[1]] = adj[r[1]] || []; adj[r[0]].push(i); adj[r[1]].push(i); });
+
+  var paths = [];
+  function border(card, tx, ty) {
+    var x = card.offsetLeft, y = card.offsetTop, w = card.offsetWidth, h = card.offsetHeight;
+    var cx = x + w / 2, cy = y + h / 2, dx = tx - cx, dy = ty - cy;
+    if (dx === 0 && dy === 0) return { x: cx, y: cy };
+    var tX = dx !== 0 ? (w / 2) / Math.abs(dx) : Infinity;
+    var tY = dy !== 0 ? (h / 2) / Math.abs(dy) : Infinity;
+    var t = Math.min(tX, tY);
+    return { x: cx + dx * t, y: cy + dy * t };
+  }
+  function center(card) { return { x: card.offsetLeft + card.offsetWidth / 2, y: card.offsetTop + card.offsetHeight / 2 }; }
+
+  function draw() {
+    var w = board.scrollWidth, h = board.scrollHeight;
+    wires.setAttribute('viewBox', '0 0 ' + w + ' ' + h);
+    wires.setAttribute('width', w); wires.setAttribute('height', h);
+    while (wires.firstChild) wires.removeChild(wires.firstChild);
+    paths = [];
+    REL.forEach(function (r, i) {
+      var pa = cardEl[r[0]], ch = cardEl[r[1]];
+      var ca = center(pa), cc = center(ch);
+      var pP = border(pa, cc.x, cc.y);   // one-end (parent)
+      var pC = border(ch, ca.x, ca.y);   // many-end (child)
+      var mx = (pP.x + pC.x) / 2, my = (pP.y + pC.y) / 2;
+      // subtle perpendicular bow, alternating for separation
+      var vx = pC.x - pP.x, vy = pC.y - pP.y, len = Math.hypot(vx, vy) || 1;
+      var nx = -vy / len, ny = vx / len;
+      var bow = Math.min(26, len * 0.09) * (i % 2 ? 1 : -1);
+      var cxp = mx + nx * bow, cyp = my + ny * bow;
+      var g = document.createElementNS(SVGNS, 'g');
+      var p = document.createElementNS(SVGNS, 'path');
+      p.setAttribute('d', 'M ' + pP.x + ' ' + pP.y + ' Q ' + cxp + ' ' + cyp + ' ' + pC.x + ' ' + pC.y);
+      g.appendChild(p);
+      // cardinality glyphs, inset from each end along the curve
+      function glyph(px, py, tx, ty, txt) {
+        var gx = px + (tx - px) * 0.16, gy = py + (ty - py) * 0.16;
+        var t = document.createElementNS(SVGNS, 'text');
+        t.setAttribute('class', 'glyph'); t.setAttribute('x', gx); t.setAttribute('y', gy + 3.5);
+        t.setAttribute('text-anchor', 'middle'); t.textContent = txt;
+        g.appendChild(t); return t;
+      }
+      var g1 = glyph(pP.x, pP.y, cxp, cyp, '1');
+      var gN = glyph(pC.x, pC.y, cxp, cyp, '∞');
+      wires.appendChild(g);
+      paths.push({ i: i, from: r[0], to: r[1], p: p, g1: g1, gN: gN });
+    });
+  }
+
+  function trace(id) {
+    board.classList.add('tracing');
+    var mine = adj[id] || [];
+    var neigh = {}; neigh[id] = true;
+    paths.forEach(function (o) {
+      var on = mine.indexOf(o.i) > -1;
+      o.p.classList.toggle('on', on);
+      o.g1.classList.toggle('on', on);
+      o.gN.classList.toggle('on', on);
+      if (on) { neigh[o.from] = true; neigh[o.to] = true; }
+    });
+    Object.keys(cardEl).forEach(function (k) {
+      cardEl[k].classList.toggle('rel', !!neigh[k]);
+      cardEl[k].classList.toggle('active', k === id);
+    });
+  }
+  function clearTrace() {
+    board.classList.remove('tracing');
+    paths.forEach(function (o) { o.p.classList.remove('on'); o.g1.classList.remove('on'); o.gN.classList.remove('on'); });
+    Object.keys(cardEl).forEach(function (k) { cardEl[k].classList.remove('rel', 'active'); });
+  }
+
+  Object.keys(cardEl).forEach(function (id) {
+    var c = cardEl[id];
+    c.addEventListener('mouseenter', function () { trace(id); });
+    c.addEventListener('mouseleave', clearTrace);
+    c.addEventListener('focus', function () { trace(id); });
+    c.addEventListener('blur', clearTrace);
+  });
+
+  function relayout() { draw(); }
+  if (window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(draw); }); else draw();
+  window.addEventListener('load', draw);
+  window.addEventListener('resize', relayout);
+  if (window.ResizeObserver) new ResizeObserver(relayout).observe(board);
+  setTimeout(draw, 250); setTimeout(draw, 800);
+})();
+</script>
+
+</body>
+</html>

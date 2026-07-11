@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Edit — Feed Curator (agent prototype)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg0:#17130e; --bg1:#100d09; --panel:#1e1913; --panel2:#26201a;
+    --line:rgba(243,234,224,0.12); --line2:rgba(243,234,224,0.18);
+    --ink:#F4ECE2; --muted:rgba(244,236,226,0.62); --faint:rgba(244,236,226,0.4);
+    --accent:#C0705A; --good:#8FB89A;
+    --ui:'Hanken Grotesk',system-ui,sans-serif; --serif:'Instrument Serif',Georgia,serif; --mono:'Space Mono',monospace;
+  }
+  body.masc{ --accent:#7E93A6; --bg0:#12140f; }
+  *{box-sizing:border-box;-webkit-font-smoothing:antialiased;}
+  html,body{margin:0;min-height:100vh;color:var(--ink);font-family:var(--ui);
+    background:
+      radial-gradient(120% 70% at 18% -5%, rgba(192,112,90,0.16) 0%, rgba(0,0,0,0) 45%),
+      radial-gradient(120% 80% at 100% 0%, var(--bg0) 0%, var(--bg1) 60%, #0c0a07 100%);}
+  body.masc{background:
+      radial-gradient(120% 70% at 18% -5%, rgba(126,147,166,0.16) 0%, rgba(0,0,0,0) 45%),
+      radial-gradient(120% 80% at 100% 0%, var(--bg0) 0%, var(--bg1) 60%, #0a0b09 100%);}
+  ::selection{background:var(--accent);color:#1a160f;}
+  .grain{position:fixed;inset:0;pointer-events:none;opacity:.05;z-index:0;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");}
+  .wrap{position:relative;z-index:1;max-width:1220px;margin:0 auto;padding:40px 28px 90px;}
+
+  header.mast{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);padding-bottom:18px;margin-bottom:34px;}
+  .word{font-family:var(--mono);font-size:12px;letter-spacing:6px;text-transform:uppercase;}
+  .word b{color:var(--accent);}
+  .mtag{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);}
+  .hero{max-width:760px;margin-bottom:34px;}
+  .eyebrow{font-family:var(--mono);font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--accent);margin-bottom:14px;}
+  h1{font-family:var(--serif);font-weight:400;font-size:clamp(38px,6vw,58px);line-height:1.02;margin:0 0 14px;letter-spacing:.4px;}
+  h1 em{font-style:italic;color:var(--accent);}
+  .sub{color:var(--muted);font-size:16px;line-height:1.65;max-width:660px;margin:0;}
+
+  .grid{display:grid;grid-template-columns:352px 1fr;gap:26px;align-items:start;}
+  @media(max-width:900px){.grid{grid-template-columns:1fr;}}
+  .card{background:linear-gradient(180deg,var(--panel),var(--panel2));border:1px solid var(--line);border-radius:20px;padding:22px;}
+  .briefcard{position:sticky;top:20px;}
+  .label{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin:0 0 10px;display:flex;justify-content:space-between;}
+  .field{margin-bottom:20px;}
+  .seg{display:flex;gap:8px;background:var(--panel2);border:1px solid var(--line);border-radius:14px;padding:5px;}
+  .seg button{flex:1;padding:11px 8px;border-radius:10px;border:none;background:transparent;color:var(--muted);font-family:var(--ui);font-size:13.5px;font-weight:600;cursor:pointer;transition:.18s;}
+  .seg button.on{background:var(--ink);color:#1a160f;box-shadow:0 2px 10px rgba(0,0,0,.25);}
+  .dots{display:flex;gap:9px;flex-wrap:wrap;}
+  .dotwrap{padding:3px;border-radius:999px;border:2px solid transparent;cursor:pointer;transition:.15s;line-height:0;}
+  .dotwrap.on{border-color:var(--ink);}
+  .dot{width:30px;height:30px;border-radius:999px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.18);}
+  .chips{display:flex;gap:8px;flex-wrap:wrap;}
+  .chip{padding:8px 13px;border-radius:999px;border:1px solid var(--line);background:transparent;color:var(--muted);font-size:12.5px;font-weight:600;cursor:pointer;transition:.15s;font-family:var(--ui);}
+  .chip.on{background:var(--accent);border-color:var(--accent);color:#fff;}
+  input[type=text]{width:100%;padding:12px 14px;border-radius:12px;border:1px solid var(--line);background:var(--panel2);color:var(--ink);font-family:var(--ui);font-size:14px;outline:none;}
+  input[type=text]:focus{border-color:var(--accent);}
+  .rangerow{display:flex;align-items:center;gap:12px;}
+  input[type=range]{flex:1;accent-color:var(--accent);}
+  .budgetval{font-family:var(--mono);font-size:15px;min-width:60px;text-align:right;}
+  .go{width:100%;padding:15px;border:none;border-radius:14px;background:var(--accent);color:#fff;font-family:var(--ui);font-weight:700;font-size:15px;cursor:pointer;letter-spacing:.2px;transition:.15s;box-shadow:0 6px 20px rgba(0,0,0,.25);}
+  .go:hover{filter:brightness(1.07);transform:translateY(-1px);}
+  .go:disabled{opacity:.55;cursor:default;transform:none;}
+
+  /* trace */
+  .trace{background:rgba(0,0,0,.22);border:1px solid var(--line);border-radius:16px;padding:16px 18px;font-family:var(--mono);font-size:12.5px;line-height:1.85;color:var(--muted);margin-bottom:22px;min-height:56px;}
+  .trace .step{opacity:0;transform:translateY(4px);animation:rise .3s ease forwards;display:flex;gap:8px;}
+  .trace .step b{color:var(--ink);font-weight:700;}
+  .trace .tick{color:var(--good);}
+  .trace .cur{color:var(--accent);}
+  @keyframes rise{to{opacity:1;transform:none;}}
+  .blink::after{content:'▌';animation:bl 1s steps(2) infinite;color:var(--accent);}
+  @keyframes bl{50%{opacity:0;}}
+
+  .empty{color:var(--muted);font-size:14.5px;line-height:1.65;padding:8px 2px;}
+  .empty b{color:var(--ink);}
+
+  .lookhead{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;margin:0 0 16px;flex-wrap:wrap;}
+  .lookhead h2{font-family:var(--serif);font-weight:400;font-size:30px;margin:0 0 3px;}
+  .lookhead .mode{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);}
+  .scorebox{text-align:right;min-width:150px;}
+  .scoreval{font-family:var(--serif);font-size:34px;line-height:1;}
+  .scoreval small{font-size:15px;color:var(--muted);}
+  .scorelab{font-family:var(--mono);font-size:9.5px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-top:3px;}
+  .meter{height:6px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);overflow:hidden;margin-top:8px;}
+  .meter>i{display:block;height:100%;background:linear-gradient(90deg,var(--accent),var(--good));width:0;transition:width .9s cubic-bezier(.2,.7,.2,1);}
+
+  .palstrip{display:flex;gap:0;border-radius:10px;overflow:hidden;border:1px solid var(--line);height:26px;margin-bottom:6px;}
+  .palstrip>span{flex:1;}
+  .palnote{font-family:var(--mono);font-size:10.5px;color:var(--muted);margin-bottom:18px;letter-spacing:.5px;}
+
+  .budgetbar{height:8px;border-radius:999px;background:var(--panel2);border:1px solid var(--line);overflow:hidden;margin:2px 0 5px;}
+  .budgetbar>i{display:block;height:100%;background:var(--accent);width:0;transition:width .8s ease;}
+  .budgetnote{font-family:var(--mono);font-size:11px;color:var(--muted);margin-bottom:22px;}
+
+  .look{display:grid;grid-template-columns:repeat(3,1fr);gap:15px;margin-bottom:22px;}
+  @media(max-width:560px){.look{grid-template-columns:repeat(2,1fr);}}
+  .piece{opacity:0;transform:translateY(8px);animation:rise .4s ease forwards;}
+  .piece .frame{position:relative;width:100%;aspect-ratio:3/4;border-radius:14px;overflow:hidden;border:1px solid var(--line);background:var(--panel2);}
+  .piece .frame svg{position:absolute;inset:0;width:100%;height:100%;}
+  .piece .frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
+  .piece.big{grid-row:span 1;}
+  .piece .star{position:absolute;top:9px;left:9px;background:rgba(20,15,10,.6);backdrop-filter:blur(4px);color:#fff;font-family:var(--mono);font-size:9px;letter-spacing:1.5px;padding:4px 8px;border-radius:8px;border:1px solid rgba(255,255,255,.16);}
+  .piece .drop{position:absolute;top:9px;right:9px;background:var(--accent);color:#fff;font-family:var(--mono);font-size:9.5px;font-weight:700;padding:4px 8px;border-radius:8px;}
+  .piece .swap{position:absolute;bottom:9px;right:9px;width:28px;height:28px;border-radius:8px;border:1px solid rgba(255,255,255,.2);background:rgba(20,15,10,.55);backdrop-filter:blur(4px);color:#fff;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;opacity:0;transition:.15s;}
+  .piece .frame:hover .swap{opacity:1;}
+  .piece .swap:hover{background:var(--accent);}
+  .piece .br{font-family:var(--ui);font-size:9.5px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);margin:9px 2px 2px;}
+  .piece .ti{font-size:13px;color:var(--ink);margin:0 2px 3px;line-height:1.28;}
+  .piece .pr{font-family:var(--mono);font-size:12.5px;font-weight:700;margin:0 2px;}
+  .piece .pr s{color:var(--faint);font-weight:400;font-size:11px;margin-left:6px;}
+
+  .rationale{background:rgba(0,0,0,.2);border:1px solid var(--line);border-radius:16px;padding:18px 20px;margin-bottom:20px;}
+  .rationale .label{margin-bottom:9px;}
+  .rationale p{margin:0 0 10px;font-size:14.5px;line-height:1.62;color:var(--ink);}
+  .rationale .meta{font-size:12.5px;color:var(--muted);line-height:1.75;font-family:var(--mono);}
+
+  .refine{border-top:1px dashed var(--line);padding-top:18px;}
+  .refine .rl{font-family:var(--mono);font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--faint);margin-bottom:11px;}
+  .refine .chips .chip{background:var(--panel2);}
+  .refine .chips .chip:hover{border-color:var(--accent);color:var(--ink);}
+
+  details{margin-top:26px;}
+  summary{cursor:pointer;font-family:var(--mono);font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--accent);list-style:none;}
+  summary::-webkit-details-marker{display:none;}
+  summary::before{content:'+ ';}
+  details[open] summary::before{content:'– ';}
+  details pre{white-space:pre-wrap;font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--muted);background:rgba(0,0,0,.25);border:1px solid var(--line);border-radius:14px;padding:18px;margin-top:14px;overflow-x:auto;}
+  .foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--faint);display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+</style>
+</head>
+<body class="fem">
+<div class="grain"></div>
+<div class="wrap">
+  <header class="mast">
+    <div class="word"><b>THE&nbsp;EDIT</b> &nbsp;·&nbsp; FEED CURATOR</div>
+    <div class="mtag">Working agent prototype</div>
+  </header>
+
+  <div class="hero">
+    <div class="eyebrow">One aesthetic, every brand</div>
+    <h1>Describe the look. <em>The agent builds it.</em></h1>
+    <p class="sub">This is the curation engine behind The Edit, on its own. Give it an aesthetic, a palette, a budget and an occasion. It scans a multi-brand catalog, scores every piece for palette fit and cohesion, assembles a set that stays on-look and on-budget, then tells you why. Change your mind and it re-curates. Everything below runs live.</p>
+  </div>
+
+  <div class="grid">
+    <!-- BRIEF -->
+    <div class="card briefcard" id="brief">
+      <div class="field">
+        <div class="label">Aesthetic</div>
+        <div class="seg" id="modeSeg">
+          <button data-mode="fem" class="on">Soft Romance</button>
+          <button data-mode="masc">Quiet Utility</button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label"><span>Palette</span><span id="palname">agent's choice</span></div>
+        <div class="dots" id="dots"></div>
+      </div>
+      <div class="field">
+        <div class="label">Occasion</div>
+        <div class="chips" id="occ"></div>
+      </div>
+      <div class="field">
+        <div class="label"><span>Budget</span></div>
+        <div class="rangerow">
+          <input type="range" id="budget" min="120" max="1400" step="10" value="520">
+          <div class="budgetval" id="budgetval">$520</div>
+        </div>
+      </div>
+      <div class="field">
+        <div class="label">Vibe note (optional)</div>
+        <input type="text" id="vibe" placeholder="e.g. layering pieces, nothing loud">
+      </div>
+      <button class="go" id="go">Curate my feed</button>
+    </div>
+
+    <!-- RESULT -->
+    <div class="card" id="result">
+      <div class="empty" id="emptyState">Set a brief on the left and press <b>Curate my feed</b>. The agent will think out loud, then assemble a cohesive look with a rationale — and you can refine it from there.</div>
+      <div id="output" style="display:none;">
+        <div class="trace" id="trace"></div>
+        <div id="lookBlock" style="display:none;">
+          <div class="lookhead">
+            <div>
+              <h2 id="lookTitle"></h2>
+              <span class="mode" id="lookMode"></span>
+            </div>
+            <div class="scorebox">
+              <div class="scoreval" id="scoreVal">—</div>
+              <div class="scorelab">Cohesion score</div>
+              <div class="meter"><i id="scoreFill"></i></div>
+            </div>
+          </div>
+          <div class="palstrip" id="palstrip"></div>
+          <div class="palnote" id="palnote"></div>
+          <div class="budgetbar"><i id="budgetFill"></i></div>
+          <div class="budgetnote" id="budgetNote"></div>
+          <div class="look" id="look"></div>
+          <div class="rationale">
+            <div class="label">Why this set</div>
+            <p id="rationaleText"></p>
+            <div class="meta" id="rationaleMeta"></div>
+          </div>
+          <div class="refine">
+            <div class="rl">Refine — the agent adapts</div>
+            <div class="chips" id="refineChips"></div>
+          </div>
+        </div>
+      </div>
+      <details>
+        <summary>Under the hood — how this becomes a Claude agent in production</summary>
+        <pre id="spec"></pre>
+      </details>
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Rules-based demo of the curation logic</span>
+    <span>In production, Claude is the reasoning engine with catalog tools</span>
+  </div>
+</div>
+
+<script>
+/* ===================== CATALOG ===================== */
+const COLORMAPS = {
+  fem: {
+    cream:{hex:'#EFE3D2',on:'#7A6E5E',name:'Cream'}, rose:{hex:'#E2B7B0',on:'#7E4F49',name:'Rose'},
+    clay:{hex:'#C98A6A',on:'#5C3A28',name:'Clay'}, butter:{hex:'#E8CD79',on:'#7A6326',name:'Butter'},
+    sage:{hex:'#AEB59A',on:'#474D3A',name:'Sage'}, ink:{hex:'#3A332C',on:'#D9CFC2',name:'Ink'},
+  },
+  masc: {
+    stone:{hex:'#C9C5BC',on:'#6B675E',name:'Stone'}, slate:{hex:'#6E7A82',on:'#EAF0F2',name:'Slate'},
+    olive:{hex:'#7C7A58',on:'#EFEEDD',name:'Olive'}, rust:{hex:'#A65A3C',on:'#F6E7DF',name:'Rust'},
+    sand:{hex:'#C7B295',on:'#665736',name:'Sand'}, ink:{hex:'#2A2A28',on:'#C9C5BC',name:'Ink'},
+  }
+};
+const NEUTRALS = { fem:['cream','ink'], masc:['stone','sand','ink'] };
+const CATALOG = {
+  fem: [
+    {id:'f1',brand:'Reformation',title:'Linen slip dress',cat:'dresses',price:148,was:198,color:'cream'},
+    {id:'f2',brand:'Djerf Avenue',title:'Cloud knit cardigan',cat:'knitwear',price:120,color:'butter'},
+    {id:'f3',brand:'With Jéan',title:'Lace baby tee',cat:'tops',price:59,color:'rose'},
+    {id:'f4',brand:'Ganni',title:'Buckle ballet flat',cat:'shoes',price:245,color:'ink'},
+    {id:'f5',brand:'Sézane',title:'Bias silk midi skirt',cat:'skirts',price:135,color:'clay'},
+    {id:'f6',brand:'Aritzia',title:'Effortless trouser',cat:'trousers',price:128,color:'sage'},
+    {id:'f7',brand:'Reformation',title:'Ruffle wrap blouse',cat:'tops',price:98,was:128,color:'rose'},
+    {id:'f8',brand:'Aritzia',title:'Cropped rib cardigan',cat:'knitwear',price:78,color:'cream'},
+    {id:'f9',brand:'Ganni',title:'Floral wrap dress',cat:'dresses',price:295,color:'butter'},
+    {id:'f10',brand:'Sézane',title:'Suede mary janes',cat:'shoes',price:185,color:'clay'},
+    {id:'f11',brand:'Djerf Avenue',title:'Oversized blazer',cat:'outerwear',price:210,was:260,color:'sage'},
+    {id:'f12',brand:'With Jéan',title:'Satin slip skirt',cat:'skirts',price:72,color:'rose'},
+    {id:'f13',brand:'Aritzia',title:'Contour rib tank',cat:'tops',price:35,color:'cream'},
+    {id:'f14',brand:'Ganni',title:'Soft wool beanie',cat:'accessories',price:85,color:'ink'},
+    {id:'f15',brand:'Sézane',title:'Cropped trench',cat:'outerwear',price:265,color:'cream'},
+    {id:'f16',brand:'Reformation',title:'Knit column skirt',cat:'skirts',price:110,color:'sage'},
+  ],
+  masc: [
+    {id:'m1',brand:'Carhartt WIP',title:'Detroit jacket',cat:'outerwear',price:228,was:268,color:'rust'},
+    {id:'m2',brand:'Stüssy',title:'Heavyweight tee',cat:'tops',price:65,color:'stone'},
+    {id:'m3',brand:'Our Legacy',title:'Pleated trouser',cat:'trousers',price:260,color:'slate'},
+    {id:'m4',brand:'A.P.C.',title:'Petit New Standard',cat:'denim',price:215,color:'ink'},
+    {id:'m5',brand:'Norse Projects',title:'Merino crew knit',cat:'knitwear',price:145,color:'olive'},
+    {id:'m6',brand:'Aimé Leon Dore',title:'Logo hoodie',cat:'tops',price:190,was:220,color:'sand'},
+    {id:'m7',brand:'Carhartt WIP',title:'Regular cargo pant',cat:'trousers',price:128,color:'olive'},
+    {id:'m8',brand:'Stüssy',title:'Stock bucket hat',cat:'accessories',price:55,color:'stone'},
+    {id:'m9',brand:'Our Legacy',title:'Box short shirt',cat:'tops',price:230,color:'slate'},
+    {id:'m10',brand:'Norse Projects',title:'Gore-Tex shell',cat:'outerwear',price:499,was:560,color:'ink'},
+    {id:'m11',brand:'A.P.C.',title:'Suede court sneaker',cat:'shoes',price:310,color:'sand'},
+    {id:'m12',brand:'Aimé Leon Dore',title:'Wool ball cap',cat:'accessories',price:98,color:'rust'},
+    {id:'m13',brand:'Carhartt WIP',title:'Pocket tee — 2 pack',cat:'tops',price:45,color:'stone'},
+    {id:'m14',brand:'Norse Projects',title:'Pleated walk short',cat:'shorts',price:110,color:'olive'},
+    {id:'m15',brand:'Our Legacy',title:'Suede overshirt',cat:'outerwear',price:340,color:'sand'},
+    {id:'m16',brand:'A.P.C.',title:'Lambswool crew',cat:'knitwear',price:175,color:'slate'},
+  ]
+};
+const MODE_META = { fem:{name:'Soft Romance ’26'}, masc:{name:'Quiet Utility ’26'} };
+const GROUPS = {
+  fem:  [ {key:'anchor',cats:['dresses','tops'],label:'anchor'},
+          {key:'bottom',cats:['skirts','trousers'],label:'a bottom'},
+          {key:'shoes',cats:['shoes'],label:'shoes'},
+          {key:'layer',cats:['knitwear','outerwear'],label:'a layer'},
+          {key:'accessory',cats:['accessories'],label:'an accessory'} ],
+  masc: [ {key:'top',cats:['tops'],label:'a top'},
+          {key:'bottom',cats:['trousers','denim','shorts'],label:'a bottom'},
+          {key:'layer',cats:['outerwear','knitwear'],label:'a layer'},
+          {key:'shoes',cats:['shoes'],label:'shoes'},
+          {key:'accessory',cats:['accessories'],label:'an accessory'} ],
+};
+const OCCASIONS = [
+  {key:'full', label:'Full outfit', note:'a complete head-to-toe look'},
+  {key:'capsule', label:'Capsule (5)', note:'five mix-and-match pieces'},
+  {key:'budget', label:'Stretch budget', note:'as many cohesive pieces as fit'},
+];
+
+/* ============ GARMENT SILHOUETTES (in-palette, image-ready) ============ */
+function shapeKey(cat){
+  return ({tops:'tee',knitwear:'knit',dresses:'dress',skirts:'skirt',trousers:'pants',
+    denim:'pants',shorts:'shorts',shoes:'shoe',outerwear:'coat',accessories:'bag'})[cat]||'tee';
+}
+const PATHS = {
+  tee:'M38,24 Q50,32 62,24 L75,31 L85,44 L74,52 L67,45 L67,98 L33,98 L33,45 L26,52 L15,44 L25,31 Z',
+  knit:'M36,26 Q50,34 64,26 L80,32 L89,66 L78,71 L69,46 L69,99 L31,99 L31,46 L22,71 L11,66 L20,32 Z',
+  dress:'M38,24 Q50,32 62,24 L74,31 L84,44 L73,52 L67,45 L69,62 L81,106 L19,106 L31,62 L33,45 L27,52 L16,44 L26,31 Z',
+  skirt:'M34,34 L66,34 L78,104 L22,104 Z',
+  pants:'M31,28 L69,28 L67,104 L54,104 L50,58 L46,104 L33,104 Z',
+  shorts:'M31,32 L69,32 L66,72 L54,72 L50,52 L46,72 L34,72 Z',
+  shoe:'M16,82 Q14,64 34,62 L60,62 Q80,64 86,82 Q86,90 77,90 L23,90 Q16,90 16,82 Z',
+  coat:'M36,24 Q50,32 64,24 L79,31 L88,47 L77,54 L71,46 L71,105 L53,105 L53,42 L47,42 L47,105 L29,105 L29,46 L23,54 L12,47 L21,31 Z',
+  bag:'M30,52 L70,52 L74,98 L26,98 Z'
+};
+function garmentSVG(item, cm){
+  const key = shapeKey(item.cat);
+  const base = cm.hex;
+  const on = cm.on;
+  const grad = 'g'+item.id;
+  const extra = key==='bag'
+    ? '<path d="M38,52 Q38,33 50,33 Q62,33 62,52" fill="none" stroke="'+on+'" stroke-opacity="0.5" stroke-width="2.4"/>'
+    : key==='skirt' ? '<line x1="34" y1="40" x2="66" y2="40" stroke="'+on+'" stroke-opacity="0.35" stroke-width="1.6"/>'
+    : '';
+  return '<svg viewBox="0 0 100 120" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">'
+    +'<defs><linearGradient id="'+grad+'" x1="0" y1="0" x2="0" y2="1">'
+    +'<stop offset="0" stop-color="'+base+'"/><stop offset="1" stop-color="'+shade(base,-14)+'"/></linearGradient>'
+    +'<radialGradient id="'+grad+'l" cx="0.3" cy="0.16" r="0.9"><stop offset="0" stop-color="#ffffff" stop-opacity="0.28"/><stop offset="0.5" stop-color="#ffffff" stop-opacity="0"/></radialGradient></defs>'
+    +'<rect width="100" height="120" fill="url(#'+grad+')"/>'
+    +'<rect width="100" height="120" fill="url(#'+grad+'l)"/>'
+    +'<path d="'+PATHS[key]+'" fill="'+on+'" fill-opacity="0.13" stroke="'+on+'" stroke-opacity="0.42" stroke-width="1.6" stroke-linejoin="round"/>'
+    +extra
+    +'</svg>';
+}
+function shade(hex,amt){
+  const n=parseInt(hex.slice(1),16); let r=(n>>16)+amt,g=((n>>8)&255)+amt,b=(n&255)+amt;
+  r=Math.max(0,Math.min(255,r));g=Math.max(0,Math.min(255,g));b=Math.max(0,Math.min(255,b));
+  return '#'+(1<<24|r<<16|g<<8|b).toString(16).slice(1);
+}
+
+/* ===================== STATE ===================== */
+const state = { mode:'fem', color:null, occ:'full', budget:520, vibe:'', minimal:false, exclude:new Set() };
+let lastResult=null;
+
+/* ===================== BRIEF UI ===================== */
+function renderDots(){
+  const cm = COLORMAPS[state.mode], box=document.getElementById('dots'); box.innerHTML='';
+  const auto=document.createElement('div');
+  auto.className='dotwrap'+(state.color===null?' on':''); auto.title='Let the agent choose';
+  auto.innerHTML='<div class="dot" style="background:conic-gradient(from 20deg,'+Object.values(cm).map(c=>c.hex).join(',')+','+Object.values(cm)[0].hex+')"></div>';
+  auto.onclick=()=>{state.color=null;syncPalName();renderDots();};
+  box.appendChild(auto);
+  Object.keys(cm).forEach(k=>{
+    const w=document.createElement('div'); w.className='dotwrap'+(state.color===k?' on':''); w.title=cm[k].name;
+    const d=document.createElement('div'); d.className='dot'; d.style.background=cm[k].hex; w.appendChild(d);
+    w.onclick=()=>{state.color=(state.color===k?null:k);syncPalName();renderDots();};
+    box.appendChild(w);
+  });
+}
+function syncPalName(){ document.getElementById('palname').textContent = state.color? COLORMAPS[state.mode][state.color].name : "agent's choice"; }
+function renderOcc(){
+  const box=document.getElementById('occ'); box.innerHTML='';
+  OCCASIONS.forEach(o=>{ const c=document.createElement('button'); c.className='chip'+(state.occ===o.key?' on':''); c.textContent=o.label; c.onclick=()=>{state.occ=o.key;renderOcc();}; box.appendChild(c); });
+}
+document.getElementById('modeSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return;
+  state.mode=b.dataset.mode; state.color=null; state.exclude.clear();
+  document.body.className=state.mode;
+  [...e.currentTarget.children].forEach(x=>x.classList.toggle('on',x===b));
+  syncPalName(); renderDots();
+});
+document.getElementById('budget').addEventListener('input',e=>{state.budget=+e.target.value; document.getElementById('budgetval').textContent='$'+state.budget;});
+document.getElementById('vibe').addEventListener('input',e=>{state.vibe=e.target.value; state.minimal=/minimal|quiet|nothing loud|simple|clean/i.test(e.target.value);});
+renderDots(); renderOcc(); syncPalName();
+
+/* ===================== THE AGENT ===================== */
+function mostCommonColor(pool){ const c={}; pool.forEach(p=>c[p.color]=(c[p.color]||0)+1); return Object.keys(c).sort((a,b)=>c[b]-c[a])[0]; }
+function curate(brief){
+  const pool = CATALOG[brief.mode].filter(p=>!brief.exclude.has(p.id));
+  const cm = COLORMAPS[brief.mode], neutrals = NEUTRALS[brief.mode];
+  const base = brief.color || mostCommonColor(pool);
+  const allowed = [base, ...neutrals.filter(n=>n!==base)];
+  const colorMatch = p => p.color===base ? 1 : (neutrals.includes(p.color) ? 0.6 : 0.15);
+  const chosen=[], skipped=[]; let spend=0; const budget=brief.budget; const taken=new Set();
+  const pickBest = (cats) => {
+    let cand = pool.filter(p=>!taken.has(p.id) && cats.includes(p.cat));
+    if(brief.minimal) cand = cand.sort((a,b)=>(colorMatch(b)-colorMatch(a))||(a.price-b.price)); // favour on-palette + calm
+    else cand.sort((a,b)=> (colorMatch(b)-colorMatch(a)) || (a.price-b.price) || ((b.was?1:0)-(a.was?1:0)) );
+    const affordable = cand.filter(p=> spend + p.price <= budget);
+    return affordable[0]||null;
+  };
+  if(brief.occ==='full'){
+    let anchorIsDress=false;
+    GROUPS[brief.mode].forEach(g=>{
+      if(g.key==='bottom' && anchorIsDress) return;
+      const optional=(g.key==='layer'||g.key==='accessory');
+      const roomGate = brief.minimal? 0.62 : 0.8;
+      if(optional && spend > budget*roomGate){ skipped.push(g.label); return; }
+      if(brief.minimal && g.key==='accessory'){ skipped.push(g.label); return; }
+      const pick=pickBest(g.cats);
+      if(pick){ chosen.push(pick); taken.add(pick.id); spend+=pick.price; if(g.key==='anchor') anchorIsDress=(pick.cat==='dresses'); }
+      else skipped.push(g.label);
+    });
+  } else if(brief.occ==='capsule'){
+    let cand=pool.slice().sort((a,b)=>(colorMatch(b)-colorMatch(a))||(a.price-b.price));
+    for(const p of cand){ if(chosen.length>=5) break; if(spend+p.price<=budget){ chosen.push(p);taken.add(p.id);spend+=p.price; } }
+  } else {
+    let cand=pool.filter(p=>allowed.includes(p.color)).sort((a,b)=>a.price-b.price);
+    for(const p of cand){ if(spend+p.price<=budget){ chosen.push(p);taken.add(p.id);spend+=p.price; } }
+    if(chosen.length<3){ let extra=pool.filter(p=>!taken.has(p.id)).sort((a,b)=>a.price-b.price); for(const p of extra){ if(spend+p.price<=budget){ chosen.push(p);taken.add(p.id);spend+=p.price; } } }
+  }
+  const statement = chosen.reduce((m,p)=> !m||p.price>m.price?p:m, null);
+  const brands=Array.from(new Set(chosen.map(p=>p.brand)));
+  const colorsUsed=Array.from(new Set(chosen.map(p=>p.color)));
+  const drops=chosen.filter(p=>p.was);
+  // cohesion score
+  const onPalette = chosen.filter(p=>allowed.includes(p.color)).length;
+  const unity = chosen.length? onPalette/chosen.length : 0;
+  const targetGroups = brief.occ==='full'? GROUPS[brief.mode].length-(chosen.some(p=>p.cat==='dresses')?1:0) : Math.max(chosen.length,1);
+  const coveredGroups = brief.occ==='full'? new Set(chosen.map(p=>{const g=GROUPS[brief.mode].find(g=>g.cats.includes(p.cat));return g?g.key:p.cat;})).size : new Set(chosen.map(p=>p.cat)).size;
+  const balance = Math.min(1, coveredGroups/targetGroups);
+  const brandMix = Math.min(1, brands.length/Math.max(3,Math.min(chosen.length,4)));
+  const score = Math.round(100*(0.55*unity + 0.30*balance + 0.15*brandMix));
+  return { base:cm[base].name, baseKey:base, allowed, chosen, statement, brands, colorsUsed, spend, budget, skipped, drops,
+    poolSize:CATALOG[brief.mode].length, poolBrands:new Set(CATALOG[brief.mode].map(p=>p.brand)).size, score, unity, cm };
+}
+
+/* ===================== RENDER ===================== */
+function pieceNode(p, mode, cm, isStar, idx){
+  const c=cm[p.color]; const wrap=document.createElement('div'); wrap.className='piece'+(isStar?' big':'');
+  wrap.style.animationDelay=(idx*70)+'ms';
+  const pct=p.was?Math.round((1-p.price/p.was)*100):0;
+  const media = p.img
+    ? '<img src="'+p.img+'" alt="'+p.title+'" onerror="this.remove()">'
+    : '';
+  wrap.innerHTML=
+    '<div class="frame">'+garmentSVG(p,c)+media
+    +(isStar?'<div class="star">★ Statement</div>':'')
+    +(p.was?'<div class="drop">↓ '+pct+'%</div>':'')
+    +'<div class="swap" title="Swap this piece" data-swap="'+p.id+'">⟳</div>'
+    +'</div>'
+    +'<div class="br">'+p.brand+'</div><div class="ti">'+p.title+'</div>'
+    +'<div class="pr">$'+p.price+(p.was?' <s>$'+p.was+'</s>':'')+'</div>';
+  return wrap;
+}
+function buildRationale(r, brief){
+  const headroom=r.budget-r.spend;
+  const occNote=OCCASIONS.find(o=>o.key===brief.occ).note;
+  let txt='Working from your '+(brief.mode==='fem'?'Soft Romance':'Quiet Utility')+' brief with a $'+r.budget+' ceiling, I scanned '+r.poolSize+' pieces across '+r.poolBrands+' brands and built '+occNote+' — '+r.chosen.length+' piece'+(r.chosen.length===1?'':'s')+'. ';
+  if(r.statement) txt+='I anchored the palette on '+r.base+' and let the '+r.statement.title.toLowerCase()+' by '+r.statement.brand+' be the one statement piece, keeping everything else quiet so it layers. ';
+  txt+='The set comes to $'+r.spend+', '+ (headroom>=0? '$'+headroom+' under budget.' : '$'+(-headroom)+' over — trim one piece.');
+  if(brief.minimal) txt+=' Kept it pared back per your note.';
+  if(r.drops.length) txt+=' '+r.drops.length+' piece'+(r.drops.length>1?'s are':' is')+' on sale right now.';
+  const names=r.colorsUsed.map(k=>r.cm[k].name);
+  let meta='Palette held to '+names.join(', ')+'.  ·  Brands mixed: '+r.brands.join(', ')+'.';
+  if(r.skipped.length) meta+='  ·  Left out to stay on budget: '+r.skipped.join(', ')+'.';
+  return {txt, meta};
+}
+const TRACE_STEPS=(r,brief,refine)=>refine? [
+  'Adjusting — <span class="cur">'+refine+'</span>.',
+  'Re-scoring candidates against the change…',
+  '<span class="tick">✓</span> Rebuilt <b>'+r.chosen.length+' pieces</b>, $'+r.spend+', cohesion <b>'+r.score+'</b>.'
+] : [
+  'Reading brief — <b>'+(brief.mode==='fem'?'Soft Romance':'Quiet Utility')+'</b>, palette <b>'+(brief.color?r.base:"agent's pick ("+r.base+")")+'</b>, budget <b>$'+brief.budget+'</b>.',
+  'Scanning catalog — <b>'+r.poolSize+' pieces</b> · <b>'+r.poolBrands+' brands</b>.',
+  'Scoring for palette fit and cohesion — base <b>'+r.base+'</b>, neutrals allowed as accents.',
+  'Assembling a set and enforcing the <b>$'+brief.budget+'</b> ceiling…',
+  '<span class="tick">✓</span> Selected <b>'+r.chosen.length+' pieces</b> from <b>'+r.brands.length+' brands</b> · $'+r.spend+' · cohesion <b>'+r.score+'/100</b>.'
+];
+function animateTrace(steps, done){
+  const trace=document.getElementById('trace'); trace.innerHTML='';
+  const go=document.getElementById('go'); go.disabled=true;
+  steps.forEach((s,i)=>setTimeout(()=>{
+    [...trace.querySelectorAll('.step')].forEach(el=>el.classList.remove('blink'));
+    const d=document.createElement('div'); d.className='step'+(i<steps.length-1?' blink':''); d.innerHTML='<span class="cur">›</span> '+s; trace.appendChild(d);
+  }, i*430));
+  setTimeout(done, steps.length*430+160);
+}
+function run(refineLabel){
+  const brief={...state, exclude:state.exclude};
+  const r=curate(brief); lastResult=r;
+  document.getElementById('emptyState').style.display='none';
+  document.getElementById('output').style.display='block';
+  document.getElementById('lookBlock').style.display='none';
+  animateTrace(TRACE_STEPS(r,brief,refineLabel), ()=>{ renderLook(r,brief); document.getElementById('go').disabled=false; });
+}
+function renderLook(r,brief){
+  document.getElementById('lookBlock').style.display='block';
+  document.getElementById('lookTitle').textContent=r.base+' edit · '+r.chosen.length+' pieces';
+  document.getElementById('lookMode').textContent=MODE_META[brief.mode].name;
+  document.getElementById('scoreVal').innerHTML=r.score+'<small>/100</small>';
+  setTimeout(()=>document.getElementById('scoreFill').style.width=r.score+'%',60);
+  // palette strip from actual pieces
+  const strip=document.getElementById('palstrip'); strip.innerHTML='';
+  r.colorsUsed.forEach(k=>{ const s=document.createElement('span'); s.style.background=r.cm[k].hex; strip.appendChild(s); });
+  document.getElementById('palnote').textContent=r.colorsUsed.map(k=>r.cm[k].name).join('  ·  ')+'  —  base '+r.base+', neutrals as accents';
+  const pct=Math.min(100,Math.round(r.spend/r.budget*100));
+  setTimeout(()=>document.getElementById('budgetFill').style.width=pct+'%',60);
+  document.getElementById('budgetNote').textContent='$'+r.spend+' of $'+r.budget+' ('+pct+'%) · $'+Math.max(0,r.budget-r.spend)+' left';
+  const look=document.getElementById('look'); look.innerHTML='';
+  r.chosen.forEach((p,i)=> look.appendChild(pieceNode(p,brief.mode,r.cm, r.statement&&p.id===r.statement.id, i)));
+  look.querySelectorAll('[data-swap]').forEach(b=>b.onclick=()=>{ state.exclude.add(b.dataset.swap); run('swapped a piece'); });
+  const rat=buildRationale(r,brief);
+  document.getElementById('rationaleText').textContent=rat.txt;
+  document.getElementById('rationaleMeta').textContent=rat.meta;
+  renderRefine();
+}
+function renderRefine(){
+  const box=document.getElementById('refineChips'); box.innerHTML='';
+  const acts=[
+    {t:'Make it more minimal', f:()=>{state.minimal=true; run('paring it back');}},
+    {t:'Trim the budget 25%', f:()=>{state.budget=Math.round(state.budget*0.75/10)*10; document.getElementById('budget').value=state.budget; document.getElementById('budgetval').textContent='$'+state.budget; run('tighter budget');}},
+    {t:'Swap the statement', f:()=>{ if(lastResult&&lastResult.statement){state.exclude.add(lastResult.statement.id);} run('new statement piece');}},
+    {t:'Shift the palette', f:()=>{ const keys=Object.keys(COLORMAPS[state.mode]); const cur=lastResult?lastResult.baseKey:keys[0]; const next=keys[(keys.indexOf(cur)+1)%keys.length]; state.color=next; syncPalName(); renderDots(); run('shifting palette to '+COLORMAPS[state.mode][next].name);}},
+    {t:'Start over', f:()=>{state.minimal=false; state.exclude.clear(); state.color=null; syncPalName(); renderDots(); run();}},
+  ];
+  acts.forEach(a=>{ const c=document.createElement('button'); c.className='chip'; c.textContent=a.t; c.onclick=a.f; box.appendChild(c); });
+}
+document.getElementById('go').addEventListener('click',()=>{ state.exclude.clear(); run(); });
+
+/* ===================== PRODUCTION SPEC ===================== */
+document.getElementById('spec').textContent=
+`In production, this same loop runs with Claude as the reasoning engine instead of
+the hard-coded rules above. The demo approximates the "thinking"; the real thing reasons.
+
+SYSTEM PROMPT (sketch)
+  You are The Edit's feed curator. Given a shopper's brief (aesthetic, palette,
+  budget, occasion, vibe note), assemble a cohesive multi-brand set. Rules:
+  - Stay within the palette; at most one accent outside the base family.
+  - Cover the occasion's categories (a "full outfit" needs a full outfit).
+  - Never exceed budget. Prefer one statement piece + quiet supporting pieces.
+  - Mix brands; don't lean on a single label.
+  - Return the set, a cohesion score, and a short, specific rationale.
+
+TOOLS the agent can call
+  search_catalog(aesthetic, palette?, category?, max_price?) -> pieces[]
+  get_price(piece_id) -> { price, was, in_stock }
+  score_cohesion(pieces[]) -> { score, notes }     // palette + category balance
+
+AGENT LOOP
+  1. Parse brief into constraints.
+  2. search_catalog() for candidates per category.
+  3. Draft a set; score_cohesion(); revise until it passes and fits budget.
+  4. On shopper feedback ("more minimal", "swap the statement"), adjust the
+     constraints and re-run — the refine chips above simulate exactly this.
+  5. Confirm stock + price via get_price(); return set + rationale.
+
+WHY AN AGENT (not just a filter)
+  Cohesion is a judgment call — "does this go together?" — not a WHERE clause.
+  Claude can weigh palette, silhouette, formality and budget together, explain
+  its picks, and adapt when a piece is dropped or out of stock.`;
+</script>
+</body>
+</html>

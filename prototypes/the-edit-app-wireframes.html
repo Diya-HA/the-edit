@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The Edit — App Wireframes (low-fi)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  body{margin:0;background:#efece7;font-family:system-ui,-apple-system,sans-serif}
+  .dv-turn{padding:44px 48px 40px;border-bottom:1px solid rgba(0,0,0,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 6px}
+  .dv-tid{font:700 10px 'Space Mono',monospace;padding:3px 7px;background:#1a1a1a;color:#fff;border-radius:4px;text-decoration:none}
+  .dv-tname{font:600 14px/1.3 system-ui,sans-serif;color:#1a1a1a}
+  .dv-intro{font:400 12.5px/1.5 system-ui;color:rgba(0,0,0,.55);max-width:640px;margin:0 0 26px}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:34px 30px;align-items:flex-start}
+  .dv-opt{flex:none;display:flex;flex-direction:column;gap:10px;scroll-margin-top:16px;width:300px}
+  .dv-oid{font:700 10.5px 'Space Mono',monospace;padding:3px 7px;background:rgba(0,0,0,.09);color:#1a1a1a;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:8px;font:600 12px/1.3 system-ui;color:#1a1a1a}
+  .dv-note{font:600 13px/1.35 'Caveat',cursive;color:#c8503a;padding:0 2px}
+  .dv-opt:target .dv-oid{background:#c8503a;color:#fff}
+  .dv-next{margin:26px 0 0;font:12px/1.6 system-ui;color:rgba(0,0,0,.5)}
+  .dv-next a{color:#c8503a}
+
+  /* phone shell */
+  .ph{width:300px;height:624px;background:#fff;border:1.5px solid #333;border-radius:26px;overflow:hidden;display:flex;flex-direction:column;position:relative;box-shadow:0 3px 14px rgba(0,0,0,.10)}
+  .stat{height:26px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;font:700 9px 'Space Mono',monospace;color:#aaa;flex:none;border-bottom:1px solid #f0efec}
+  .stat .dots{letter-spacing:1px}
+  .body{flex:1;overflow:hidden;position:relative;display:flex;flex-direction:column;min-height:0}
+  .scroll{flex:1;overflow:hidden;display:flex;flex-direction:column;min-height:0}
+
+  /* primitives */
+  .img{background:
+      linear-gradient(to top right, transparent calc(50% - .6px), #d8d5cf calc(50% - .6px), #d8d5cf calc(50% + .6px), transparent calc(50% + .6px)),
+      linear-gradient(to top left, transparent calc(50% - .6px), #d8d5cf calc(50% - .6px), #d8d5cf calc(50% + .6px), transparent calc(50% + .6px)),
+      #ecebe7;
+    border-radius:8px;position:relative;overflow:hidden}
+  .imgtag{position:absolute;left:0;right:0;bottom:0;font:600 7.5px 'Space Mono',monospace;color:#a6a29a;text-align:center;padding:2px;background:rgba(255,255,255,.55)}
+  .bar{height:7px;border-radius:4px;background:#e4e2dd}
+  .bar.d{background:#d3d0c9}
+  .eye{font:700 8px 'Space Mono',monospace;letter-spacing:.14em;color:#b3aea4;text-transform:uppercase}
+  .h{font:600 15px/1.15 system-ui;color:#222}
+  .h2{font:600 12px/1.2 system-ui;color:#2a2a2a}
+  .sub{font:400 10px/1.4 system-ui;color:#8f8a80}
+  .btn{text-align:center;font:600 11px system-ui;padding:11px;border-radius:11px;background:#1a1a1a;color:#fff}
+  .btn.gh{background:#fff;color:#444;border:1.3px solid #ccc}
+  .chip{font:600 10px system-ui;padding:7px 11px;border-radius:999px;border:1.2px solid #cfccc4;color:#555;background:#fff;white-space:nowrap}
+  .chip.on{background:#1a1a1a;color:#fff;border-color:#1a1a1a}
+  .chip.aes{border-color:#c8503a;color:#c8503a}
+  .chip.aes.on{background:#c8503a;color:#fff;border-color:#c8503a}
+  .dot{width:20px;height:20px;border-radius:999px;flex:none}
+  .dot.on{box-shadow:0 0 0 2px #fff,0 0 0 4px #1a1a1a}
+  .row{display:flex;align-items:center}
+  .prog{height:4px;border-radius:999px;background:#eceae5;overflow:hidden}
+  .prog i{display:block;height:100%;background:#1a1a1a}
+  .heart{width:26px;height:26px;border-radius:999px;background:rgba(255,255,255,.85);display:flex;align-items:center;justify-content:center;font-size:12px;color:#555;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+  .badge{font:700 8px 'Space Mono',monospace;padding:3px 6px;border-radius:6px;background:#1a1a1a;color:#fff}
+
+  /* bottom nav */
+  .nav{height:50px;border-top:1px solid #e6e4df;display:flex;flex:none;background:#fbfaf8}
+  .nav>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;font:600 8px system-ui;color:#b3aea4}
+  .nav>div.on{color:#1a1a1a}
+  .ni{width:17px;height:17px}
+  .ni.grid{border:1.7px solid currentColor;border-radius:3px;position:relative}
+  .ni.grid::after{content:"";position:absolute;inset:2px;background:
+     linear-gradient(currentColor,currentColor) center/1.4px 100% no-repeat,
+     linear-gradient(currentColor,currentColor) center/100% 1.4px no-repeat}
+  .ni.sr{border:1.7px solid currentColor;border-radius:999px;width:13px;height:13px;position:relative;margin:1px}
+  .ni.sr::after{content:"";position:absolute;right:-4px;bottom:-3px;width:6px;height:1.7px;background:currentColor;transform:rotate(45deg);border-radius:2px}
+  .ni.bk{width:13px;height:16px;border:1.7px solid currentColor;border-bottom:none;border-radius:2px 2px 0 0;position:relative}
+  .ni.bk::after{content:"";position:absolute;left:-1.7px;right:-1.7px;bottom:-1px;height:6px;background:
+     linear-gradient(45deg,transparent 49%,currentColor 49% 55%,transparent 55%),
+     linear-gradient(-45deg,transparent 49%,currentColor 49% 55%,transparent 55%)}
+  .ni.cog{border:1.7px solid currentColor;border-radius:999px;position:relative}
+  .ni.cog::after{content:"";position:absolute;inset:4px;border:1.7px solid currentColor;border-radius:999px}
+</style>
+</head>
+<body>
+
+<section class="dv-turn" id="t1">
+  <div class="dv-thd"><a class="dv-tid" href="#t1">1</a><span class="dv-tname">The Edit — full app map (low-fi)</span></div>
+  <p class="dv-intro">Pinterest-style shopping app built around <b>named aesthetics</b>. The core loop: describe a vibe (free-text to the AI or pick a preset) → the app curates one cohesive on-aesthetic feed across brands → save, board, and buy. Four tabs: Feed · Search · Boards · Settings. Handwritten notes call out where the USP lives.</p>
+
+  <div class="dv-opts">
+
+    <!-- 1a Onboarding: aesthetic -->
+    <div class="dv-opt" id="1a">
+      <div class="dv-olabel"><a class="dv-oid" href="#1a">1a</a>Onboarding · Describe your aesthetic</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body" style="padding:22px 20px;gap:0;display:flex;flex-direction:column">
+          <div style="font:italic 600 20px/1 Georgia,serif;color:#222;margin-bottom:2px">The Edit</div>
+          <div class="eye" style="margin-bottom:16px">Step 1 of 4</div>
+          <div class="prog" style="margin-bottom:20px"><i style="width:25%"></i></div>
+          <div class="h" style="margin-bottom:6px">What's your aesthetic?</div>
+          <div class="sub" style="margin-bottom:12px">Describe it however you want — the agent reads between the lines.</div>
+          <div style="border:1.3px solid #cfccc4;border-radius:14px;padding:12px;min-height:78px;margin-bottom:14px">
+            <div class="sub" style="color:#b3aea4;font-style:italic">"Soft romance, lots of layering, mostly neutrals but a pop of butter yellow…"</div>
+          </div>
+          <div class="eye" style="margin-bottom:8px">or start from a preset</div>
+          <div style="display:flex;flex-wrap:wrap;gap:7px;margin-bottom:auto">
+            <div class="chip aes on">Soft Romance</div>
+            <div class="chip aes">Quiet Utility</div>
+            <div class="chip aes">Street Edit</div>
+            <div class="chip aes">Dark Academia</div>
+            <div class="chip aes">Coastal</div>
+          </div>
+          <div class="btn" style="margin-bottom:10px">Continue</div>
+          <div class="row" style="justify-content:space-between">
+            <div class="sub" style="text-decoration:underline">Let the AI choose for me</div>
+            <div class="sub" style="text-decoration:underline">Skip</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">★ The USP — free-text vibe → AI. Preset chips + "let AI choose" as low-effort paths.</div>
+    </div>
+
+    <!-- 1b Onboarding: palette + budget -->
+    <div class="dv-opt" id="1b">
+      <div class="dv-olabel"><a class="dv-oid" href="#1b">1b</a>Onboarding · Palette &amp; budget</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body" style="padding:22px 20px">
+          <div class="eye" style="margin-bottom:10px">Step 2 of 4</div>
+          <div class="prog" style="margin-bottom:22px"><i style="width:50%"></i></div>
+          <div class="h" style="margin-bottom:4px">Pick your palette</div>
+          <div class="sub" style="margin-bottom:14px">Feeds and filters lock to these tones.</div>
+          <div class="row" style="gap:12px;flex-wrap:wrap;margin-bottom:26px">
+            <div class="dot on" style="background:#c8503a"></div>
+            <div class="dot on" style="background:#e6c26a"></div>
+            <div class="dot" style="background:#7a8b6f"></div>
+            <div class="dot on" style="background:#d9cbb8"></div>
+            <div class="dot" style="background:#3a5a8c"></div>
+            <div class="dot" style="background:#8c5a7a"></div>
+            <div class="dot" style="background:#2a2a2a"></div>
+          </div>
+          <div class="h" style="margin-bottom:4px">Budget ceiling</div>
+          <div class="sub" style="margin-bottom:12px">Max for a complete look.</div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-bottom:auto">
+            <div class="chip" style="text-align:center;padding:13px">$150</div>
+            <div class="chip on" style="text-align:center;padding:13px">$300</div>
+            <div class="chip" style="text-align:center;padding:13px">$500</div>
+            <div class="chip" style="text-align:center;padding:13px">$1000+</div>
+          </div>
+          <div class="row" style="gap:9px">
+            <div class="btn gh" style="flex:none;padding:11px 18px">Back</div>
+            <div class="btn" style="flex:1">Continue</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Palette = a first-class filter later. Optional — skippable if AI chose.</div>
+    </div>
+
+    <!-- 1c Onboarding: confirm -->
+    <div class="dv-opt" id="1c">
+      <div class="dv-olabel"><a class="dv-oid" href="#1c">1c</a>Onboarding · Your edit is ready</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body" style="padding:22px 20px;align-items:center;text-align:center;justify-content:center">
+          <div class="eye" style="margin-bottom:10px">Step 4 of 4</div>
+          <div class="img" style="width:70px;height:70px;border-radius:999px;margin-bottom:20px"></div>
+          <div class="h" style="font-size:19px;margin-bottom:6px">Your edit is ready</div>
+          <div class="sub" style="max-width:210px;margin-bottom:20px">We assembled a cohesive feed across brands from your profile.</div>
+          <div style="width:100%;border:1.3px solid #e4e2dd;border-radius:12px;padding:14px;text-align:left;margin-bottom:24px">
+            <div class="eye" style="margin-bottom:7px">Your edit</div>
+            <div class="h2" style="margin-bottom:3px">Soft Romance ’26</div>
+            <div class="sub">Warm neutrals + butter yellow · up to $300</div>
+          </div>
+          <div class="btn" style="width:100%">Start exploring</div>
+        </div>
+      </div>
+      <div class="dv-note">Names the edit ("Soft Romance ’26") — the artifact the whole app orbits.</div>
+    </div>
+
+    <!-- 1d Feed -->
+    <div class="dv-opt" id="1d">
+      <div class="dv-olabel"><a class="dv-oid" href="#1d">1d</a>Feed · core curated masonry</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body">
+          <div style="padding:12px 16px 0;flex:none">
+            <div class="row" style="justify-content:space-between;margin-bottom:12px">
+              <div style="font:italic 600 18px/1 Georgia,serif;color:#222">The Edit</div>
+              <div class="dot" style="background:#c8503a;width:26px;height:26px;display:flex;align-items:center;justify-content:center;color:#fff;font:700 8px 'Space Mono'">AL</div>
+            </div>
+            <div class="row" style="gap:7px;overflow:hidden;margin-bottom:10px">
+              <div class="chip aes on">Soft Romance ’26</div>
+              <div class="chip aes">Quiet Utility</div>
+              <div class="chip aes">＋</div>
+            </div>
+            <div class="row" style="gap:9px;margin-bottom:12px;align-items:center">
+              <div class="eye">Palette</div>
+              <div class="dot on" style="background:#c8503a;width:16px;height:16px"></div>
+              <div class="dot" style="background:#e6c26a;width:16px;height:16px"></div>
+              <div class="dot" style="background:#d9cbb8;width:16px;height:16px"></div>
+              <div class="dot" style="background:#7a8b6f;width:16px;height:16px"></div>
+            </div>
+          </div>
+          <div class="scroll" style="padding:0 16px">
+            <div style="columns:2;column-gap:9px">
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:150px"></div><div class="bar d" style="width:70%;margin:6px 0 4px"></div><div class="bar" style="width:40%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:104px"></div><div class="bar d" style="width:60%;margin:6px 0 4px"></div><div class="bar" style="width:45%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:96px"></div><div class="bar d" style="width:65%;margin:6px 0 4px"></div><div class="bar" style="width:38%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:140px"></div><div class="bar d" style="width:72%;margin:6px 0 4px"></div><div class="bar" style="width:42%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:120px"></div><div class="bar d" style="width:58%;margin:6px 0 4px"></div><div class="bar" style="width:40%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:88px"></div><div class="bar d" style="width:66%;margin:6px 0 4px"></div><div class="bar" style="width:44%"></div></div>
+            </div>
+          </div>
+          <div class="nav">
+            <div class="on"><div class="ni grid"></div>Feed</div>
+            <div><div class="ni sr"></div>Search</div>
+            <div><div class="ni bk"></div>Boards</div>
+            <div><div class="ni cog"></div>Settings</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">★ Pinterest masonry, all on-aesthetic. Switch the pill → whole feed re-curates.</div>
+    </div>
+
+    <!-- 1e Product detail -->
+    <div class="dv-opt" id="1e">
+      <div class="dv-olabel"><a class="dv-oid" href="#1e">1e</a>Product detail · save to board</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body">
+          <div class="scroll">
+            <div class="img" style="height:250px;border-radius:0;flex:none">
+              <div class="row" style="position:absolute;top:12px;left:12px;right:12px;justify-content:space-between">
+                <div class="heart">‹</div><div class="heart">♡</div>
+              </div>
+              <div class="badge" style="position:absolute;left:12px;bottom:12px">↓ 25%</div>
+            </div>
+            <div style="padding:14px 16px">
+              <div class="eye" style="margin-bottom:5px">Ganni · dresses</div>
+              <div class="h" style="margin-bottom:4px">Layered organza midi</div>
+              <div class="h2" style="font-family:'Space Mono';margin-bottom:12px"><span style="text-decoration:line-through;color:#b3aea4">$198</span> &nbsp;$148</div>
+              <div class="sub" style="margin-bottom:14px">A dress piece from the Soft Romance ’26 edit — chosen to layer into one cohesive wardrobe.</div>
+              <div class="row" style="gap:9px;margin-bottom:16px">
+                <div class="btn" style="flex:1">Save to board ♡</div>
+                <div class="btn gh" style="flex:none;padding:11px 16px">Buy</div>
+              </div>
+              <div class="eye" style="margin-bottom:8px">More like this</div>
+              <div class="row" style="gap:8px">
+                <div class="img" style="width:82px;height:100px;flex:none"></div>
+                <div class="img" style="width:82px;height:100px;flex:none"></div>
+                <div class="img" style="width:82px;height:100px;flex:none"></div>
+              </div>
+            </div>
+          </div>
+          <!-- save sheet peek -->
+          <div style="position:absolute;left:8px;right:8px;bottom:8px;background:#fff;border:1.5px solid #333;border-radius:20px 20px 14px 14px;padding:14px 16px 16px;box-shadow:0 -6px 20px rgba(0,0,0,.14)">
+            <div style="width:34px;height:4px;border-radius:999px;background:#d8d5cf;margin:0 auto 12px"></div>
+            <div class="h2" style="margin-bottom:10px">Save to board</div>
+            <div class="row" style="gap:9px">
+              <div style="flex:1"><div class="img" style="height:52px"></div><div class="sub" style="margin-top:4px">Soft Romance</div></div>
+              <div style="flex:1"><div class="img" style="height:52px"></div><div class="sub" style="margin-top:4px">Summer edit</div></div>
+              <div style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1.3px dashed #cfccc4;border-radius:8px;height:52px;color:#8f8a80;font:600 16px system-ui">＋</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Save-to-board sheet + "more like this" keeps the mood-boarding loop going.</div>
+    </div>
+
+    <!-- 1f Search + AI stylist -->
+    <div class="dv-opt" id="1f">
+      <div class="dv-olabel"><a class="dv-oid" href="#1f">1f</a>Search · AI stylist</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body">
+          <div style="padding:14px 16px 0;flex:none">
+            <div class="eye" style="margin-bottom:8px">Search</div>
+            <div class="row" style="border:1.3px solid #cfccc4;border-radius:12px;padding:9px 12px;gap:8px;margin-bottom:12px">
+              <span style="color:#b3aea4">⌕</span><div class="bar" style="flex:1;width:auto"></div>
+            </div>
+            <div class="row" style="gap:7px;flex-wrap:wrap;margin-bottom:12px">
+              <div class="chip">Butter-yellow knits</div>
+              <div class="chip">Linen for Europe</div>
+              <div class="chip">Office minimal</div>
+            </div>
+            <div style="border:1.3px solid #e4e2dd;border-radius:12px;padding:12px;margin-bottom:14px;background:#faf9f6">
+              <div class="eye" style="margin-bottom:7px">AI stylist</div>
+              <div class="bar" style="width:100%;margin-bottom:5px"></div>
+              <div class="bar" style="width:88%;margin-bottom:5px"></div>
+              <div class="bar" style="width:64%"></div>
+            </div>
+          </div>
+          <div class="scroll" style="padding:0 16px">
+            <div class="eye" style="margin-bottom:8px">Results · 24 pieces</div>
+            <div style="columns:2;column-gap:9px">
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:110px"></div><div class="bar d" style="width:66%;margin:6px 0 4px"></div><div class="bar" style="width:40%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:138px"></div><div class="bar d" style="width:60%;margin:6px 0 4px"></div><div class="bar" style="width:44%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:126px"></div><div class="bar d" style="width:70%;margin:6px 0 4px"></div><div class="bar" style="width:38%"></div></div>
+              <div style="break-inside:avoid;margin-bottom:9px"><div class="img" style="height:98px"></div><div class="bar d" style="width:58%;margin:6px 0 4px"></div><div class="bar" style="width:46%"></div></div>
+            </div>
+          </div>
+          <div class="nav">
+            <div><div class="ni grid"></div>Feed</div>
+            <div class="on"><div class="ni sr"></div>Search</div>
+            <div><div class="ni bk"></div>Boards</div>
+            <div><div class="ni cog"></div>Settings</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Natural-language prompts → the agent answers + fills a result grid.</div>
+    </div>
+
+    <!-- 1g Boards -->
+    <div class="dv-opt" id="1g">
+      <div class="dv-olabel"><a class="dv-oid" href="#1g">1g</a>Boards · your saved edits</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body">
+          <div style="padding:14px 16px 10px;flex:none">
+            <div class="row" style="justify-content:space-between;align-items:baseline">
+              <div class="h">Your boards</div>
+              <div class="chip">＋ New</div>
+            </div>
+            <div class="eye" style="margin-top:6px">4 boards · 48 pieces</div>
+          </div>
+          <div class="scroll" style="padding:0 16px">
+            <div style="display:flex;flex-direction:column;gap:12px">
+              <div>
+                <div class="row" style="gap:4px;height:78px"><div class="img" style="width:50%;height:78px"></div><div style="flex:1;display:flex;flex-direction:column;gap:4px"><div class="img" style="height:37px"></div><div class="img" style="height:37px"></div></div></div>
+                <div class="row" style="justify-content:space-between;margin-top:6px"><div class="h2">Soft Romance ’26</div><div class="sub">14</div></div>
+              </div>
+              <div>
+                <div class="row" style="gap:4px;height:78px"><div class="img" style="width:50%;height:78px"></div><div style="flex:1;display:flex;flex-direction:column;gap:4px"><div class="img" style="height:37px"></div><div class="img" style="height:37px"></div></div></div>
+                <div class="row" style="justify-content:space-between;margin-top:6px"><div class="h2">Work wardrobe</div><div class="sub">8</div></div>
+              </div>
+              <div>
+                <div class="row" style="gap:4px;height:78px"><div class="img" style="width:50%;height:78px"></div><div style="flex:1;display:flex;flex-direction:column;gap:4px"><div class="img" style="height:37px"></div><div class="img" style="height:37px"></div></div></div>
+                <div class="row" style="justify-content:space-between;margin-top:6px"><div class="h2">Summer edit</div><div class="sub">21</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="nav">
+            <div><div class="ni grid"></div>Feed</div>
+            <div><div class="ni sr"></div>Search</div>
+            <div class="on"><div class="ni bk"></div>Boards</div>
+            <div><div class="ni cog"></div>Settings</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Boards = named saved edits. 3-panel painted covers echo the aesthetic.</div>
+    </div>
+
+    <!-- 1h Settings -->
+    <div class="dv-opt" id="1h">
+      <div class="dv-olabel"><a class="dv-oid" href="#1h">1h</a>Settings · profile, brands, drops</div>
+      <div class="ph">
+        <div class="stat"><span>9:41</span><span class="dots">●●● ▮</span></div>
+        <div class="body">
+          <div style="padding:16px 16px 8px;flex:none"><div class="h">Settings</div></div>
+          <div class="scroll" style="padding:0 16px">
+            <div class="row" style="gap:11px;padding:12px 0;border-bottom:1px solid #eeece7">
+              <div class="dot" style="background:#c8503a;width:40px;height:40px;display:flex;align-items:center;justify-content:center;color:#fff;font:700 11px 'Space Mono'">AL</div>
+              <div><div class="h2">Aria Lane</div><div class="sub">Soft Romance ’26 · edit account</div></div>
+            </div>
+            <div class="eye" style="margin:14px 0 6px">Your taste</div>
+            <div style="display:flex;flex-direction:column">
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Your aesthetics</div><span class="sub">3 ›</span></div>
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Palette preferences</div><span class="sub">›</span></div>
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Budget ceiling</div><span class="sub">$300 ›</span></div>
+            </div>
+            <div class="eye" style="margin:14px 0 6px">Brands &amp; drops</div>
+            <div style="display:flex;flex-direction:column">
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Followed brands</div><span class="sub">12 ›</span></div>
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Price-drop alerts</div><div style="width:30px;height:17px;border-radius:999px;background:#1a1a1a;position:relative"><div style="position:absolute;right:2px;top:2px;width:13px;height:13px;border-radius:999px;background:#fff"></div></div></div>
+              <div class="row" style="justify-content:space-between;padding:11px 0;border-bottom:1px solid #f2f0ec"><div class="h2" style="font-weight:500">Notifications</div><span class="sub">›</span></div>
+            </div>
+            <div class="sub" style="text-decoration:underline;padding:14px 0 8px">Sign out</div>
+          </div>
+          <div class="nav">
+            <div><div class="ni grid"></div>Feed</div>
+            <div><div class="ni sr"></div>Search</div>
+            <div><div class="ni bk"></div>Boards</div>
+            <div class="on"><div class="ni cog"></div>Settings</div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Followed brands + price-drop alerts live here (no Shelf tab in this map).</div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">Source: imported from the Claude Design project “The Edit — App Wireframes”. The interactive build of these screens is <b>the-edit-app.html</b>.</p>
+</section>
+
+</body>
+</html>
