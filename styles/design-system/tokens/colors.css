@@ -1,0 +1,62 @@
+/* ============================================================
+   The Edit — Color
+   Saturated poster pigments (vermillion, cobalt, cadmium,
+   viridian, rose, violet) on a PURE WHITE canvas with cool
+   near-black ink. White does the breathing; pigment does the
+   talking. Base pigments + neutrals first, then semantic aliases.
+   ============================================================ */
+:root {
+  /* ---- Pigments (bright, saturated — the painter's box) ---- */
+  --pig-vermillion: #FF3B24;   /* signature warm red                  */
+  --pig-cobalt:     #2436EA;   /* electric saturated blue             */
+  --pig-cerulean:   #00A3FF;   /* bright sky blue                     */
+  --pig-viridian:   #00B37A;   /* saturated green                     */
+  --pig-cadmium:    #FFC400;   /* cadmium yellow                      */
+  --pig-rose:       #FF4D97;   /* hot rose / pink                     */
+  --pig-violet:     #7A2BFF;   /* electric violet                     */
+  --pig-tangerine:  #FF7A00;   /* warm orange bridge                  */
+
+  /* ---- Tints (soft washes of the pigments, for large fields) ---- */
+  --tint-vermillion: #FFD9D1;
+  --tint-cobalt:     #D4D9FF;
+  --tint-cerulean:   #CBEBFF;
+  --tint-viridian:   #C4F0DC;
+  --tint-cadmium:    #FFEDB0;
+  --tint-rose:       #FFD6E6;
+  --tint-violet:     #E3D6FF;
+
+  /* ---- Canvas neutrals (white + cool grey, no beige) ---- */
+  --canvas-0:  #FFFFFF;   /* base app background — pure white       */
+  --canvas-1:  #FFFFFF;   /* cards sit flush; lift with shadow only */
+  --canvas-2:  #F3F4F6;   /* sunken / inset wells, inputs, chips    */
+  --ink-0:     #0E0E10;   /* primary cool near-black text           */
+  --ink-1:     #43454A;   /* secondary text                         */
+  --ink-2:     #86888F;   /* muted / meta text                      */
+  --line-0:    rgba(14,14,16,0.12);  /* hairline borders            */
+  --line-1:    rgba(14,14,16,0.06);  /* faint dividers              */
+  --white:     #FFFFFF;
+
+  /* ---- Semantic aliases ---- */
+  --brand:            var(--pig-vermillion);
+  --brand-ink:        #FFFFFF;
+  --brand-secondary:  var(--pig-cobalt);
+  --accent:           var(--pig-rose);
+
+  --surface-app:      var(--canvas-0);
+  --surface-card:     var(--canvas-1);
+  --surface-sunken:   var(--canvas-2);
+
+  --text-strong:      var(--ink-0);
+  --text-body:        var(--ink-1);
+  --text-muted:       var(--ink-2);
+  --text-on-brand:    var(--brand-ink);
+
+  --border:           var(--line-0);
+  --border-faint:     var(--line-1);
+
+  --focus-ring:       var(--pig-cobalt);
+
+  /* semantic status */
+  --success: var(--pig-viridian);
+  --sale:    var(--pig-vermillion);   /* price-drop tags */
+}

@@ -1,0 +1,51 @@
+/* ============================================================
+   The Edit — Typography scale
+   Tight, confident, contemporary: a variable grotesque handles all
+   display roles with negative tracking; the serif is an italic
+   accent voice only; mono carries data.
+   ============================================================ */
+:root {
+  /* ---- Font size ramp ---- */
+  --fs-xs:   11px;
+  --fs-sm:   12.5px;
+  --fs-base: 14px;
+  --fs-md:   15px;
+  --fs-lg:   18px;
+  --fs-xl:   22px;
+  --fs-2xl:  28px;
+  --fs-3xl:  36px;
+  --fs-4xl:  48px;
+  --fs-5xl:  64px;
+  --fs-6xl:  84px;
+
+  /* ---- Line height ---- */
+  --lh-tight:   1.0;   /* @kind font */
+  --lh-snug:    1.14;  /* @kind font */
+  --lh-normal:  1.45;  /* @kind font */
+  --lh-relaxed: 1.6;   /* @kind font */
+
+  /* ---- Weight ---- */
+  --fw-regular: 400;   /* @kind font */
+  --fw-medium:  500;   /* @kind font */
+  --fw-semi:    600;   /* @kind font */
+  --fw-bold:    700;   /* @kind font */
+  --fw-black:   800;   /* @kind font */
+
+  /* ---- Tracking ---- */
+  --ls-tighter: -0.045em; /* @kind font */
+  --ls-tight:  -0.025em;  /* @kind font */
+  --ls-normal: 0;         /* @kind font */
+  --ls-wide:   0.06em;    /* @kind font */
+  --ls-kicker: 0.12em;    /* @kind font */
+
+  /* ---- Semantic type roles ---- */
+  --type-display:  var(--fw-black) var(--fs-5xl)/var(--lh-tight) var(--font-display);  /* @kind font */
+  --type-h1:       var(--fw-bold) var(--fs-3xl)/var(--lh-snug) var(--font-display);    /* @kind font */
+  --type-h2:       var(--fw-bold) var(--fs-2xl)/var(--lh-snug) var(--font-display);    /* @kind font */
+  --type-h3:       var(--fw-semi) var(--fs-xl)/var(--lh-snug) var(--font-display);     /* @kind font */
+  --type-editorial: italic var(--fw-regular) var(--fs-3xl)/var(--lh-snug) var(--font-serif); /* @kind font */
+  --type-body:     var(--fw-regular) var(--fs-base)/var(--lh-relaxed) var(--font-sans); /* @kind font */
+  --type-label:    var(--fw-semi) var(--fs-sm)/var(--lh-normal) var(--font-sans);      /* @kind font */
+  --type-kicker:   var(--fw-medium) var(--fs-xs)/1 var(--font-mono);                   /* @kind font */
+  --type-price:    var(--fw-bold) var(--fs-md)/1 var(--font-mono);                     /* @kind font */
+}

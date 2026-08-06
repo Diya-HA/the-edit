@@ -1,6 +1,42 @@
-# build artifacts
-build/out/
+# dependencies
 node_modules/
+/.pnp
+.pnp.*
+
+# next.js
+/.next/
+/out/
+
+# build artifacts
+# NOTE: this is `build/out/`, not `build/` — build/ holds the scripts that
+# generate the Word docs and is tracked. Next's default ignore has `/build`;
+# it is deliberately omitted here.
+build/out/
+
+# testing
+/coverage
+
 # OS junk
 .DS_Store
 Thumbs.db
+
+# misc
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# env files
+.env
+.env.*
+!.env.example
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# vercel
+.vercel

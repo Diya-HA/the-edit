@@ -1,0 +1,54 @@
+/* CanvasSwatch — the painted colour field.
+   A pigment fill, a pointillist dab layer, a brushstroke sheen. */
+
+.swatch {
+  position: relative;
+  width: 100%;
+  height: var(--swatch-height);
+  border-radius: var(--swatch-radius);
+  background-color: var(--swatch-color);
+  overflow: hidden;
+}
+
+/* Seurat-style stipple. */
+.pointillism {
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+  pointer-events: none;
+}
+
+/* Monet-style multi-pigment wash, hero fields only. */
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--texture-wash);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Diagonal light, as paint catching sun. */
+.sheen {
+  position: absolute;
+  inset: 0;
+  background: var(--texture-sheen-soft);
+  pointer-events: none;
+}
+
+.caption {
+  position: absolute;
+  left: var(--space-3);
+  right: var(--space-3);
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+  font: var(--type-kicker);
+  font-size: 10.5px;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--swatch-caption-color);
+  mix-blend-mode: overlay;
+  pointer-events: none;
+}

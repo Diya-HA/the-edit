@@ -1,0 +1,22 @@
+/* ColorDot — palette filter swatch. A painted tile that takes an
+   ink ring when it is the active filter. */
+
+.dot {
+  flex: 0 0 auto;
+  display: block;
+  width: var(--dot-size);
+  height: var(--dot-size);
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-sm);
+  background-color: var(--dot-color);
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+  box-shadow: var(--ring-idle);
+  cursor: pointer;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.active {
+  box-shadow: var(--ring-active);
+}

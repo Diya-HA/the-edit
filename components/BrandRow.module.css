@@ -1,0 +1,66 @@
+/* BrandRow — a label on your shelf: painted swatch, name and meta,
+   and a follow toggle. A soft card row, not a divider list. */
+
+.row {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 9px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+}
+
+.swatch {
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--brand-swatch-color);
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  font-weight: var(--fw-semi);
+  color: var(--text-strong);
+}
+
+.meta {
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+/* Following is the settled, ink-filled state; Follow is the invitation. */
+.follow {
+  flex: none;
+  padding: 5px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--surface-card);
+  color: var(--text-strong);
+  border: 1.5px solid var(--line-2);
+  box-shadow: var(--shadow-pill-idle);
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.following {
+  background: var(--ink-0);
+  color: var(--canvas-1);
+  border: 1px solid var(--ink-0);
+  box-shadow: var(--shadow-pill-active);
+}

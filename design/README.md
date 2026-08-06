@@ -15,7 +15,9 @@ screens/
 
 design-system/
   styles.css                    Single entry point. Import this and nothing else.
-  tokens/                       colors, typography, spacing, effects, fonts.
+  tokens/                       colors, typography, spacing, effects, fonts,
+                                extensions (values the screens use that the
+                                base files don't name).
   readme.md                     Voice, layout rules, component inventory, do's and don'ts.
 ```
 

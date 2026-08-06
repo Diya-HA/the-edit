@@ -1,0 +1,76 @@
+/* Button — pill action. Sentence case, weighty sans, never mono.
+   Press springs to 0.97. */
+
+.button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  cursor: pointer;
+  transition: transform var(--dur-fast) var(--ease-out),
+    background var(--dur-fast) var(--ease-out);
+}
+
+.button:active {
+  transform: scale(0.97);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.full {
+  width: 100%;
+}
+
+/* ---- Sizes ---- */
+.sm {
+  padding: var(--space-2) var(--space-4);
+  font-size: var(--fs-sm);
+}
+
+.md {
+  padding: 13px 22px;
+  font-size: var(--fs-md);
+}
+
+.lg {
+  padding: var(--space-4) 28px;
+  font-size: var(--fs-lg);
+}
+
+/* ---- Variants ---- */
+.primary {
+  background: var(--ink-0);
+  color: var(--canvas-1);
+  border: 1.5px solid var(--ink-0);
+  box-shadow: var(--shadow-cta);
+}
+
+.brand {
+  background: var(--brand);
+  color: var(--brand-ink);
+  border: 1.5px solid var(--brand);
+  box-shadow: var(--shadow-cta);
+}
+
+/* The white outlined pill the screens use for "Buy" and "Back". */
+.secondary {
+  background: var(--surface-card);
+  color: var(--text-strong);
+  border: 1.5px solid var(--line-2);
+  box-shadow: var(--shadow-pill-idle);
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1.5px solid var(--border);
+}

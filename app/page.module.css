@@ -1,0 +1,257 @@
+/* Component gallery. The frame stands in for the phone so the
+   absolutely-positioned pieces (Toast, BottomSheet) sit correctly. */
+
+.page {
+  min-height: 100vh;
+  padding: var(--space-10) var(--space-6) var(--space-16);
+  background: var(--surface-sunken);
+}
+
+.masthead {
+  max-width: 1180px;
+  margin: 0 auto var(--space-8);
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--fs-2xl);
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink-0);
+}
+
+.tagline {
+  margin-top: var(--space-2);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-lg);
+  color: var(--text-body);
+}
+
+.layout {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-10);
+  align-items: flex-start;
+  justify-content: center;
+  max-width: 1180px;
+  margin: 0 auto;
+}
+
+/* ---- Phone frame ---- */
+.phone {
+  flex: none;
+  width: 320px;
+  height: 668px;
+  padding: 10px;
+  border-radius: 44px;
+  background: var(--ink-0);
+  box-shadow: var(--shadow-xl);
+}
+
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  border-radius: 35px;
+  background: var(--surface-app);
+  overflow: hidden;
+}
+
+.status {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: space-between;
+  height: 32px;
+  padding: 0 22px 0 var(--space-6);
+  font-family: var(--font-mono);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  color: var(--ink-0);
+}
+
+.signal {
+  font-size: 8px;
+  letter-spacing: var(--ls-wide);
+}
+
+.header {
+  flex: none;
+  padding: 0 var(--space-4) 9px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.brandmark {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink-0);
+}
+
+.chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin: 0 calc(var(--space-4) * -1);
+  padding: 0 var(--space-4) 9px;
+}
+
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.paletteLabel {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+}
+
+.feed {
+  flex: 1;
+  overflow-y: auto;
+  padding: var(--space-3) var(--space-4) var(--space-5);
+}
+
+.pair {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin-top: var(--space-4);
+}
+
+.pairItem {
+  flex: 1;
+  min-width: 0;
+}
+
+.block {
+  margin-bottom: var(--space-6);
+}
+
+/* ---- Specimen column ---- */
+.specimens {
+  flex: 1;
+  min-width: 320px;
+  max-width: 560px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+
+.section {
+  padding: var(--space-6);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.rowGroup {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.inline {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 9px;
+  align-items: center;
+}
+
+.boards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+}
+
+.sheetRow {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sheetThumb {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background-color: var(--sheet-thumb-color);
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+}
+
+.sheetText {
+  flex: 1;
+  min-width: 0;
+}
+
+.sheetName {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sheet);
+  font-weight: var(--fw-medium);
+  color: var(--text-strong);
+}
+
+.sheetNote {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+.homeIndicator {
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  z-index: 14;
+  width: 104px;
+  height: 4px;
+  transform: translateX(-50%);
+  border-radius: var(--radius-pill);
+  background: var(--line-2);
+  pointer-events: none;
+}
