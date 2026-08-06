@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet data-dc-atomics>
+<meta name="design_doc_mode" content="canvas">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/tokens/fonts.css">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/tokens/colors.css">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/tokens/typography.css">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/tokens/spacing.css">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/tokens/effects.css">
+<link rel="stylesheet" href="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/styles.css">
+<script src="_ds/the-edit-design-system-47ea0ea7-8bbf-41f0-a773-eefb85a84352/_ds_bundle.js"></script>
+<style>
+  body{margin:0;background:#F3F4F6;font-family:'Instrument Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased}
+  a{color:#0E0E10;text-decoration:none}
+  a:hover{color:#43454A}
+  .dv-turn{padding:48px 52px 44px;border-bottom:1px solid rgba(14,14,16,.08);scroll-margin-top:16px}
+  .dv-thd{display:flex;align-items:baseline;gap:10px;margin:0 0 8px}
+  .dv-tid{font:700 10px 'Martian Mono',monospace;padding:4px 8px;background:#0E0E10;color:#fff;border-radius:5px;text-decoration:none}
+  .dv-tname{font:700 15px/1.2 'Archivo',sans-serif;font-stretch:90%;letter-spacing:-.02em;color:#0E0E10}
+  .dv-intro{font:400 13px/1.55 'Instrument Sans',sans-serif;color:#43454A;max-width:660px;margin:0 0 30px}
+  .dv-opts{display:flex;flex-wrap:wrap;gap:40px 32px;align-items:flex-start}
+  .dv-opt{flex:none;width:auto;display:flex;flex-direction:column;gap:11px;scroll-margin-top:16px}
+  .dv-oid{font:700 10px 'Martian Mono',monospace;padding:4px 8px;background:rgba(14,14,16,.08);color:#0E0E10;border-radius:5px;text-decoration:none}
+  .dv-olabel{display:flex;align-items:baseline;gap:9px;font:600 12.5px/1.3 'Instrument Sans',sans-serif;color:#0E0E10}
+  .dv-note{font:400 11.5px/1.5 'Instrument Sans',sans-serif;color:#86888F;max-width:320px;padding-top:2px}
+  .dv-opt:target .dv-oid{background:#0E0E10;color:#fff}
+  .dv-next{margin:30px 0 0;font:12px/1.7 'Instrument Sans',sans-serif;color:#86888F}
+  @keyframes tePop{0%{transform:scale(1)}45%{transform:scale(1.34)}100%{transform:scale(1)}}
+  @keyframes teRise{from{opacity:0;transform:translate(-50%,10px)}to{opacity:1;transform:translate(-50%,0)}}
+  @keyframes teFade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  @keyframes teSheet{from{transform:translateY(101%)}to{transform:none}}
+  @keyframes teBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}35%{opacity:1;transform:translate(-50%,-50%) scale(1.15)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.5)}}
+  ::-webkit-scrollbar{width:0;height:0}
+</style>
+</helmet>
+
+<section class="dv-turn" id="t3">
+  <div class="dv-thd"><a class="dv-tid" href="#t3">3</a><span class="dv-tname">The Edit — plain canvas, washed moments</span></div>
+  <p class="dv-intro">The wash now only shows up where something is being celebrated or asked for: getting started, the stylist, and milestones. Everyday screens are clean white so the clothes carry the colour. Placeholders are tinted to the actual fabric so you can read a look at a glance. Search stands on its own now with three ways in: pieces, looks and the brands you follow, which is where price drops live. Palette swatches are rounded squares, stars are gone from home, buttons shrank and picked up a shadow. <a href="#3a">3a</a> is tappable.</p>
+
+  <div class="dv-opts">
+
+    <div class="dv-opt" id="3a">
+      <div class="dv-olabel"><a class="dv-oid" href="#3a">3a</a>The app — tappable</div>
+      <div style="{{ themeVars }}">
+      <div style="width:320px;height:668px;border-radius:44px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+        <div style="width:100%;height:100%;border-radius:35px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+
+          <div style="height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-family:'Martian Mono',monospace;font-size:10px;font-weight:600;color:#0E0E10">
+            <span>9:41</span>
+            <span style="display:flex;align-items:center;gap:5px;font-size:8px;letter-spacing:.06em">▮▮▮ ⌁ ▰</span>
+          </div>
+
+          <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+            <div style="flex:none;padding:0 16px 9px;border-bottom:1px solid var(--line-1)">
+              <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:9px">
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:18px;letter-spacing:-.03em;text-transform:uppercase;color:#0E0E10">The Edit</div>
+                <div onClick="{{ goYou }}" style="width:26px;height:26px;border-radius:999px;background:#0E0E10;color:#fff;display:flex;align-items:center;justify-content:center;font-size:9.5px;font-weight:700;cursor:pointer">AL</div>
+              </div>
+              <div style="display:flex;gap:6px;overflow-x:auto;margin:0 -16px;padding:0 16px 9px">
+                <sc-for list="{{ aesChips }}" as="a" hint-placeholder-count="4">
+                  <div onClick="{{ a.pick }}" style="{{ a.style }}">{{ a.name }}</div>
+                </sc-for>
+                <div onClick="{{ openNew }}" style="flex:0 0 auto;padding:5px 12px;border-radius:999px;border:1.5px dashed rgba(14,14,16,.2);color:#43454A;font-size:11.5px;font-weight:600;white-space:nowrap;cursor:pointer">＋ Write your own</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:9px">
+                <span style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.14em;color:#86888F;flex:none">PALETTE</span>
+                <div style="display:flex;gap:6px;overflow-x:auto;padding:2px 0">
+                  <sc-for list="{{ palDots }}" as="d" hint-placeholder-count="6">
+                    <div onClick="{{ d.pick }}" style="{{ d.style }}"></div>
+                  </sc-for>
+                </div>
+              </div>
+            </div>
+
+            <div style="flex:1;overflow-y:auto;padding:12px 16px 18px">
+              <sc-for list="{{ blocks }}" as="b" hint-placeholder-count="2">
+                <div style="{{ b.wrap }}">
+                  <div onClick="{{ b.hero.open }}" style="{{ b.hero.heroThumb }}">
+                    <div onClick="{{ b.hero.save }}" style="{{ b.hero.heartStyle }}">{{ b.hero.heart }}</div>
+                    <div style="{{ b.hero.dropStyle }}">{{ b.hero.drop }}</div>
+                    <div style="{{ b.hero.phStyle }}">{{ b.hero.ph }}</div>
+                  </div>
+                  <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:10px;padding:9px 1px 0">
+                    <div style="min-width:0">
+                      <div style="font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#86888F;margin-bottom:4px">{{ b.hero.brand }}</div>
+                      <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:17px;line-height:1.05;letter-spacing:-.03em;color:#0E0E10">{{ b.hero.title }}</div>
+                    </div>
+                    <div style="font-family:'Martian Mono',monospace;font-size:12px;font-weight:700;color:#0E0E10;white-space:nowrap">{{ b.hero.priceStr }}</div>
+                  </div>
+                  <div style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:12.5px;line-height:1.45;color:#43454A;padding:5px 1px 0">{{ b.hero.line }}</div>
+
+                  <div style="{{ b.pairRow }}">
+                    <sc-for list="{{ b.pair }}" as="p" hint-placeholder-count="2">
+                      <div style="flex:1;min-width:0">
+                        <div onClick="{{ p.open }}" style="{{ p.smallThumb }}">
+                          <div onClick="{{ p.save }}" style="{{ p.heartStyle }}">{{ p.heart }}</div>
+                          <div style="{{ p.phStyle }}">{{ p.ph }}</div>
+                        </div>
+                        <div style="padding:8px 1px 0">
+                          <div style="font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#86888F;margin-bottom:3px">{{ p.brand }}</div>
+                          <div style="font-size:12px;font-weight:500;line-height:1.25;color:#0E0E10">{{ p.title }}</div>
+                          <div style="font-family:'Martian Mono',monospace;font-size:10.5px;font-weight:700;color:#0E0E10;margin-top:4px">{{ p.priceStr }}</div>
+                        </div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </sc-for>
+
+              <sc-if value="{{ feedEmpty }}" hint-placeholder-val="{{ false }}">
+                <div style="padding:52px 20px;text-align:center">
+                  <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:19px;letter-spacing:-.02em;color:#0E0E10;margin-bottom:8px">Nothing in this colour yet</div>
+                  <div style="font-size:12.5px;line-height:1.5;color:#86888F;margin-bottom:16px">Bit of a niche request. Try another swatch or clear it and see the whole look.</div>
+                  <div onClick="{{ clearPal }}" style="display:inline-block;padding:9px 16px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12.5px;font-weight:700;box-shadow:0 3px 10px rgba(14,14,16,.22);cursor:pointer">Clear the palette</div>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isSearch }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;padding:0 16px 9px;border-bottom:1px solid var(--line-1)">
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:22px;letter-spacing:-.03em;color:#0E0E10;margin-bottom:9px">Look for something</div>
+              <div style="display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;background:#F5F5F7;border:1px solid var(--line-1)">
+                <span style="font-size:13px;color:#86888F">⌕</span>
+                <span style="font-size:12.5px;color:#86888F">{{ searchHint }}</span>
+              </div>
+              <div style="display:flex;gap:5px;margin-top:10px">
+                <sc-for list="{{ segs }}" as="s" hint-placeholder-count="3">
+                  <div onClick="{{ s.pick }}" style="{{ s.style }}">{{ s.name }}</div>
+                </sc-for>
+              </div>
+            </div>
+
+            <div style="flex:1;overflow-y:auto;padding:12px 16px 18px">
+              <sc-if value="{{ segPieces }}" hint-placeholder-val="{{ true }}">
+                <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin:0 0 9px">EVERYTHING IN YOUR SIZE</div>
+                <div style="{{ gridStyle }}">
+                  <sc-for list="{{ searchGrid }}" as="p" hint-placeholder-count="6">
+                    <div style="break-inside:avoid;display:inline-block;width:100%;margin-bottom:14px">
+                      <div onClick="{{ p.open }}" style="{{ p.thumb }}">
+                        <div onClick="{{ p.save }}" style="{{ p.heartStyle }}">{{ p.heart }}</div>
+                        <div style="{{ p.phStyle }}">{{ p.ph }}</div>
+                      </div>
+                      <div style="padding:8px 1px 0">
+                        <div style="font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#86888F;margin-bottom:3px">{{ p.brand }}</div>
+                        <div style="font-size:12px;font-weight:500;line-height:1.25;color:#0E0E10">{{ p.title }}</div>
+                        <div style="font-family:'Martian Mono',monospace;font-size:10.5px;font-weight:700;color:#0E0E10;margin-top:4px">{{ p.priceStr }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ segLooksList }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12px;line-height:1.5;color:#86888F;margin-bottom:12px">Looks other people are building. Have a nose around and take any of them home.</div>
+                <div style="display:flex;flex-direction:column;gap:9px">
+                  <sc-for list="{{ lookRows }}" as="l" hint-placeholder-count="5">
+                    <div onClick="{{ l.open }}" style="display:flex;align-items:center;gap:11px;padding:9px;border-radius:16px;border:1px solid var(--line-1);background:#fff;box-shadow:0 1px 4px rgba(14,14,16,.05);cursor:pointer">
+                      <div style="display:flex;gap:3px;flex:none">
+                        <sc-for list="{{ l.swatches }}" as="s" hint-placeholder-count="3">
+                          <div style="{{ s.style }}"></div>
+                        </sc-for>
+                      </div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:13px;font-weight:600;color:#0E0E10">{{ l.name }}</div>
+                        <div style="font-size:10.5px;color:#86888F;margin-top:2px">{{ l.meta }}</div>
+                      </div>
+                      <div style="font-size:15px;color:#B4B6BC">›</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ segLookOpen }}" hint-placeholder-val="{{ false }}">
+                <div onClick="{{ backToLooks }}" style="display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:600;color:#43454A;margin-bottom:10px;cursor:pointer">‹ All looks</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:21px;letter-spacing:-.03em;color:#0E0E10">{{ openLookName }}</div>
+                <div style="font-size:11.5px;color:#86888F;margin:5px 0 11px">{{ openLookMeta }}</div>
+                <div onClick="{{ adoptLook }}" style="display:inline-block;padding:9px 15px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12px;font-weight:700;box-shadow:0 3px 10px rgba(14,14,16,.22);margin-bottom:14px;cursor:pointer">Put this on my home</div>
+                <div style="{{ gridStyle }}">
+                  <sc-for list="{{ openLookItems }}" as="p" hint-placeholder-count="4">
+                    <div style="break-inside:avoid;display:inline-block;width:100%;margin-bottom:14px">
+                      <div onClick="{{ p.open }}" style="{{ p.thumb }}">
+                        <div onClick="{{ p.save }}" style="{{ p.heartStyle }}">{{ p.heart }}</div>
+                        <div style="{{ p.phStyle }}">{{ p.ph }}</div>
+                      </div>
+                      <div style="padding:8px 1px 0">
+                        <div style="font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#86888F;margin-bottom:3px">{{ p.brand }}</div>
+                        <div style="font-size:12px;font-weight:500;line-height:1.25;color:#0E0E10">{{ p.title }}</div>
+                        <div style="font-family:'Martian Mono',monospace;font-size:10.5px;font-weight:700;color:#0E0E10;margin-top:4px">{{ p.priceStr }}</div>
+                      </div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+
+              <sc-if value="{{ segBrands }}" hint-placeholder-val="{{ false }}">
+                <div style="font-size:12px;line-height:1.5;color:#86888F;margin-bottom:14px">Follow a label and its new pieces turn up here first. So do its price drops, which is the fun part.</div>
+                <sc-if value="{{ hasDrops }}" hint-placeholder-val="{{ true }}">
+                  <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin:0 0 9px">PRICES MOVED ON LABELS YOU FOLLOW</div>
+                  <div style="display:flex;flex-direction:column;gap:8px;margin-bottom:20px">
+                    <sc-for list="{{ drops }}" as="p" hint-placeholder-count="2">
+                      <div onClick="{{ p.open }}" style="display:flex;gap:11px;align-items:center;padding:9px;border-radius:16px;border:1px solid var(--line-1);background:#fff;box-shadow:0 1px 4px rgba(14,14,16,.05);cursor:pointer">
+                        <div style="{{ p.rowThumb }}"></div>
+                        <div style="flex:1;min-width:0">
+                          <div style="font-size:8.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:#86888F;margin-bottom:3px">{{ p.brand }}</div>
+                          <div style="font-size:12.5px;font-weight:500;color:#0E0E10;margin-bottom:4px">{{ p.title }}</div>
+                          <div style="display:flex;align-items:baseline;gap:6px">
+                            <span style="font-family:'Martian Mono',monospace;font-size:11.5px;font-weight:700;color:#0E0E10">{{ p.priceStr }}</span>
+                            <span style="font-family:'Martian Mono',monospace;font-size:9px;color:#86888F;text-decoration:line-through">{{ p.wasStr }}</span>
+                          </div>
+                        </div>
+                        <div style="flex:none;padding:3px 7px;border-radius:7px;background:#0E0E10;color:#fff;font-family:'Martian Mono',monospace;font-size:8.5px;font-weight:700">{{ p.drop }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </sc-if>
+                <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin:0 0 9px">LABELS ON YOUR SHELF</div>
+                <div style="display:flex;flex-direction:column;gap:7px">
+                  <sc-for list="{{ brandRows }}" as="b" hint-placeholder-count="5">
+                    <div style="display:flex;align-items:center;gap:11px;padding:9px;border-radius:16px;border:1px solid var(--line-1);background:#fff">
+                      <div style="{{ b.swatch }}"></div>
+                      <div style="flex:1;min-width:0">
+                        <div style="font-size:13px;font-weight:600;color:#0E0E10">{{ b.name }}</div>
+                        <div style="font-size:10.5px;color:#86888F;margin-top:2px">{{ b.meta }}</div>
+                      </div>
+                      <div onClick="{{ b.toggle }}" style="{{ b.btn }}">{{ b.btnLabel }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isBoards }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:none;padding:0 16px 10px;display:flex;align-items:flex-end;justify-content:space-between">
+              <div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:22px;letter-spacing:-.03em;color:#0E0E10">Your boards</div>
+                <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.14em;color:#86888F;margin-top:6px">FOUR ON THE GO</div>
+              </div>
+              <div onClick="{{ openNewBoard }}" style="padding:6px 13px;border-radius:999px;background:#0E0E10;color:#fff;font-size:11.5px;font-weight:600;box-shadow:0 3px 10px rgba(14,14,16,.2);cursor:pointer">＋ New</div>
+            </div>
+            <div style="flex:1;overflow-y:auto;padding:0 16px 18px">
+              <sc-for list="{{ boardCards }}" as="b" hint-placeholder-count="3">
+                <div onClick="{{ b.open }}" style="margin-bottom:16px;cursor:pointer">
+                  <div style="display:flex;gap:3px;height:98px;border-radius:14px;overflow:hidden">
+                    <div style="{{ b.c1 }}"></div>
+                    <div style="flex:1;display:flex;flex-direction:column;gap:3px">
+                      <div style="{{ b.c2 }}"></div>
+                      <div style="{{ b.c3 }}"></div>
+                    </div>
+                  </div>
+                  <div style="display:flex;align-items:baseline;justify-content:space-between;margin-top:9px">
+                    <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:16px;letter-spacing:-.02em;color:#0E0E10">{{ b.name }}</div>
+                    <div style="font-family:'Martian Mono',monospace;font-size:9.5px;color:#86888F">{{ b.n }}</div>
+                  </div>
+                  <div style="font-size:11.5px;color:#86888F;margin-top:3px">{{ b.note }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ isYou }}" hint-placeholder-val="{{ false }}">
+            <div style="flex:1;overflow-y:auto;padding:0 16px 18px">
+              <div style="display:flex;align-items:center;gap:12px;padding:2px 0 16px">
+                <div style="width:44px;height:44px;border-radius:999px;background:#0E0E10;color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700">AL</div>
+                <div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:20px;letter-spacing:-.03em;color:#0E0E10">Aria Lane</div>
+                  <div style="font-size:11.5px;color:#86888F;margin-top:2px">Four boards and no regrets</div>
+                </div>
+              </div>
+
+              <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:6px">LOOKS YOU KEEP COMING BACK TO</div>
+              <div style="font-size:11.5px;line-height:1.5;color:#43454A;margin-bottom:8px">Star the ones worth seeing more of and home leans that way.</div>
+              <div style="margin-bottom:20px">
+                <sc-for list="{{ aesRows }}" as="a" hint-placeholder-count="5">
+                  <div onClick="{{ a.fav }}" style="display:flex;align-items:center;gap:11px;padding:9px 0;border-bottom:1px solid var(--line-1);cursor:pointer">
+                    <div style="{{ a.swatch }}"></div>
+                    <div style="flex:1">
+                      <div style="font-size:13px;font-weight:500;color:#0E0E10">{{ a.name }}</div>
+                      <div style="font-size:10.5px;color:#86888F;margin-top:2px">{{ a.meta }}</div>
+                    </div>
+                    <div style="{{ a.starRowStyle }}">{{ a.starRow }}</div>
+                  </div>
+                </sc-for>
+              </div>
+
+              <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:2px">HOW YOU SHOP</div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line-1)">
+                <div style="font-size:13px;color:#0E0E10">What counts as a lot</div>
+                <div style="font-family:'Martian Mono',monospace;font-size:11.5px;color:#43454A">$300 ›</div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0;border-bottom:1px solid var(--line-1)">
+                <div style="font-size:13px;color:#0E0E10">Sizes</div>
+                <div style="font-family:'Martian Mono',monospace;font-size:11.5px;color:#43454A">S · 27 · 38 ›</div>
+              </div>
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:11px 0">
+                <div style="font-size:13px;color:#0E0E10">Nudge me when prices drop</div>
+                <div onClick="{{ toggleNotif }}" style="{{ notifTrack }}"><div style="{{ notifKnob }}"></div></div>
+              </div>
+              <div style="padding:14px 0 2px;font-size:12px;color:#86888F;text-decoration:underline;cursor:pointer">Sign out</div>
+            </div>
+          </sc-if>
+
+          <sc-if value="{{ showStylistPill }}" hint-placeholder-val="{{ true }}">
+            <div onClick="{{ openStylist }}" style="position:absolute;right:14px;bottom:74px;z-index:6;display:flex;align-items:center;gap:6px;padding:7px 13px 7px 11px;border-radius:999px;background:#FFFFFF;box-shadow:0 6px 18px rgba(14,14,16,.18);border:1px solid var(--line-1);cursor:pointer">
+              <span style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:14px;color:#0E0E10;line-height:1">e</span>
+              <span style="font-size:11.5px;font-weight:600;color:#0E0E10;white-space:nowrap">Ask a stylist</span>
+            </div>
+          </sc-if>
+
+          <div style="flex:none;display:flex;align-items:stretch;background:#FFFFFF;border-top:1px solid var(--line-0);padding-bottom:10px">
+            <div onClick="{{ goHome }}" style="{{ sHome }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><rect x="3" y="3" width="7" height="7" rx="1.4"></rect><rect x="14" y="3" width="7" height="7" rx="1.4"></rect><rect x="3" y="14" width="7" height="7" rx="1.4"></rect><rect x="14" y="14" width="7" height="7" rx="1.4"></rect></svg>
+              <div style="font-family:'Martian Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase">Home</div>
+            </div>
+            <div onClick="{{ goSearch }}" style="{{ sSearch }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="11" cy="11" r="7"></circle><path d="M20 20l-3.5-3.5" stroke-linecap="round"></path></svg>
+              <div style="font-family:'Martian Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase">Search</div>
+            </div>
+            <div onClick="{{ goBoards }}" style="{{ sBoards }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 3.5h12a1 1 0 0 1 1 1V21l-7-4.6L5 21V4.5a1 1 0 0 1 1-1z" stroke-linejoin="round"></path></svg>
+              <div style="font-family:'Martian Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase">Boards</div>
+            </div>
+            <div onClick="{{ goYou }}" style="{{ sYou }}">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><circle cx="12" cy="8.5" r="3.8"></circle><path d="M4.8 20c.7-3.7 3.6-5.6 7.2-5.6s6.5 1.9 7.2 5.6" stroke-linecap="round"></path></svg>
+              <div style="font-family:'Martian Mono',monospace;font-size:7px;letter-spacing:.08em;text-transform:uppercase">You</div>
+            </div>
+          </div>
+          <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:104px;height:4px;border-radius:999px;background:rgba(14,14,16,.2);z-index:14;pointer-events:none"></div>
+
+          <sc-if value="{{ hasDetail }}" hint-placeholder-val="{{ false }}">
+            <div style="position:absolute;inset:0;z-index:8;background:#FFFFFF;display:flex;flex-direction:column;animation:teFade .24s cubic-bezier(.2,.8,.2,1)">
+              <div style="flex:1;overflow-y:auto">
+                <div style="{{ detailThumb }}">
+                  <div style="position:absolute;top:14px;left:14px;right:14px;display:flex;justify-content:space-between">
+                    <div onClick="{{ closeDetail }}" style="width:30px;height:30px;border-radius:999px;background:#FFFFFF;display:flex;align-items:center;justify-content:center;font-size:16px;color:#0E0E10;box-shadow:0 3px 10px rgba(14,14,16,.2);cursor:pointer">‹</div>
+                    <div onClick="{{ detailSave }}" style="{{ detailHeartStyle }}">{{ detailHeart }}</div>
+                  </div>
+                  <div style="{{ detailPhStyle }}">{{ detailPh }}</div>
+                </div>
+                <div style="padding:16px 16px 22px">
+                  <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:#86888F;margin-bottom:6px">{{ detailBrand }}</div>
+                  <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:22px;line-height:1.05;letter-spacing:-.03em;color:#0E0E10;margin-bottom:9px;text-wrap:pretty">{{ detailTitle }}</div>
+                  <div style="display:flex;align-items:baseline;gap:8px;margin-bottom:14px">
+                    <span style="font-family:'Martian Mono',monospace;font-size:15px;font-weight:700;color:#0E0E10">{{ detailPrice }}</span>
+                    <span style="font-family:'Martian Mono',monospace;font-size:11px;color:#86888F;text-decoration:line-through">{{ detailWas }}</span>
+                  </div>
+                  <div style="font-size:13px;line-height:1.6;color:#43454A;margin-bottom:16px;text-wrap:pretty">{{ detailNote }}</div>
+                  <div style="display:flex;gap:8px;margin-bottom:22px">
+                    <div onClick="{{ openSave }}" style="flex:1;text-align:center;padding:11px;border-radius:999px;background:#0E0E10;color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(14,14,16,.24);cursor:pointer">Keep it ♡</div>
+                    <div style="padding:11px 19px;border-radius:999px;border:1.5px solid rgba(14,14,16,.14);color:#0E0E10;font-size:13px;font-weight:700;background:#fff;box-shadow:0 2px 8px rgba(14,14,16,.08);cursor:pointer">Buy</div>
+                  </div>
+                  <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:9px">SITS WELL WITH</div>
+                  <div style="display:flex;gap:8px;overflow-x:auto;margin:0 -16px;padding:0 16px">
+                    <sc-for list="{{ moreLike }}" as="m" hint-placeholder-count="3">
+                      <div onClick="{{ m.open }}" style="flex:0 0 auto;width:92px;cursor:pointer">
+                        <div style="{{ m.thumb }}"></div>
+                        <div style="font-size:10.5px;color:#43454A;margin-top:6px;line-height:1.3">{{ m.title }}</div>
+                        <div style="font-family:'Martian Mono',monospace;font-size:9.5px;color:#0E0E10;margin-top:2px">{{ m.priceStr }}</div>
+                      </div>
+                    </sc-for>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </sc-if>
+
+          <x-import component-from-global-scope="TheEditDesignSystem_47ea0e.BottomSheet" open="{{ sheetSave }}" title="Where's it going?" on-close="{{ closeSheet }}" style="{{ sheetAnim }}" hint-size="100%,280px">
+            <div style="display:flex;flex-direction:column;gap:2px;padding-bottom:4px">
+              <sc-for list="{{ boardPicks }}" as="b" hint-placeholder-count="4">
+                <div onClick="{{ b.pick }}" style="display:flex;align-items:center;gap:12px;padding:8px 0;cursor:pointer">
+                  <div style="{{ b.thumb }}"></div>
+                  <div style="flex:1">
+                    <div style="font-size:13.5px;font-weight:500;color:#0E0E10">{{ b.name }}</div>
+                    <div style="font-size:10.5px;color:#86888F;margin-top:2px">{{ b.note }}</div>
+                  </div>
+                  <div style="font-size:16px;color:#86888F">＋</div>
+                </div>
+              </sc-for>
+              <div onClick="{{ openNewBoard }}" style="display:flex;align-items:center;gap:12px;padding:10px 0;cursor:pointer">
+                <div style="width:46px;height:46px;border-radius:12px;border:1.5px dashed rgba(14,14,16,.2);display:flex;align-items:center;justify-content:center;font-size:17px;color:#86888F">＋</div>
+                <div style="font-size:13.5px;font-weight:600;color:#0E0E10">Somewhere new</div>
+              </div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="TheEditDesignSystem_47ea0e.BottomSheet" open="{{ sheetNew }}" title="What are you into?" on-close="{{ closeSheet }}" style="{{ sheetAnim }}" hint-size="100%,280px">
+            <div style="font-size:12.5px;line-height:1.55;color:#43454A;margin-bottom:12px">Type it however it comes out. Rambling encouraged.</div>
+            <div style="padding:13px;border-radius:14px;background:#F5F5F7;border:1px solid var(--line-1);min-height:70px;font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:14px;line-height:1.5;color:#43454A;margin-bottom:12px">“Long skirts and soft knits with a bit of tarnished silver. Like a Sunday in a secondhand bookshop.”</div>
+            <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px">
+              <div style="padding:6px 12px;border-radius:999px;background:#F5F5F7;border:1px solid var(--line-1);font-size:11.5px;font-weight:600;color:#0E0E10">Call it: Sunday bookshop</div>
+            </div>
+            <div onClick="{{ makeLook }}" style="text-align:center;padding:11px;border-radius:999px;background:#0E0E10;color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(14,14,16,.24);cursor:pointer">Build this look</div>
+          </x-import>
+
+          <x-import component-from-global-scope="TheEditDesignSystem_47ea0e.BottomSheet" open="{{ sheetStylist }}" title="Hey. What's the occasion?" on-close="{{ closeSheet }}" style="{{ sheetAnim }}" hint-size="100%,320px">
+            <div style="position:relative;margin:0 -16px;padding:0 16px">
+              <div style="position:absolute;inset:0;background:var(--texture-wash);opacity:.55;pointer-events:none"></div>
+              <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.4),rgba(255,255,255,.82));pointer-events:none"></div>
+              <div style="position:relative;padding:4px 0 2px">
+                <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px">
+                  <div style="align-self:flex-start;max-width:84%;padding:11px 14px;border-radius:16px 16px 16px 5px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 8px rgba(14,14,16,.06);font-size:12.5px;line-height:1.5;color:#0E0E10">No rush. Give me an occasion or a weather forecast or just a mood and I'll find things that get along.</div>
+                  <div style="align-self:flex-end;max-width:84%;padding:11px 14px;border-radius:16px 16px 5px 16px;background:#0E0E10;color:#fff;font-size:12.5px;line-height:1.5">Wedding in Puglia in September. I burn in the sun.</div>
+                  <div style="align-self:flex-start;max-width:84%;padding:11px 14px;border-radius:16px 16px 16px 5px;background:rgba(255,255,255,.78);border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 8px rgba(14,14,16,.06);font-size:12.5px;line-height:1.5;color:#0E0E10">Long sleeves that still let you breathe then. Plus one thing with a bit of shine for after dark. Found six. Want them?</div>
+                </div>
+                <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px">
+                  <div style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:11.5px;font-weight:600;color:#0E0E10">Go on then</div>
+                  <div style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:11.5px;font-weight:600;color:#0E0E10">Cheaper please</div>
+                  <div style="padding:6px 12px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:11.5px;font-weight:600;color:#0E0E10">Less fussy</div>
+                </div>
+                <div style="display:flex;align-items:center;gap:9px;padding:10px 14px;border-radius:999px;background:rgba(255,255,255,.8);border:1px solid rgba(255,255,255,.8);font-size:12.5px;color:#86888F">Say a bit more…</div>
+              </div>
+            </div>
+          </x-import>
+
+          <x-import component-from-global-scope="TheEditDesignSystem_47ea0e.Toast" message="{{ toast }}" style="{{ toastAnim }}" hint-size="200px,36px"></x-import>
+        </div>
+      </div>
+      </div>
+      <div class="dv-note">White canvas, tinted placeholders. Home is looks and colour. Search is pieces, looks and the labels on your shelf. The stylist is the one washed surface in the app.</div>
+    </div>
+
+    <div class="dv-opt" id="3b">
+      <div class="dv-olabel"><a class="dv-oid" href="#3b">3b</a>Getting started — the washed screens</div>
+      <div style="display:flex;gap:22px;flex-wrap:wrap">
+
+        <div style="width:320px;height:668px;border-radius:44px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+          <div style="width:100%;height:100%;border-radius:35px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+            <div style="position:absolute;inset:0;background:var(--texture-wash);opacity:.62"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(255,255,255,.8))"></div>
+            <div style="position:relative;height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-family:'Martian Mono',monospace;font-size:10px;font-weight:600;color:#0E0E10"><span>9:41</span><span style="font-size:8px;letter-spacing:.06em">▮▮▮ ⌁ ▰</span></div>
+            <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:12px 20px 20px">
+              <div style="display:flex;gap:5px;margin-bottom:22px">
+                <div style="flex:1;height:3px;border-radius:999px;background:#0E0E10"></div>
+                <div style="flex:1;height:3px;border-radius:999px;background:rgba(14,14,16,.12)"></div>
+                <div style="flex:1;height:3px;border-radius:999px;background:rgba(14,14,16,.12)"></div>
+              </div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:32px;line-height:.94;letter-spacing:-.035em;color:#0E0E10;margin-bottom:11px">What are you<br>into right now?</div>
+              <div style="font-size:13.5px;line-height:1.55;color:#43454A;margin-bottom:18px;text-wrap:pretty">Type it however it comes out. Half formed is completely fine and rambling is encouraged.</div>
+              <div style="padding:15px;border-radius:16px;background:rgba(255,255,255,.72);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.8);box-shadow:0 2px 10px rgba(14,14,16,.06);min-height:94px;margin-bottom:18px">
+                <div style="font-family:'Newsreader',Georgia,serif;font-style:italic;font-size:15px;line-height:1.5;color:#86888F">“Soft and a bit undone. Lots of layers in warm neutrals with one thing that's butter yellow.”</div>
+              </div>
+              <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:9px">OR PINCH ONE TO START</div>
+              <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:auto">
+                <div style="padding:6px 13px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12px;font-weight:600;box-shadow:0 3px 10px rgba(14,14,16,.2)">Soft romance</div>
+                <div style="padding:6px 13px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:12px;font-weight:600;color:#0E0E10">Quiet utility</div>
+                <div style="padding:6px 13px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:12px;font-weight:600;color:#0E0E10">Library cardigan</div>
+                <div style="padding:6px 13px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:12px;font-weight:600;color:#0E0E10">Balletcore off duty</div>
+                <div style="padding:6px 13px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:12px;font-weight:600;color:#0E0E10">Wabi sabi linen</div>
+                <div style="padding:6px 13px;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:12px;font-weight:600;color:#0E0E10">Whimsigoth</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:11px;margin-top:16px">
+                <div style="flex:1;text-align:center;padding:10px;border-radius:999px;background:#0E0E10;color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(14,14,16,.24)">Next</div>
+                <div style="font-size:12px;color:#86888F;text-decoration:underline">Skip</div>
+              </div>
+            </div>
+            <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:104px;height:4px;border-radius:999px;background:rgba(14,14,16,.2)"></div>
+          </div>
+        </div>
+
+        <div style="width:320px;height:668px;border-radius:44px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+          <div style="width:100%;height:100%;border-radius:35px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+            <div style="position:absolute;inset:0;background:var(--texture-wash);opacity:.62"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.3),rgba(255,255,255,.8))"></div>
+            <div style="position:relative;height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-family:'Martian Mono',monospace;font-size:10px;font-weight:600;color:#0E0E10"><span>9:41</span><span style="font-size:8px;letter-spacing:.06em">▮▮▮ ⌁ ▰</span></div>
+            <div style="position:relative;flex:1;display:flex;flex-direction:column;padding:12px 20px 20px">
+              <div style="display:flex;gap:5px;margin-bottom:22px">
+                <div style="flex:1;height:3px;border-radius:999px;background:#0E0E10"></div>
+                <div style="flex:1;height:3px;border-radius:999px;background:#0E0E10"></div>
+                <div style="flex:1;height:3px;border-radius:999px;background:rgba(14,14,16,.12)"></div>
+              </div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:32px;line-height:.94;letter-spacing:-.035em;color:#0E0E10;margin-bottom:11px">Which colours<br>do you wear?</div>
+              <div style="font-size:13.5px;line-height:1.55;color:#43454A;margin-bottom:18px">Pick a few. Nothing is permanent and taste wanders.</div>
+              <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:24px">
+                <div style="aspect-ratio:1;border-radius:14px;background:#E4DCCB;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #0E0E10,0 3px 10px rgba(14,14,16,.12)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#F0DFA8;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #0E0E10,0 3px 10px rgba(14,14,16,.12)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#E9C7CC;box-shadow:0 2px 8px rgba(14,14,16,.1)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#9AA9C4;box-shadow:0 2px 8px rgba(14,14,16,.1)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#C9D2C3;box-shadow:0 2px 8px rgba(14,14,16,.1)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#D08A6E;box-shadow:0 2px 8px rgba(14,14,16,.1)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#EDE3D3;box-shadow:0 0 0 2px #fff,0 0 0 3.5px #0E0E10,0 3px 10px rgba(14,14,16,.12)"></div>
+                <div style="aspect-ratio:1;border-radius:14px;background:#3A3A3C;box-shadow:0 2px 8px rgba(14,14,16,.1)"></div>
+              </div>
+              <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:9px">WHAT COUNTS AS A LOT FOR ONE PIECE?</div>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:auto">
+                <div style="text-align:center;padding:12px;border-radius:14px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:13px;font-weight:600;font-family:'Martian Mono',monospace;color:#0E0E10">$150</div>
+                <div style="text-align:center;padding:12px;border-radius:14px;background:#0E0E10;color:#fff;font-size:13px;font-weight:600;font-family:'Martian Mono',monospace;box-shadow:0 3px 10px rgba(14,14,16,.2)">$300</div>
+                <div style="text-align:center;padding:12px;border-radius:14px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:13px;font-weight:600;font-family:'Martian Mono',monospace;color:#0E0E10">$500</div>
+                <div style="text-align:center;padding:12px;border-radius:14px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.07);font-size:13px;font-weight:600;font-family:'Martian Mono',monospace;color:#0E0E10">No ceiling</div>
+              </div>
+              <div style="display:flex;align-items:center;gap:10px;margin-top:16px">
+                <div style="padding:10px 17px;border-radius:999px;border:1.5px solid rgba(14,14,16,.14);background:#fff;box-shadow:0 2px 8px rgba(14,14,16,.08);color:#43454A;font-size:13px;font-weight:700">Back</div>
+                <div style="flex:1;text-align:center;padding:10px;border-radius:999px;background:#0E0E10;color:#fff;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(14,14,16,.24)">Next</div>
+              </div>
+            </div>
+            <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:104px;height:4px;border-radius:999px;background:rgba(14,14,16,.2)"></div>
+          </div>
+        </div>
+
+        <div style="width:320px;height:668px;border-radius:44px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+          <div style="width:100%;height:100%;border-radius:35px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+            <div style="position:absolute;inset:0;background:var(--texture-wash);opacity:.7"></div>
+            <div style="position:absolute;inset:0;background:linear-gradient(160deg,rgba(255,255,255,.22),rgba(255,255,255,.78))"></div>
+            <div style="position:relative;height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-family:'Martian Mono',monospace;font-size:10px;font-weight:600;color:#0E0E10"><span>9:41</span><span style="font-size:8px;letter-spacing:.06em">▮▮▮ ⌁ ▰</span></div>
+            <div style="position:relative;flex:1;display:flex;flex-direction:column;justify-content:center;padding:24px 22px 28px">
+              <div style="font-size:40px;line-height:1;margin-bottom:18px;color:{{ accentColor }}">♥</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:36px;line-height:.92;letter-spacing:-.04em;color:#0E0E10;margin-bottom:13px">Nice eye!<br>It's all yours.</div>
+              <div style="font-size:14px;line-height:1.55;color:#43454A;margin-bottom:24px;max-width:250px;text-wrap:pretty">Everything in here was picked to sit next to everything else. Keep what you love and it gets sharper by the day.</div>
+              <div style="background:rgba(255,255,255,.74);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border:1px solid rgba(255,255,255,.8);border-radius:16px;padding:15px;box-shadow:0 4px 14px rgba(14,14,16,.08);margin-bottom:22px">
+                <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:8px">YOUR FIRST LOOK</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:20px;letter-spacing:-.025em;color:#0E0E10;margin-bottom:5px">Soft romance</div>
+                <div style="font-size:12px;color:#43454A;line-height:1.5">Warm neutrals with one butter yellow. Mostly under $300.</div>
+                <div style="display:flex;gap:6px;margin-top:11px">
+                  <div style="width:22px;height:22px;border-radius:7px;background:#EDE3D3"></div>
+                  <div style="width:22px;height:22px;border-radius:7px;background:#F0DFA8"></div>
+                  <div style="width:22px;height:22px;border-radius:7px;background:#E9C7CC"></div>
+                </div>
+              </div>
+              <div style="text-align:center;padding:11px;border-radius:999px;background:#0E0E10;color:#fff;font-size:13.5px;font-weight:700;box-shadow:0 5px 14px rgba(14,14,16,.26)">Take me in</div>
+            </div>
+            <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:104px;height:4px;border-radius:999px;background:rgba(14,14,16,.2)"></div>
+          </div>
+        </div>
+
+      </div>
+      <div class="dv-note">The wash earns its place here because these screens are a welcome. Swatches are watercolour squares and the bottom buttons dropped to 10px with a shadow so they lift off the page.</div>
+    </div>
+
+    <div class="dv-opt" id="3c">
+      <div class="dv-olabel"><a class="dv-oid" href="#3c">3c</a>Switching looks — live</div>
+      <div style="{{ themeVars }}">
+      <div style="width:320px;height:500px;border-radius:36px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+        <div style="width:100%;height:100%;border-radius:27px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+          <div style="flex:none;padding:16px 16px 10px">
+            <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:9px">FLIP THROUGH YOUR LOOKS</div>
+            <div style="display:flex;align-items:center;gap:9px">
+              <div onClick="{{ deckPrev }}" style="width:26px;height:26px;flex:none;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.09);display:flex;align-items:center;justify-content:center;font-size:14px;color:#43454A;cursor:pointer">‹</div>
+              <div style="flex:1;overflow:hidden;text-align:center">
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:21px;letter-spacing:-.03em;color:#0E0E10;line-height:1.05">{{ deckName }}</div>
+                <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.14em;color:#86888F;margin-top:5px">{{ deckMeta }}</div>
+              </div>
+              <div onClick="{{ deckNext }}" style="width:26px;height:26px;flex:none;border-radius:999px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 8px rgba(14,14,16,.09);display:flex;align-items:center;justify-content:center;font-size:14px;color:#43454A;cursor:pointer">›</div>
+            </div>
+          </div>
+          <div style="flex:1;overflow:hidden;padding:4px 16px 14px">
+            <div style="{{ deckGridStyle }}">
+              <sc-for list="{{ deckItems }}" as="p" hint-placeholder-count="4">
+                <div style="break-inside:avoid;display:inline-block;width:100%;margin-bottom:10px">
+                  <div style="{{ p.thumb }}"></div>
+                  <div style="font-size:11px;font-weight:500;color:#0E0E10;margin-top:6px;line-height:1.25">{{ p.title }}</div>
+                </div>
+              </sc-for>
+            </div>
+          </div>
+          <div style="flex:none;padding:0 16px 16px;display:flex;gap:8px;align-items:center">
+            <div onClick="{{ deckFav }}" style="{{ deckFavStyle }}">{{ deckFavLabel }}</div>
+            <div style="flex:1"></div>
+            <div style="display:flex;gap:4px">
+              <sc-for list="{{ deckPips }}" as="d" hint-placeholder-count="5">
+                <div style="{{ d.style }}"></div>
+              </sc-for>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+      <div class="dv-note">Looks behave like a deck you flip through. Star one and it climbs the strip so home leans that way from then on.</div>
+    </div>
+
+    <div class="dv-opt" id="3d">
+      <div class="dv-olabel"><a class="dv-oid" href="#3d">3d</a>Saving — three gestures, live</div>
+      <div style="{{ themeVars }}">
+      <div style="width:320px;height:500px;border-radius:36px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+        <div style="width:100%;height:100%;border-radius:27px;background:#FFFFFF;overflow:hidden;position:relative;display:flex;flex-direction:column">
+          <div style="flex:none;padding:14px 16px 8px;display:flex;gap:5px">
+            <sc-for list="{{ gestureTabs }}" as="g" hint-placeholder-count="3">
+              <div onClick="{{ g.pick }}" style="{{ g.style }}">{{ g.name }}</div>
+            </sc-for>
+          </div>
+          <div style="flex:none;padding:0 16px 10px;font-size:11.5px;line-height:1.5;color:#86888F">{{ gestureHint }}</div>
+          <div style="flex:1;padding:0 16px 16px">
+            <div onClick="{{ gTap }}" onMouseDown="{{ gDown }}" onMouseUp="{{ gUp }}" onMouseLeave="{{ gUp }}" onDoubleClick="{{ gDouble }}" style="position:relative;height:100%;border-radius:18px;background:#E3CBA4;overflow:hidden;cursor:pointer;user-select:none">
+              <div style="position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:'Martian Mono',monospace;font-size:7px;letter-spacing:.2em;color:rgba(14,14,16,.34)">CARDIGAN · TRY THE GESTURE</div>
+              <div onClick="{{ gTap }}" style="{{ gHeartStyle }}">{{ gHeart }}</div>
+              <div style="{{ gBurstStyle }}">♥</div>
+              <div style="{{ gRadialStyle }}">
+                <sc-for list="{{ gBoards }}" as="b" hint-placeholder-count="3">
+                  <div onClick="{{ b.pick }}" style="padding:8px 13px;border-radius:999px;background:#0E0E10;color:#fff;font-size:11.5px;font-weight:600;white-space:nowrap;box-shadow:0 6px 18px rgba(14,14,16,.28);cursor:pointer">{{ b.name }}</div>
+                </sc-for>
+              </div>
+            </div>
+          </div>
+          <x-import component-from-global-scope="TheEditDesignSystem_47ea0e.Toast" message="{{ gToast }}" style="{{ toastAnim }}" hint-size="200px,36px"></x-import>
+        </div>
+      </div>
+      </div>
+      <div class="dv-note">Tap the heart for a quick keep. Hold the image and the boards come to you. Double tap anywhere for the big one.</div>
+    </div>
+
+    <div class="dv-opt" id="3e">
+      <div class="dv-olabel"><a class="dv-oid" href="#3e">3e</a>Home — full bleed, one at a time</div>
+      <div style="width:320px;height:668px;border-radius:44px;background:#0E0E10;padding:10px;box-sizing:border-box;box-shadow:0 20px 48px rgba(14,14,16,.20)">
+        <div style="width:100%;height:100%;border-radius:35px;background:#0E0E10;overflow:hidden;position:relative;display:flex;flex-direction:column">
+          <div style="position:absolute;inset:0;background:#B6B79C"></div>
+          <div style="position:absolute;left:0;right:0;bottom:0;height:270px;background:linear-gradient(to top,rgba(14,14,16,.78),rgba(14,14,16,0))"></div>
+          <div style="position:absolute;left:0;right:0;top:0;height:140px;background:linear-gradient(to bottom,rgba(14,14,16,.42),rgba(14,14,16,0))"></div>
+          <div style="position:absolute;left:0;right:0;top:52%;text-align:center;font-family:'Martian Mono',monospace;font-size:8px;letter-spacing:.22em;color:rgba(14,14,16,.36)">COAT · FULL BLEED</div>
+          <div style="position:relative;height:32px;flex:none;display:flex;align-items:center;justify-content:space-between;padding:0 22px 0 24px;font-family:'Martian Mono',monospace;font-size:10px;font-weight:600;color:#fff"><span>9:41</span><span style="font-size:8px;letter-spacing:.06em">▮▮▮ ⌁ ▰</span></div>
+          <div style="position:relative;padding:4px 18px 0;display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:7px;padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);color:#fff;font-size:11.5px;font-weight:600">Quiet utility <span style="opacity:.6">▾</span></div>
+            <div style="font-family:'Martian Mono',monospace;font-size:8.5px;letter-spacing:.12em;color:rgba(255,255,255,.75)">3 / 24</div>
+          </div>
+          <div style="flex:1"></div>
+          <div style="position:relative;padding:0 18px 16px">
+            <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:14px">
+              <div>
+                <div style="display:inline-flex;align-items:center;padding:3px 8px;border-radius:8px;background:#fff;color:#0E0E10;font-family:'Martian Mono',monospace;font-size:9.5px;font-weight:700;margin-bottom:9px;box-shadow:0 3px 10px rgba(0,0,0,.2)">↓ 16%</div>
+                <div style="font-size:9px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.72);margin-bottom:5px">Margaux</div>
+                <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:27px;line-height:.95;letter-spacing:-.035em;color:#fff;margin-bottom:8px">Cropped<br>barn coat</div>
+                <div style="display:flex;align-items:baseline;gap:8px">
+                  <span style="font-family:'Martian Mono',monospace;font-size:14px;font-weight:700;color:#fff">$285</span>
+                  <span style="font-family:'Martian Mono',monospace;font-size:10.5px;color:rgba(255,255,255,.55);text-decoration:line-through">$340</span>
+                </div>
+              </div>
+              <div style="display:flex;flex-direction:column;gap:10px;align-items:center">
+                <div style="width:42px;height:42px;border-radius:999px;background:#fff;display:flex;align-items:center;justify-content:center;font-size:18px;color:{{ accentColor }};box-shadow:0 5px 16px rgba(0,0,0,.3)">♥</div>
+                <div style="width:42px;height:42px;border-radius:999px;background:rgba(255,255,255,.18);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-size:17px;color:#fff">＋</div>
+              </div>
+            </div>
+            <div style="margin-top:15px;text-align:center;font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:rgba(255,255,255,.6)">SWIPE FOR THE NEXT ONE ↑</div>
+          </div>
+          <div style="position:absolute;left:50%;bottom:6px;transform:translateX(-50%);width:104px;height:4px;border-radius:999px;background:rgba(255,255,255,.5)"></div>
+        </div>
+      </div>
+      <div class="dv-note">Worth keeping as a mode you can flip into rather than the default. Fastest way to judge one piece and the slowest way to browse.</div>
+    </div>
+
+    <div class="dv-opt" id="3f" style="width:auto">
+      <div class="dv-olabel"><a class="dv-oid" href="#3f">3f</a>Little moments</div>
+      <div style="width:520px;border-radius:20px;padding:26px 28px 28px;background:#fff;border:1px solid var(--line-1);box-shadow:0 4px 14px rgba(14,14,16,.09)">
+        <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:16px">CONFIRMATIONS</div>
+        <div style="display:flex;flex-wrap:wrap;gap:9px;margin-bottom:24px">
+          <div style="padding:10px 18px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12.5px;font-weight:600;box-shadow:0 4px 12px rgba(14,14,16,.22)">Yours now ♥ Soft romance is 14 deep</div>
+          <div style="padding:10px 18px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12.5px;font-weight:600;box-shadow:0 4px 12px rgba(14,14,16,.22)">Built it! Go have a scroll</div>
+          <div style="padding:10px 18px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12.5px;font-weight:600;box-shadow:0 4px 12px rgba(14,14,16,.22)">Following. You'll know before they announce it</div>
+          <div style="padding:10px 18px;border-radius:999px;background:#0E0E10;color:#fff;font-size:12.5px;font-weight:600;box-shadow:0 4px 12px rgba(14,14,16,.22)">Noted! More of that on the way</div>
+        </div>
+        <div style="height:1px;background:rgba(14,14,16,.08);margin-bottom:24px"></div>
+        <div style="font-family:'Martian Mono',monospace;font-size:7.5px;letter-spacing:.16em;color:#86888F;margin-bottom:14px">A BOARD FILLING UP</div>
+        <div style="display:flex;gap:16px;align-items:stretch">
+          <div style="flex:1;border-radius:16px;background:#fff;border:1px solid var(--line-1);box-shadow:0 2px 10px rgba(14,14,16,.07);padding:18px">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;margin-bottom:11px">
+              <div style="font-family:'Archivo',sans-serif;font-weight:700;font-stretch:90%;font-size:16px;letter-spacing:-.02em;color:#0E0E10">Linen summer</div>
+              <div style="font-family:'Martian Mono',monospace;font-size:9.5px;color:#43454A">7 / 10</div>
+            </div>
+            <div style="height:5px;border-radius:999px;background:rgba(14,14,16,.1);overflow:hidden;margin-bottom:11px"><div style="width:70%;height:100%;background:#0E0E10"></div></div>
+            <div style="font-size:12px;line-height:1.5;color:#43454A">Three more and that is a fully packed suitcase.</div>
+          </div>
+          <div style="flex:1;border-radius:16px;background:#0E0E10;padding:18px;color:#fff;position:relative;overflow:hidden">
+            <div style="position:absolute;inset:0;background:var(--texture-wash);opacity:.32"></div>
+            <div style="position:relative">
+              <div style="font-size:24px;margin-bottom:7px;color:{{ accentColor }}">♥</div>
+              <div style="font-family:'Archivo',sans-serif;font-weight:800;font-stretch:88%;font-size:19px;letter-spacing:-.03em;line-height:1.05;margin-bottom:7px">Fifty keeps in!</div>
+              <div style="font-size:12px;line-height:1.5;color:rgba(255,255,255,.75)">Taste is getting specific. Want to give it a name before it gets away?</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="dv-note">Confirmations sit on ink with a shadow so they never blend. The milestone tile is the other place the wash shows up.</div>
+    </div>
+
+  </div>
+
+  <p class="dv-next">Try next: "make <a class="dv-oid" href="#3e">3e</a> a mode toggle inside <a class="dv-oid" href="#3a">3a</a>" · "show the board detail screen" · "funnier empty states" · "try real photography in the grid"</p>
+</section>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1400,&quot;height&quot;:900},&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#FF3B24&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;options&quot;:[&quot;#FF3B24&quot;,&quot;#2436EA&quot;,&quot;#FF4D97&quot;,&quot;#00B37A&quot;],&quot;section&quot;:&quot;Look&quot;},&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;Airy&quot;,&quot;options&quot;:[&quot;Airy&quot;,&quot;Compact&quot;],&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Look&quot;},&quot;stylistPill&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Behaviour&quot;}}">
+class Component extends DCLogic {
+  AES = [
+    { id: 'soft-romance', name: 'Soft romance', meta: 'Warm neutrals and one soft colour', c: '#E9C7CC' },
+    { id: 'library-cardigan', name: 'Library cardigan', meta: 'Wool and tweed and tarnished silver', c: '#E3CBA4' },
+    { id: 'quiet-utility', name: 'Quiet utility', meta: 'Workwear cut clean', c: '#C9D2C3' },
+    { id: 'balletcore', name: 'Balletcore off duty', meta: 'Ribbons and wrap knits and flats', c: '#F0D9DC' },
+    { id: 'wabi-sabi', name: 'Wabi sabi linen', meta: 'Undyed and crumpled and easy', c: '#EDE3D3' },
+    { id: 'everyday-neutrals', name: 'Everyday neutrals', meta: 'The stuff you reach for', c: '#E4DCCB' },
+    { id: 'denim-forward', name: 'Denim forward', meta: 'Indigo top to toe', c: '#9AA9C4' },
+    { id: 'whimsigoth', name: 'Whimsigoth', meta: 'Velvet and crochet and moons', c: '#8F8A82' }
+  ];
+  PAL = [
+    { id: 'neutral', c: '#E4DCCB' }, { id: 'cream', c: '#F2EDE4' }, { id: 'butter', c: '#F0DFA8' },
+    { id: 'rust', c: '#D08A6E' }, { id: 'rose', c: '#E9C7CC' }, { id: 'indigo', c: '#9AA9C4' },
+    { id: 'sage', c: '#C9D2C3' }, { id: 'ink', c: '#3A3A3C' }
+  ];
+  P = [
+    { id: 'p1', brand: 'Margaux', title: 'Cotton poplin blouse', price: 128, ph: 'BLOUSE', h: 186, tone: '#F2EDE4', pal: 'cream', line: 'Goes under everything without adding bulk.', why: 'Sits neatly beneath the cardigan you starred.', tags: ['soft-romance', 'everyday-neutrals', 'library-cardigan'] },
+    { id: 'p2', brand: 'Alder & Oak', title: 'Washed linen trouser', price: 165, ph: 'TROUSER', h: 140, tone: '#E4DCCB', pal: 'neutral', line: 'The kind that gets better creased.', why: 'Same easy cut as the dress on your Sicily board.', tags: ['quiet-utility', 'wabi-sabi', 'everyday-neutrals'] },
+    { id: 'p3', brand: 'Ciel', title: 'Ribbon tie ballet flat', price: 96, was: 140, ph: 'FLAT', h: 128, tone: '#E9C7CC', pal: 'rose', line: 'Quiet alone and loud with a long skirt.', why: 'You keep saving flats so here is a pair that lasts.', tags: ['soft-romance', 'balletcore'] },
+    { id: 'p4', brand: 'Studio Nore', title: 'Boxy canvas jacket', price: 240, ph: 'JACKET', h: 176, tone: '#C9D2C3', pal: 'sage', line: 'Throw it over anything and it works.', why: 'Roomy enough to go over the knits already on your boards.', tags: ['quiet-utility', 'denim-forward'] },
+    { id: 'p5', brand: 'Leonie', title: 'Silk slip skirt', price: 148, ph: 'SKIRT', h: 158, tone: '#F0DFA8', pal: 'butter', line: 'One shiny thing is usually enough.', why: 'The bit of shine your neutrals have been missing.', tags: ['soft-romance', 'balletcore', 'whimsigoth'] },
+    { id: 'p6', brand: 'Halle', title: 'Lambswool cardigan', price: 118, ph: 'CARDIGAN', h: 146, tone: '#E3CBA4', pal: 'neutral', line: 'The one everything else got picked around.', why: 'Half your boards are built around a cardigan like this.', tags: ['library-cardigan', 'everyday-neutrals', 'soft-romance'] },
+    { id: 'p7', brand: 'Paloma Works', title: 'Raw hem denim', price: 132, was: 176, ph: 'DENIM', h: 152, tone: '#9AA9C4', pal: 'indigo', line: 'Stiff for a week then yours forever.', why: 'A plainer cut than the pair you scrolled past last week.', tags: ['denim-forward', 'quiet-utility', 'everyday-neutrals'] },
+    { id: 'p8', brand: 'Vestry', title: 'Oversized poplin shirt', price: 110, ph: 'SHIRT', h: 122, tone: '#E8EAEC', pal: 'cream', line: 'Works buttoned up or falling off.', why: 'Cheap trick for making everything else look considered.', tags: ['quiet-utility', 'everyday-neutrals', 'denim-forward'] },
+    { id: 'p9', brand: 'Rosemary', title: 'Crochet cardigan', price: 195, ph: 'CROCHET', h: 168, tone: '#8F8A82', pal: 'ink', line: 'A bit odd in the best way.', why: 'Odd enough to be interesting and soft enough to live in.', tags: ['whimsigoth', 'soft-romance', 'library-cardigan'] },
+    { id: 'p10', brand: 'Kin & Cloth', title: 'Slub linen dress', price: 210, ph: 'DRESS', h: 190, tone: '#EDE3D3', pal: 'neutral', line: 'The one everything else was chosen around.', why: 'Everything on your Soft romance board goes with it.', tags: ['wabi-sabi', 'soft-romance', 'everyday-neutrals'] },
+    { id: 'p11', brand: 'Atelier Sud', title: 'Leather mary jane', price: 245, ph: 'SHOE', h: 132, tone: '#3A3A3C', pal: 'ink', line: 'Sturdy enough to walk home in.', why: 'Tougher than the flats you keep and just as pretty.', tags: ['balletcore', 'library-cardigan', 'whimsigoth'] },
+    { id: 'p12', brand: 'Bonne Maison', title: 'Ribbed wool sock', price: 28, ph: 'SOCK', h: 112, tone: '#D08A6E', pal: 'rust', line: 'Small thing that changes the whole outfit.', why: 'Warm colour to break up all that oatmeal.', tags: ['library-cardigan', 'balletcore', 'everyday-neutrals'] },
+    { id: 'p13', brand: 'Margaux', title: 'Cropped barn coat', price: 285, was: 340, ph: 'COAT', h: 172, tone: '#B6B79C', pal: 'sage', line: 'Cut short so it sits over everything.', why: 'Short enough to clear the long skirts you save.', tags: ['quiet-utility', 'denim-forward', 'wabi-sabi'] },
+    { id: 'p14', brand: 'Leonie', title: 'Lace trim camisole', price: 88, ph: 'CAMISOLE', h: 126, tone: '#F0D9DC', pal: 'rose', line: 'Layer it or don\u2019t.', why: 'Works alone in August and under wool by October.', tags: ['soft-romance', 'whimsigoth', 'balletcore'] }
+  ];
+  BOARDS = [
+    { id: 'b1', name: 'Soft romance', n: 14, note: 'Started in March and still going' },
+    { id: 'b2', name: 'Desk to dinner', n: 8, note: 'Things that do both' },
+    { id: 'b3', name: 'Linen summer', n: 21, note: 'For Sicily allegedly' },
+    { id: 'b4', name: 'One day', n: 5, note: 'Saving up' }
+  ];
+  BRANDS = [
+    { id: 'margaux', name: 'Margaux', meta: 'Three of theirs live on your boards', c: '#E9C7CC' },
+    { id: 'ciel', name: 'Ciel', meta: 'Two prices came down this week', c: '#9AA9C4' },
+    { id: 'alder', name: 'Alder & Oak', meta: 'New linen just landed', c: '#C9D2C3' },
+    { id: 'paloma', name: 'Paloma Works', meta: 'You keep four of theirs', c: '#E4DCCB' },
+    { id: 'vestry', name: 'Vestry', meta: 'Quiet utility regular', c: '#E8EAEC' }
+  ];
+  SEARCH_HINTS = ['A piece or a label or a whole mood', 'Something for a wedding in September', 'That cardigan you keep thinking about'];
+
+  state = {
+    tab: 'home', aes: 'soft-romance', pal: [], detail: null, sheet: null, toast: '',
+    saved: { p3: true, p6: true }, favs: { 'soft-romance': true, 'library-cardigan': true },
+    follows: { margaux: true, ciel: true }, seg: 'pieces', openLook: null, pulse: '', switching: false,
+    notif: true, deck: 0, g: 'tap', gSaved: false, gRadial: false, gBurst: 0, gToast: ''
+  };
+
+  componentWillUnmount() { clearTimeout(this._t); clearTimeout(this._s); clearTimeout(this._h); clearTimeout(this._gt); clearTimeout(this._hold); }
+
+  say(m) { clearTimeout(this._t); this.setState({ toast: m }); this._t = setTimeout(() => this.setState({ toast: '' }), 2400); }
+  gsay(m) { clearTimeout(this._gt); this.setState({ gToast: m }); this._gt = setTimeout(() => this.setState({ gToast: '' }), 2200); }
+
+  pickAes(id) {
+    this.setState({ switching: true, aes: id });
+    clearTimeout(this._s);
+    this._s = setTimeout(() => this.setState({ switching: false }), 230);
+  }
+  toggleFav(id) {
+    const f = { ...this.state.favs }; const on = !f[id];
+    if (on) f[id] = true; else delete f[id];
+    this.setState({ favs: f });
+    const a = this.AES.find(x => x.id === id);
+    this.say(on ? 'Noted! More of that on the way' : 'Fair enough. Easing off ' + a.name.toLowerCase());
+  }
+  toggleSave(id) {
+    const s = { ...this.state.saved };
+    if (s[id]) { delete s[id]; this.setState({ saved: s }); return; }
+    s[id] = true;
+    const look = this.AES.find(a => a.id === this.state.aes);
+    this.setState({ saved: s, pulse: id });
+    clearTimeout(this._h);
+    this._h = setTimeout(() => this.setState({ pulse: '' }), 420);
+    this.say('Yours now \u2665 ' + look.name + ' is ' + Object.keys(s).length + ' deep');
+  }
+  togglePal(id) {
+    const p = this.state.pal.includes(id) ? this.state.pal.filter(x => x !== id) : this.state.pal.concat(id);
+    this.setState({ pal: p, switching: true });
+    clearTimeout(this._s);
+    this._s = setTimeout(() => this.setState({ switching: false }), 230);
+  }
+  toggleFollow(id) {
+    const f = { ...this.state.follows }; const on = !f[id];
+    if (on) f[id] = true; else delete f[id];
+    this.setState({ follows: f });
+    const b = this.BRANDS.find(x => x.id === id);
+    this.say(on ? 'Following. You\u2019ll know before they announce it' : 'Unfollowed ' + b.name + '. No hard feelings');
+  }
+
+  phStyle(size) {
+    return {
+      position: 'absolute', left: 0, right: 0, bottom: size === 'lg' ? 10 : 8, textAlign: 'center',
+      fontFamily: "'Martian Mono',monospace", fontSize: size === 'lg' ? 7.5 : 6.5,
+      letterSpacing: '.2em', color: 'rgba(14,14,16,.34)'
+    };
+  }
+  heart(p, big) {
+    const on = !!this.state.saved[p.id];
+    const d = big ? 30 : 26;
+    return {
+      position: 'absolute', top: big ? 9 : 7, right: big ? 9 : 7, width: d, height: d, borderRadius: 999,
+      background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center',
+      fontSize: big ? 14 : 12, lineHeight: 1, color: on ? 'var(--brand)' : '#6A6C72',
+      cursor: 'pointer', boxShadow: '0 3px 10px rgba(14,14,16,.2)',
+      animation: this.state.pulse === p.id ? 'tePop .42s cubic-bezier(.2,.8,.2,1)' : 'none'
+    };
+  }
+  view(p) {
+    return {
+      ...p,
+      priceStr: '$' + p.price,
+      wasStr: p.was ? '$' + p.was : '',
+      drop: p.was ? '\u2193 ' + Math.round((1 - p.price / p.was) * 100) + '%' : '',
+      dropStyle: {
+        display: p.was ? 'flex' : 'none', position: 'absolute', top: 9, left: 9, padding: '3px 7px',
+        borderRadius: 7, background: '#FFFFFF', color: '#0E0E10', boxShadow: '0 3px 10px rgba(14,14,16,.18)',
+        fontFamily: "'Martian Mono',monospace", fontSize: 8.5, fontWeight: 700
+      },
+      heroThumb: { position: 'relative', height: 176, borderRadius: 16, background: p.tone, overflow: 'hidden', cursor: 'pointer' },
+      smallThumb: { position: 'relative', height: 108, borderRadius: 14, background: p.tone, overflow: 'hidden', cursor: 'pointer' },
+      thumb: { position: 'relative', height: Math.round(p.h * 0.66), borderRadius: 14, background: p.tone, overflow: 'hidden', cursor: 'pointer' },
+      rowThumb: { width: 62, height: 74, borderRadius: 10, background: p.tone, flex: '0 0 auto' },
+      phStyle: this.phStyle('sm'),
+      heart: this.state.saved[p.id] ? '\u2665' : '\u2661',
+      heartStyle: this.heart(p, false),
+      open: () => this.setState({ detail: p.id }),
+      save: (e) => { e.stopPropagation(); this.toggleSave(p.id); }
+    };
+  }
+
+  renderVals() {
+    const st = this.state;
+    const accent = this.props.accent || '#FF3B24';
+    const dense = (this.props.density || 'Airy') === 'Compact';
+    const gap = dense ? 8 : 11;
+
+    let list = this.P.filter(p => p.tags.indexOf(st.aes) > -1);
+    if (list.length < 6) list = list.concat(this.P.filter(p => p.tags.indexOf(st.aes) === -1)).slice(0, 9);
+    if (st.pal.length) list = list.filter(p => st.pal.indexOf(p.pal) > -1);
+    const views = list.map(p => this.view(p));
+
+    const blocks = [];
+    for (let i = 0; i < views.length; i += 3) {
+      const hero = views[i];
+      if (!hero) break;
+      blocks.push({
+        hero: { ...hero, heartStyle: this.heart(hero, true), phStyle: this.phStyle('lg') },
+        pair: views.slice(i + 1, i + 3),
+        wrap: { marginBottom: dense ? 18 : 24, animation: 'teFade .26s cubic-bezier(.2,.8,.2,1)' },
+        pairRow: { display: 'flex', gap: gap, alignItems: 'flex-start', marginTop: views.slice(i + 1, i + 3).length ? 16 : 0 }
+      });
+    }
+
+    const sortedAes = this.AES.slice().sort((a, b) => (st.favs[b.id] ? 1 : 0) - (st.favs[a.id] ? 1 : 0));
+    const aesChips = sortedAes.map(a => {
+      const on = st.aes === a.id;
+      return {
+        name: a.name,
+        style: {
+          flex: '0 0 auto', padding: '5px 12px', borderRadius: 999,
+          background: on ? '#0E0E10' : '#FFFFFF', color: on ? '#fff' : '#0E0E10',
+          border: on ? '1px solid #0E0E10' : '1px solid var(--line-1)',
+          boxShadow: on ? '0 3px 10px rgba(14,14,16,.2)' : '0 2px 7px rgba(14,14,16,.07)',
+          fontSize: 11.5, fontWeight: 600, whiteSpace: 'nowrap', cursor: 'pointer',
+          transition: 'background .15s cubic-bezier(.2,.8,.2,1)'
+        },
+        pick: () => this.pickAes(a.id)
+      };
+    });
+
+    const detail = st.detail ? this.P.find(p => p.id === st.detail) : null;
+    const look = this.AES.find(a => a.id === st.aes);
+    const deckAes = sortedAes[st.deck % sortedAes.length];
+    let deckList = this.P.filter(p => p.tags.indexOf(deckAes.id) > -1);
+    if (deckList.length < 4) deckList = deckList.concat(this.P).slice(0, 4);
+
+    const openLook = st.openLook ? this.AES.find(a => a.id === st.openLook) : null;
+    const openLookItems = openLook ? this.P.filter(p => p.tags.indexOf(openLook.id) > -1).map(p => this.view(p)) : [];
+    const followed = this.BRANDS.filter(b => st.follows[b.id]).map(b => b.name);
+    const dropList = this.P.filter(p => p.was && followed.indexOf(p.brand) > -1).map(p => this.view(p));
+
+    const gestureCopy = {
+      tap: 'Tap the heart. Quick keep with no soul searching.',
+      hold: 'Press and hold the image and your boards come to you.',
+      double: 'Double tap anywhere. The satisfying one.'
+    };
+
+    const seg = (id, name) => ({
+      name,
+      pick: () => this.setState({ seg: id, openLook: null }),
+      style: {
+        flex: 1, textAlign: 'center', padding: '7px 0', borderRadius: 999, fontSize: 11.5, fontWeight: 600,
+        cursor: 'pointer', background: st.seg === id ? '#0E0E10' : '#FFFFFF',
+        color: st.seg === id ? '#fff' : '#0E0E10', border: st.seg === id ? '1px solid #0E0E10' : '1px solid var(--line-1)',
+        boxShadow: st.seg === id ? '0 3px 10px rgba(14,14,16,.2)' : '0 2px 7px rgba(14,14,16,.07)'
+      }
+    });
+
+    return {
+      themeVars: { display: 'contents', '--brand': accent },
+      accentColor: accent,
+      isHome: st.tab === 'home', isSearch: st.tab === 'search', isBoards: st.tab === 'boards', isYou: st.tab === 'you',
+      showStylistPill: (this.props.stylistPill !== false) && !st.detail && !st.sheet && (st.tab === 'home' || st.tab === 'search'),
+      gridStyle: { columns: 2, columnGap: gap, opacity: st.switching ? 0 : 1, filter: st.switching ? 'blur(3px)' : 'none', transition: 'opacity .22s cubic-bezier(.2,.8,.2,1), filter .22s cubic-bezier(.2,.8,.2,1)' },
+      blocks: st.switching ? [] : blocks,
+      feedEmpty: views.length === 0,
+      clearPal: () => this.setState({ pal: [] }),
+      aesChips,
+      palDots: this.PAL.map(d => ({
+        pick: () => this.togglePal(d.id),
+        style: {
+          flex: '0 0 auto', width: 22, height: 22, borderRadius: 7, background: d.c, cursor: 'pointer',
+          boxShadow: st.pal.indexOf(d.id) > -1
+            ? '0 0 0 1.5px #fff, 0 0 0 3px #0E0E10, 0 2px 6px rgba(14,14,16,.14)'
+            : '0 1px 4px rgba(14,14,16,.14)',
+          transition: 'box-shadow .15s cubic-bezier(.2,.8,.2,1)'
+        }
+      })),
+
+      searchHint: this.SEARCH_HINTS[0],
+      segs: [seg('pieces', 'Pieces'), seg('looks', 'Looks'), seg('brands', 'Brands')],
+      segPieces: st.seg === 'pieces',
+      segLooksList: st.seg === 'looks' && !openLook,
+      segLookOpen: st.seg === 'looks' && !!openLook,
+      segBrands: st.seg === 'brands',
+      searchGrid: this.P.slice(2, 12).map(p => this.view(p)),
+      lookRows: this.AES.map(a => ({
+        name: a.name,
+        meta: this.P.filter(p => p.tags.indexOf(a.id) > -1).length + ' pieces · ' + a.meta.toLowerCase(),
+        swatches: this.P.filter(p => p.tags.indexOf(a.id) > -1).slice(0, 3).map(p => ({
+          style: { width: 22, height: 34, borderRadius: 6, background: p.tone }
+        })),
+        open: () => this.setState({ openLook: a.id })
+      })),
+      openLookName: openLook ? openLook.name : '',
+      openLookMeta: openLook ? openLook.meta : '',
+      openLookItems,
+      backToLooks: () => this.setState({ openLook: null }),
+      adoptLook: () => { if (openLook) { this.pickAes(openLook.id); this.say(openLook.name + ' it is. Home just changed \u2665'); } },
+      hasDrops: dropList.length > 0,
+      drops: dropList,
+      brandRows: this.BRANDS.map(b => {
+        const on = !!st.follows[b.id];
+        return {
+          ...b,
+          swatch: { width: 40, height: 40, borderRadius: 12, background: b.c, flex: '0 0 auto', backgroundImage: 'var(--texture-pointillism)', backgroundSize: '7px 7px, 9px 9px, 6px 6px, 11px 11px' },
+          btn: { padding: '5px 12px', borderRadius: 999, fontSize: 11, fontWeight: 600, cursor: 'pointer', whiteSpace: 'nowrap', background: on ? '#0E0E10' : '#fff', color: on ? '#fff' : '#0E0E10', border: on ? '1px solid #0E0E10' : '1.5px solid rgba(14,14,16,.16)', boxShadow: on ? '0 3px 10px rgba(14,14,16,.2)' : '0 2px 7px rgba(14,14,16,.08)' },
+          btnLabel: on ? 'Following' : 'Follow',
+          toggle: () => this.toggleFollow(b.id)
+        };
+      }),
+
+      boardCards: this.BOARDS.map((b, i) => {
+        const pics = this.P.slice(i * 3, i * 3 + 3);
+        return {
+          ...b,
+          c1: { width: '52%', background: (pics[0] || this.P[0]).tone },
+          c2: { flex: 1, background: (pics[1] || this.P[1]).tone },
+          c3: { flex: 1, background: (pics[2] || this.P[2]).tone },
+          open: () => this.say('Opening ' + b.name)
+        };
+      }),
+      openNewBoard: () => this.say('New board! Name it when inspiration strikes'),
+
+      aesRows: sortedAes.slice(0, 6).map(a => ({
+        ...a,
+        swatch: { width: 30, height: 30, borderRadius: 9, background: a.c, flex: '0 0 auto', backgroundImage: 'var(--texture-pointillism)', backgroundSize: '7px 7px, 9px 9px, 6px 6px, 11px 11px' },
+        starRow: st.favs[a.id] ? '\u2605' : '\u2606',
+        starRowStyle: { fontSize: 15, color: st.favs[a.id] ? '#0E0E10' : '#C9CBD1' },
+        fav: () => this.toggleFav(a.id)
+      })),
+      toggleNotif: () => this.setState({ notif: !st.notif }),
+      notifTrack: { width: 38, height: 22, borderRadius: 999, background: st.notif ? '#0E0E10' : 'rgba(14,14,16,.16)', position: 'relative', cursor: 'pointer', transition: 'background .15s' },
+      notifKnob: { position: 'absolute', top: 3, left: st.notif ? 19 : 3, width: 16, height: 16, borderRadius: 999, background: '#fff', transition: 'left .15s cubic-bezier(.2,.8,.2,1)' },
+
+      goHome: () => this.setState({ tab: 'home', detail: null }),
+      goSearch: () => this.setState({ tab: 'search', detail: null }),
+      goBoards: () => this.setState({ tab: 'boards', detail: null }),
+      goYou: () => this.setState({ tab: 'you', detail: null }),
+      sHome: this.tabStyle('home'), sSearch: this.tabStyle('search'), sBoards: this.tabStyle('boards'), sYou: this.tabStyle('you'),
+
+      hasDetail: !!detail,
+      detailThumb: detail ? { position: 'relative', height: 296, background: detail.tone } : { display: 'none' },
+      detailPh: detail ? detail.ph : '',
+      detailPhStyle: this.phStyle('lg'),
+      detailBrand: detail ? detail.brand : '',
+      detailTitle: detail ? detail.title : '',
+      detailPrice: detail ? '$' + detail.price : '',
+      detailWas: detail && detail.was ? '$' + detail.was : '',
+      detailNote: detail ? detail.line + ' ' + detail.why : '',
+      detailHeart: detail && st.saved[detail.id] ? '\u2665' : '\u2661',
+      detailHeartStyle: detail ? this.heart(detail, true) : { display: 'none' },
+      detailSave: () => { if (detail) this.toggleSave(detail.id); },
+      closeDetail: () => this.setState({ detail: null }),
+      moreLike: this.P.filter(p => detail && p.id !== detail.id && p.tags.indexOf(st.aes) > -1).slice(0, 4).map(p => ({
+        title: p.title, priceStr: '$' + p.price,
+        thumb: { height: 108, borderRadius: 12, background: p.tone },
+        open: () => this.setState({ detail: p.id })
+      })),
+
+      sheetSave: st.sheet === 'save', sheetNew: st.sheet === 'new', sheetStylist: st.sheet === 'stylist',
+      sheetAnim: { animation: 'teSheet .28s cubic-bezier(.2,.8,.2,1)' },
+      toastAnim: { animation: 'teRise .22s cubic-bezier(.2,.8,.2,1)', bottom: 96 },
+      closeSheet: () => this.setState({ sheet: null }),
+      openSave: () => this.setState({ sheet: 'save' }),
+      openNew: () => this.setState({ sheet: 'new' }),
+      openStylist: () => this.setState({ sheet: 'stylist' }),
+      makeLook: () => { this.setState({ sheet: null }); this.say('Built it! Go have a scroll'); },
+      boardPicks: this.BOARDS.map((b, i) => ({
+        ...b,
+        thumb: { width: 46, height: 46, borderRadius: 12, background: this.P[i * 3].tone, flex: '0 0 auto' },
+        pick: () => { this.setState({ sheet: null }); this.say('Tucked into ' + b.name + ' \u2665'); }
+      })),
+      toast: st.toast,
+
+      deckName: deckAes.name,
+      deckMeta: st.favs[deckAes.id] ? 'ONE OF YOURS' : 'TAP THE STAR FOR MORE OF IT',
+      deckItems: deckList.slice(0, 4).map(p => ({ title: p.title, thumb: { height: 86 + (p.h % 36), borderRadius: 14, background: p.tone } })),
+      deckGridStyle: { columns: 2, columnGap: 10, animation: 'teFade .24s cubic-bezier(.2,.8,.2,1)' },
+      deckPrev: () => this.setState({ deck: (st.deck + sortedAes.length - 1) % sortedAes.length }),
+      deckNext: () => this.setState({ deck: (st.deck + 1) % sortedAes.length }),
+      deckFav: () => this.toggleFav(deckAes.id),
+      deckFavLabel: st.favs[deckAes.id] ? '\u2605 One of yours' : '\u2606 More of this please',
+      deckFavStyle: { padding: '7px 13px', borderRadius: 999, fontSize: 11.5, fontWeight: 600, cursor: 'pointer', background: st.favs[deckAes.id] ? '#0E0E10' : '#fff', border: st.favs[deckAes.id] ? '1px solid #0E0E10' : '1px solid var(--line-1)', boxShadow: st.favs[deckAes.id] ? '0 3px 10px rgba(14,14,16,.2)' : '0 2px 7px rgba(14,14,16,.08)', color: st.favs[deckAes.id] ? '#fff' : '#0E0E10' },
+      deckPips: sortedAes.map((a, i) => ({ style: { width: i === st.deck % sortedAes.length ? 14 : 5, height: 5, borderRadius: 999, background: i === st.deck % sortedAes.length ? '#0E0E10' : 'rgba(14,14,16,.16)', transition: 'width .2s cubic-bezier(.2,.8,.2,1)' } })),
+
+      gestureTabs: [{ id: 'tap', name: 'Tap' }, { id: 'hold', name: 'Hold' }, { id: 'double', name: 'Double tap' }].map(g => ({
+        name: g.name,
+        pick: () => this.setState({ g: g.id, gRadial: false, gSaved: false }),
+        style: { flex: 1, textAlign: 'center', padding: '7px 0', borderRadius: 999, fontSize: 11.5, fontWeight: 600, cursor: 'pointer', background: st.g === g.id ? '#0E0E10' : '#fff', border: st.g === g.id ? '1px solid #0E0E10' : '1px solid var(--line-1)', boxShadow: st.g === g.id ? '0 3px 10px rgba(14,14,16,.2)' : '0 2px 7px rgba(14,14,16,.07)', color: st.g === g.id ? '#fff' : '#0E0E10' }
+      })),
+      gestureHint: gestureCopy[st.g],
+      gHeart: st.gSaved ? '\u2665' : '\u2661',
+      gHeartStyle: {
+        position: 'absolute', top: 12, right: 12, width: 34, height: 34, borderRadius: 999,
+        background: '#FFFFFF', display: 'flex', alignItems: 'center', justifyContent: 'center',
+        fontSize: 16, color: st.gSaved ? accent : '#6A6C72', cursor: 'pointer', boxShadow: '0 3px 10px rgba(14,14,16,.2)',
+        animation: st.gBurst ? 'tePop .42s cubic-bezier(.2,.8,.2,1)' : 'none'
+      },
+      gBurstStyle: {
+        position: 'absolute', left: '50%', top: '50%', fontSize: 92, color: accent, pointerEvents: 'none',
+        display: st.gBurst ? 'block' : 'none', animation: st.gBurst ? 'teBurst .62s cubic-bezier(.2,.8,.2,1)' : 'none'
+      },
+      gRadialStyle: {
+        position: 'absolute', left: 14, right: 14, bottom: 14, display: st.gRadial ? 'flex' : 'none',
+        flexWrap: 'wrap', gap: 7, justifyContent: 'center', animation: 'teFade .2s cubic-bezier(.2,.8,.2,1)'
+      },
+      gBoards: this.BOARDS.slice(0, 3).map(b => ({
+        name: b.name,
+        pick: (e) => { e.stopPropagation(); this.setState({ gRadial: false, gSaved: true }); this.gsay('Tucked into ' + b.name + ' \u2665'); }
+      })),
+      gTap: (e) => {
+        e.stopPropagation();
+        if (st.g !== 'tap') return;
+        const on = !st.gSaved;
+        this.setState({ gSaved: on, gBurst: on ? 1 : 0 });
+        setTimeout(() => this.setState({ gBurst: 0 }), 640);
+        if (on) this.gsay('Yours now \u2665 good call');
+      },
+      gDown: () => { if (st.g !== 'hold') return; clearTimeout(this._hold); this._hold = setTimeout(() => this.setState({ gRadial: true }), 380); },
+      gUp: () => { clearTimeout(this._hold); },
+      gDouble: () => {
+        if (st.g !== 'double') return;
+        this.setState({ gSaved: true, gBurst: 1 });
+        setTimeout(() => this.setState({ gBurst: 0 }), 640);
+        this.gsay('Yours now \u2665 that was decisive');
+      },
+      gToast: st.gToast
+    };
+  }
+
+  tabStyle(key) {
+    const on = this.state.tab === key;
+    return {
+      flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3,
+      padding: '7px 0 5px', cursor: 'pointer', color: on ? '#0E0E10' : '#8A8C92'
+    };
+  }
+}
+</script>
+</body>
+</html>

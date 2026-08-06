@@ -1,0 +1,27 @@
+/* ============================================================
+   The Edit — Spacing, radii, layout
+   4px base grid. Values copied from prototype where present.
+   ============================================================ */
+:root {
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* screen gutter used across the app */
+  --gutter: 18px;
+
+  /* ---- Corner radii ---- */
+  --radius-sm:   8px;    /* tags, chips inner, small tiles */
+  --radius-md:   12px;   /* buttons, swatches, brand tiles */
+  --radius-lg:   14px;   /* board covers, list thumbs      */
+  --radius-xl:   16px;   /* product card thumbnails        */
+  --radius-2xl:  26px;   /* bottom sheets                  */
+  --radius-pill: 999px;  /* pills, dots, avatars, follow   */
+}

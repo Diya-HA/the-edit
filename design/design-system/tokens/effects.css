@@ -1,0 +1,62 @@
+/* ============================================================
+   The Edit — Effects: elevation, motion, and the signature
+   Impressionist "canvas" texture motif.
+   ============================================================ */
+:root {
+  /* ---- Elevation (soft, cool-tinted, never harsh black) ---- */
+  --shadow-sm:  0 1px 3px rgba(14,14,16,0.08);
+  --shadow-md:  0 4px 14px rgba(14,14,16,0.09);
+  --shadow-lg:  0 12px 34px rgba(14,14,16,0.12);
+  --shadow-xl:  0 24px 60px rgba(14,14,16,0.16);
+  --shadow-sheet: 0 -10px 40px rgba(14,14,16,0.18);
+  --shadow-float: 0 1px 4px rgba(0,0,0,0.18);   /* floating glass buttons */
+
+  /* frosted-glass control (save heart, close, etc.) */
+  --glass-bg: rgba(255,255,255,0.86);
+  --glass-blur: blur(6px);  /* @kind other */
+
+  /* ---- Motion ---- */
+  --ease-out:   cubic-bezier(.2,.8,.2,1);  /* @kind other */
+  --ease-inout: cubic-bezier(.4,0,.2,1);   /* @kind other */
+  --dur-fast:   .15s;  /* @kind other */
+  --dur-med:    .22s;  /* @kind other */
+  --dur-slow:   .28s;  /* @kind other */
+
+  /* ---- Impressionist texture ---- *
+   * The brand's unique element: a pointillist "dab" field and a
+   * gauzy brushstroke wash, both pure CSS so any color field can
+   * become a painted surface. Layer over a pigment/tint fill.    */
+
+  /* Pointillism: fine stippled dabs of light + shadow (Seurat) */
+  --texture-pointillism:
+    radial-gradient(circle at 20% 30%, rgba(255,255,255,0.35) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 70% 20%, rgba(0,0,0,0.06) 0 1.1px, transparent 1.6px),
+    radial-gradient(circle at 40% 70%, rgba(255,255,255,0.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 85% 65%, rgba(0,0,0,0.05) 0 1px, transparent 1.5px); /* @kind other */
+  --texture-pointillism-size: 7px 7px, 9px 9px, 6px 6px, 11px 11px;  /* @kind other */
+
+  /* Brushstroke sheen: soft diagonal light like paint catching sun */
+  --texture-sheen:
+    linear-gradient(140deg, rgba(255,255,255,0.24), rgba(255,255,255,0) 42%, rgba(0,0,0,0.07)); /* @kind other */
+
+  /* Painterly wash: multi-pigment gauzy blend for hero fields */
+  --texture-wash:
+    radial-gradient(80% 60% at 15% 20%, rgba(255,196,0,0.30), transparent 60%),
+    radial-gradient(70% 70% at 85% 30%, rgba(255,77,151,0.28), transparent 60%),
+    radial-gradient(90% 80% at 60% 100%, rgba(36,54,234,0.22), transparent 65%); /* @kind other */
+}
+
+/* Utility class: turn any element into a painted swatch.
+   Set the base color via `background-color` inline/elsewhere. */
+.te-canvas {
+  position: relative;
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+}
+.te-canvas::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--texture-sheen);
+  pointer-events: none;
+}
