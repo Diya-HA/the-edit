@@ -109,6 +109,10 @@ model Product {
 
   /// One editorial line, serif italic under a hero card.
   line     String?
+  /// Why this piece, for you — the rationale the detail screen shows after
+  /// the line. The data model's CURATED_ITEM.rationale, denormalised onto
+  /// the product until curated sets exist.
+  why      String?
   imageUrl String?
   /// Where the affiliate click goes.
   productUrl String?

@@ -56,3 +56,63 @@ export async function toggleSave(
     } ♥`,
   };
 }
+
+/** Save a piece into a board you picked from the sheet. */
+export async function saveToEdit(
+  productId: string,
+  editId: string,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const edit = await prisma.edit.findFirst({
+    where: { id: editId, userId: user.id },
+  });
+  if (!edit) throw new Error("That board is not yours.");
+
+  await prisma.savedItem.upsert({
+    where: { editId_productId: { editId, productId } },
+    update: {},
+    create: { editId, productId },
+  });
+
+  revalidatePath("/", "layout");
+  return {
+    saved: true,
+    message: `Saved to ${edit.name}. It’s coming together nicely`,
+  };
+}
+
+/**
+ * "Somewhere new" — start a board and drop the piece straight into it.
+ * Named after the look it came from, numbered if that name is taken, so the
+ * sheet never stops to ask you for a name mid-save.
+ */
+export async function saveToNewEdit(
+  productId: string,
+  lookName: string,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const taken = new Set(
+    (
+      await prisma.edit.findMany({
+        where: { userId: user.id },
+        select: { name: true },
+      })
+    ).map((e) => e.name),
+  );
+
+  let name = lookName;
+  for (let n = 2; taken.has(name); n += 1) name = `${lookName} ${n}`;
+
+  const edit = await prisma.edit.create({
+    data: { userId: user.id, name, note: "Just started" },
+  });
+  await prisma.savedItem.create({ data: { editId: edit.id, productId } });
+
+  revalidatePath("/", "layout");
+  return {
+    saved: true,
+    message: `Saved to ${name}. Name it whenever you like`,
+  };
+}
