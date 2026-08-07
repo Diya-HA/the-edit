@@ -32,4 +32,10 @@ COPY --from=build /src/node_modules/prisma ./node_modules/prisma
 COPY --from=build /src/node_modules/@prisma ./node_modules/@prisma
 
 EXPOSE 3000
-CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy && node server.js"]
+# Seeds between migrate and start. The template's default CMD omits the seed;
+# it is added here because the production database starts empty and every
+# screen reads the catalogue — without a seed the build goes green and the
+# site returns 500 on every page (verified against an empty database).
+# prisma/seed.ts is entirely upserts, so this is safe on every restart.
+# Remove the seed clause once real catalogue data arrives from somewhere else.
+CMD ["sh", "-c", "node node_modules/prisma/build/index.js migrate deploy && node node_modules/prisma/build/index.js db seed && node server.js"]
