@@ -59,12 +59,12 @@ const AESTHETICS = [
 ];
 
 const BRANDS = [
-  { slug: "margaux", name: "Margaux", meta: "Three of theirs live on your boards", colorToken: "--fabric-rose", isPartner: true },
-  { slug: "ciel", name: "Ciel", meta: "Two prices came down this week", colorToken: "--fabric-indigo", isPartner: true },
-  { slug: "alder-and-oak", name: "Alder & Oak", meta: "New linen just landed", colorToken: "--fabric-sage", isPartner: false },
-  { slug: "paloma-works", name: "Paloma Works", meta: "You keep four of theirs", colorToken: "--fabric-neutral", isPartner: false },
-  { slug: "leonie", name: "Leonie", meta: "Quietly good after dark", colorToken: "--fabric-ink", isPartner: true },
-  { slug: "halle", name: "Halle", meta: "The knitwear you come back to", colorToken: "--fabric-rust", isPartner: false },
+  { slug: "margaux", name: "Margaux", meta: "Quiet utility, softened. Wool tailoring and silk, rarely under $100.", colorToken: "--fabric-rose", isPartner: true },
+  { slug: "ciel", name: "Ciel", meta: "Balletcore off duty. Flats, ribbons and wrap knits, mostly under $150.", colorToken: "--fabric-indigo", isPartner: true },
+  { slug: "alder-and-oak", name: "Alder & Oak", meta: "Quiet utility. Washed linen and cotton, most of it under $200.", colorToken: "--fabric-sage", isPartner: false },
+  { slug: "paloma-works", name: "Paloma Works", meta: "Quiet utility, strictly. Denim, canvas and workwear, nothing over $200.", colorToken: "--fabric-neutral", isPartner: false },
+  { slug: "leonie", name: "Leonie", meta: "Soft romance after dark. Silk, lace and velvet, up to $400.", colorToken: "--fabric-ink", isPartner: true },
+  { slug: "halle", name: "Halle", meta: "Soft romance, mostly. Knitwear only — lambswool and cashmere, seldom over $200.", colorToken: "--fabric-rust", isPartner: false },
 ];
 
 /** Labels the seeded shopper already follows. */
