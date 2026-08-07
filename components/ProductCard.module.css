@@ -1,0 +1,160 @@
+/* ProductCard — the feed unit. The placeholder is the card: no border, no
+   shadow, meta straight on the white canvas.
+
+   Turn 3: heart top right on solid white, drop chip top left in ink on
+   white, garment named along the bottom of the placeholder. */
+
+.card {
+  display: inline-block;
+  width: 100%;
+}
+
+.frame {
+  position: relative;
+  cursor: pointer;
+}
+
+/* ---- Price drop, top left ---- */
+.drop {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  z-index: 3;
+}
+
+/* ---- Save heart, top right ---- */
+.heart {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-pill);
+  background: var(--white);
+  box-shadow: var(--shadow-glass);
+  color: var(--control-idle);
+  font-size: var(--fs-card);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.featured .heart {
+  top: 9px;
+  right: 9px;
+  width: 30px;
+  height: 30px;
+  font-size: 14px;
+}
+
+.saved {
+  color: var(--brand);
+  animation: tePop 0.42s var(--ease-out);
+}
+
+@keyframes tePop {
+  0% {
+    transform: scale(1);
+  }
+  45% {
+    transform: scale(1.34);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+/* ---- Meta ---- */
+.meta {
+  padding: var(--space-2) 1px 0;
+  cursor: pointer;
+}
+
+.brand {
+  margin-bottom: 3px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-semi);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.title {
+  font-family: var(--font-sans);
+  font-size: var(--fs-card);
+  font-weight: var(--fw-medium);
+  line-height: 1.25;
+  color: var(--text-strong);
+}
+
+.prices {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  margin-top: var(--space-1);
+}
+
+.price {
+  font-family: var(--font-mono);
+  font-size: var(--fs-price);
+  font-weight: var(--fw-bold);
+  color: var(--text-strong);
+}
+
+.was {
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+  text-decoration: line-through;
+}
+
+/* ---- Featured: the hero that opens a block ---- */
+.featured .meta {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-3);
+  padding: 9px 1px 0;
+}
+
+.featured .text {
+  min-width: 0;
+}
+
+.featured .brand {
+  margin-bottom: var(--space-1);
+}
+
+.featured .title {
+  font-family: var(--font-display);
+  font-size: 17px;
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  line-height: 1.05;
+  letter-spacing: var(--ls-tight);
+}
+
+.featured .prices {
+  margin-top: 0;
+  white-space: nowrap;
+}
+
+.featured .price {
+  font-size: var(--fs-card);
+}
+
+/* One editorial line under a hero, serif italic. */
+.line {
+  padding: 5px 1px 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-chip);
+  line-height: 1.45;
+  color: var(--text-body);
+}

@@ -10,11 +10,35 @@ Pick a look (say Soft Romance or Quiet Utility) and the app curates real pieces 
 
 ```
 the-edit/
-├── docs/          Written deliverables (Word docs) + the data model views
+├── app/           Next.js App Router — the running app
+├── components/    The design system as React components (see components/README.md)
+├── styles/        design-system/ — the token set, imported once in app/layout.tsx
+├── prisma/        Schema, migrations and seed
+├── Dockerfile     From the class deploy template — expects the app at the repo root
+├── design/        The visual source of truth: tokens, component system, screens
+├── docs/          Written deliverables (Word docs, PDFs) + the data model views
 ├── prototypes/    Self-contained, clickable HTML prototypes — double-click to open
 ├── deck/          The 9-slide concept deck
 └── build/         The scripts that generate the Word docs (see build/README.md)
 ```
+
+## Running it
+
+```bash
+npm install
+docker compose up -d          # PostgreSQL on localhost:5432
+npx prisma migrate dev        # create the schema
+npx prisma db seed            # 6 brands, 4 aesthetics, 30 products
+npm run dev                   # http://localhost:3000
+```
+
+Copy `.env.example` to `.env` first — it holds the local `DATABASE_URL`.
+In production the platform provides `DATABASE_URL`; migrations run on every
+start via the Dockerfile.
+
+Deployment follows the class template: merge to `main` and the GitHub Action
+builds and ships the image. `next.config.ts` sets `output: 'standalone'`,
+which that Dockerfile requires.
 
 ### docs/ — the deliverables
 

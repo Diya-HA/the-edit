@@ -1,0 +1,47 @@
+/* Badge — compact mono tag. Price drops, NEW, short status. */
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 7px;
+  border-radius: 7px;
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  font-weight: var(--fw-bold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+/* Floating over a placeholder: a white chip with ink text. Turn 3 took the
+   vermillion out of the everyday screens — a drop is stated calmly. */
+.drop {
+  background: var(--white);
+  color: var(--ink-0);
+  box-shadow: var(--shadow-badge);
+}
+
+.sale {
+  background: var(--sale);
+  color: var(--white);
+}
+
+.brand {
+  background: var(--brand);
+  color: var(--brand-ink);
+}
+
+.cobalt {
+  background: var(--pig-cobalt);
+  color: var(--white);
+}
+
+.ink {
+  background: var(--ink-0);
+  color: var(--canvas-1);
+}
+
+.outline {
+  background: transparent;
+  color: var(--text-body);
+  box-shadow: inset 0 0 0 1.5px var(--border);
+}

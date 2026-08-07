@@ -1,0 +1,88 @@
+/* ============================================================
+   The Edit — Extended tokens
+   Values the app screens (screens/the-edit-app.dc.html) rely on that
+   the base token files do not yet name. Per the rule in the design
+   README — "if a colour is missing, add it to the token file, not to
+   the component" — they live here rather than in component code.
+   Every value is lifted verbatim from the reference screens.
+   ============================================================ */
+:root {
+  /* ---- Fabric tones (turn 3) ----
+     Turn 3 pulled the treatment back: everyday screens are plain white and
+     product placeholders are tinted to the actual fabric rather than being
+     decorative pigment fields. These eight are the palette families the
+     filter row offers. A product's own tone is content — the exact colour
+     of the cloth, which real photography will eventually replace — so it
+     lives in the database, not here. These name the family it groups into. */
+  --fabric-neutral: #E4DCCB;
+  --fabric-cream:   #F2EDE4;
+  --fabric-butter:  #F0DFA8;
+  --fabric-rust:    #D08A6E;
+  --fabric-rose:    #E9C7CC;
+  --fabric-indigo:  #9AA9C4;
+  --fabric-sage:    #C9D2C3;
+  --fabric-ink:     #3A3A3C;
+
+  /* Mono label sitting on a fabric placeholder — "CARDIGAN". */
+  --label-on-fabric: rgba(14, 14, 16, 0.34);
+
+  /* ---- Color ---- */
+  /* Sunken input wells on turn 3 screens: a hair warmer than --canvas-2. */
+  --surface-input: #F5F5F7;
+
+  /* Idle glyph inside a frosted-glass control (the unsaved heart).
+     Darker than --ink-2 so it stays legible over a pigment field. */
+  --control-idle: #6A6C72;
+
+  /* Warm-dark scrim behind bottom sheets. */
+  --scrim: rgba(20, 16, 12, 0.40);
+
+  /* Mono eyebrow set directly on a painted field. */
+  --caption-on-paint: rgba(255, 255, 255, 0.72);
+
+  /* A heavier hairline than --line-0, for the 1.5px idle borders on
+     secondary buttons and the Follow toggle. */
+  --line-2: rgba(14, 14, 16, 0.16);
+
+  /* ---- Elevation ---- */
+  /* The pill pair used across chips, segments and follow toggles:
+     a faint lift when idle, a firmer one when ink-filled. */
+  --shadow-pill-idle:   0 2px 7px rgba(14, 14, 16, 0.07);
+  --shadow-pill-active: 0 3px 10px rgba(14, 14, 16, 0.20);
+
+  /* Primary call-to-action pill. */
+  --shadow-cta: 0 4px 12px rgba(14, 14, 16, 0.24);
+
+  /* Chips and glass controls floating over a painted field. */
+  --shadow-badge: 0 3px 10px rgba(14, 14, 16, 0.18);
+  --shadow-glass: 0 3px 10px rgba(14, 14, 16, 0.20);
+
+  /* ---- Selection rings ---- */
+  /* Palette swatch / colour dot: white gap, ink ring, soft drop. */
+  --ring-active: 0 0 0 1.5px var(--white), 0 0 0 3px var(--ink-0),
+                 0 2px 6px rgba(14, 14, 16, 0.14);
+  --ring-idle:   0 1px 4px rgba(14, 14, 16, 0.14);
+
+  /* ---- Type sub-scale ----
+     The mobile screens sit between the steps of the base ramp. These
+     are the recurring in-component sizes, named by the role they play
+     rather than by step, so components never carry a bare px value. */
+  --fs-tab:     7px;     /* tab bar caption                          */
+  --fs-eyebrow: 8.5px;   /* brand line above a product title, badges */
+  --fs-meta:    9.5px;   /* board counts, struck-through prices      */
+  --fs-price:   10.5px;  /* price in a grid card                     */
+  --fs-chip:    11.5px;  /* chips, follow toggles, card notes        */
+  --fs-card:    12px;    /* product title in a grid card             */
+  --fs-row:     13px;    /* list row title, toast copy               */
+  --fs-sheet:   13.5px;  /* bottom-sheet row title                   */
+  --fs-title:   16px;    /* board name                               */
+  --fs-heading: 26px;    /* bottom-sheet heading                     */
+
+  /* ---- Texture ---- */
+  /* The screens soften the base --texture-sheen on small painted
+     tiles so the stipple stays readable at thumbnail size. */
+  --texture-sheen-soft:
+    linear-gradient(150deg, rgba(255, 255, 255, 0.20),
+                            rgba(255, 255, 255, 0) 55%,
+                            rgba(0, 0, 0, 0.025));
+}

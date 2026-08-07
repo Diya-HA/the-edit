@@ -1,0 +1,73 @@
+/* BoardCard — a mood-board tile: a three-panel painted cover built
+   from the board's first pieces, then name, count and note. */
+
+.card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.cover {
+  display: flex;
+  gap: 3px;
+  height: 98px;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+/* Turn 3: plain fabric tones, no stipple. */
+.panel {
+  background-color: var(--panel-color);
+}
+
+/* The lead panel takes just over half; the other two stack. */
+.lead {
+  width: 52%;
+  flex: 0 0 auto;
+}
+
+.stack {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.stack .panel {
+  flex: 1;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--space-2);
+  margin-top: 9px;
+}
+
+.name {
+  font-family: var(--font-display);
+  font-size: var(--fs-title);
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.count {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-muted);
+}
+
+.note {
+  margin-top: 3px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  color: var(--text-muted);
+}

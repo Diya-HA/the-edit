@@ -1,0 +1,254 @@
+/* Getting started — the washed screens.
+
+   This is where the wash belongs: turn 3 reserves it for the moments that
+   are a welcome. Everything behind the copy is the multi-pigment wash under
+   a white veil, with frosted cards floating on top. */
+
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+  background: var(--surface-app);
+  overflow: hidden;
+}
+
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--texture-wash);
+  opacity: 0.62;
+  pointer-events: none;
+}
+
+.veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0.8)
+  );
+  pointer-events: none;
+}
+
+/* The last step lifts the wash and deepens the veil. */
+.finale .wash {
+  opacity: 0.7;
+}
+
+.finale .veil {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.22),
+    rgba(255, 255, 255, 0.78)
+  );
+}
+
+.content {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+  padding: var(--space-3) var(--space-5) var(--space-5);
+  overflow-y: auto;
+}
+
+.centred {
+  justify-content: center;
+}
+
+/* ---- Progress ---- */
+.bars {
+  display: flex;
+  flex: none;
+  gap: 5px;
+  margin-bottom: 22px;
+}
+
+.bar {
+  flex: 1;
+  height: 3px;
+  border-radius: var(--radius-pill);
+  background: var(--line-2);
+}
+
+.barOn {
+  background: var(--ink-0);
+}
+
+/* ---- Copy ---- */
+.heading {
+  margin-bottom: 11px;
+  font-family: var(--font-display);
+  font-size: 32px;
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  line-height: 0.94;
+  letter-spacing: -0.035em;
+  color: var(--text-strong);
+}
+
+.finale .heading {
+  font-size: 36px;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  margin-bottom: var(--space-3);
+}
+
+.blurb {
+  margin-bottom: 18px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sheet);
+  line-height: 1.55;
+  color: var(--text-body);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  margin-bottom: 9px;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* Frosted card — the quoted example, and the first-look summary. */
+.card {
+  margin-bottom: 18px;
+  padding: var(--space-4);
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 2px 10px rgba(14, 14, 16, 0.06);
+}
+
+.quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-md);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: auto;
+}
+
+/* ---- Colours ---- */
+.swatches {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: var(--space-6);
+}
+
+.swatch {
+  aspect-ratio: 1;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-lg);
+  background-color: var(--swatch-tone);
+  box-shadow: var(--ring-idle);
+  cursor: pointer;
+  transition: box-shadow var(--dur-fast) var(--ease-out);
+}
+
+.swatchOn {
+  box-shadow: 0 0 0 2px var(--white), 0 0 0 3.5px var(--ink-0),
+    0 3px 10px rgba(14, 14, 16, 0.12);
+}
+
+/* ---- Budget ---- */
+.budgets {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  margin-bottom: auto;
+}
+
+.budget {
+  padding: var(--space-3);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-lg);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-pill-idle);
+  font-family: var(--font-mono);
+  font-size: var(--fs-row);
+  font-weight: var(--fw-semi);
+  color: var(--text-strong);
+  cursor: pointer;
+}
+
+.budgetOn {
+  background: var(--ink-0);
+  border-color: var(--ink-0);
+  color: var(--canvas-1);
+  box-shadow: var(--shadow-pill-active);
+}
+
+/* ---- Footer ---- */
+.actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 11px;
+  margin-top: var(--space-4);
+}
+
+.skip {
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+/* ---- Finale ---- */
+.heart {
+  margin-bottom: 18px;
+  font-size: 40px;
+  line-height: 1;
+  color: var(--brand);
+}
+
+.lookName {
+  margin-bottom: 5px;
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  letter-spacing: -0.025em;
+  color: var(--text-strong);
+}
+
+.lookBlurb {
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.tones {
+  display: flex;
+  gap: 6px;
+  margin-top: 11px;
+}
+
+.tone {
+  width: 22px;
+  height: 22px;
+  border-radius: 7px;
+  background-color: var(--tone);
+}

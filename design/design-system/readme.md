@@ -123,6 +123,11 @@ tokens/
   typography.css                Size ramp, weights, tracking, semantic type roles
   spacing.css                   4px grid, gutter, corner radii
   effects.css                   Elevation, motion, Impressionist texture tokens + .te-canvas
+  extensions.css                Values the app screens rely on that the files above
+                                don't name: the idle glyph colour on glass controls,
+                                the sheet scrim, the idle/active pill shadows, the
+                                palette selection ring, a softened sheen, and a type
+                                sub-scale for sizes between the base ramp's steps.
 components/
   actions/     Button
   forms/       SearchField, Chip, ColorDot

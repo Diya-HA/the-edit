@@ -1,0 +1,53 @@
+/* CanvasSwatch — the field standing in for photography.
+
+   Turn 3: a plain tone tinted to the actual fabric. The pointillist texture
+   and the wash are opt-in, kept for brand swatches and the few celebratory
+   surfaces respectively. */
+
+.swatch {
+  position: relative;
+  width: 100%;
+  height: var(--swatch-height);
+  border-radius: var(--swatch-radius);
+  background-color: var(--swatch-color);
+  overflow: hidden;
+}
+
+/* Seurat-style stipple. Brand and look swatches only. */
+.pointillism {
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+  pointer-events: none;
+}
+
+/* Gauzy multi-pigment wash — welcome, stylist, milestones. */
+.wash {
+  position: absolute;
+  inset: 0;
+  background: var(--texture-wash);
+  opacity: 0.55;
+  mix-blend-mode: screen;
+  pointer-events: none;
+}
+
+/* Names the garment, so a placeholder still tells you what it is. */
+.label {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: var(--space-2);
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 6.5px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--label-on-fabric);
+  pointer-events: none;
+}
+
+.labelLarge {
+  bottom: 10px;
+  font-size: 7.5px;
+}

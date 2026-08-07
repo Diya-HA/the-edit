@@ -1,0 +1,34 @@
+/* Chip — category / aesthetic filter pill.
+   White and lifted when idle, ink-filled when active. */
+
+.chip {
+  flex: 0 0 auto;
+  padding: 5px var(--space-3);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  cursor: pointer;
+  background: var(--surface-card);
+  color: var(--text-strong);
+  border: 1px solid var(--border-faint);
+  box-shadow: var(--shadow-pill-idle);
+  transition: background var(--dur-fast) var(--ease-out),
+    color var(--dur-fast) var(--ease-out);
+}
+
+.active {
+  background: var(--ink-0);
+  color: var(--canvas-1);
+  border-color: var(--ink-0);
+  box-shadow: var(--shadow-pill-active);
+}
+
+/* "＋ Write your own" — an invitation, not a state. */
+.dashed {
+  background: transparent;
+  border: 1.5px dashed var(--line-2);
+  color: var(--text-body);
+  box-shadow: none;
+}

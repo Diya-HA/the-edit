@@ -1,0 +1,199 @@
+// The Edit — v1 schema.
+//
+// Cut down from the 18-entity model in docs/data-model-cards.html to the six
+// tables v1 actually needs. What was dropped, and where it went:
+//
+//   CATEGORY       -> Product.category, a plain string. One table for a label.
+//   COLOR          -> Product.color*, denormalised. The palette is a fixed set
+//                     of design tokens, not user data; a table would only ever
+//                     be read as a lookup.
+//   PRICE_HISTORY  -> Product.wasPrice. v1 shows "this dropped from X", which
+//                     is one prior number, not a series.
+//   BOARD          -> Edit. Same entity in the product's own language.
+//   BOARD_ITEM     -> SavedItem.
+//   FOLLOW, PRICE_ALERT, NOTIFICATION, and everything in the "Curate & act"
+//                     domain (CURATOR_BRIEF, CURATED_SET, CURATED_ITEM,
+//                     INTERACTION, OUTBOUND_CLICK) are out of v1 entirely.
+//
+// The relationships that survive keep the cardinality the model specifies:
+// a brand supplies many pieces, each piece is tagged to one aesthetic, a user
+// keeps many edits, and edits meet products through SavedItem.
+//
+// WHY PRISMA 6, NOT 7: Prisma 7 removed `url` from the schema — it has to live
+// in prisma.config.ts, and `migrate deploy` hard-errors without it. The deploy
+// template's Dockerfile copies only prisma/ into the runtime image, never
+// prisma.config.ts, so a v7 setup cannot migrate on start without editing that
+// Dockerfile. v6 keeps the URL here, where the template already looks, and the
+// image works untouched. Revisit if the template ever copies the config file.
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+/// A shopper. Onboarding sets the aesthetic their feed opens on.
+model User {
+  id          String   @id @default(uuid()) @db.Uuid
+  email       String   @unique
+  displayName String
+  /// Two letters for the Avatar component — "AL".
+  initials    String   @db.VarChar(2)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  activeAestheticId String?    @db.Uuid
+  activeAesthetic   Aesthetic? @relation(fields: [activeAestheticId], references: [id], onDelete: SetNull)
+
+  edits   Edit[]
+  follows Follow[]
+
+  @@index([activeAestheticId])
+  @@map("users")
+}
+
+/// A label you follow. Its new pieces surface first, and its price drops are
+/// what the shelf is actually for. The data model's FOLLOW, added in turn 3
+/// when the brands shelf became a real screen.
+model Follow {
+  userId     String   @db.Uuid
+  brandId    String   @db.Uuid
+  followedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@id([userId, brandId])
+  @@index([brandId])
+  @@map("follows")
+}
+
+/// A label whose pieces appear in the feed.
+model Brand {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String   @unique
+  slug      String   @unique
+  /// A line for the brand shelf — "New linen just arrived".
+  meta      String?
+  /// Tint token carried by the shelf swatch, e.g. "--tint-rose".
+  colorToken String  @default("--tint-cobalt")
+  isPartner Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  products  Product[]
+  followers Follow[]
+
+  @@map("brands")
+}
+
+/// A named look — "Soft romance". Every product is tagged to exactly one.
+model Aesthetic {
+  id          String   @id @default(uuid()) @db.Uuid
+  name        String   @unique
+  slug        String   @unique
+  /// The one-line description shown under the name in the deck.
+  description String?
+  /// Styled like a season — "Soft romance ’26".
+  wordmark    String?
+  createdAt   DateTime @default(now())
+
+  products Product[]
+  users    User[]
+
+  @@map("aesthetics")
+}
+
+/// A real piece from a brand feed, tagged to one aesthetic and one tint.
+model Product {
+  id       String @id @default(uuid()) @db.Uuid
+  /// Stable handle, so seeding can upsert rather than duplicate.
+  slug     String @unique
+  title    String
+  /// Kept as a string rather than its own table — see the header note.
+  category String
+
+  price    Decimal  @db.Decimal(10, 2)
+  /// Prior price. Its presence is what draws the drop badge.
+  wasPrice Decimal? @db.Decimal(10, 2)
+
+  /// Colour, in two parts.
+  ///
+  /// colorHex is the tone of the actual cloth and fills the placeholder — it
+  /// is content, the stand-in for photography, so it lives here rather than
+  /// as a token. colorToken/colorName are the palette *family* it groups
+  /// into (`--fabric-sage`, "Sage"), which is what the filter row offers and
+  /// what the swatch on a colour dot is painted with.
+  colorName  String
+  colorToken String
+  colorHex   String @db.Char(7)
+
+  /// One editorial line, serif italic under a hero card.
+  line     String?
+  /// Why this piece, for you — the rationale the detail screen shows after
+  /// the line. The data model's CURATED_ITEM.rationale, denormalised onto
+  /// the product until curated sets exist.
+  why      String?
+  imageUrl String?
+  /// Where the affiliate click goes.
+  productUrl String?
+  inStock  Boolean  @default(true)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  brandId String @db.Uuid
+  brand   Brand  @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  aestheticId String    @db.Uuid
+  aesthetic   Aesthetic @relation(fields: [aestheticId], references: [id], onDelete: Restrict)
+
+  savedItems SavedItem[]
+
+  @@index([brandId])
+  @@index([aestheticId])
+  @@index([colorToken])
+  @@map("products")
+}
+
+/// A user's saved collection — the data model's BOARD, in the product's
+/// own language.
+model Edit {
+  id         String   @id @default(uuid()) @db.Uuid
+  name       String
+  /// "Growing since March".
+  note       String?
+  shareToken String?  @unique
+  isPublic   Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  userId String @db.Uuid
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items SavedItem[]
+
+  @@unique([userId, name])
+  @@index([userId])
+  @@map("edits")
+}
+
+/// A piece saved into an edit. The join between Edit and Product.
+model SavedItem {
+  id      String   @id @default(uuid()) @db.Uuid
+  addedAt DateTime @default(now())
+
+  editId String @db.Uuid
+  edit   Edit   @relation(fields: [editId], references: [id], onDelete: Cascade)
+
+  productId String  @db.Uuid
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  /// A piece lands in a given edit once.
+  @@unique([editId, productId])
+  @@index([editId])
+  @@index([productId])
+  @@map("saved_items")
+}

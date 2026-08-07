@@ -1,0 +1,73 @@
+/* BottomSheet — bottom-anchored modal with a scrim and a grab
+   handle. Slides up on the out-ease; the scrim just fades. */
+
+.scrim {
+  position: absolute;
+  inset: 0;
+  z-index: 9;
+  border: none;
+  padding: 0;
+  width: 100%;
+  background: var(--scrim);
+  cursor: pointer;
+  animation: teFade var(--dur-med) var(--ease-out);
+}
+
+.sheet {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  max-height: 74%;
+  padding: var(--space-3) var(--gutter) 36px;
+  background: var(--surface-card);
+  border-top-left-radius: var(--radius-2xl);
+  border-top-right-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-sheet);
+  animation: teSheet var(--dur-slow) var(--ease-out);
+}
+
+.handle {
+  flex: none;
+  width: 40px;
+  height: 4px;
+  margin: 0 auto var(--space-3);
+  border-radius: var(--radius-pill);
+  background: var(--border);
+}
+
+.title {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-display);
+  font-size: var(--fs-heading);
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  line-height: var(--lh-snug);
+  color: var(--text-strong);
+}
+
+.body {
+  overflow-y: auto;
+}
+
+@keyframes teSheet {
+  from {
+    transform: translateY(101%);
+  }
+  to {
+    transform: none;
+  }
+}
+
+@keyframes teFade {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

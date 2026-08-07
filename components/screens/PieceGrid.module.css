@@ -1,0 +1,22 @@
+/* Two-column masonry. Cards keep their natural height, so the columns
+   stagger the way the reference feed does. */
+
+.grid {
+  columns: 2;
+  column-gap: 11px;
+  transition: opacity var(--dur-med) var(--ease-out),
+    filter var(--dur-med) var(--ease-out);
+}
+
+.item {
+  break-inside: avoid;
+  display: inline-block;
+  width: 100%;
+  margin-bottom: var(--space-4);
+}
+
+/* Filters being applied — the grid softens rather than jumping. */
+.pending {
+  opacity: 0;
+  filter: blur(3px);
+}
