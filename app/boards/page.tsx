@@ -11,7 +11,11 @@ export default async function BoardsPage() {
 
   return (
     <AppShell>
-      <BoardsScreen edits={edits} />
+      <BoardsScreen
+        edits={edits}
+        displayName={user.displayName}
+        initials={user.initials}
+      />
     </AppShell>
   );
 }

@@ -382,7 +382,7 @@ export async function getEdits(
     name: e.name,
     note: e.note,
     count: e.items.length,
-    tones: e.items.slice(0, 3).map((i) => i.product.colorHex.trim()),
+    tones: e.items.slice(0, 4).map((i) => i.product.colorHex.trim()),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
@@ -420,16 +420,115 @@ export async function getEdit(
   };
 }
 
-/**
- * The feed reads as blocks: one hero piece, then a pair beside it. Matches
- * the block rhythm in the reference screens.
- */
-export type FeedBlock = { hero: ProductView; pair: ProductView[] };
+export type OutfitView = {
+  id: string;
+  slug: string;
+  name: string;
+  note: string | null;
+  aestheticName: string;
+  aestheticSlug: string;
+  /** True when an agent assembled it rather than the seed. */
+  fromAgent: boolean;
+  pieces: ProductView[];
+};
 
-export function toBlocks(products: ProductView[]): FeedBlock[] {
-  const blocks: FeedBlock[] = [];
-  for (let i = 0; i < products.length; i += 3) {
-    blocks.push({ hero: products[i], pair: products.slice(i + 1, i + 3) });
-  }
-  return blocks;
+/** Assembled outfits, newest first, optionally narrowed to one look. */
+export async function getOutfits(opts: {
+  userId: string;
+  aestheticSlug?: string;
+}): Promise<OutfitView[]> {
+  const { userId, aestheticSlug } = opts;
+
+  const [rows, savedIds] = await Promise.all([
+    prisma.outfit.findMany({
+      where: aestheticSlug ? { aesthetic: { slug: aestheticSlug } } : {},
+      orderBy: [{ createdAt: "desc" }, { name: "asc" }],
+      include: {
+        aesthetic: { select: { name: true, slug: true } },
+        items: {
+          orderBy: { position: "asc" },
+          include: { product: { select: productSelect } },
+        },
+      },
+    }),
+    getSavedProductIds(userId),
+  ]);
+
+  return rows.map((o) => ({
+    id: o.id,
+    slug: o.slug,
+    name: o.name,
+    note: o.note,
+    aestheticName: o.aesthetic.name,
+    aestheticSlug: o.aesthetic.slug,
+    fromAgent: o.source === "AGENT",
+    pieces: o.items.map((i) => toView(i.product as ProductRow, savedIds)),
+  }));
+}
+
+/**
+ * The trending row. Seeded demo data — with a single shopper there is no real
+ * popularity signal, so the app labels it as a sample rather than dressing a
+ * made-up number as a measurement.
+ */
+export async function getTrending(userId: string): Promise<ProductView[]> {
+  const [rows, savedIds] = await Promise.all([
+    prisma.product.findMany({
+      where: { inStock: true, trendingRank: { not: null } },
+      orderBy: { trendingRank: "asc" },
+      take: 12,
+      select: productSelect,
+    }),
+    getSavedProductIds(userId),
+  ]);
+  return rows.map((r) => toView(r as ProductRow, savedIds));
+}
+
+export type BrandCard = BrandRowView & {
+  /** Looks this label actually stocks. */
+  aesthetics: string[];
+  priceFrom: number;
+  priceTo: number;
+  pieceCount: number;
+  /** Tones from its pieces, for the card. */
+  tones: string[];
+  newestAt: string;
+};
+
+/** Brand discovery: every label with what it stocks and what it costs. */
+export async function getBrandCards(userId: string): Promise<BrandCard[]> {
+  const rows = await prisma.brand.findMany({
+    orderBy: { name: "asc" },
+    include: {
+      followers: { where: { userId }, select: { userId: true } },
+      products: {
+        where: { inStock: true },
+        orderBy: { createdAt: "desc" },
+        select: {
+          price: true,
+          colorHex: true,
+          createdAt: true,
+          aesthetic: { select: { name: true } },
+        },
+      },
+    },
+  });
+
+  return rows.map((b) => {
+    const prices = b.products.map((p) => Number(p.price));
+    return {
+      id: b.id,
+      slug: b.slug,
+      name: b.name,
+      meta: b.meta,
+      color: `var(${b.colorToken})`,
+      following: b.followers.length > 0,
+      aesthetics: [...new Set(b.products.map((p) => p.aesthetic.name))].sort(),
+      priceFrom: prices.length ? Math.min(...prices) : 0,
+      priceTo: prices.length ? Math.max(...prices) : 0,
+      pieceCount: b.products.length,
+      tones: b.products.slice(0, 4).map((p) => p.colorHex.trim()),
+      newestAt: (b.products[0]?.createdAt ?? new Date(0)).toISOString(),
+    };
+  });
 }

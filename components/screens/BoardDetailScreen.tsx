@@ -1,24 +1,29 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toggleSave } from "@/app/actions";
 import type { EditView, ProductView } from "@/lib/data";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
 import PieceGrid from "./PieceGrid";
+import SaveSheet from "./SaveSheet";
+import type { SaveTarget } from "./SaveSheet";
 import styles from "./BoardDetailScreen.module.css";
 
 export type BoardDetailScreenProps = {
   edit: EditView;
   items: ProductView[];
+  edits: EditView[];
 };
 
 export default function BoardDetailScreen({
   edit,
   items,
+  edits,
 }: BoardDetailScreenProps) {
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
+  const [saving, setSaving] = useState<SaveTarget | null>(null);
 
   const meta = [
     `${edit.count} ${edit.count === 1 ? "piece" : "pieces"}`,
@@ -51,11 +56,18 @@ export default function BoardDetailScreen({
               products={items}
               pending={pending}
               onOpen={(p) => router.push(`/product/${p.slug}`)}
-              onSave={(p) => run(() => toggleSave(p.id, edit.name))}
+              onSave={(p) => setSaving({ kind: "product", product: p })}
             />
           )}
         </div>
       </div>
+
+      <SaveSheet
+        target={saving}
+        edits={edits}
+        onClose={() => setSaving(null)}
+        run={run}
+      />
 
       <Toast message={toast} />
     </>

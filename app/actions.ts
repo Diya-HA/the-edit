@@ -3,55 +3,25 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
-
-/**
- * Where an untargeted save lands: the edit named after the look you are
- * browsing, created on first use. Saving from the feed should never make you
- * choose a board first — the sheet is for when you want to.
- */
-async function defaultEdit(userId: string, lookName: string) {
-  const existing = await prisma.edit.findUnique({
-    where: { userId_name: { userId, name: lookName } },
-  });
-  if (existing) return existing;
-
-  return prisma.edit.create({
-    data: { userId, name: lookName, note: "Started from the feed" },
-  });
-}
+import { upsertOutfit } from "@/lib/outfits";
+import type { OutfitInput } from "@/lib/outfits";
 
 export type SaveResult = { saved: boolean; message: string };
 
-/**
- * Toggle a piece in or out of the user's edits. Returns the line the toast
- * shows — the voice is a stylist telling you what just happened.
- */
-export async function toggleSave(
-  productId: string,
-  lookName: string,
-): Promise<SaveResult> {
-  const user = await getCurrentUser();
+/* Saving used to announce itself every single time, which got noisy fast.
+   It is quiet now, and every twentieth keep gets the milestone instead. */
+const MILESTONE_EVERY = 20;
 
-  const existing = await prisma.savedItem.findFirst({
-    where: { productId, edit: { userId: user.id } },
-    include: { edit: true },
-  });
+async function savedTotal(userId: string) {
+  return prisma.savedItem.count({ where: { edit: { userId } } });
+}
 
-  if (existing) {
-    await prisma.savedItem.delete({ where: { id: existing.id } });
-    revalidatePath("/", "layout");
-    return { saved: false, message: "Off the list. No hard feelings" };
-  }
-
-  const edit = await defaultEdit(user.id, lookName);
-  await prisma.savedItem.create({ data: { editId: edit.id, productId } });
-
-  const count = await prisma.savedItem.count({ where: { editId: edit.id } });
-  revalidatePath("/", "layout");
-
+async function confirmSave(userId: string): Promise<SaveResult> {
+  const total = await savedTotal(userId);
+  const milestone = total > 0 && total % MILESTONE_EVERY === 0;
   return {
     saved: true,
-    message: `Yours now ♥ ${edit.name} is ${count} deep`,
+    message: milestone ? "Yours now ♥" : "Saved ✓",
   };
 }
 
@@ -147,10 +117,24 @@ export async function saveToEdit(
   });
 
   revalidatePath("/", "layout");
-  return {
-    saved: true,
-    message: `Into ${edit.name} it goes ♥`,
-  };
+  return confirmSave(user.id);
+}
+
+/** Take a piece back off a board. */
+export async function removeFromEdit(
+  productId: string,
+  editId: string,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const edit = await prisma.edit.findFirst({
+    where: { id: editId, userId: user.id },
+  });
+  if (!edit) throw new Error("That board is not yours.");
+
+  await prisma.savedItem.deleteMany({ where: { editId, productId } });
+  revalidatePath("/", "layout");
+  return { saved: false, message: `Removed from ${edit.name}` };
 }
 
 /**
@@ -182,8 +166,92 @@ export async function saveToNewEdit(
   await prisma.savedItem.create({ data: { editId: edit.id, productId } });
 
   revalidatePath("/", "layout");
-  return {
-    saved: true,
-    message: `New board! Name it when inspiration strikes`,
-  };
+  return confirmSave(user.id);
+}
+
+/* ---- Outfits ---- */
+
+/** A free board name, numbered if the one asked for is taken. */
+async function freeBoardName(userId: string, wanted: string) {
+  const taken = new Set(
+    (
+      await prisma.edit.findMany({
+        where: { userId },
+        select: { name: true },
+      })
+    ).map((e) => e.name),
+  );
+  let name = wanted;
+  for (let n = 2; taken.has(name); n += 1) name = `${wanted} ${n}`;
+  return name;
+}
+
+async function outfitPieces(outfitId: string) {
+  const outfit = await prisma.outfit.findUnique({
+    where: { id: outfitId },
+    include: { items: { orderBy: { position: "asc" } } },
+  });
+  if (!outfit) throw new Error("No such outfit.");
+  return outfit;
+}
+
+/**
+ * Save a whole outfit onto a board you picked. The pieces arrive together,
+ * which is the point of an outfit, so this is one action rather than the
+ * shopper hearting each piece in turn.
+ */
+export async function saveOutfitToEdit(
+  outfitId: string,
+  editId: string,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const edit = await prisma.edit.findFirst({
+    where: { id: editId, userId: user.id },
+  });
+  if (!edit) throw new Error("That board is not yours.");
+
+  const outfit = await outfitPieces(outfitId);
+  await prisma.savedItem.createMany({
+    data: outfit.items.map((i) => ({ editId, productId: i.productId })),
+    skipDuplicates: true,
+  });
+
+  revalidatePath("/", "layout");
+  return { saved: true, message: `Saved to ${edit.name} ✓` };
+}
+
+/** Save an outfit onto a board of its own, named after it. */
+export async function saveOutfitToNewEdit(
+  outfitId: string,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+  const outfit = await outfitPieces(outfitId);
+
+  const name = await freeBoardName(user.id, outfit.name);
+  const edit = await prisma.edit.create({
+    data: { userId: user.id, name, note: "Saved as a set" },
+  });
+
+  await prisma.savedItem.createMany({
+    data: outfit.items.map((i) => ({ editId: edit.id, productId: i.productId })),
+    skipDuplicates: true,
+  });
+
+  revalidatePath("/", "layout");
+  return { saved: true, message: `Saved to ${name} ✓` };
+}
+
+/**
+ * Write an outfit from outside the UI.
+ *
+ * This is the entry point for the agent run that scores garments with
+ * .claude/skills/aesthetic-fit and assembles them: it needs no session and no
+ * browser, and it is idempotent on slug so the job is safe to repeat. The
+ * validation lives in lib/outfits.ts so the seed goes through the same door.
+ */
+export async function createOutfit(input: OutfitInput) {
+  const result = await upsertOutfit(prisma, { source: "AGENT", ...input });
+  revalidatePath("/", "layout");
+  return result;
 }

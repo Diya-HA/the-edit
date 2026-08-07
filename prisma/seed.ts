@@ -12,6 +12,8 @@
  * the palette family it groups into, which is what the filter row offers.
  */
 import { PrismaClient } from "@prisma/client";
+import { upsertOutfits } from "../lib/outfits.ts";
+import type { OutfitInput } from "../lib/outfits.ts";
 
 const prisma = new PrismaClient();
 
@@ -133,6 +135,96 @@ const PRODUCTS: ProductSeed[] = [
   { slug: "halle-ballet-wrap-top", title: "Ballet wrap top", category: "wrap top", price: 132, brand: "halle", aesthetic: "balletcore-off-duty", family: "rose", tone: "#F0D9DC", line: "Crosses at the front and stays put.", why: "The wrap shape you keep saving, in a knit that holds it." },
 ];
 
+/* Assembled outfits. Written through the same upsertOutfits the agent uses,
+   so the seed exercises the real write path rather than a private shortcut.
+   The notes are WHY lines in the product voice, as the skill produces. */
+const OUTFITS: OutfitInput[] = [
+  {
+    slug: "sunday-in-warm-neutrals",
+    name: "Sunday in warm neutrals",
+    aestheticSlug: "soft-romance",
+    note: "Butter and cream layered soft, with one shine for the evening.",
+    items: [
+      { productSlug: "margaux-cotton-poplin-blouse", score: 92, note: "Warms the cream without competing." },
+      { productSlug: "leonie-silk-slip-skirt", score: 88, note: "The shine the neutrals were missing." },
+      { productSlug: "halle-lambswool-cardigan", score: 90, note: "The piece the rest gets chosen around." },
+      { productSlug: "ciel-satin-hair-ribbon", score: 84, note: "Makes the whole thing look deliberate." },
+    ],
+  },
+  {
+    slug: "the-long-dress-one",
+    name: "The long dress one",
+    aestheticSlug: "soft-romance",
+    note: "One dress doing the work, softened either side.",
+    items: [
+      { productSlug: "alder-slub-linen-dress", score: 94, note: "Everything here was chosen around it." },
+      { productSlug: "halle-cashmere-crew", score: 86, note: "Goes under it when it turns." },
+      { productSlug: "margaux-silk-scarf", score: 82, note: "A warm note against all that oatmeal." },
+    ],
+  },
+  {
+    slug: "monday-uniform",
+    name: "Monday uniform",
+    aestheticSlug: "quiet-utility",
+    note: "Straight lines and pockets, nothing asking for attention.",
+    items: [
+      { productSlug: "alder-washed-linen-trouser", score: 91, note: "Better creased, which helps by Friday." },
+      { productSlug: "alder-oversized-poplin-shirt", score: 89, note: "Buttoned up or falling off, both work." },
+      { productSlug: "alder-boxy-canvas-jacket", score: 87, note: "Goes over the lot without swamping it." },
+      { productSlug: "paloma-utility-belt", score: 78, note: "Holds the looser trouser where you want it." },
+    ],
+  },
+  {
+    slug: "denim-and-canvas",
+    name: "Denim and canvas",
+    aestheticSlug: "quiet-utility",
+    note: "Indigo top to toe, broken with one plain layer.",
+    items: [
+      { productSlug: "paloma-raw-hem-denim", score: 90, note: "Stiff for a week, then yours." },
+      { productSlug: "paloma-indigo-overshirt", score: 88, note: "Fades exactly where you use it." },
+      { productSlug: "alder-undyed-cotton-tee", score: 83, note: "The plain layer holding it together." },
+      { productSlug: "paloma-canvas-tote", score: 76, note: "Carries the week without trying." },
+    ],
+  },
+  {
+    slug: "studio-to-street",
+    name: "Studio to street",
+    aestheticSlug: "balletcore-off-duty",
+    note: "Wrap knits and flats, worn a long way from the studio.",
+    items: [
+      { productSlug: "halle-ballet-wrap-top", score: 93, note: "Crosses at the front and stays put." },
+      { productSlug: "ciel-wrap-knit-cardigan", score: 89, note: "Ties in where boxier knits do not." },
+      { productSlug: "ciel-ribbon-tie-ballet-flat", score: 91, note: "Quiet alone, lovely with a long skirt." },
+      { productSlug: "ciel-mesh-sock", score: 80, note: "Makes the flats look finished." },
+    ],
+  },
+  {
+    slug: "after-dark-velvet",
+    name: "After dark velvet",
+    aestheticSlug: "whimsigoth",
+    note: "Velvet and tarnished silver, romantic rather than heavy.",
+    items: [
+      { productSlug: "leonie-velvet-opera-coat", score: 95, note: "For the two nights that deserve it." },
+      { productSlug: "margaux-velvet-blazer", score: 88, note: "Theatrical without the effort." },
+      { productSlug: "leonie-crescent-drop-earring", score: 85, note: "Tarnished enough to sit with the rest." },
+      { productSlug: "ciel-leather-mary-jane", score: 82, note: "Sturdy enough to walk home in." },
+    ],
+  },
+];
+
+/* The trending row. Demo data: with one shopper there is no popularity
+   signal to measure, so these are simply plausible and the app says so. */
+const TRENDING = [
+  "leonie-bias-cut-midi",
+  "halle-lambswool-cardigan",
+  "alder-slub-linen-dress",
+  "ciel-ribbon-tie-ballet-flat",
+  "paloma-raw-hem-denim",
+  "margaux-cropped-barn-coat",
+  "halle-crochet-cardigan",
+  "leonie-silk-slip-skirt",
+];
+
 const EDITS = [
   { name: "Soft romance", note: "Started in March and still going" },
   { name: "Desk to dinner", note: "Things that do both" },
@@ -237,6 +329,21 @@ async function main() {
     });
   }
   console.log(`follows     ${FOLLOWED.length}`);
+
+  for (const [i, slug] of TRENDING.entries()) {
+    await prisma.product.update({
+      where: { slug },
+      data: { trendingRank: i + 1 },
+    });
+  }
+  console.log(`trending    ${TRENDING.length}`);
+
+  const outfits = await upsertOutfits(prisma, OUTFITS);
+  if (outfits.failed.length) {
+    for (const f of outfits.failed) console.error(`  outfit ${f.error}`);
+    throw new Error(`${outfits.failed.length} outfit(s) rejected`);
+  }
+  console.log(`outfits     ${outfits.written.length}`);
 
   let starCount = 0;
   for (const slug of STARRED) {

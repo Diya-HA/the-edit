@@ -5,6 +5,8 @@ export type CanvasSwatchProps = {
   /** The fill. A fabric tone from the catalogue, or a token. */
   color?: string;
   height?: number | string;
+  /** Shape, as a CSS ratio — "1 / 1", "4 / 5". Wins over height when set. */
+  aspect?: string;
   radius?: string;
   /** Mono label along the bottom naming the garment — "CARDIGAN". */
   label?: string;
@@ -26,7 +28,8 @@ const len = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
  */
 export default function CanvasSwatch({
   color = "var(--fabric-neutral)",
-  height = 240,
+  height,
+  aspect,
   radius = "var(--radius-xl)",
   label,
   texture = false,
@@ -43,7 +46,8 @@ export default function CanvasSwatch({
       style={
         {
           "--swatch-color": color,
-          "--swatch-height": len(height),
+          "--swatch-height": height === undefined ? "auto" : len(height),
+          "--swatch-aspect": aspect ?? "auto",
           "--swatch-radius": radius,
           ...style,
         } as CSSProperties

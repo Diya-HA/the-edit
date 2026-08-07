@@ -30,7 +30,6 @@ export default async function ProductPage({
         product={product}
         sitsWellWith={sitsWellWith}
         edits={edits}
-        lookName={product.aestheticName}
       />
     </AppShell>
   );

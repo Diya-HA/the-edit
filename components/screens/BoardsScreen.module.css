@@ -1,46 +1,33 @@
-/* Boards — measurements from turn 3. */
+/* Boards, two across, with settings underneath. */
 
 .header {
-  flex: none;
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  flex: none;
+  align-items: center;
   gap: var(--space-3);
-  padding: var(--space-3) var(--space-4) 10px;
+  padding: var(--space-3) var(--space-4) var(--space-3);
+  border-bottom: 1px solid var(--border-faint);
   background: var(--surface-app);
 }
 
-.title {
+.who {
+  min-width: 0;
+}
+
+.name {
   font-family: var(--font-display);
-  font-size: var(--fs-xl);
+  font-size: var(--fs-lg);
   font-weight: var(--fw-black);
   font-stretch: 88%;
   letter-spacing: -0.03em;
   color: var(--text-strong);
 }
 
-.count {
-  margin-top: 6px;
-  font-family: var(--font-mono);
-  font-size: 7.5px;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text-muted);
-}
-
-.new {
-  flex: none;
-  padding: 6px 13px;
-  border: none;
-  border-radius: var(--radius-pill);
-  background: var(--ink-0);
-  color: var(--canvas-1);
+.summary {
+  margin-top: 2px;
   font-family: var(--font-sans);
   font-size: var(--fs-chip);
-  font-weight: var(--fw-semi);
-  white-space: nowrap;
-  box-shadow: var(--shadow-pill-active);
-  cursor: pointer;
+  color: var(--text-muted);
 }
 
 .scroll {
@@ -49,12 +36,113 @@
   -webkit-overflow-scrolling: touch;
 }
 
-.list {
-  padding: 0 var(--space-4) var(--space-5);
+.body {
+  padding: var(--space-4) var(--space-4) var(--space-5);
+}
+
+/* ---- The grid ---- */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
 }
 
 .board {
-  margin-bottom: var(--space-4);
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* A four-up cover, so a board reads as a collection at a glance. */
+.cover {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2px;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+}
+
+.tile {
+  display: block;
+  background-color: var(--tile);
+}
+
+.boardName {
+  display: block;
+  margin-top: var(--space-2);
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  font-weight: var(--fw-semi);
+  color: var(--text-strong);
+}
+
+.boardCount {
+  display: block;
+  margin-top: 1px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+/* ---- Settings ---- */
+.settings {
+  margin-top: var(--space-8);
+  padding-top: var(--space-5);
+  border-top: 1px solid var(--border-faint);
+}
+
+.eyebrow {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  width: 100%;
+  padding: 11px 0;
+  border: none;
+  border-bottom: 1px solid var(--border-faint);
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.rowLabel {
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  color: var(--text-strong);
+}
+
+.rowValue {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: var(--fs-chip);
+  color: var(--text-body);
+}
+
+.signOut {
+  margin-top: var(--space-4);
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  text-decoration: underline;
+  cursor: pointer;
 }
 
 /* ---- Empty ---- */
