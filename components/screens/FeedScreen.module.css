@@ -1,0 +1,136 @@
+/* Feed — measurements taken from design/screens/the-edit-app.dc.html. */
+
+.header {
+  flex: none;
+  padding: var(--space-3) var(--space-4) 9px;
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--surface-app);
+}
+
+.headerTop {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 9px;
+}
+
+.wordmark {
+  font-family: var(--font-display);
+  font-size: var(--fs-lg);
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--ink-0);
+}
+
+/* Chip row bleeds to the screen edges so it scrolls past the gutter. */
+.chips {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin: 0 calc(var(--space-4) * -1);
+  padding: 0 var(--space-4) 9px;
+  scrollbar-width: none;
+}
+
+.chips::-webkit-scrollbar {
+  display: none;
+}
+
+.palette {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.paletteLabel {
+  flex: none;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  color: var(--text-muted);
+}
+
+.dots {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+  scrollbar-width: none;
+}
+
+.dots::-webkit-scrollbar {
+  display: none;
+}
+
+/* ---- Feed body ---- */
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.feed {
+  padding: var(--space-3) var(--space-4) var(--space-5);
+}
+
+.block {
+  margin-bottom: var(--space-6);
+  animation: teFade 0.26s var(--ease-out);
+}
+
+.pair {
+  display: flex;
+  gap: 11px;
+  align-items: flex-start;
+  margin-top: var(--space-4);
+}
+
+.pairItem {
+  flex: 1;
+  min-width: 0;
+}
+
+@keyframes teFade {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Filters are being applied — the grid dims rather than jumping. */
+.pending {
+  opacity: 0;
+  filter: blur(3px);
+  transition: opacity var(--dur-med) var(--ease-out),
+    filter var(--dur-med) var(--ease-out);
+}
+
+/* ---- Empty state ---- */
+.empty {
+  padding: 52px var(--space-5);
+  text-align: center;
+}
+
+.emptyTitle {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.emptyBody {
+  margin-bottom: var(--space-4);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}

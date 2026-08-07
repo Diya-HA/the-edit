@@ -1,0 +1,45 @@
+/* The app column. On a phone it fills the viewport; on a desktop it sits
+   centred at phone width so the layout reads as designed.
+
+   The reference screens are drawn inside a phone bezel with a 9:41 status
+   bar and a home indicator. Those are the design document's presentation
+   chrome, not app UI, so they are not reproduced here — a real app must not
+   paint a fake clock. Everything inside the screen matches. */
+
+.shell {
+  display: flex;
+  justify-content: center;
+  min-height: 100dvh;
+  background: var(--surface-sunken);
+}
+
+.screen {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 420px;
+  min-height: 100dvh;
+  background: var(--surface-app);
+  overflow: hidden;
+}
+
+@media (min-width: 460px) {
+  .shell {
+    padding: var(--space-6) 0;
+  }
+
+  .screen {
+    min-height: auto;
+    height: calc(100dvh - var(--space-12));
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-lg);
+  }
+}
+
+/* Fills the space between header and tab bar, and scrolls on its own. */
+.body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
