@@ -8,13 +8,15 @@ export type ProductView = {
   slug: string;
   brand: string;
   title: string;
+  /** Garment noun, shown uppercase on the placeholder. */
   category: string;
   price: number;
   wasPrice: number | null;
-  colorName: string;
-  colorToken: string;
-  /** Ready to drop straight into a component: `var(--tint-rose)`. */
-  color: string;
+  /** The tone of the cloth. Fills the placeholder. */
+  tone: string;
+  /** Palette family this groups into, for the filter row. */
+  family: string;
+  familyName: string;
   line: string | null;
   why: string | null;
   saved: boolean;
@@ -38,6 +40,7 @@ const productSelect = {
   wasPrice: true,
   colorName: true,
   colorToken: true,
+  colorHex: true,
   line: true,
   why: true,
   brand: { select: { name: true } },
@@ -52,6 +55,7 @@ type ProductRow = {
   wasPrice: unknown;
   colorName: string;
   colorToken: string;
+  colorHex: string;
   line: string | null;
   why: string | null;
   brand: { name: string };
@@ -66,9 +70,9 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     category: p.category,
     price: Number(p.price),
     wasPrice: p.wasPrice === null ? null : Number(p.wasPrice),
-    colorName: p.colorName,
-    colorToken: p.colorToken,
-    color: `var(${p.colorToken})`,
+    tone: p.colorHex.trim(),
+    family: `var(${p.colorToken})`,
+    familyName: p.colorName,
     line: p.line,
     why: p.why,
     saved: savedIds.has(p.id),
@@ -93,7 +97,7 @@ export async function getAesthetics(): Promise<AestheticView[]> {
 
 /**
  * The palette filter row. Derived from the catalogue rather than hardcoded,
- * so it only ever offers colours that will actually return something.
+ * so it only ever offers colours that will return something.
  */
 export async function getPalette(): Promise<PaletteEntry[]> {
   const rows = await prisma.product.findMany({
@@ -108,7 +112,7 @@ export async function getPalette(): Promise<PaletteEntry[]> {
   }));
 }
 
-/** The feed: pieces in one look, optionally narrowed to a set of tints. */
+/** The feed: pieces in one look, optionally narrowed to a set of families. */
 export async function getFeed(opts: {
   userId: string;
   aestheticId: string;
@@ -132,7 +136,7 @@ export async function getFeed(opts: {
   return rows.map((r) => toView(r as ProductRow, savedIds));
 }
 
-/** One piece, by its handle. Null when the slug matches nothing. */
+/** One piece, by its handle. */
 export async function getProduct(
   slug: string,
   userId: string,
@@ -158,10 +162,10 @@ export async function getProduct(
 }
 
 /**
- * "Wears well with" — other pieces from the same look. Cohesion across
- * brands is the product, so this deliberately does not filter to one brand.
+ * "Sits well with" — other pieces from the same look. Cohesion across brands
+ * is the product, so this deliberately does not filter to one brand.
  */
-export async function getWearsWellWith(opts: {
+export async function getSitsWellWith(opts: {
   userId: string;
   aestheticId: string;
   excludeId: string;
@@ -182,18 +186,143 @@ export async function getWearsWellWith(opts: {
   return rows.map((r) => toView(r as ProductRow, savedIds));
 }
 
+/** Everything in the catalogue, for the Pieces tab of search. */
+export async function searchPieces(opts: {
+  userId: string;
+  query?: string;
+  take?: number;
+}): Promise<ProductView[]> {
+  const { userId, query, take = 20 } = opts;
+  const q = query?.trim();
+
+  const [rows, savedIds] = await Promise.all([
+    prisma.product.findMany({
+      where: {
+        inStock: true,
+        ...(q
+          ? {
+              OR: [
+                { title: { contains: q, mode: "insensitive" as const } },
+                { category: { contains: q, mode: "insensitive" as const } },
+                { brand: { name: { contains: q, mode: "insensitive" as const } } },
+                { aesthetic: { name: { contains: q, mode: "insensitive" as const } } },
+              ],
+            }
+          : {}),
+      },
+      orderBy: { title: "asc" },
+      take,
+      select: productSelect,
+    }),
+    getSavedProductIds(userId),
+  ]);
+
+  return rows.map((r) => toView(r as ProductRow, savedIds));
+}
+
+export type LookRow = AestheticView & {
+  count: number;
+  /** Tones of the first few pieces, for the little stacked swatches. */
+  tones: string[];
+};
+
+/** The Looks tab: every look with a count and a colour sample. */
+export async function getLooks(): Promise<LookRow[]> {
+  const rows = await prisma.aesthetic.findMany({
+    orderBy: { name: "asc" },
+    include: {
+      products: {
+        where: { inStock: true },
+        orderBy: { title: "asc" },
+        select: { colorHex: true },
+      },
+    },
+  });
+
+  return rows.map((a) => ({
+    id: a.id,
+    slug: a.slug,
+    name: a.name,
+    description: a.description,
+    count: a.products.length,
+    tones: a.products.slice(0, 3).map((p) => p.colorHex.trim()),
+  }));
+}
+
+/** Pieces inside one look, for the opened-look view. */
+export async function getLookItems(
+  aestheticId: string,
+  userId: string,
+): Promise<ProductView[]> {
+  const [rows, savedIds] = await Promise.all([
+    prisma.product.findMany({
+      where: { aestheticId, inStock: true },
+      orderBy: { title: "asc" },
+      select: productSelect,
+    }),
+    getSavedProductIds(userId),
+  ]);
+  return rows.map((r) => toView(r as ProductRow, savedIds));
+}
+
+export type BrandRowView = {
+  id: string;
+  slug: string;
+  name: string;
+  meta: string | null;
+  color: string;
+  following: boolean;
+};
+
+/** The shelf: every label, with whether you follow it. */
+export async function getBrands(userId: string): Promise<BrandRowView[]> {
+  const rows = await prisma.brand.findMany({
+    orderBy: { name: "asc" },
+    include: { followers: { where: { userId }, select: { userId: true } } },
+  });
+
+  return rows.map((b) => ({
+    id: b.id,
+    slug: b.slug,
+    name: b.name,
+    meta: b.meta,
+    color: `var(${b.colorToken})`,
+    following: b.followers.length > 0,
+  }));
+}
+
+/**
+ * Price drops from labels you follow. Following is the whole point of the
+ * shelf, so an empty follow list means an empty drops list — not everything.
+ */
+export async function getDrops(userId: string): Promise<ProductView[]> {
+  const [rows, savedIds] = await Promise.all([
+    prisma.product.findMany({
+      where: {
+        inStock: true,
+        wasPrice: { not: null },
+        brand: { followers: { some: { userId } } },
+      },
+      orderBy: { title: "asc" },
+      select: productSelect,
+    }),
+    getSavedProductIds(userId),
+  ]);
+
+  return rows.map((r) => toView(r as ProductRow, savedIds));
+}
+
 export type EditView = {
   id: string;
   name: string;
   note: string | null;
   count: number;
-  /** Tints of the first few pieces, for the painted cover. */
-  colors: string[];
-  /** Whether a particular piece is already in here. */
+  /** Tones of the first three pieces, for the board cover. */
+  tones: string[];
   holdsProduct?: boolean;
 };
 
-/** The user's edits, newest first, with cover colours and counts. */
+/** The user's edits, with cover tones and counts. */
 export async function getEdits(
   userId: string,
   productId?: string,
@@ -204,7 +333,7 @@ export async function getEdits(
     include: {
       items: {
         orderBy: { addedAt: "asc" },
-        select: { productId: true, product: { select: { colorToken: true } } },
+        select: { productId: true, product: { select: { colorHex: true } } },
       },
     },
   });
@@ -214,11 +343,42 @@ export async function getEdits(
     name: e.name,
     note: e.note,
     count: e.items.length,
-    colors: e.items.slice(0, 3).map((i) => `var(${i.product.colorToken})`),
+    tones: e.items.slice(0, 3).map((i) => i.product.colorHex.trim()),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
   }));
+}
+
+/** One board and everything in it. */
+export async function getEdit(
+  editId: string,
+  userId: string,
+): Promise<{ edit: EditView; items: ProductView[] } | null> {
+  const row = await prisma.edit.findFirst({
+    where: { id: editId, userId },
+    include: {
+      items: {
+        orderBy: { addedAt: "desc" },
+        include: { product: { select: productSelect } },
+      },
+    },
+  });
+  if (!row) return null;
+
+  const savedIds = await getSavedProductIds(userId);
+  const items = row.items.map((i) => toView(i.product as ProductRow, savedIds));
+
+  return {
+    edit: {
+      id: row.id,
+      name: row.name,
+      note: row.note,
+      count: items.length,
+      tones: items.slice(0, 3).map((p) => p.tone),
+    },
+    items,
+  };
 }
 
 /**

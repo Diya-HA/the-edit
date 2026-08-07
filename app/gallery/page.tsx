@@ -26,12 +26,12 @@ const LOOKS = [
 ];
 
 const PALETTE = [
-  { id: "butter", name: "Butter", color: "var(--tint-cadmium)" },
-  { id: "rose", name: "Rose", color: "var(--tint-rose)" },
-  { id: "coral", name: "Coral", color: "var(--tint-vermillion)" },
-  { id: "blue", name: "Blue", color: "var(--tint-cobalt)" },
-  { id: "sage", name: "Sage", color: "var(--tint-viridian)" },
-  { id: "violet", name: "Violet", color: "var(--tint-violet)" },
+  { id: "butter", name: "Butter", color: "var(--fabric-butter)" },
+  { id: "rose", name: "Rose", color: "var(--fabric-rose)" },
+  { id: "coral", name: "Coral", color: "var(--fabric-rust)" },
+  { id: "blue", name: "Blue", color: "var(--fabric-indigo)" },
+  { id: "sage", name: "Sage", color: "var(--fabric-sage)" },
+  { id: "violet", name: "Violet", color: "var(--fabric-ink)" },
 ];
 
 const PIECES = [
@@ -40,7 +40,7 @@ const PIECES = [
     brand: "Kin & Cloth",
     title: "Slub linen dress",
     price: 210,
-    color: "var(--tint-cadmium)",
+    color: "var(--fabric-butter)",
     line: "The dress the whole look was built around.",
   },
   {
@@ -49,14 +49,14 @@ const PIECES = [
     title: "Ribbon tie ballet flat",
     price: 96,
     was: 140,
-    color: "var(--tint-rose)",
+    color: "var(--fabric-rose)",
   },
   {
     id: "p6",
     brand: "Halle",
     title: "Lambswool cardigan",
     price: 118,
-    color: "var(--tint-vermillion)",
+    color: "var(--fabric-rust)",
   },
 ];
 
@@ -66,21 +66,21 @@ const BOARDS = [
     name: "Soft romance",
     count: 14,
     note: "Growing since March",
-    colors: ["var(--tint-rose)", "var(--tint-cadmium)", "var(--tint-viridian)"],
+    colors: ["var(--fabric-rose)", "var(--fabric-butter)", "var(--fabric-sage)"],
   },
   {
     id: "b3",
     name: "Linen summer",
     count: 21,
     note: "For Sicily, hopefully",
-    colors: ["var(--tint-viridian)", "var(--tint-cerulean)", "var(--tint-cobalt)"],
+    colors: ["var(--fabric-sage)", "var(--fabric-cream)", "var(--fabric-indigo)"],
   },
 ];
 
 const BRANDS = [
-  { id: "margaux", name: "Margaux", meta: "Three of theirs live on your boards", color: "var(--tint-rose)" },
-  { id: "ciel", name: "Ciel", meta: "Two prices came down this week", color: "var(--tint-cobalt)" },
-  { id: "alder", name: "Alder & Oak", meta: "New linen just arrived", color: "var(--tint-viridian)" },
+  { id: "margaux", name: "Margaux", meta: "Three of theirs live on your boards", color: "var(--fabric-rose)" },
+  { id: "ciel", name: "Ciel", meta: "Two prices came down this week", color: "var(--fabric-indigo)" },
+  { id: "alder", name: "Alder & Oak", meta: "New linen just arrived", color: "var(--fabric-sage)" },
 ];
 
 export default function Page() {
@@ -291,10 +291,9 @@ export default function Page() {
           <section className={styles.section}>
             <div className={styles.eyebrow}>Canvas swatch</div>
             <CanvasSwatch
-              color="var(--tint-cobalt)"
+              color="var(--fabric-sage)"
               height={150}
-              wash
-              caption="Soft romance ’26"
+              label="Cardigan"
             />
           </section>
 

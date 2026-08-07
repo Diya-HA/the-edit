@@ -19,7 +19,10 @@
   flex-direction: column;
   width: 100%;
   max-width: 420px;
-  min-height: 100dvh;
+  /* Fixed height, not min-height: the screen scrolls its own body so the
+     tab bar stays pinned. With min-height the flex child grows past the
+     viewport and the bar drifts to the bottom of a very long page. */
+  height: 100dvh;
   background: var(--surface-app);
   overflow: hidden;
 }
@@ -30,7 +33,6 @@
   }
 
   .screen {
-    min-height: auto;
     height: calc(100dvh - var(--space-12));
     border-radius: var(--radius-2xl);
     box-shadow: var(--shadow-lg);

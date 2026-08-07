@@ -6,7 +6,7 @@ import styles from "./BoardCard.module.css";
 export type BoardCardProps = {
   name: string;
   count: number;
-  /** Up to three pigment tokens, taken from the board's first pieces.
+  /** Up to three fabric tones, taken from the board's first pieces.
    *  Short lists are padded with the sunken canvas. */
   colors?: string[];
   /** A quiet line under the name — "Growing since March". */

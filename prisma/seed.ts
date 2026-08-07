@@ -1,185 +1,142 @@
 /**
- * Seed: 4 aesthetics, 6 brands, 30 products, one shopper with four edits.
+ * Seed: 4 aesthetics, 6 brands, 30 products, one shopper with four edits and
+ * two labels followed.
  *
  * Idempotent by design — everything is an upsert keyed on a natural handle,
  * so running it twice changes nothing. That is what lets it run on container
- * start in production if we ever enable that in the Dockerfile.
+ * start in production.
  *
- * Names, brands, prices and copy come from the design screens
- * (design/screens/the-edit-app.dc.html) so the seeded feed reads like the
- * thing that was designed. Every product carries a tint from the palette in
- * design/design-system/tokens/colors.css, which is what makes the painted
- * swatches look right.
+ * Colour follows turn 3 of the design (design/screens/the-edit-FINAL-turn3
+ * .dc.html): placeholders are tinted to the actual fabric, not to decorative
+ * pigment. Each product carries its own tone — the colour of the cloth — plus
+ * the palette family it groups into, which is what the filter row offers.
  */
 import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-/** The tint palette. `token` is what the React components consume. */
-const TINT = {
-  rose: { colorName: "Rose", colorToken: "--tint-rose", colorHex: "#FFD6E6" },
-  butter: {
-    colorName: "Butter",
-    colorToken: "--tint-cadmium",
-    colorHex: "#FFEDB0",
-  },
-  coral: {
-    colorName: "Coral",
-    colorToken: "--tint-vermillion",
-    colorHex: "#FFD9D1",
-  },
-  sage: { colorName: "Sage", colorToken: "--tint-viridian", colorHex: "#C4F0DC" },
-  sky: { colorName: "Sky", colorToken: "--tint-cerulean", colorHex: "#CBEBFF" },
-  blue: { colorName: "Blue", colorToken: "--tint-cobalt", colorHex: "#D4D9FF" },
-  violet: {
-    colorName: "Violet",
-    colorToken: "--tint-violet",
-    colorHex: "#E3D6FF",
-  },
+/** The eight palette families the filter row offers. */
+const FAMILY = {
+  neutral: { colorName: "Neutral", colorToken: "--fabric-neutral" },
+  cream: { colorName: "Cream", colorToken: "--fabric-cream" },
+  butter: { colorName: "Butter", colorToken: "--fabric-butter" },
+  rust: { colorName: "Rust", colorToken: "--fabric-rust" },
+  rose: { colorName: "Rose", colorToken: "--fabric-rose" },
+  indigo: { colorName: "Indigo", colorToken: "--fabric-indigo" },
+  sage: { colorName: "Sage", colorToken: "--fabric-sage" },
+  ink: { colorName: "Ink", colorToken: "--fabric-ink" },
 } as const;
 
-type TintKey = keyof typeof TINT;
+type FamilyKey = keyof typeof FAMILY;
 
 const AESTHETICS = [
   {
     slug: "soft-romance",
     name: "Soft romance",
-    description: "Warm neutrals with one soft colour.",
+    description: "Warm neutrals and one soft colour",
     wordmark: "Soft romance ’26",
   },
   {
     slug: "quiet-utility",
     name: "Quiet utility",
-    description: "Workwear, cut clean.",
+    description: "Workwear cut clean",
     wordmark: "Quiet utility ’26",
   },
   {
     slug: "balletcore-off-duty",
     name: "Balletcore off duty",
-    description: "Ribbons, wrap knits and flats.",
+    description: "Ribbons and wrap knits and flats",
     wordmark: "Balletcore off duty ’26",
   },
   {
     slug: "whimsigoth",
     name: "Whimsigoth",
-    description: "Velvet, crochet and moons.",
+    description: "Velvet and crochet and moons",
     wordmark: "Whimsigoth ’26",
   },
 ];
 
 const BRANDS = [
-  {
-    slug: "margaux",
-    name: "Margaux",
-    meta: "Three of theirs live on your boards",
-    colorToken: "--tint-rose",
-    isPartner: true,
-  },
-  {
-    slug: "ciel",
-    name: "Ciel",
-    meta: "Two prices came down this week",
-    colorToken: "--tint-cobalt",
-    isPartner: true,
-  },
-  {
-    slug: "alder-and-oak",
-    name: "Alder & Oak",
-    meta: "New linen just arrived",
-    colorToken: "--tint-viridian",
-    isPartner: false,
-  },
-  {
-    slug: "paloma-works",
-    name: "Paloma Works",
-    meta: "You’ve saved four of theirs",
-    colorToken: "--tint-cadmium",
-    isPartner: false,
-  },
-  {
-    slug: "leonie",
-    name: "Leonie",
-    meta: "Quietly good at eveningwear",
-    colorToken: "--tint-violet",
-    isPartner: true,
-  },
-  {
-    slug: "halle",
-    name: "Halle",
-    meta: "The knitwear you keep coming back to",
-    colorToken: "--tint-vermillion",
-    isPartner: false,
-  },
+  { slug: "margaux", name: "Margaux", meta: "Three of theirs live on your boards", colorToken: "--fabric-rose", isPartner: true },
+  { slug: "ciel", name: "Ciel", meta: "Two prices came down this week", colorToken: "--fabric-indigo", isPartner: true },
+  { slug: "alder-and-oak", name: "Alder & Oak", meta: "New linen just landed", colorToken: "--fabric-sage", isPartner: false },
+  { slug: "paloma-works", name: "Paloma Works", meta: "You keep four of theirs", colorToken: "--fabric-neutral", isPartner: false },
+  { slug: "leonie", name: "Leonie", meta: "Quietly good after dark", colorToken: "--fabric-ink", isPartner: true },
+  { slug: "halle", name: "Halle", meta: "The knitwear you come back to", colorToken: "--fabric-rust", isPartner: false },
 ];
+
+/** Labels the seeded shopper already follows. */
+const FOLLOWED = ["margaux", "ciel"];
 
 type ProductSeed = {
   slug: string;
   title: string;
+  /** Garment noun. Shown uppercase on the placeholder — "CARDIGAN". */
   category: string;
   price: number;
   wasPrice?: number;
   brand: string;
   aesthetic: string;
-  tint: TintKey;
-  /// The editorial line — what the piece is.
+  /** Palette family, for the filter row. */
+  family: FamilyKey;
+  /** The tone of the actual cloth, which fills the placeholder. */
+  tone: string;
   line: string;
-  /// Why it was picked for you. Shown after the line on the detail screen.
   why: string;
 };
 
 /* 30 pieces — five per brand, spread across the four looks. */
 const PRODUCTS: ProductSeed[] = [
   // ---- Margaux ----
-  { slug: "margaux-cotton-poplin-blouse", title: "Cotton poplin blouse", category: "tops", price: 128, brand: "margaux", aesthetic: "soft-romance", tint: "butter", line: "Layers under everything without any bulk.", why: "It sits neatly under the cardigan you starred." },
-  { slug: "margaux-cropped-barn-coat", title: "Cropped barn coat", category: "outerwear", price: 285, wasPrice: 340, brand: "margaux", aesthetic: "quiet-utility", tint: "sage", line: "Cut short so it sits well over everything.", why: "Short enough to clear the long skirts you save." },
-  { slug: "margaux-silk-scarf", title: "Hand rolled silk scarf", category: "accessories", price: 74, brand: "margaux", aesthetic: "soft-romance", tint: "rose", line: "The one thing that lifts a plain morning.", why: "A warm note to break up the neutrals you keep choosing." },
-  { slug: "margaux-wool-trouser", title: "High waist wool trouser", category: "bottoms", price: 198, brand: "margaux", aesthetic: "quiet-utility", tint: "blue", line: "Holds a crease all the way to Friday.", why: "The cut you keep saving, in a weight that lasts past October." },
-  { slug: "margaux-velvet-blazer", title: "Crushed velvet blazer", category: "outerwear", price: 320, wasPrice: 395, brand: "margaux", aesthetic: "whimsigoth", tint: "violet", line: "Dark, a little theatrical, entirely wearable.", why: "Darker than your usual, and it works with everything on One day." },
+  { slug: "margaux-cotton-poplin-blouse", title: "Cotton poplin blouse", category: "blouse", price: 128, brand: "margaux", aesthetic: "soft-romance", family: "cream", tone: "#F2EDE4", line: "Goes under everything without adding bulk.", why: "Sits neatly beneath the cardigan you starred." },
+  { slug: "margaux-cropped-barn-coat", title: "Cropped barn coat", category: "coat", price: 285, wasPrice: 340, brand: "margaux", aesthetic: "quiet-utility", family: "sage", tone: "#B6B79C", line: "Cut short so it sits over everything.", why: "Short enough to clear the long skirts you save." },
+  { slug: "margaux-silk-scarf", title: "Hand rolled silk scarf", category: "scarf", price: 74, brand: "margaux", aesthetic: "soft-romance", family: "rose", tone: "#E9C7CC", line: "The one thing that lifts a plain morning.", why: "A warm note to break up all that oatmeal." },
+  { slug: "margaux-wool-trouser", title: "High waist wool trouser", category: "trouser", price: 198, brand: "margaux", aesthetic: "quiet-utility", family: "indigo", tone: "#9AA9C4", line: "Holds a crease all the way to Friday.", why: "The cut you keep saving, in a weight that lasts past October." },
+  { slug: "margaux-velvet-blazer", title: "Crushed velvet blazer", category: "blazer", price: 320, wasPrice: 395, brand: "margaux", aesthetic: "whimsigoth", family: "ink", tone: "#3A3A3C", line: "Dark, a bit theatrical, entirely wearable.", why: "Darker than your usual and it works with everything on One day." },
 
   // ---- Ciel ----
-  { slug: "ciel-ribbon-tie-ballet-flat", title: "Ribbon tie ballet flat", category: "shoes", price: 96, wasPrice: 140, brand: "ciel", aesthetic: "balletcore-off-duty", tint: "rose", line: "Quiet on their own, lovely with a long skirt.", why: "You save a lot of flats, and these are made to last." },
-  { slug: "ciel-wrap-knit-cardigan", title: "Wrap knit cardigan", category: "knitwear", price: 145, brand: "ciel", aesthetic: "balletcore-off-duty", tint: "coral", line: "Ties at the waist and softens everything.", why: "Ties in at the waist, which the boxier knits on your boards do not." },
-  { slug: "ciel-mesh-sock", title: "Sheer mesh sock", category: "accessories", price: 24, wasPrice: 32, brand: "ciel", aesthetic: "balletcore-off-duty", tint: "rose", line: "A small thing that makes flats look considered.", why: "A small thing that makes the flats you already saved look finished." },
-  { slug: "ciel-satin-hair-ribbon", title: "Satin hair ribbon", category: "accessories", price: 18, brand: "ciel", aesthetic: "soft-romance", tint: "butter", line: "Cheap in the best way, and it changes a whole look.", why: "The cheapest way to make the rest of the look deliberate." },
-  { slug: "ciel-leather-mary-jane", title: "Leather mary jane", category: "shoes", price: 245, brand: "ciel", aesthetic: "whimsigoth", tint: "violet", line: "Pretty enough for dinner, sturdy enough to walk home.", why: "A little tougher than the flats you usually save." },
+  { slug: "ciel-ribbon-tie-ballet-flat", title: "Ribbon tie ballet flat", category: "flat", price: 96, wasPrice: 140, brand: "ciel", aesthetic: "balletcore-off-duty", family: "rose", tone: "#E9C7CC", line: "Quiet alone and loud with a long skirt.", why: "You keep saving flats so here is a pair that lasts." },
+  { slug: "ciel-wrap-knit-cardigan", title: "Wrap knit cardigan", category: "cardigan", price: 145, brand: "ciel", aesthetic: "balletcore-off-duty", family: "rust", tone: "#E3CBA4", line: "Ties at the waist and softens everything.", why: "Ties in where the boxier knits on your boards do not." },
+  { slug: "ciel-mesh-sock", title: "Sheer mesh sock", category: "sock", price: 24, wasPrice: 32, brand: "ciel", aesthetic: "balletcore-off-duty", family: "rose", tone: "#F0D9DC", line: "Small thing that changes the whole outfit.", why: "Makes the flats you already keep look finished." },
+  { slug: "ciel-satin-hair-ribbon", title: "Satin hair ribbon", category: "ribbon", price: 18, brand: "ciel", aesthetic: "soft-romance", family: "butter", tone: "#F0DFA8", line: "Cheap in the best way.", why: "Cheapest trick for making the rest look deliberate." },
+  { slug: "ciel-leather-mary-jane", title: "Leather mary jane", category: "shoe", price: 245, brand: "ciel", aesthetic: "whimsigoth", family: "ink", tone: "#3A3A3C", line: "Sturdy enough to walk home in.", why: "Tougher than the flats you keep and just as pretty." },
 
   // ---- Alder & Oak ----
-  { slug: "alder-washed-linen-trouser", title: "Washed linen trouser", category: "bottoms", price: 165, brand: "alder-and-oak", aesthetic: "quiet-utility", tint: "sage", line: "The kind of linen that looks better creased.", why: "The same easy cut as the dress on your Linen summer board." },
-  { slug: "alder-slub-linen-dress", title: "Slub linen dress", category: "dresses", price: 210, brand: "alder-and-oak", aesthetic: "soft-romance", tint: "butter", line: "The dress the whole look was built around.", why: "Everything on your Soft romance board pairs with it." },
-  { slug: "alder-boxy-canvas-jacket", title: "Boxy canvas jacket", category: "outerwear", price: 240, brand: "alder-and-oak", aesthetic: "quiet-utility", tint: "sage", line: "Throw it over anything and it simply works.", why: "Roomy enough for the knits already on your boards." },
-  { slug: "alder-oversized-poplin-shirt", title: "Oversized poplin shirt", category: "tops", price: 110, wasPrice: 145, brand: "alder-and-oak", aesthetic: "quiet-utility", tint: "sky", line: "Lovely buttoned up or worn loose.", why: "An easy way to make everything else look considered." },
-  { slug: "alder-undyed-cotton-tee", title: "Undyed cotton tee", category: "tops", price: 58, brand: "alder-and-oak", aesthetic: "quiet-utility", tint: "sky", line: "The plain one you will reach for most.", why: "The plain layer the rest of your linen has been missing." },
+  { slug: "alder-washed-linen-trouser", title: "Washed linen trouser", category: "trouser", price: 165, brand: "alder-and-oak", aesthetic: "quiet-utility", family: "neutral", tone: "#E4DCCB", line: "The kind that gets better creased.", why: "Same easy cut as the dress on your Linen summer board." },
+  { slug: "alder-slub-linen-dress", title: "Slub linen dress", category: "dress", price: 210, brand: "alder-and-oak", aesthetic: "soft-romance", family: "neutral", tone: "#EDE3D3", line: "The one everything else was chosen around.", why: "Everything on your Soft romance board goes with it." },
+  { slug: "alder-boxy-canvas-jacket", title: "Boxy canvas jacket", category: "jacket", price: 240, brand: "alder-and-oak", aesthetic: "quiet-utility", family: "sage", tone: "#C9D2C3", line: "Throw it over anything and it works.", why: "Roomy enough to go over the knits already on your boards." },
+  { slug: "alder-oversized-poplin-shirt", title: "Oversized poplin shirt", category: "shirt", price: 110, wasPrice: 145, brand: "alder-and-oak", aesthetic: "quiet-utility", family: "cream", tone: "#E8EAEC", line: "Works buttoned up or falling off.", why: "Cheap trick for making everything else look considered." },
+  { slug: "alder-undyed-cotton-tee", title: "Undyed cotton tee", category: "tee", price: 58, brand: "alder-and-oak", aesthetic: "quiet-utility", family: "cream", tone: "#F2EDE4", line: "The plain one you reach for most.", why: "The layer the rest of your linen has been missing." },
 
   // ---- Paloma Works ----
-  { slug: "paloma-raw-hem-denim", title: "Raw hem denim", category: "bottoms", price: 132, wasPrice: 176, brand: "paloma-works", aesthetic: "quiet-utility", tint: "blue", line: "A touch stiff the first week, then yours forever.", why: "A cleaner cut than the pair you looked at last week." },
-  { slug: "paloma-workwear-chore-coat", title: "Workwear chore coat", category: "outerwear", price: 189, brand: "paloma-works", aesthetic: "quiet-utility", tint: "blue", line: "Four pockets and no opinions.", why: "Sits over the knits you save without swamping them." },
-  { slug: "paloma-canvas-tote", title: "Heavy canvas tote", category: "bags", price: 88, brand: "paloma-works", aesthetic: "quiet-utility", tint: "butter", line: "Carries a laptop and a week of groceries.", why: "Big enough for the days your board says desk to dinner." },
-  { slug: "paloma-indigo-overshirt", title: "Indigo overshirt", category: "tops", price: 124, brand: "paloma-works", aesthetic: "quiet-utility", tint: "blue", line: "Fades exactly where you use it.", why: "Layers over the tees you already own, and fades with them." },
-  { slug: "paloma-utility-belt", title: "Webbing utility belt", category: "accessories", price: 45, wasPrice: 60, brand: "paloma-works", aesthetic: "quiet-utility", tint: "sage", line: "Adjusts to whatever you are wearing.", why: "Holds up the looser trousers you have been saving." },
+  { slug: "paloma-raw-hem-denim", title: "Raw hem denim", category: "denim", price: 132, wasPrice: 176, brand: "paloma-works", aesthetic: "quiet-utility", family: "indigo", tone: "#9AA9C4", line: "Stiff for a week then yours forever.", why: "A plainer cut than the pair you scrolled past last week." },
+  { slug: "paloma-workwear-chore-coat", title: "Workwear chore coat", category: "coat", price: 189, brand: "paloma-works", aesthetic: "quiet-utility", family: "indigo", tone: "#8C97AE", line: "Four pockets and no opinions.", why: "Goes over the knits you save without swamping them." },
+  { slug: "paloma-canvas-tote", title: "Heavy canvas tote", category: "tote", price: 88, brand: "paloma-works", aesthetic: "quiet-utility", family: "neutral", tone: "#E4DCCB", line: "Carries a laptop and a week of groceries.", why: "Big enough for the days your board says desk to dinner." },
+  { slug: "paloma-indigo-overshirt", title: "Indigo overshirt", category: "overshirt", price: 124, brand: "paloma-works", aesthetic: "quiet-utility", family: "indigo", tone: "#9AA9C4", line: "Fades exactly where you use it.", why: "Layers over the tees you own and fades with them." },
+  { slug: "paloma-utility-belt", title: "Webbing utility belt", category: "belt", price: 45, wasPrice: 60, brand: "paloma-works", aesthetic: "quiet-utility", family: "sage", tone: "#C9D2C3", line: "Adjusts to whatever you are wearing.", why: "Holds up the looser trousers you keep saving." },
 
   // ---- Leonie ----
-  { slug: "leonie-silk-slip-skirt", title: "Silk slip skirt", category: "bottoms", price: 148, brand: "leonie", aesthetic: "soft-romance", tint: "butter", line: "One touch of shine is usually all you need.", why: "The little bit of shine your neutrals were missing." },
-  { slug: "leonie-lace-trim-camisole", title: "Lace trim camisole", category: "tops", price: 88, brand: "leonie", aesthetic: "soft-romance", tint: "rose", line: "Layer it, or let it stand alone.", why: "Works on its own in August and under wool by October." },
-  { slug: "leonie-bias-cut-midi", title: "Bias cut midi dress", category: "dresses", price: 265, wasPrice: 330, brand: "leonie", aesthetic: "soft-romance", tint: "rose", line: "Moves well, which is most of the work.", why: "The dress your Soft romance board has been building toward." },
-  { slug: "leonie-velvet-opera-coat", title: "Velvet opera coat", category: "outerwear", price: 410, brand: "leonie", aesthetic: "whimsigoth", tint: "violet", line: "For the two nights a year that deserve it.", why: "Worth the wait, which is what One day is for." },
-  { slug: "leonie-crescent-drop-earring", title: "Crescent drop earring", category: "jewellery", price: 62, brand: "leonie", aesthetic: "whimsigoth", tint: "violet", line: "Tarnished silver, deliberately.", why: "Tarnished enough to sit with the silver you save." },
+  { slug: "leonie-silk-slip-skirt", title: "Silk slip skirt", category: "skirt", price: 148, brand: "leonie", aesthetic: "soft-romance", family: "butter", tone: "#F0DFA8", line: "One shiny thing is usually enough.", why: "The bit of shine your neutrals have been missing." },
+  { slug: "leonie-lace-trim-camisole", title: "Lace trim camisole", category: "camisole", price: 88, brand: "leonie", aesthetic: "soft-romance", family: "rose", tone: "#F0D9DC", line: "Layer it or don’t.", why: "Works alone in August and under wool by October." },
+  { slug: "leonie-bias-cut-midi", title: "Bias cut midi dress", category: "dress", price: 265, wasPrice: 330, brand: "leonie", aesthetic: "soft-romance", family: "rose", tone: "#E9C7CC", line: "Moves well, which is most of the work.", why: "The dress your Soft romance board has been building toward." },
+  { slug: "leonie-velvet-opera-coat", title: "Velvet opera coat", category: "coat", price: 410, brand: "leonie", aesthetic: "whimsigoth", family: "ink", tone: "#3A3A3C", line: "For the two nights a year that deserve it.", why: "Worth the wait, which is what One day is for." },
+  { slug: "leonie-crescent-drop-earring", title: "Crescent drop earring", category: "earring", price: 62, brand: "leonie", aesthetic: "whimsigoth", family: "ink", tone: "#8F8A82", line: "Tarnished silver, deliberately.", why: "Tarnished enough to sit with the silver you keep." },
 
   // ---- Halle ----
-  { slug: "halle-lambswool-cardigan", title: "Lambswool cardigan", category: "knitwear", price: 118, brand: "halle", aesthetic: "soft-romance", tint: "coral", line: "The piece everything else gets chosen around.", why: "Half your boards are built around a cardigan like this one." },
-  { slug: "halle-ribbed-wool-sock", title: "Ribbed wool sock", category: "accessories", price: 28, brand: "halle", aesthetic: "balletcore-off-duty", tint: "coral", line: "A small thing that lifts the whole outfit.", why: "A warm note to break up the neutrals." },
-  { slug: "halle-crochet-cardigan", title: "Crochet cardigan", category: "knitwear", price: 195, wasPrice: 240, brand: "halle", aesthetic: "whimsigoth", tint: "violet", line: "A little unusual, in the best way.", why: "Distinctive enough to be interesting, soft enough to live in." },
-  { slug: "halle-cashmere-crew", title: "Featherweight cashmere crew", category: "knitwear", price: 225, brand: "halle", aesthetic: "soft-romance", tint: "butter", line: "Thin enough for autumn, warm enough for winter.", why: "Thin enough to layer under everything else you have saved." },
-  { slug: "halle-ballet-wrap-top", title: "Ballet wrap top", category: "knitwear", price: 132, brand: "halle", aesthetic: "balletcore-off-duty", tint: "rose", line: "Crosses at the front and stays put.", why: "The wrap shape you keep saving, in a knit that holds it." },
+  { slug: "halle-lambswool-cardigan", title: "Lambswool cardigan", category: "cardigan", price: 118, brand: "halle", aesthetic: "soft-romance", family: "rust", tone: "#E3CBA4", line: "The one everything else got picked around.", why: "Half your boards are built around a cardigan like this." },
+  { slug: "halle-ribbed-wool-sock", title: "Ribbed wool sock", category: "sock", price: 28, brand: "halle", aesthetic: "balletcore-off-duty", family: "rust", tone: "#D08A6E", line: "Small thing that changes the whole outfit.", why: "Warm colour to break up all that oatmeal." },
+  { slug: "halle-crochet-cardigan", title: "Crochet cardigan", category: "crochet", price: 195, wasPrice: 240, brand: "halle", aesthetic: "whimsigoth", family: "ink", tone: "#8F8A82", line: "A bit odd in the best way.", why: "Odd enough to be interesting and soft enough to live in." },
+  { slug: "halle-cashmere-crew", title: "Featherweight cashmere crew", category: "knit", price: 225, brand: "halle", aesthetic: "soft-romance", family: "butter", tone: "#F0DFA8", line: "Thin for autumn, warm for winter.", why: "Thin enough to go under everything else you keep." },
+  { slug: "halle-ballet-wrap-top", title: "Ballet wrap top", category: "wrap top", price: 132, brand: "halle", aesthetic: "balletcore-off-duty", family: "rose", tone: "#F0D9DC", line: "Crosses at the front and stays put.", why: "The wrap shape you keep saving, in a knit that holds it." },
 ];
 
 const EDITS = [
-  { name: "Soft romance", note: "Growing since March" },
-  { name: "Desk to dinner", note: "Pieces that do both" },
-  { name: "Linen summer", note: "For Sicily, hopefully" },
-  { name: "One day", note: "Worth the wait" },
+  { name: "Soft romance", note: "Started in March and still going" },
+  { name: "Desk to dinner", note: "Things that do both" },
+  { name: "Linen summer", note: "For Sicily allegedly" },
+  { name: "One day", note: "Saving up" },
 ];
 
-/** Which pieces land in which edit, by product slug. */
 const SAVED: Record<string, string[]> = {
   "Soft romance": [
     "leonie-lace-trim-camisole",
@@ -218,12 +175,7 @@ async function main() {
   for (const b of BRANDS) {
     const row = await prisma.brand.upsert({
       where: { slug: b.slug },
-      update: {
-        name: b.name,
-        meta: b.meta,
-        colorToken: b.colorToken,
-        isPartner: b.isPartner,
-      },
+      update: { name: b.name, meta: b.meta, colorToken: b.colorToken, isPartner: b.isPartner },
       create: b,
     });
     brands.set(b.slug, row.id);
@@ -235,8 +187,7 @@ async function main() {
     const brandId = brands.get(p.brand);
     const aestheticId = aesthetics.get(p.aesthetic);
     if (!brandId) throw new Error(`${p.slug}: unknown brand "${p.brand}"`);
-    if (!aestheticId)
-      throw new Error(`${p.slug}: unknown aesthetic "${p.aesthetic}"`);
+    if (!aestheticId) throw new Error(`${p.slug}: unknown aesthetic "${p.aesthetic}"`);
 
     const data = {
       slug: p.slug,
@@ -246,7 +197,8 @@ async function main() {
       wasPrice: p.wasPrice ?? null,
       line: p.line,
       why: p.why,
-      ...TINT[p.tint],
+      colorHex: p.tone,
+      ...FAMILY[p.family],
       brandId,
       aestheticId,
     };
@@ -271,6 +223,17 @@ async function main() {
     },
   });
   console.log(`users       1`);
+
+  for (const slug of FOLLOWED) {
+    const brandId = brands.get(slug);
+    if (!brandId) throw new Error(`follow: unknown brand "${slug}"`);
+    await prisma.follow.upsert({
+      where: { userId_brandId: { userId: user.id, brandId } },
+      update: {},
+      create: { userId: user.id, brandId },
+    });
+  }
+  console.log(`follows     ${FOLLOWED.length}`);
 
   let savedCount = 0;
   for (const e of EDITS) {

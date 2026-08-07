@@ -12,10 +12,11 @@
   white-space: nowrap;
 }
 
-/* Floating over a painted field: a white chip with brand text. */
+/* Floating over a placeholder: a white chip with ink text. Turn 3 took the
+   vermillion out of the everyday screens — a drop is stated calmly. */
 .drop {
   background: var(--white);
-  color: var(--brand);
+  color: var(--ink-0);
   box-shadow: var(--shadow-badge);
 }
 

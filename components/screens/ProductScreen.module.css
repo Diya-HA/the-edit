@@ -32,11 +32,19 @@
   position: relative;
 }
 
-.back {
+/* Turn 3 puts back and save in one row across the top of the placeholder. */
+.controls {
   position: absolute;
   top: 14px;
   left: 14px;
+  right: 14px;
   z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.back {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -54,10 +62,6 @@
 }
 
 .heart {
-  position: absolute;
-  right: 14px;
-  bottom: 14px;
-  z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -66,9 +70,7 @@
   padding: 0;
   border: none;
   border-radius: var(--radius-pill);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: var(--white);
   box-shadow: var(--shadow-glass);
   color: var(--control-idle);
   font-size: 14px;

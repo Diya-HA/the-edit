@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import { saveToEdit, saveToNewEdit, toggleSave } from "@/app/actions";
@@ -9,40 +9,25 @@ import BottomSheet from "../BottomSheet";
 import Button from "../Button";
 import CanvasSwatch from "../CanvasSwatch";
 import Toast from "../Toast";
+import { useToast } from "../useToast";
 import styles from "./ProductScreen.module.css";
 
 export type ProductScreenProps = {
   product: ProductView;
-  wearsWellWith: ProductView[];
+  sitsWellWith: ProductView[];
   edits: EditView[];
   lookName: string;
 };
 
 export default function ProductScreen({
   product,
-  wearsWellWith,
+  sitsWellWith,
   edits,
   lookName,
 }: ProductScreenProps) {
   const router = useRouter();
-  const [, startTransition] = useTransition();
   const [sheet, setSheet] = useState(false);
-  const [toast, setToast] = useState("");
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const say = (message: string) => {
-    clearTimeout(timer.current);
-    setToast(message);
-    timer.current = setTimeout(() => setToast(""), 2600);
-  };
-
-  useEffect(() => () => clearTimeout(timer.current), []);
-
-  const run = (work: () => Promise<{ message: string }>) =>
-    startTransition(async () => {
-      const result = await work();
-      say(result.message);
-    });
+  const { message: toast, say, run } = useToast();
 
   /* The note is the editorial line and then why it was picked for you —
      what the piece is, then what it is doing here. */
@@ -52,18 +37,24 @@ export default function ProductScreen({
     <div className={styles.screen}>
       <div className={styles.scroll}>
         <div className={styles.hero}>
-          <CanvasSwatch color={product.color} height={296} radius="0" />
+          <CanvasSwatch
+            color={product.tone}
+            height={296}
+            radius="0"
+            label={product.category}
+          />
 
-          <button
-            type="button"
-            className={styles.back}
-            onClick={() => router.back()}
-            aria-label="Back"
-          >
-            ‹
-          </button>
+          <div className={styles.controls}>
+            <button
+              type="button"
+              className={styles.back}
+              onClick={() => router.back()}
+              aria-label="Back"
+            >
+              ‹
+            </button>
 
-          <button
+            <button
             type="button"
             aria-pressed={product.saved}
             aria-label={product.saved ? "Unsave" : "Save"}
@@ -72,8 +63,9 @@ export default function ProductScreen({
               .join(" ")}
             onClick={() => run(() => toggleSave(product.id, lookName))}
           >
-            {product.saved ? "♥" : "♡"}
-          </button>
+              {product.saved ? "♥" : "♡"}
+            </button>
+          </div>
         </div>
 
         <div className={styles.body}>
@@ -91,23 +83,23 @@ export default function ProductScreen({
 
           <div className={styles.actions}>
             <Button full onClick={() => setSheet(true)}>
-              Save to a board
+              Keep it ♡
             </Button>
             <Button
               variant="secondary"
               onClick={() =>
-                say(`We’ll take you to ${product.brand} to finish up`)
+                say(`Off to ${product.brand} to finish up`)
               }
             >
               Buy
             </Button>
           </div>
 
-          {wearsWellWith.length > 0 && (
+          {sitsWellWith.length > 0 && (
             <>
-              <div className={styles.eyebrow}>Wears well with</div>
+              <div className={styles.eyebrow}>Sits well with</div>
               <div className={styles.rail}>
-                {wearsWellWith.map((p) => (
+                {sitsWellWith.map((p) => (
                   <button
                     key={p.id}
                     type="button"
@@ -115,9 +107,10 @@ export default function ProductScreen({
                     onClick={() => router.push(`/product/${p.slug}`)}
                   >
                     <CanvasSwatch
-                      color={p.color}
+                      color={p.tone}
                       height={108}
                       radius="var(--radius-md)"
+                      label={p.category}
                     />
                     <span className={styles.railTitle}>{p.title}</span>
                     <span className={styles.railPrice}>${p.price}</span>
@@ -131,7 +124,7 @@ export default function ProductScreen({
 
       <BottomSheet
         open={sheet}
-        title="Where shall we save it?"
+        title="Where’s it going?"
         onClose={() => setSheet(false)}
       >
         <div className={styles.picks}>
@@ -149,7 +142,7 @@ export default function ProductScreen({
                 className={styles.pickThumb}
                 style={
                   {
-                    "--pick-color": e.colors[0] ?? "var(--canvas-2)",
+                    "--pick-color": e.tones[0] ?? "var(--canvas-2)",
                   } as CSSProperties
                 }
               />

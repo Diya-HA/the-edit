@@ -1,5 +1,8 @@
-/* ProductCard — the feed unit. The painted swatch is the card:
-   no border, no shadow, meta sits straight on the canvas. */
+/* ProductCard — the feed unit. The placeholder is the card: no border, no
+   shadow, meta straight on the white canvas.
+
+   Turn 3: heart top right on solid white, drop chip top left in ink on
+   white, garment named along the bottom of the placeholder. */
 
 .card {
   display: inline-block;
@@ -8,9 +11,6 @@
 
 .frame {
   position: relative;
-}
-
-.tappable {
   cursor: pointer;
 }
 
@@ -22,11 +22,11 @@
   z-index: 3;
 }
 
-/* ---- Save heart, bottom right, on frosted glass ---- */
+/* ---- Save heart, top right ---- */
 .heart {
   position: absolute;
+  top: 7px;
   right: 7px;
-  bottom: 7px;
   z-index: 3;
   display: flex;
   align-items: center;
@@ -36,9 +36,7 @@
   padding: 0;
   border: none;
   border-radius: var(--radius-pill);
-  background: var(--glass-bg);
-  backdrop-filter: var(--glass-blur);
-  -webkit-backdrop-filter: var(--glass-blur);
+  background: var(--white);
   box-shadow: var(--shadow-glass);
   color: var(--control-idle);
   font-size: var(--fs-card);
@@ -47,8 +45,8 @@
 }
 
 .featured .heart {
+  top: 9px;
   right: 9px;
-  bottom: 9px;
   width: 30px;
   height: 30px;
   font-size: 14px;
@@ -74,6 +72,7 @@
 /* ---- Meta ---- */
 .meta {
   padding: var(--space-2) 1px 0;
+  cursor: pointer;
 }
 
 .brand {
@@ -115,8 +114,7 @@
   text-decoration: line-through;
 }
 
-/* ---- Featured: the hero card that opens a feed block.
-   Title goes display-grotesque, price sits out to the right. ---- */
+/* ---- Featured: the hero that opens a block ---- */
 .featured .meta {
   display: flex;
   align-items: flex-end;
@@ -151,7 +149,7 @@
   font-size: var(--fs-card);
 }
 
-/* One editorial line under a hero card, serif italic. */
+/* One editorial line under a hero, serif italic. */
 .line {
   padding: 5px 1px 0;
   font-family: var(--font-serif);

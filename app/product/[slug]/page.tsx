@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import AppShell from "@/components/AppShell";
 import ProductScreen from "@/components/screens/ProductScreen";
-import { getEdits, getProduct, getWearsWellWith } from "@/lib/data";
+import { getEdits, getProduct, getSitsWellWith } from "@/lib/data";
 import { getCurrentUser } from "@/lib/session";
 
 export const dynamic = "force-dynamic";
@@ -15,8 +15,8 @@ export default async function ProductPage({
   const product = await getProduct(slug, user.id);
   if (!product) notFound();
 
-  const [wearsWellWith, edits] = await Promise.all([
-    getWearsWellWith({
+  const [sitsWellWith, edits] = await Promise.all([
+    getSitsWellWith({
       userId: user.id,
       aestheticId: product.aestheticId,
       excludeId: product.id,
@@ -28,7 +28,7 @@ export default async function ProductPage({
     <AppShell>
       <ProductScreen
         product={product}
-        wearsWellWith={wearsWellWith}
+        sitsWellWith={sitsWellWith}
         edits={edits}
         lookName={product.aestheticName}
       />

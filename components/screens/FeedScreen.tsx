@@ -1,6 +1,5 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { toggleSave } from "@/app/actions";
 import type {
@@ -15,6 +14,7 @@ import Chip from "../Chip";
 import ColorDot from "../ColorDot";
 import ProductCard from "../ProductCard";
 import Toast from "../Toast";
+import { useToast } from "../useToast";
 import styles from "./FeedScreen.module.css";
 
 export type FeedScreenProps = {
@@ -37,17 +37,7 @@ export default function FeedScreen({
   initials,
 }: FeedScreenProps) {
   const router = useRouter();
-  const [pending, startTransition] = useTransition();
-  const [toast, setToast] = useState("");
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-
-  const say = (message: string) => {
-    clearTimeout(timer.current);
-    setToast(message);
-    timer.current = setTimeout(() => setToast(""), 2600);
-  };
-
-  useEffect(() => () => clearTimeout(timer.current), []);
+  const { message: toast, say, run, pending } = useToast();
 
   /* Filters live in the URL, so a filtered feed is shareable and the back
      button walks the looks you tried. */
@@ -55,13 +45,13 @@ export default function FeedScreen({
     const params = new URLSearchParams();
     params.set("look", look);
     for (const t of tokens) params.append("tint", t);
-    startTransition(() => router.push(`/?${params}`, { scroll: false }));
+    router.push(`/?${params}`, { scroll: false });
   };
 
   const pickLook = (slug: string, name: string) => {
     if (slug === activeSlug) return;
     navigate(slug, selectedTokens);
-    say(`${name} is your home feed now. Enjoy`);
+    say(`${name} it is. Home just changed ♥`);
   };
 
   const toggleTint = (token: string) => {
@@ -71,12 +61,8 @@ export default function FeedScreen({
     navigate(activeSlug, next);
   };
 
-  const save = (product: ProductView) => {
-    startTransition(async () => {
-      const result = await toggleSave(product.id, activeName);
-      say(result.message);
-    });
-  };
+  const save = (product: ProductView) =>
+    run(() => toggleSave(product.id, activeName));
 
   const card = (p: ProductView, featured: boolean) => (
     <ProductCard
@@ -84,7 +70,8 @@ export default function FeedScreen({
       title={p.title}
       price={p.price}
       was={p.wasPrice ?? undefined}
-      color={p.color}
+      color={p.tone}
+      category={p.category}
       line={p.line ?? undefined}
       featured={featured}
       saved={p.saved}
@@ -133,13 +120,13 @@ export default function FeedScreen({
         <div className={styles.feed}>
           {blocks.length === 0 ? (
           <div className={styles.empty}>
-            <div className={styles.emptyTitle}>Nothing in this shade just yet</div>
+            <div className={styles.emptyTitle}>Nothing in this colour yet</div>
             <p className={styles.emptyBody}>
-              We add new pieces all the time, so it won’t stay empty for long. In
-              the meantime, may we show you the rest of the look?
+              Bit of a niche request. Try another swatch or clear it and see the
+              whole look.
             </p>
             <Button size="sm" onClick={() => navigate(activeSlug, [])}>
-              Show everything
+              Clear the palette
             </Button>
           </div>
         ) : (

@@ -1,0 +1,57 @@
+/* A board when you open it.
+
+   Turn 3 doesn't draw this screen, so its shape comes from turn 1 — which
+   the design README says to treat as provisional — restated in turn 3's
+   terms: plain white, fabric tones, no texture. */
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.body {
+  padding: var(--space-3) var(--space-4) var(--space-5);
+}
+
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  font-weight: var(--fw-semi);
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+}
+
+.meta {
+  margin: 6px 0 var(--space-3);
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.empty {
+  padding: 44px var(--space-5);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}

@@ -19,10 +19,9 @@
   overflow: hidden;
 }
 
+/* Turn 3: plain fabric tones, no stipple. */
 .panel {
   background-color: var(--panel-color);
-  background-image: var(--texture-pointillism);
-  background-size: var(--texture-pointillism-size);
 }
 
 /* The lead panel takes just over half; the other two stack. */

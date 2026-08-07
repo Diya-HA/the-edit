@@ -1,0 +1,211 @@
+/* Search — turn 3 makes this its own screen with three ways in. */
+
+.header {
+  flex: none;
+  padding: var(--space-3) var(--space-4) 9px;
+  border-bottom: 1px solid var(--border-faint);
+  background: var(--surface-app);
+}
+
+.title {
+  margin-bottom: 9px;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+}
+
+.field {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: 9px var(--space-4);
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-pill);
+  background: var(--surface-input);
+}
+
+.glass {
+  flex: none;
+  font-size: var(--fs-row);
+  color: var(--text-muted);
+}
+
+.input {
+  flex: 1;
+  min-width: 0;
+  border: none;
+  background: none;
+  outline: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--text-strong);
+}
+
+.input::placeholder {
+  color: var(--text-muted);
+}
+
+.segments {
+  display: flex;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.segment {
+  flex: 1;
+  padding: 7px 0;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  font-weight: var(--fw-semi);
+  box-shadow: var(--shadow-pill-idle);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.segmentOn {
+  background: var(--ink-0);
+  border-color: var(--ink-0);
+  color: var(--canvas-1);
+  box-shadow: var(--shadow-pill-active);
+}
+
+.scroll {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.body {
+  padding: var(--space-3) var(--space-4) var(--space-5);
+}
+
+.eyebrow {
+  margin: 0 0 9px;
+  font-family: var(--font-mono);
+  font-size: 7.5px;
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.intro {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+/* ---- Looks list ---- */
+.looks {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.look {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  width: 100%;
+  padding: 9px;
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+  text-align: left;
+  cursor: pointer;
+}
+
+.lookSwatches {
+  display: flex;
+  flex: none;
+  gap: 3px;
+}
+
+.lookSwatch {
+  width: 22px;
+  height: 34px;
+  border-radius: 6px;
+  background-color: var(--look-tone);
+}
+
+.lookText {
+  flex: 1;
+  min-width: 0;
+}
+
+.lookName {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  font-weight: var(--fw-semi);
+  color: var(--text-strong);
+}
+
+.lookMeta {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+.chevron {
+  flex: none;
+  font-size: var(--fs-md);
+  color: var(--ink-2);
+}
+
+/* ---- An opened look ---- */
+.back {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 10px;
+  padding: 0;
+  border: none;
+  background: none;
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  font-weight: var(--fw-semi);
+  color: var(--text-body);
+  cursor: pointer;
+}
+
+.openName {
+  font-family: var(--font-display);
+  font-size: 21px;
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+}
+
+.openMeta {
+  margin: 5px 0 11px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-chip);
+  color: var(--text-muted);
+}
+
+.adopt {
+  margin-bottom: var(--space-3);
+}
+
+.empty {
+  padding: 44px var(--space-5);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}

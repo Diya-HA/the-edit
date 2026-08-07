@@ -8,10 +8,9 @@
   height: var(--dot-size);
   padding: 0;
   border: none;
-  border-radius: var(--radius-sm);
+  /* Turn 3: a plain rounded square. The stipple came off the filter row. */
+  border-radius: 7px;
   background-color: var(--dot-color);
-  background-image: var(--texture-pointillism);
-  background-size: var(--texture-pointillism-size);
   box-shadow: var(--ring-idle);
   cursor: pointer;
   transition: box-shadow var(--dur-fast) var(--ease-out);

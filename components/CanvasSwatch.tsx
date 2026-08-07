@@ -2,16 +2,19 @@ import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
 import styles from "./CanvasSwatch.module.css";
 
 export type CanvasSwatchProps = {
-  /** Pigment fill. Pass a token, e.g. `var(--tint-rose)`. */
+  /** The fill. A fabric tone from the catalogue, or a token. */
   color?: string;
-  /** Field height. A bare number is read as pixels. */
   height?: number | string;
-  /** Corner radius. Product thumbs use `var(--radius-xl)`. */
   radius?: string;
-  /** Optional centred mono eyebrow, set over the paint. */
-  caption?: string;
-  captionColor?: string;
-  /** Layer the gauzy multi-pigment wash on top. Hero fields only. */
+  /** Mono label along the bottom naming the garment — "CARDIGAN". */
+  label?: string;
+  /**
+   * Pointillist dab texture. Turn 3 keeps this for brand and look swatches
+   * but takes it off product placeholders, which are now tinted to the
+   * actual cloth rather than being decorative fields.
+   */
+  texture?: boolean;
+  /** The gauzy multi-pigment wash. Welcome and milestones only. */
   wash?: boolean;
   children?: ReactNode;
 } & Omit<ComponentPropsWithoutRef<"div">, "color" | "children">;
@@ -19,16 +22,14 @@ export type CanvasSwatchProps = {
 const len = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
 
 /**
- * CanvasSwatch — The Edit's signature painted colour field: a pigment
- * fill dressed with a pointillist dab texture and a brushstroke sheen.
- * Stands in for product photography, and turns any surface "painted".
+ * CanvasSwatch — the painted field standing in for photography.
  */
 export default function CanvasSwatch({
-  color = "var(--pig-cobalt)",
+  color = "var(--fabric-neutral)",
   height = 240,
   radius = "var(--radius-xl)",
-  caption,
-  captionColor = "var(--caption-on-paint)",
+  label,
+  texture = false,
   wash = false,
   children,
   className,
@@ -44,15 +45,24 @@ export default function CanvasSwatch({
           "--swatch-color": color,
           "--swatch-height": len(height),
           "--swatch-radius": radius,
-          "--swatch-caption-color": captionColor,
           ...style,
         } as CSSProperties
       }
     >
-      <div className={styles.pointillism} />
+      {texture && <div className={styles.pointillism} />}
       {wash && <div className={styles.wash} />}
-      <div className={styles.sheen} />
-      {caption && <div className={styles.caption}>{caption}</div>}
+      {label && (
+        <div
+          className={[
+            styles.label,
+            typeof height === "number" && height >= 160 && styles.labelLarge,
+          ]
+            .filter(Boolean)
+            .join(" ")}
+        >
+          {label}
+        </div>
+      )}
       {children}
     </div>
   );

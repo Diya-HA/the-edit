@@ -7,7 +7,29 @@
    Every value is lifted verbatim from the reference screens.
    ============================================================ */
 :root {
+  /* ---- Fabric tones (turn 3) ----
+     Turn 3 pulled the treatment back: everyday screens are plain white and
+     product placeholders are tinted to the actual fabric rather than being
+     decorative pigment fields. These eight are the palette families the
+     filter row offers. A product's own tone is content — the exact colour
+     of the cloth, which real photography will eventually replace — so it
+     lives in the database, not here. These name the family it groups into. */
+  --fabric-neutral: #E4DCCB;
+  --fabric-cream:   #F2EDE4;
+  --fabric-butter:  #F0DFA8;
+  --fabric-rust:    #D08A6E;
+  --fabric-rose:    #E9C7CC;
+  --fabric-indigo:  #9AA9C4;
+  --fabric-sage:    #C9D2C3;
+  --fabric-ink:     #3A3A3C;
+
+  /* Mono label sitting on a fabric placeholder — "CARDIGAN". */
+  --label-on-fabric: rgba(14, 14, 16, 0.34);
+
   /* ---- Color ---- */
+  /* Sunken input wells on turn 3 screens: a hair warmer than --canvas-2. */
+  --surface-input: #F5F5F7;
+
   /* Idle glyph inside a frosted-glass control (the unsaved heart).
      Darker than --ink-2 so it stays legible over a pigment field. */
   --control-idle: #6A6C72;

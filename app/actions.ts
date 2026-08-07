@@ -40,7 +40,7 @@ export async function toggleSave(
   if (existing) {
     await prisma.savedItem.delete({ where: { id: existing.id } });
     revalidatePath("/", "layout");
-    return { saved: false, message: "No problem. It’s off your list" };
+    return { saved: false, message: "Off the list. No hard feelings" };
   }
 
   const edit = await defaultEdit(user.id, lookName);
@@ -51,10 +51,51 @@ export async function toggleSave(
 
   return {
     saved: true,
-    message: `Saved to ${edit.name}. That makes ${count} ${
-      count === 1 ? "piece" : "pieces"
-    } ♥`,
+    message: `Yours now ♥ ${edit.name} is ${count} deep`,
   };
+}
+
+/** Follow or unfollow a label. Following is what fills the shelf. */
+export async function toggleFollow(brandId: string): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const brand = await prisma.brand.findUnique({ where: { id: brandId } });
+  if (!brand) throw new Error("No such label.");
+
+  const existing = await prisma.follow.findUnique({
+    where: { userId_brandId: { userId: user.id, brandId } },
+  });
+
+  if (existing) {
+    await prisma.follow.delete({
+      where: { userId_brandId: { userId: user.id, brandId } },
+    });
+    revalidatePath("/", "layout");
+    return { saved: false, message: `Unfollowed ${brand.name}. No hard feelings` };
+  }
+
+  await prisma.follow.create({ data: { userId: user.id, brandId } });
+  revalidatePath("/", "layout");
+  return {
+    saved: true,
+    message: "Following. You’ll know before they announce it",
+  };
+}
+
+/** "Put this on my home" — the look the feed opens on from now on. */
+export async function adoptLook(aestheticId: string): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const look = await prisma.aesthetic.findUnique({ where: { id: aestheticId } });
+  if (!look) throw new Error("No such look.");
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { activeAestheticId: aestheticId },
+  });
+
+  revalidatePath("/", "layout");
+  return { saved: true, message: `${look.name} it is. Home just changed ♥` };
 }
 
 /** Save a piece into a board you picked from the sheet. */
@@ -78,7 +119,7 @@ export async function saveToEdit(
   revalidatePath("/", "layout");
   return {
     saved: true,
-    message: `Saved to ${edit.name}. It’s coming together nicely`,
+    message: `Into ${edit.name} it goes ♥`,
   };
 }
 
@@ -113,6 +154,6 @@ export async function saveToNewEdit(
   revalidatePath("/", "layout");
   return {
     saved: true,
-    message: `Saved to ${name}. Name it whenever you like`,
+    message: `New board! Name it when inspiration strikes`,
   };
 }

@@ -9,18 +9,15 @@ export type ProductCardProps = {
   brand: string;
   title: string;
   price: number;
-  /** Was-price. Its presence is what draws the drop badge. */
   was?: number;
-  /** Pigment fill standing in for the photograph. */
+  /** The fabric tone that fills the placeholder. */
   color?: string;
-  caption?: string;
-  captionColor?: string;
+  /** Garment noun, named along the bottom of the placeholder. */
+  category?: string;
   height?: number | string;
   saved?: boolean;
-  /** The hero card at the head of a feed block: taller, grotesque
-   *  title, price out to the right. */
+  /** The hero at the head of a block: taller, grotesque title. */
   featured?: boolean;
-  /** One editorial line, serif italic, under a featured card. */
   line?: string;
   onOpen?: () => void;
   onSave?: () => void;
@@ -29,18 +26,15 @@ export type ProductCardProps = {
 };
 
 /**
- * ProductCard — the core feed unit: a painted swatch, a floating save
- * heart, an optional price-drop badge, then brand / title / price.
- * Prices are always mono.
+ * ProductCard — the core feed unit.
  */
 export default function ProductCard({
   brand,
   title,
   price,
   was,
-  color = "var(--pig-cobalt)",
-  caption,
-  captionColor,
+  color = "var(--fabric-neutral)",
+  category,
   height,
   saved = false,
   featured = false,
@@ -58,6 +52,13 @@ export default function ProductCard({
     onSave?.();
   };
 
+  const prices = (
+    <div className={styles.prices}>
+      <span className={styles.price}>${price}</span>
+      {was && <span className={styles.was}>${was}</span>}
+    </div>
+  );
+
   return (
     <div
       className={[styles.card, featured && styles.featured, className]
@@ -65,15 +66,12 @@ export default function ProductCard({
         .join(" ")}
       style={style}
     >
-      <div className={styles.frame}>
+      <div className={styles.frame} onClick={onOpen}>
         <CanvasSwatch
           color={color}
           height={fieldHeight}
           radius={featured ? "var(--radius-xl)" : "var(--radius-lg)"}
-          caption={caption}
-          captionColor={captionColor}
-          className={onOpen ? styles.tappable : undefined}
-          onClick={onOpen}
+          label={category}
         />
 
         {was && (
@@ -97,29 +95,13 @@ export default function ProductCard({
         )}
       </div>
 
-      <div
-        className={[styles.meta, onOpen && styles.tappable]
-          .filter(Boolean)
-          .join(" ")}
-        onClick={onOpen}
-      >
+      <div className={styles.meta} onClick={onOpen}>
         <div className={styles.text}>
           <div className={styles.brand}>{brand}</div>
           <div className={styles.title}>{title}</div>
-          {!featured && (
-            <div className={styles.prices}>
-              <span className={styles.price}>${price}</span>
-              {was && <span className={styles.was}>${was}</span>}
-            </div>
-          )}
+          {!featured && prices}
         </div>
-
-        {featured && (
-          <div className={styles.prices}>
-            <span className={styles.price}>${price}</span>
-            {was && <span className={styles.was}>${was}</span>}
-          </div>
-        )}
+        {featured && prices}
       </div>
 
       {featured && line && <div className={styles.line}>{line}</div>}

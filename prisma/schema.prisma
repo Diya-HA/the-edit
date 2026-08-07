@@ -48,10 +48,27 @@ model User {
   activeAestheticId String?    @db.Uuid
   activeAesthetic   Aesthetic? @relation(fields: [activeAestheticId], references: [id], onDelete: SetNull)
 
-  edits Edit[]
+  edits   Edit[]
+  follows Follow[]
 
   @@index([activeAestheticId])
   @@map("users")
+}
+
+/// A label you follow. Its new pieces surface first, and its price drops are
+/// what the shelf is actually for. The data model's FOLLOW, added in turn 3
+/// when the brands shelf became a real screen.
+model Follow {
+  userId     String   @db.Uuid
+  brandId    String   @db.Uuid
+  followedAt DateTime @default(now())
+
+  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
+  brand Brand @relation(fields: [brandId], references: [id], onDelete: Cascade)
+
+  @@id([userId, brandId])
+  @@index([brandId])
+  @@map("follows")
 }
 
 /// A label whose pieces appear in the feed.
@@ -66,7 +83,8 @@ model Brand {
   isPartner Boolean  @default(false)
   createdAt DateTime @default(now())
 
-  products Product[]
+  products  Product[]
+  followers Follow[]
 
   @@map("brands")
 }
@@ -101,8 +119,13 @@ model Product {
   /// Prior price. Its presence is what draws the drop badge.
   wasPrice Decimal? @db.Decimal(10, 2)
 
-  /// The painted swatch. colorToken is what the components consume
-  /// (`var(--tint-rose)`); hex is here for anything that can't read CSS.
+  /// Colour, in two parts.
+  ///
+  /// colorHex is the tone of the actual cloth and fills the placeholder — it
+  /// is content, the stand-in for photography, so it lives here rather than
+  /// as a token. colorToken/colorName are the palette *family* it groups
+  /// into (`--fabric-sage`, "Sage"), which is what the filter row offers and
+  /// what the swatch on a colour dot is painted with.
   colorName  String
   colorToken String
   colorHex   String @db.Char(7)
