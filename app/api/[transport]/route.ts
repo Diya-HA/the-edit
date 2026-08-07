@@ -1,13 +1,13 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
-import { OutfitInputError, upsertOutfit } from "@/lib/outfits";
+import { OutfitInputError, upsertOutfit } from "@/prisma/outfits";
 
 /**
  * The Edit as an MCP server.
  *
  * The other door into the same catalogue. The scraping pipeline reaches the
- * database through lib/outfits.ts from a script; this exposes the same two
+ * database through prisma/outfits.ts from a script; this exposes the same two
  * operations — find pieces, assemble them — to any MCP client, so a run that
  * lives outside this repo can curate without shelling into it.
  *

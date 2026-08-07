@@ -4,14 +4,14 @@
  *   node --experimental-strip-types scripts/ingest-uskees.ts <scored.json>
  *
  * Runs with no browser and no session, like the job it stands in for. Pieces
- * are upserted on slug and outfits go through lib/outfits.ts — the same door
+ * are upserted on slug and outfits go through prisma/outfits.ts — the same door
  * the seed and the server action use — so a repeat run updates rather than
  * duplicates.
  */
 import { PrismaClient } from "@prisma/client";
 import { readFileSync } from "node:fs";
-import { upsertOutfits } from "../lib/outfits.ts";
-import type { OutfitInput } from "../lib/outfits.ts";
+import { upsertOutfits } from "../prisma/outfits.ts";
+import type { OutfitInput } from "../prisma/outfits.ts";
 
 const prisma = new PrismaClient();
 

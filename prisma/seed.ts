@@ -12,8 +12,8 @@
  * the palette family it groups into, which is what the filter row offers.
  */
 import { PrismaClient } from "@prisma/client";
-import { upsertOutfits } from "../lib/outfits.ts";
-import type { OutfitInput } from "../lib/outfits.ts";
+import { upsertOutfits } from "./outfits.ts";
+import type { OutfitInput } from "./outfits.ts";
 
 const prisma = new PrismaClient();
 
