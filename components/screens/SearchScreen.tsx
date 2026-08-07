@@ -1,8 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import type { CSSProperties } from "react";
-import { adoptLook, toggleSave } from "@/app/actions";
+import { adoptLook, toggleSave, toggleStar } from "@/app/actions";
 import type {
   BrandRowView,
   LookRow,
@@ -11,6 +10,7 @@ import type {
 import Button from "../Button";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
+import LooksDeck from "./LooksDeck";
 import PieceGrid from "./PieceGrid";
 import ShelfPanel from "./ShelfPanel";
 import styles from "./SearchScreen.module.css";
@@ -23,6 +23,8 @@ export type SearchScreenProps = {
   pieces: ProductView[];
   looks: LookRow[];
   openLook: LookRow | null;
+  /** Slug of the look on top of the deck. */
+  card?: string;
   openLookItems: ProductView[];
   brands: BrandRowView[];
   drops: ProductView[];
@@ -40,6 +42,7 @@ export default function SearchScreen({
   pieces,
   looks,
   openLook,
+  card,
   openLookItems,
   brands,
   drops,
@@ -49,13 +52,16 @@ export default function SearchScreen({
 
   /* The tab, the query and the opened look all live in the URL, so any state
      of this screen can be linked to and the back button walks it. */
-  const go = (next: Partial<{ tab: SearchTab; q: string; look: string }>) => {
+  const go = (
+    next: Partial<{ tab: SearchTab; q: string; look: string; card: string }>,
+  ) => {
     const params = new URLSearchParams();
     const t = next.tab ?? tab;
     if (t !== "pieces") params.set("tab", t);
     const q = next.q ?? query;
     if (q) params.set("q", q);
     if (next.look) params.set("look", next.look);
+    if (next.card) params.set("card", next.card);
     const qs = params.toString();
     router.push(qs ? `/search?${qs}` : "/search", { scroll: false });
   };
@@ -130,42 +136,14 @@ export default function SearchScreen({
           )}
 
           {tab === "looks" && !openLook && (
-            <>
-              <p className={styles.intro}>
-                Looks other people are building. Have a nose around and take any
-                of them home.
-              </p>
-              <div className={styles.looks}>
-                {looks.map((l) => (
-                  <button
-                    key={l.id}
-                    type="button"
-                    className={styles.look}
-                    onClick={() => go({ tab: "looks", look: l.slug })}
-                  >
-                    <span className={styles.lookSwatches}>
-                      {l.tones.map((tone, i) => (
-                        <span
-                          key={i}
-                          className={styles.lookSwatch}
-                          style={{ "--look-tone": tone } as CSSProperties}
-                        />
-                      ))}
-                    </span>
-                    <span className={styles.lookText}>
-                      <span className={styles.lookName}>{l.name}</span>
-                      <span className={styles.lookMeta}>
-                        {l.count} pieces
-                        {l.description ? ` · ${l.description.toLowerCase()}` : ""}
-                      </span>
-                    </span>
-                    <span className={styles.chevron} aria-hidden="true">
-                      ›
-                    </span>
-                  </button>
-                ))}
-              </div>
-            </>
+            <LooksDeck
+              looks={looks}
+              onSlug={card}
+              onFlip={(next) => go({ tab: "looks", card: next })}
+              onOpen={(l) => go({ tab: "looks", look: l.slug })}
+              onStar={(l) => run(() => toggleStar(l.id))}
+              onAdopt={(l) => run(() => adoptLook(l.id))}
+            />
           )}
 
           {tab === "looks" && openLook && (
@@ -173,7 +151,7 @@ export default function SearchScreen({
               <button
                 type="button"
                 className={styles.back}
-                onClick={() => go({ tab: "looks", look: undefined })}
+                onClick={() => go({ tab: "looks", card })}
               >
                 ‹ All looks
               </button>

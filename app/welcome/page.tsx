@@ -1,5 +1,6 @@
 import OnboardingScreen from "@/components/screens/OnboardingScreen";
 import { getAesthetics, getLooks, getPalette } from "@/lib/data";
+import { getCurrentUser } from "@/lib/session";
 import styles from "@/components/AppShell.module.css";
 
 export const dynamic = "force-dynamic";
@@ -9,10 +10,11 @@ export const dynamic = "force-dynamic";
  * shell's frame directly rather than AppShell.
  */
 export default async function WelcomePage() {
+  const user = await getCurrentUser();
   const [looks, palette, withTones] = await Promise.all([
-    getAesthetics(),
+    getAesthetics(user.id),
     getPalette(),
-    getLooks(),
+    getLooks(user.id),
   ]);
 
   const tonesByLook = Object.fromEntries(

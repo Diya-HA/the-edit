@@ -68,6 +68,9 @@ const BRANDS = [
 /** Labels the seeded shopper already follows. */
 const FOLLOWED = ["margaux", "ciel"];
 
+/** Looks she has starred. Starred looks sort first on the home strip. */
+const STARRED = ["soft-romance"];
+
 type ProductSeed = {
   slug: string;
   title: string;
@@ -234,6 +237,19 @@ async function main() {
     });
   }
   console.log(`follows     ${FOLLOWED.length}`);
+
+  let starCount = 0;
+  for (const slug of STARRED) {
+    const aestheticId = aesthetics.get(slug);
+    if (!aestheticId) throw new Error(`star: unknown look "${slug}"`);
+    await prisma.favouriteLook.upsert({
+      where: { userId_aestheticId: { userId: user.id, aestheticId } },
+      update: {},
+      create: { userId: user.id, aestheticId },
+    });
+    starCount += 1;
+  }
+  console.log(`starred     ${starCount}`);
 
   let savedCount = 0;
   for (const e of EDITS) {

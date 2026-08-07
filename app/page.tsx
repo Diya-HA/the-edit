@@ -11,9 +11,10 @@ export const dynamic = "force-dynamic";
 export default async function FeedPage({ searchParams }: PageProps<"/">) {
   const params = await searchParams;
 
-  const [user, aesthetics, palette] = await Promise.all([
-    getCurrentUser(),
-    getAesthetics(),
+  /* Aesthetics need the user, so starred looks can climb the strip. */
+  const user = await getCurrentUser();
+  const [aesthetics, palette] = await Promise.all([
+    getAesthetics(user.id),
     getPalette(),
   ]);
 

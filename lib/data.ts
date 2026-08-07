@@ -27,6 +27,7 @@ export type AestheticView = {
   slug: string;
   name: string;
   description: string | null;
+  starred?: boolean;
 };
 
 export type PaletteEntry = { name: string; token: string; color: string };
@@ -88,11 +89,32 @@ export async function getSavedProductIds(userId: string): Promise<Set<string>> {
   return new Set(rows.map((r) => r.productId));
 }
 
-export async function getAesthetics(): Promise<AestheticView[]> {
-  return prisma.aesthetic.findMany({
+/**
+ * The looks, starred ones first — turn 3: "star one and it climbs the strip
+ * so home leans that way". Alphabetical within each group so the order is
+ * stable rather than shuffling under you.
+ */
+export async function getAesthetics(userId: string): Promise<AestheticView[]> {
+  const rows = await prisma.aesthetic.findMany({
     orderBy: { name: "asc" },
-    select: { id: true, slug: true, name: true, description: true },
+    select: {
+      id: true,
+      slug: true,
+      name: true,
+      description: true,
+      favourites: { where: { userId }, select: { userId: true } },
+    },
   });
+
+  return rows
+    .map((a) => ({
+      id: a.id,
+      slug: a.slug,
+      name: a.name,
+      description: a.description,
+      starred: a.favourites.length > 0,
+    }))
+    .sort((a, b) => Number(b.starred) - Number(a.starred));
 }
 
 /**
@@ -220,33 +242,50 @@ export async function searchPieces(opts: {
   return rows.map((r) => toView(r as ProductRow, savedIds));
 }
 
+export type DeckPiece = { id: string; title: string; tone: string };
+
 export type LookRow = AestheticView & {
+  starred: boolean;
   count: number;
   /** Tones of the first few pieces, for the little stacked swatches. */
   tones: string[];
+  /** The four pieces the deck shows for this look. */
+  pieces: DeckPiece[];
 };
 
-/** The Looks tab: every look with a count and a colour sample. */
-export async function getLooks(): Promise<LookRow[]> {
+/**
+ * The deck: every look with its count, a colour sample, and the handful of
+ * pieces shown on the card. Starred looks come first, as on the home strip.
+ */
+export async function getLooks(userId: string): Promise<LookRow[]> {
   const rows = await prisma.aesthetic.findMany({
     orderBy: { name: "asc" },
     include: {
+      favourites: { where: { userId }, select: { userId: true } },
       products: {
         where: { inStock: true },
         orderBy: { title: "asc" },
-        select: { colorHex: true },
+        select: { id: true, title: true, colorHex: true },
       },
     },
   });
 
-  return rows.map((a) => ({
-    id: a.id,
-    slug: a.slug,
-    name: a.name,
-    description: a.description,
-    count: a.products.length,
-    tones: a.products.slice(0, 3).map((p) => p.colorHex.trim()),
-  }));
+  return rows
+    .map((a) => ({
+      id: a.id,
+      slug: a.slug,
+      name: a.name,
+      description: a.description,
+      starred: a.favourites.length > 0,
+      count: a.products.length,
+      tones: a.products.slice(0, 3).map((p) => p.colorHex.trim()),
+      pieces: a.products.slice(0, 4).map((p) => ({
+        id: p.id,
+        title: p.title,
+        tone: p.colorHex.trim(),
+      })),
+    }))
+    .sort((a, b) => Number(b.starred) - Number(a.starred));
 }
 
 /** Pieces inside one look, for the opened-look view. */
