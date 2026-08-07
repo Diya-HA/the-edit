@@ -1,0 +1,29 @@
+# Local PostgreSQL only. The app itself is not built here — production images
+# come from the deploy template's Dockerfile, built in CI. This is just the
+# database your laptop talks to.
+#
+#   docker compose up -d      start it
+#   docker compose down       stop it (data survives)
+#   docker compose down -v    stop it and wipe the data
+
+services:
+  db:
+    image: postgres:17-alpine
+    container_name: the-edit-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: theedit
+      POSTGRES_PASSWORD: theedit
+      POSTGRES_DB: theedit
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U theedit -d theedit"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  db-data:
