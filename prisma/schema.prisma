@@ -19,12 +19,29 @@
 // a brand supplies many pieces, each piece is tagged to one aesthetic, a user
 // keeps many edits, and edits meet products through SavedItem.
 //
-// WHY PRISMA 6, NOT 7: Prisma 7 removed `url` from the schema — it has to live
-// in prisma.config.ts, and `migrate deploy` hard-errors without it. The deploy
-// template's Dockerfile copies only prisma/ into the runtime image, never
-// prisma.config.ts, so a v7 setup cannot migrate on start without editing that
-// Dockerfile. v6 keeps the URL here, where the template already looks, and the
-// image works untouched. Revisit if the template ever copies the config file.
+// WHY PRISMA IS PINNED TO EXACTLY 6.3.1 — do not bump without reading this.
+//
+// Two separate constraints, both set by the deploy template's Dockerfile,
+// which runs `prisma migrate deploy` at container start with only these in
+// the runtime image:
+//
+//     node_modules/prisma        node_modules/@prisma        prisma/
+//
+// 1. Not 7.x. Prisma 7 removed `url` from the schema — it has to live in
+//    prisma.config.ts, which that Dockerfile never copies, and migrate deploy
+//    hard-errors without it. Keeping the URL here is what makes the image work
+//    untouched.
+//
+// 2. Not 6.4+. The CLI's dependency closure has to sit entirely under
+//    node_modules/@prisma, because nothing else is copied. That holds up to
+//    6.3.x. 6.4 added top-level `esbuild`, 6.5 added `@prisma/config` (which
+//    pulls in `effect`, `c12`, `deepmerge-ts`, `empathic`), and 7.x adds
+//    `mysql2` and `postgres`. Any of those and the container dies at startup
+//    with MODULE_NOT_FOUND before it ever reaches the database — which is
+//    exactly what happened on the first deploy.
+//
+// Pinned exact, not caret, so a stray `npm install` cannot reintroduce it.
+// Bumping means either copying more into the image or forking the Dockerfile.
 
 datasource db {
   provider = "postgresql"
