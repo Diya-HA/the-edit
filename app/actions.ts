@@ -82,6 +82,36 @@ export async function toggleFollow(brandId: string): Promise<SaveResult> {
   };
 }
 
+/**
+ * Star a look, or unstar it. Starred looks climb the home strip, so this is
+ * how the deck teaches home what you keep coming back to.
+ */
+export async function toggleStar(aestheticId: string): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const look = await prisma.aesthetic.findUnique({ where: { id: aestheticId } });
+  if (!look) throw new Error("No such look.");
+
+  const existing = await prisma.favouriteLook.findUnique({
+    where: { userId_aestheticId: { userId: user.id, aestheticId } },
+  });
+
+  if (existing) {
+    await prisma.favouriteLook.delete({
+      where: { userId_aestheticId: { userId: user.id, aestheticId } },
+    });
+    revalidatePath("/", "layout");
+    return {
+      saved: false,
+      message: `Fair enough. Easing off ${look.name.toLowerCase()}`,
+    };
+  }
+
+  await prisma.favouriteLook.create({ data: { userId: user.id, aestheticId } });
+  revalidatePath("/", "layout");
+  return { saved: true, message: "Noted! More of that on the way" };
+}
+
 /** "Put this on my home" — the look the feed opens on from now on. */
 export async function adoptLook(aestheticId: string): Promise<SaveResult> {
   const user = await getCurrentUser();

@@ -24,12 +24,13 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
     : "pieces";
   const query = typeof params.q === "string" ? params.q : "";
   const lookSlug = typeof params.look === "string" ? params.look : undefined;
+  const card = typeof params.card === "string" ? params.card : undefined;
 
   /* Only the open tab's data is fetched — no point querying the shelf while
      someone is looking at pieces. */
   const [pieces, looks, brands, drops] = await Promise.all([
     tab === "pieces" ? searchPieces({ userId: user.id, query }) : [],
-    tab === "looks" ? getLooks() : [],
+    tab === "looks" ? getLooks(user.id) : [],
     tab === "brands" ? getBrands(user.id) : [],
     tab === "brands" ? getDrops(user.id) : [],
   ]);
@@ -49,6 +50,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
         pieces={pieces}
         looks={looks}
         openLook={openLook}
+        card={card}
         openLookItems={openLookItems}
         brands={brands}
         drops={drops}

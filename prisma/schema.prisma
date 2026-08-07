@@ -65,8 +65,9 @@ model User {
   activeAestheticId String?    @db.Uuid
   activeAesthetic   Aesthetic? @relation(fields: [activeAestheticId], references: [id], onDelete: SetNull)
 
-  edits   Edit[]
-  follows Follow[]
+  edits     Edit[]
+  follows   Follow[]
+  favourites FavouriteLook[]
 
   @@index([activeAestheticId])
   @@map("users")
@@ -117,10 +118,26 @@ model Aesthetic {
   wordmark    String?
   createdAt   DateTime @default(now())
 
-  products Product[]
-  users    User[]
+  products   Product[]
+  users      User[]
+  favourites FavouriteLook[]
 
   @@map("aesthetics")
+}
+
+/// A look you starred. Starred looks sort first on the home strip, so home
+/// leans toward what you keep coming back to. Turn 3's deck is what sets it.
+model FavouriteLook {
+  userId      String   @db.Uuid
+  aestheticId String   @db.Uuid
+  starredAt   DateTime @default(now())
+
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  aesthetic Aesthetic @relation(fields: [aestheticId], references: [id], onDelete: Cascade)
+
+  @@id([userId, aestheticId])
+  @@index([aestheticId])
+  @@map("favourite_looks")
 }
 
 /// A real piece from a brand feed, tagged to one aesthetic and one tint.
