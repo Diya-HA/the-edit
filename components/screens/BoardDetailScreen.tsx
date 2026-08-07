@@ -7,6 +7,7 @@ import Toast from "../Toast";
 import { useToast } from "../useToast";
 import PieceGrid from "./PieceGrid";
 import SaveSheet from "./SaveSheet";
+import type { SaveTarget } from "./SaveSheet";
 import styles from "./BoardDetailScreen.module.css";
 
 export type BoardDetailScreenProps = {
@@ -22,7 +23,7 @@ export default function BoardDetailScreen({
 }: BoardDetailScreenProps) {
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
-  const [saving, setSaving] = useState<ProductView | null>(null);
+  const [saving, setSaving] = useState<SaveTarget | null>(null);
 
   const meta = [
     `${edit.count} ${edit.count === 1 ? "piece" : "pieces"}`,
@@ -55,14 +56,14 @@ export default function BoardDetailScreen({
               products={items}
               pending={pending}
               onOpen={(p) => router.push(`/product/${p.slug}`)}
-              onSave={(p) => setSaving(p)}
+              onSave={(p) => setSaving({ kind: "product", product: p })}
             />
           )}
         </div>
       </div>
 
       <SaveSheet
-        product={saving}
+        target={saving}
         edits={edits}
         onClose={() => setSaving(null)}
         run={run}

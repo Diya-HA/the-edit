@@ -1,0 +1,117 @@
+/* Brand discovery: browse labels by look, price or what has just landed. */
+
+.intro {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}
+
+.sorts,
+.filters {
+  display: flex;
+  gap: 6px;
+  overflow-x: auto;
+  margin: 0 calc(var(--space-4) * -1) var(--space-3);
+  padding: 0 var(--space-4);
+  scrollbar-width: none;
+}
+
+.sorts::-webkit-scrollbar,
+.filters::-webkit-scrollbar {
+  display: none;
+}
+
+.brands {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.brand {
+  border: 1px solid var(--border-faint);
+  border-radius: var(--radius-xl);
+  background: var(--surface-card);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+/* What the label actually stocks, as colour. */
+.tones {
+  display: flex;
+  height: 56px;
+}
+
+.tone {
+  flex: 1;
+  background-color: var(--tone);
+}
+
+.body {
+  padding: var(--space-3);
+}
+
+.top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  font-weight: var(--fw-semi);
+  color: var(--text-strong);
+}
+
+.meta {
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+.stats {
+  margin-top: var(--space-2);
+  font-family: var(--font-mono);
+  font-size: var(--fs-meta);
+  color: var(--text-body);
+}
+
+.follow {
+  flex: none;
+  padding: 5px var(--space-3);
+  border: 1.5px solid var(--line-2);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  color: var(--text-strong);
+  font-family: var(--font-sans);
+  font-size: var(--fs-xs);
+  font-weight: var(--fw-semi);
+  white-space: nowrap;
+  box-shadow: var(--shadow-pill-idle);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.following {
+  background: var(--ink-0);
+  border: 1px solid var(--ink-0);
+  color: var(--canvas-1);
+  box-shadow: var(--shadow-pill-active);
+}
+
+.empty {
+  padding: 40px var(--space-5);
+  text-align: center;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+}

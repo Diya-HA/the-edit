@@ -16,6 +16,7 @@ import Toast from "../Toast";
 import { useToast } from "../useToast";
 import PieceGrid from "./PieceGrid";
 import SaveSheet from "./SaveSheet";
+import type { SaveTarget } from "./SaveSheet";
 import styles from "./FeedScreen.module.css";
 
 export type FeedScreenProps = {
@@ -40,7 +41,7 @@ export default function FeedScreen({
 }: FeedScreenProps) {
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
-  const [saving, setSaving] = useState<ProductView | null>(null);
+  const [saving, setSaving] = useState<SaveTarget | null>(null);
 
   /* Filters live in the URL, so a filtered feed is shareable and the back
      button walks the looks you tried. */
@@ -109,14 +110,14 @@ export default function FeedScreen({
               products={products}
               pending={pending}
               onOpen={(p) => router.push(`/product/${p.slug}`)}
-              onSave={(p) => setSaving(p)}
+              onSave={(p) => setSaving({ kind: "product", product: p })}
             />
           )}
         </div>
       </div>
 
       <SaveSheet
-        product={saving}
+        target={saving}
         edits={edits}
         onClose={() => setSaving(null)}
         run={run}

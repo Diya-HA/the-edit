@@ -121,8 +121,72 @@ model Aesthetic {
   products   Product[]
   users      User[]
   favourites FavouriteLook[]
+  outfits    Outfit[]
 
   @@map("aesthetics")
+}
+
+/// Where a row came from. Agent runs write AGENT; anything the seed puts
+/// there is SEED, which is also how the app knows to label demo content.
+enum Source {
+  SEED
+  AGENT
+  HUMAN
+}
+
+/// An assembled outfit: several pieces from one aesthetic that work together,
+/// saveable as a set rather than piece by piece.
+///
+/// This table is a write target for an agent, not just the seed. A
+/// non-interactive run scores garments with .claude/skills/aesthetic-fit and
+/// writes outfits here, and they appear in the app without anyone touching
+/// the UI. Two consequences for the shape:
+///
+///   - `slug` is the idempotency key. A run that reassembles the same outfit
+///     upserts it rather than duplicating, so the job is safe to repeat.
+///   - `note` holds the skill's one-line reasoning in the product voice —
+///     the sentence a shopper reads under the outfit. Same rules as a WHY
+///     line: sentence case, under 20 words, no hype.
+///
+/// Write through `upsertOutfit` in lib/outfits.ts, which both the seed and
+/// the createOutfit server action use, so validation lives in one place.
+model Outfit {
+  id     String @id @default(uuid()) @db.Uuid
+  slug   String @unique
+  name   String
+  /// The skill's one-line reasoning, product voice.
+  note   String?
+  source Source @default(SEED)
+
+  aestheticId String    @db.Uuid
+  aesthetic   Aesthetic @relation(fields: [aestheticId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  items OutfitItem[]
+
+  @@index([aestheticId])
+  @@map("outfits")
+}
+
+/// A piece inside an outfit, with the skill's verdict on why it is here.
+model OutfitItem {
+  outfitId  String @db.Uuid
+  productId String @db.Uuid
+  /// Order within the outfit.
+  position  Int    @default(0)
+  /// The aesthetic-fit score out of 100, when an agent placed the piece.
+  score     Int?
+  /// The piece's own WHY line within this outfit.
+  note      String?
+
+  outfit  Outfit  @relation(fields: [outfitId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+
+  @@id([outfitId, productId])
+  @@index([productId])
+  @@map("outfit_items")
 }
 
 /// A look you starred. Starred looks sort first on the home strip, so home
@@ -184,7 +248,13 @@ model Product {
   aestheticId String    @db.Uuid
   aesthetic   Aesthetic @relation(fields: [aestheticId], references: [id], onDelete: Restrict)
 
-  savedItems SavedItem[]
+  /// Position in the trending row. Seeded demo data — with one shopper there
+  /// is no real popularity signal, so the app labels the row as a sample
+  /// rather than presenting this as a measured metric.
+  trendingRank Int?
+
+  savedItems  SavedItem[]
+  outfitItems OutfitItem[]
 
   @@index([brandId])
   @@index([aestheticId])

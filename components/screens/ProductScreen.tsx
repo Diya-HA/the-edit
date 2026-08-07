@@ -119,7 +119,7 @@ export default function ProductScreen({
       </div>
 
       <SaveSheet
-        product={sheet ? product : null}
+        target={sheet ? { kind: "product", product } : null}
         edits={edits}
         onClose={() => setSheet(false)}
         run={run}

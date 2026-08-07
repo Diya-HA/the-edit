@@ -104,6 +104,8 @@ export default function BoardsScreen({
               <span className={styles.rowValue}>$300 ›</span>
             </button>
 
+            {/* The one row here that does something. The others are
+                placeholders until there is somewhere to store the answer. */}
             <button
               type="button"
               className={styles.row}

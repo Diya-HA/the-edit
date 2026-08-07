@@ -2,41 +2,45 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { adoptLook, toggleStar } from "@/app/actions";
+import type { CSSProperties } from "react";
 import type {
-  BrandRowView,
+  BrandCard,
   EditView,
-  LookRow,
+  OutfitView,
   ProductView,
 } from "@/lib/data";
-import Button from "../Button";
+import Chip from "../Chip";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
-import LooksDeck from "./LooksDeck";
-import SaveSheet from "./SaveSheet";
+import BrandDiscovery from "./BrandDiscovery";
+import type { BrandSort } from "@/lib/brands";
+import OutfitList from "./OutfitList";
 import PieceGrid from "./PieceGrid";
-import ShelfPanel from "./ShelfPanel";
+import SaveSheet from "./SaveSheet";
+import type { SaveTarget } from "./SaveSheet";
 import styles from "./SearchScreen.module.css";
 
-export type SearchTab = "pieces" | "looks" | "brands";
+export type SearchTab = "pieces" | "outfits" | "brands";
 
 export type SearchScreenProps = {
   tab: SearchTab;
   query: string;
   pieces: ProductView[];
-  looks: LookRow[];
-  openLook: LookRow | null;
-  /** Slug of the look on top of the deck. */
-  card?: string;
-  openLookItems: ProductView[];
-  brands: BrandRowView[];
-  drops: ProductView[];
+  trending: ProductView[];
+  outfits: OutfitView[];
+  looks: { slug: string; name: string }[];
+  outfitLook?: string;
+  brands: BrandCard[];
+  brandAesthetics: string[];
+  brandSort: BrandSort;
+  brandLook?: string;
+  brandBand?: string;
   edits: EditView[];
 };
 
 const SEGMENTS: { key: SearchTab; label: string }[] = [
   { key: "pieces", label: "Pieces" },
-  { key: "looks", label: "Looks" },
+  { key: "outfits", label: "Outfits" },
   { key: "brands", label: "Brands" },
 ];
 
@@ -44,36 +48,40 @@ export default function SearchScreen({
   tab,
   query,
   pieces,
+  trending,
+  outfits,
   looks,
-  openLook,
-  card,
-  openLookItems,
+  outfitLook,
   brands,
-  drops,
+  brandAesthetics,
+  brandSort,
+  brandLook,
+  brandBand,
   edits,
 }: SearchScreenProps) {
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
-  const [saving, setSaving] = useState<ProductView | null>(null);
+  const [saving, setSaving] = useState<SaveTarget | null>(null);
 
-  /* The tab, the query and the opened look all live in the URL, so any state
-     of this screen can be linked to and the back button walks it. */
-  const go = (
-    next: Partial<{ tab: SearchTab; q: string; look: string; card: string }>,
-  ) => {
+  /* Every bit of state this screen has lives in the URL, so any view of it
+     can be linked to and the back button walks it. */
+  const go = (next: Record<string, string | undefined>) => {
+    const merged: Record<string, string | undefined> = {
+      tab,
+      q: query || undefined,
+      look: outfitLook,
+      sort: brandSort === "new" ? undefined : brandSort,
+      blook: brandLook,
+      band: brandBand,
+      ...next,
+    };
     const params = new URLSearchParams();
-    const t = next.tab ?? tab;
-    if (t !== "pieces") params.set("tab", t);
-    const q = next.q ?? query;
-    if (q) params.set("q", q);
-    if (next.look) params.set("look", next.look);
-    if (next.card) params.set("card", next.card);
+    for (const [k, v] of Object.entries(merged)) {
+      if (v && !(k === "tab" && v === "pieces")) params.set(k, v);
+    }
     const qs = params.toString();
     router.push(qs ? `/search?${qs}` : "/search", { scroll: false });
   };
-
-  const openPiece = (p: ProductView) => router.push(`/product/${p.slug}`);
-  const savePiece = (p: ProductView) => setSaving(p);
 
   return (
     <>
@@ -84,8 +92,11 @@ export default function SearchScreen({
           className={styles.field}
           onSubmit={(e) => {
             e.preventDefault();
-            const value = new FormData(e.currentTarget).get("q");
-            go({ tab: "pieces", q: typeof value === "string" ? value : "" });
+            const v = new FormData(e.currentTarget).get("q");
+            go({
+              tab: "pieces",
+              q: typeof v === "string" ? v || undefined : undefined,
+            });
           }}
         >
           <span className={styles.glass} aria-hidden="true">
@@ -100,6 +111,33 @@ export default function SearchScreen({
           />
         </form>
 
+        {/* Under the search bar: what is getting saved. Labelled a sample
+            because with one shopper there is no popularity to measure. */}
+        {trending.length > 0 && (
+          <div className={styles.trending}>
+            <div className={styles.trendingHead}>
+              <span className={styles.trendingLabel}>Getting saved</span>
+              <span className={styles.trendingNote}>sample data</span>
+            </div>
+            <div className={styles.trendingRow}>
+              {trending.map((p) => (
+                <button
+                  key={p.id}
+                  type="button"
+                  className={styles.trend}
+                  onClick={() => router.push(`/product/${p.slug}`)}
+                >
+                  <span
+                    className={styles.trendThumb}
+                    style={{ "--trend-tone": p.tone } as CSSProperties}
+                  />
+                  <span className={styles.trendTitle}>{p.title}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className={styles.segments}>
           {SEGMENTS.map((s) => (
             <button
@@ -109,7 +147,7 @@ export default function SearchScreen({
               className={[styles.segment, tab === s.key && styles.segmentOn]
                 .filter(Boolean)
                 .join(" ")}
-              onClick={() => go({ tab: s.key, look: undefined })}
+              onClick={() => go({ tab: s.key })}
             >
               {s.label}
             </button>
@@ -127,66 +165,69 @@ export default function SearchScreen({
               {pieces.length === 0 ? (
                 <p className={styles.empty}>
                   Nothing matched that. Try fewer words, or have a look through
-                  the looks instead.
+                  the outfits instead.
                 </p>
               ) : (
                 <PieceGrid
                   products={pieces}
                   pending={pending}
-                  onOpen={openPiece}
-                  onSave={savePiece}
+                  onOpen={(p) => router.push(`/product/${p.slug}`)}
+                  onSave={(p) => setSaving({ kind: "product", product: p })}
                 />
               )}
             </>
           )}
 
-          {tab === "looks" && !openLook && (
-            <LooksDeck
-              looks={looks}
-              onSlug={card}
-              onFlip={(next) => go({ tab: "looks", card: next })}
-              onOpen={(l) => go({ tab: "looks", look: l.slug })}
-              onStar={(l) => run(() => toggleStar(l.id))}
-              onAdopt={(l) => run(() => adoptLook(l.id))}
-            />
-          )}
-
-          {tab === "looks" && openLook && (
+          {tab === "outfits" && (
             <>
-              <button
-                type="button"
-                className={styles.back}
-                onClick={() => go({ tab: "looks", card })}
-              >
-                ‹ All looks
-              </button>
-              <div className={styles.openName}>{openLook.name}</div>
-              <div className={styles.openMeta}>{openLook.description}</div>
-              <div className={styles.adopt}>
-                <Button
-                  size="sm"
-                  onClick={() => run(() => adoptLook(openLook.id))}
-                >
-                  Put this on my home
-                </Button>
+              <div className={styles.filters}>
+                <Chip
+                  label="All looks"
+                  active={!outfitLook}
+                  onClick={() => go({ look: undefined })}
+                />
+                {looks.map((l) => (
+                  <Chip
+                    key={l.slug}
+                    label={l.name}
+                    active={outfitLook === l.slug}
+                    onClick={() =>
+                      go({ look: outfitLook === l.slug ? undefined : l.slug })
+                    }
+                  />
+                ))}
               </div>
-              <PieceGrid
-                products={openLookItems}
-                pending={pending}
-                onOpen={openPiece}
-                onSave={savePiece}
+
+              <OutfitList
+                outfits={outfits}
+                onOpenPiece={(slug) => router.push(`/product/${slug}`)}
+                onSave={(o) => setSaving({ kind: "outfit", outfit: o })}
               />
             </>
           )}
 
           {tab === "brands" && (
-            <ShelfPanel brands={brands} drops={drops} run={run} />
+            <BrandDiscovery
+              brands={brands}
+              aesthetics={brandAesthetics}
+              sort={brandSort}
+              look={brandLook}
+              band={brandBand}
+              onChange={(next) =>
+                go({
+                  sort: next.sort,
+                  blook: "look" in next ? next.look : brandLook,
+                  band: "band" in next ? next.band : brandBand,
+                })
+              }
+              run={run}
+            />
           )}
         </div>
       </div>
 
       <SaveSheet
-        product={saving}
+        target={saving}
         edits={edits}
         onClose={() => setSaving(null)}
         run={run}
