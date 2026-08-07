@@ -7,7 +7,10 @@
 .swatch {
   position: relative;
   width: 100%;
+  /* One of these wins: an explicit height, or an aspect ratio. Feed cards use
+     the ratio so they can only ever be square or portrait — never landscape. */
   height: var(--swatch-height);
+  aspect-ratio: var(--swatch-aspect);
   border-radius: var(--swatch-radius);
   background-color: var(--swatch-color);
   overflow: hidden;

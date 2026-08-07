@@ -382,7 +382,7 @@ export async function getEdits(
     name: e.name,
     note: e.note,
     count: e.items.length,
-    tones: e.items.slice(0, 3).map((i) => i.product.colorHex.trim()),
+    tones: e.items.slice(0, 4).map((i) => i.product.colorHex.trim()),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
@@ -418,18 +418,4 @@ export async function getEdit(
     },
     items,
   };
-}
-
-/**
- * The feed reads as blocks: one hero piece, then a pair beside it. Matches
- * the block rhythm in the reference screens.
- */
-export type FeedBlock = { hero: ProductView; pair: ProductView[] };
-
-export function toBlocks(products: ProductView[]): FeedBlock[] {
-  const blocks: FeedBlock[] = [];
-  for (let i = 0; i < products.length; i += 3) {
-    blocks.push({ hero: products[i], pair: products.slice(i + 1, i + 3) });
-  }
-  return blocks;
 }

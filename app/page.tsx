@@ -1,6 +1,6 @@
 import AppShell from "@/components/AppShell";
 import FeedScreen from "@/components/screens/FeedScreen";
-import { getAesthetics, getFeed, getPalette, toBlocks } from "@/lib/data";
+import { getAesthetics, getEdits, getFeed, getPalette } from "@/lib/data";
 import { getCurrentUser } from "@/lib/session";
 
 /* Every screen reads the database per request. Without this Next would try to
@@ -13,9 +13,10 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
 
   /* Aesthetics need the user, so starred looks can climb the strip. */
   const user = await getCurrentUser();
-  const [aesthetics, palette] = await Promise.all([
+  const [aesthetics, palette, edits] = await Promise.all([
     getAesthetics(user.id),
     getPalette(),
+    getEdits(user.id),
   ]);
 
   /* Which look the feed is showing: the URL wins, then the shopper's own
@@ -32,29 +33,27 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
     );
   }
 
-  const raw = params.tint;
-  const requested = Array.isArray(raw) ? raw : raw ? [raw] : [];
-  /* Only honour tints the catalogue actually offers, so a stale or hand-typed
-     URL cannot empty the feed with a filter that could never match. */
-  const selectedTokens = requested.filter((t) =>
-    palette.some((p) => p.token === t),
-  );
+  /* One colour at a time. Only honour a tint the catalogue actually offers,
+     so a stale or hand-typed URL cannot empty the feed with a filter that
+     could never match. */
+  const raw = typeof params.tint === "string" ? params.tint : undefined;
+  const activeTint = palette.some((p) => p.token === raw) ? raw : undefined;
 
   const products = await getFeed({
     userId: user.id,
     aestheticId: active.id,
-    colorTokens: selectedTokens,
+    colorTokens: activeTint ? [activeTint] : [],
   });
 
   return (
     <AppShell>
       <FeedScreen
-        blocks={toBlocks(products)}
+        products={products}
         aesthetics={aesthetics}
         palette={palette}
+        edits={edits}
         activeSlug={active.slug}
-        activeName={active.name}
-        selectedTokens={selectedTokens}
+        activeTint={activeTint}
         initials={user.initials}
       />
     </AppShell>

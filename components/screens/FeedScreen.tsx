@@ -1,10 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toggleSave } from "@/app/actions";
 import type {
   AestheticView,
-  FeedBlock,
+  EditView,
   PaletteEntry,
   ProductView,
 } from "@/lib/data";
@@ -12,73 +12,48 @@ import Avatar from "../Avatar";
 import Button from "../Button";
 import Chip from "../Chip";
 import ColorDot from "../ColorDot";
-import ProductCard from "../ProductCard";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
+import PieceGrid from "./PieceGrid";
+import SaveSheet from "./SaveSheet";
 import styles from "./FeedScreen.module.css";
 
 export type FeedScreenProps = {
-  blocks: FeedBlock[];
+  products: ProductView[];
   aesthetics: AestheticView[];
   palette: PaletteEntry[];
+  edits: EditView[];
   activeSlug: string;
-  activeName: string;
-  selectedTokens: string[];
+  /** The one colour the feed is filtered to, if any. */
+  activeTint?: string;
   initials: string;
 };
 
 export default function FeedScreen({
-  blocks,
+  products,
   aesthetics,
   palette,
+  edits,
   activeSlug,
-  activeName,
-  selectedTokens,
+  activeTint,
   initials,
 }: FeedScreenProps) {
   const router = useRouter();
-  const { message: toast, say, run, pending } = useToast();
+  const { message: toast, run, pending } = useToast();
+  const [saving, setSaving] = useState<ProductView | null>(null);
 
   /* Filters live in the URL, so a filtered feed is shareable and the back
      button walks the looks you tried. */
-  const navigate = (look: string, tokens: string[]) => {
+  const navigate = (look: string, tint?: string) => {
     const params = new URLSearchParams();
     params.set("look", look);
-    for (const t of tokens) params.append("tint", t);
+    if (tint) params.set("tint", tint);
     router.push(`/?${params}`, { scroll: false });
   };
 
-  const pickLook = (slug: string, name: string) => {
-    if (slug === activeSlug) return;
-    navigate(slug, selectedTokens);
-    say(`${name} it is. Home just changed ♥`);
-  };
-
-  const toggleTint = (token: string) => {
-    const next = selectedTokens.includes(token)
-      ? selectedTokens.filter((t) => t !== token)
-      : [...selectedTokens, token];
-    navigate(activeSlug, next);
-  };
-
-  const save = (product: ProductView) =>
-    run(() => toggleSave(product.id, activeName));
-
-  const card = (p: ProductView, featured: boolean) => (
-    <ProductCard
-      brand={p.brand}
-      title={p.title}
-      price={p.price}
-      was={p.wasPrice ?? undefined}
-      color={p.tone}
-      category={p.category}
-      line={p.line ?? undefined}
-      featured={featured}
-      saved={p.saved}
-      onSave={() => save(p)}
-      onOpen={() => router.push(`/product/${p.slug}`)}
-    />
-  );
+  /* One colour at a time. Tapping the one already on clears it. */
+  const pickTint = (token: string) =>
+    navigate(activeSlug, token === activeTint ? undefined : token);
 
   return (
     <>
@@ -94,7 +69,7 @@ export default function FeedScreen({
               key={a.id}
               label={a.name}
               active={a.slug === activeSlug}
-              onClick={() => pickLook(a.slug, a.name)}
+              onClick={() => navigate(a.slug, activeTint)}
             />
           ))}
           <Chip label="＋ Write your own" dashed />
@@ -108,8 +83,8 @@ export default function FeedScreen({
                 key={p.token}
                 color={p.color}
                 label={p.name}
-                active={selectedTokens.includes(p.token)}
-                onClick={() => toggleTint(p.token)}
+                active={p.token === activeTint}
+                onClick={() => pickTint(p.token)}
               />
             ))}
           </div>
@@ -118,38 +93,34 @@ export default function FeedScreen({
 
       <div className={styles.scroll}>
         <div className={styles.feed}>
-          {blocks.length === 0 ? (
-          <div className={styles.empty}>
-            <div className={styles.emptyTitle}>Nothing in this colour yet</div>
-            <p className={styles.emptyBody}>
-              Bit of a niche request. Try another swatch or clear it and see the
-              whole look.
-            </p>
-            <Button size="sm" onClick={() => navigate(activeSlug, [])}>
-              Clear the palette
-            </Button>
-          </div>
-        ) : (
-          <div className={pending ? styles.pending : undefined}>
-            {blocks.map((block) => (
-              <div key={block.hero.id} className={styles.block}>
-                {card(block.hero, true)}
-
-                {block.pair.length > 0 && (
-                  <div className={styles.pair}>
-                    {block.pair.map((p) => (
-                      <div key={p.id} className={styles.pairItem}>
-                        {card(p, false)}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            ))}
-          </div>
+          {products.length === 0 ? (
+            <div className={styles.empty}>
+              <div className={styles.emptyTitle}>Nothing in this colour yet</div>
+              <p className={styles.emptyBody}>
+                Bit of a niche request. Try another swatch or clear it and see
+                the whole look.
+              </p>
+              <Button size="sm" onClick={() => navigate(activeSlug)}>
+                Clear the palette
+              </Button>
+            </div>
+          ) : (
+            <PieceGrid
+              products={products}
+              pending={pending}
+              onOpen={(p) => router.push(`/product/${p.slug}`)}
+              onSave={(p) => setSaving(p)}
+            />
           )}
         </div>
       </div>
+
+      <SaveSheet
+        product={saving}
+        edits={edits}
+        onClose={() => setSaving(null)}
+        run={run}
+      />
 
       <Toast message={toast} />
     </>

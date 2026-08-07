@@ -1,0 +1,73 @@
+/* The board picker. Every heart in the app opens this. */
+
+.picks {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-bottom: var(--space-1);
+}
+
+.pick {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-2) 0;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.thumb {
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border-radius: var(--radius-md);
+  background-color: var(--pick-color);
+}
+
+.new {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 46px;
+  height: 46px;
+  border: 1.5px dashed var(--line-2);
+  border-radius: var(--radius-md);
+  color: var(--text-muted);
+  font-size: 17px;
+}
+
+.text {
+  flex: 1;
+  min-width: 0;
+}
+
+.name {
+  display: block;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sheet);
+  font-weight: var(--fw-medium);
+  color: var(--text-strong);
+}
+
+.note {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-sans);
+  font-size: var(--fs-price);
+  color: var(--text-muted);
+}
+
+.mark {
+  flex: none;
+  font-size: var(--fs-title);
+  color: var(--text-muted);
+}
+
+/* Already on this board — tapping takes it back off. */
+.held {
+  color: var(--brand);
+}

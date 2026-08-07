@@ -1,9 +1,11 @@
 "use client";
 
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { adoptLook, toggleSave, toggleStar } from "@/app/actions";
+import { adoptLook, toggleStar } from "@/app/actions";
 import type {
   BrandRowView,
+  EditView,
   LookRow,
   ProductView,
 } from "@/lib/data";
@@ -11,6 +13,7 @@ import Button from "../Button";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
 import LooksDeck from "./LooksDeck";
+import SaveSheet from "./SaveSheet";
 import PieceGrid from "./PieceGrid";
 import ShelfPanel from "./ShelfPanel";
 import styles from "./SearchScreen.module.css";
@@ -28,6 +31,7 @@ export type SearchScreenProps = {
   openLookItems: ProductView[];
   brands: BrandRowView[];
   drops: ProductView[];
+  edits: EditView[];
 };
 
 const SEGMENTS: { key: SearchTab; label: string }[] = [
@@ -46,9 +50,11 @@ export default function SearchScreen({
   openLookItems,
   brands,
   drops,
+  edits,
 }: SearchScreenProps) {
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
+  const [saving, setSaving] = useState<ProductView | null>(null);
 
   /* The tab, the query and the opened look all live in the URL, so any state
      of this screen can be linked to and the back button walks it. */
@@ -67,8 +73,7 @@ export default function SearchScreen({
   };
 
   const openPiece = (p: ProductView) => router.push(`/product/${p.slug}`);
-  const savePiece = (p: ProductView) =>
-    run(() => toggleSave(p.id, openLook?.name ?? "Kept"));
+  const savePiece = (p: ProductView) => setSaving(p);
 
   return (
     <>
@@ -179,6 +184,13 @@ export default function SearchScreen({
           )}
         </div>
       </div>
+
+      <SaveSheet
+        product={saving}
+        edits={edits}
+        onClose={() => setSaving(null)}
+        run={run}
+      />
 
       <Toast message={toast} />
     </>

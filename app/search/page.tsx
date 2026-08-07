@@ -4,6 +4,7 @@ import type { SearchTab } from "@/components/screens/SearchScreen";
 import {
   getBrands,
   getDrops,
+  getEdits,
   getLookItems,
   getLooks,
   searchPieces,
@@ -28,11 +29,12 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
 
   /* Only the open tab's data is fetched — no point querying the shelf while
      someone is looking at pieces. */
-  const [pieces, looks, brands, drops] = await Promise.all([
+  const [pieces, looks, brands, drops, edits] = await Promise.all([
     tab === "pieces" ? searchPieces({ userId: user.id, query }) : [],
     tab === "looks" ? getLooks(user.id) : [],
     tab === "brands" ? getBrands(user.id) : [],
     tab === "brands" ? getDrops(user.id) : [],
+    getEdits(user.id),
   ]);
 
   const openLook = lookSlug
@@ -54,6 +56,7 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
         openLookItems={openLookItems}
         brands={brands}
         drops={drops}
+        edits={edits}
       />
     </AppShell>
   );

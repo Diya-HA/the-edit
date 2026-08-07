@@ -15,6 +15,8 @@ export type ProductCardProps = {
   /** Garment noun, named along the bottom of the placeholder. */
   category?: string;
   height?: number | string;
+  /** Feed shape. Squares and portraits only — never landscape. */
+  aspect?: string;
   saved?: boolean;
   /** The hero at the head of a block: taller, grotesque title. */
   featured?: boolean;
@@ -36,6 +38,7 @@ export default function ProductCard({
   color = "var(--fabric-neutral)",
   category,
   height,
+  aspect,
   saved = false,
   featured = false,
   line,
@@ -45,7 +48,8 @@ export default function ProductCard({
   style,
 }: ProductCardProps) {
   const drop = was ? Math.round((1 - price / was) * 100) : 0;
-  const fieldHeight = height ?? (featured ? 176 : 108);
+  /* A ratio wins; height is only for the fixed-size rails. */
+  const fieldHeight = aspect ? undefined : (height ?? (featured ? 176 : 108));
 
   const save = (e: MouseEvent) => {
     e.stopPropagation();
@@ -70,7 +74,8 @@ export default function ProductCard({
         <CanvasSwatch
           color={color}
           height={fieldHeight}
-          radius={featured ? "var(--radius-xl)" : "var(--radius-lg)"}
+          aspect={aspect}
+          radius="var(--radius-xl)"
           label={category}
         />
 
