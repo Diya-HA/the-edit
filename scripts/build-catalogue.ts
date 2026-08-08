@@ -16,6 +16,7 @@
  * never does.
  */
 import { writeFileSync } from "node:fs";
+import { chooseImage, PACKSHOT } from "../lib/measure.ts";
 import { BRANDS, RATE_TO_USD, RETIRED_BRANDS, RETIRED_OUTFITS } from "./catalogue/brands.ts";
 import {
   classify,
@@ -239,11 +240,20 @@ const AESTHETICS = [...new Set(BRANDS.map((b) => b.aesthetic))];
 const products: Record<string, unknown>[] = [];
 const outfits: OutfitOut[] = [];
 
+let packshots = 0;
+const measuredAt = new Date().toISOString();
+
 for (const aesthetic of AESTHETICS) {
   const mine = allPieces.filter((p) => p.aesthetic === aesthetic);
   const kept = select(mine);
 
   for (const p of kept) {
+    /* Only the pieces actually kept are measured — a few hundred requests
+       rather than several thousand — and the choice short-circuits on the
+       first packshot, which most brands publish first. */
+    const chosen = await chooseImage(p.imageCandidates.length ? p.imageCandidates : [p.imageUrl]);
+    if ((chosen.measurement?.packshotScore ?? 0) >= PACKSHOT) packshots += 1;
+
     products.push({
       slug: `${p.brand}-${p.handle}`.slice(0, 190),
       title: p.title,
@@ -255,12 +265,16 @@ for (const aesthetic of AESTHETICS) {
       colorHex: p.colorHex,
       line: pick(LINE_BY_SLOT[p.slot], p.handle),
       why: pick(WHY_BY_AESTHETIC[aesthetic](p.colourWord), p.handle + "w"),
-      imageUrl: p.imageUrl,
+      imageUrl: chosen.url || p.imageUrl,
+      bgHex: chosen.measurement?.bgHex ?? null,
+      packshotScore: chosen.measurement?.packshotScore ?? null,
+      imageMeasuredAt: chosen.measurement ? measuredAt : null,
       productUrl: p.productUrl,
       brand: p.brand,
       aesthetic,
     });
   }
+  process.stdout.write(`  ${aesthetic}: measured ${kept.length}\n`);
 
   for (let i = 0; i < 2; i += 1) {
     const o = assemble(kept, aesthetic, i);
@@ -286,7 +300,11 @@ const catalogue = {
 
 writeFileSync(OUT, JSON.stringify(catalogue, null, 2));
 
-console.log(`\n${products.length} products, ${outfits.length} outfits -> prisma/catalogue.json`);
+console.log(
+  `\n${products.length} products, ${outfits.length} outfits -> prisma/catalogue.json` +
+    `\n${packshots} of ${products.length} on a measured packshot ground ` +
+    `(${Math.round((100 * packshots) / products.length)}%)`,
+);
 for (const [brand, reasons] of Object.entries(rejections)) {
   const total = Object.values(reasons).reduce((a, b) => a + b, 0);
   if (total === 0) continue;

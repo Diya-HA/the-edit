@@ -132,7 +132,7 @@ export default function SearchScreen({
                     className={styles.trendThumb}
                     style={
                       {
-                        "--trend-tone": p.tone,
+                        "--trend-tone": p.ground ?? p.tone,
                         "--trend-photo": thumbBackground(p.image),
                       } as CSSProperties
                     }

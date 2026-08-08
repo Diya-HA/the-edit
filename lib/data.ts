@@ -17,6 +17,13 @@ export type ProductView = {
   tone: string;
   /** The brand's own photograph, when the catalogue has one. */
   image: string | null;
+  /**
+   * The photograph's own background, measured at ingest. Painted behind
+   * the picture so the field and the image meet without a seam — which is
+   * what lets five brands shooting on five different whites read as one
+   * edit. Null when unmeasured, and then the tone stands in as before.
+   */
+  ground: string | null;
   /** Palette family this groups into, for the filter row. */
   family: string;
   familyName: string;
@@ -48,6 +55,8 @@ const productSelect = {
   line: true,
   why: true,
   imageUrl: true,
+  bgHex: true,
+  packshotScore: true,
   brand: { select: { name: true } },
 } as const;
 
@@ -64,6 +73,8 @@ type ProductRow = {
   line: string | null;
   why: string | null;
   imageUrl: string | null;
+  bgHex: string | null;
+  packshotScore: number | null;
   brand: { name: string };
 };
 
@@ -78,6 +89,7 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     wasPrice: p.wasPrice === null ? null : Number(p.wasPrice),
     tone: p.colorHex.trim(),
     image: p.imageUrl,
+    ground: p.bgHex ? p.bgHex.trim() : null,
     family: `var(${p.colorToken})`,
     familyName: p.colorName,
     line: p.line,
@@ -238,7 +250,14 @@ export async function searchPieces(opts: {
             }
           : {}),
       },
-      orderBy: { title: "asc" },
+      /* Packshots first. Searching across everything is one of only two
+          places the app puts four aesthetics side by side — cohesion is
+          per-aesthetic everywhere else — so this is where a calm picture
+          earns its place. Title breaks the tie, as before. */
+      orderBy: [
+        { packshotScore: { sort: "desc", nulls: "last" } },
+        { title: "asc" },
+      ],
       take,
       select: productSelect,
     }),
@@ -366,6 +385,8 @@ export type EditView = {
   tones: string[];
   /** Their photographs, where they have one — same order as tones. */
   covers: (string | null)[];
+  /** Each photograph's measured background, same order again. */
+  grounds: (string | null)[];
   holdsProduct?: boolean;
 };
 
@@ -382,7 +403,7 @@ export async function getEdits(
         orderBy: { addedAt: "asc" },
         select: {
           productId: true,
-          product: { select: { colorHex: true, imageUrl: true } },
+          product: { select: { colorHex: true, imageUrl: true, bgHex: true } },
         },
       },
     },
@@ -395,6 +416,7 @@ export async function getEdits(
     count: e.items.length,
     tones: e.items.slice(0, 4).map((i) => i.product.colorHex.trim()),
     covers: e.items.slice(0, 4).map((i) => i.product.imageUrl),
+    grounds: e.items.slice(0, 4).map((i) => i.product.bgHex?.trim() ?? null),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
@@ -428,6 +450,7 @@ export async function getEdit(
       count: items.length,
       tones: items.slice(0, 3).map((p) => p.tone),
       covers: items.slice(0, 3).map((p) => p.image),
+      grounds: items.slice(0, 3).map((p) => p.ground),
     },
     items,
   };

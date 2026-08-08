@@ -20,6 +20,13 @@ export type CanvasSwatchProps = {
   image?: string | null;
   /** Describes the garment for anyone who can't see it. */
   alt?: string;
+  /**
+   * The photograph's own measured background. When present it paints the
+   * field instead of the fabric tone, so the picture and the card meet with
+   * no visible seam — which is what lets five brands shooting on five
+   * slightly different whites read as one edit. Falls back to the tone.
+   */
+  ground?: string | null;
   /** Which width to ask the brand's CDN for. Cards by default. */
   imageWidth?: number;
   /**
@@ -49,6 +56,7 @@ export default function CanvasSwatch({
   label,
   image,
   alt,
+  ground,
   imageWidth = IMAGE_WIDTH.card,
   texture = false,
   wash = false,
@@ -60,12 +68,15 @@ export default function CanvasSwatch({
   return (
     <div
       {...rest}
-      className={[styles.swatch, image && styles.hasPhoto, className]
+      className={[styles.swatch, image && !ground && styles.hasPhoto, className]
         .filter(Boolean)
         .join(" ")}
       style={
         {
-          "--swatch-color": color,
+          /* The photograph's own ground when it was measured, the fabric
+             tone when it was not. Either way the field is painted before
+             the image arrives, so nothing flashes white. */
+          "--swatch-color": ground ?? color,
           "--swatch-height": height === undefined ? "auto" : len(height),
           "--swatch-aspect": aspect ?? "auto",
           "--swatch-radius": radius,

@@ -15,6 +15,8 @@ export type ProductCardProps = {
   color?: string;
   /** The brand's photograph, when the catalogue has one. */
   image?: string | null;
+  /** The photograph's measured background, painted as the field. */
+  ground?: string | null;
   /** Garment noun, named along the bottom of the placeholder. */
   category?: string;
   height?: number | string;
@@ -40,6 +42,7 @@ export default function ProductCard({
   was,
   color = "var(--fabric-neutral)",
   image,
+  ground,
   category,
   height,
   aspect,
@@ -78,6 +81,7 @@ export default function ProductCard({
         <CanvasSwatch
           color={color}
           image={image}
+          ground={ground}
           alt={category ? `${title} — ${category} by ${brand}` : `${title} by ${brand}`}
           height={fieldHeight}
           aspect={aspect}

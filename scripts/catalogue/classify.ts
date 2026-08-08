@@ -31,6 +31,9 @@ export type Piece = {
   colorName: string;
   colorToken: string;
   colorHex: string;
+  /** Every image the brand published, in its own order. The one to show is
+      chosen after measuring — see lib/measure.ts. */
+  imageCandidates: string[];
   imageUrl: string;
   productUrl: string;
   /** Style identity within a brand. Colourways of one style share it. */
@@ -312,6 +315,7 @@ export function classify(
       colorName: fam.colorName,
       colorToken: fam.colorToken,
       colorHex: fam.colorHex,
+      imageCandidates: (p.images ?? []).map((i) => i.src).filter((s): s is string => !!s),
       imageUrl: image,
       productUrl: `https://${brand.host}${brand.path}/products/${handle}`,
       style: styleKey(title_),

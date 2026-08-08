@@ -67,7 +67,9 @@ export default function BoardsScreen({
                         className={styles.tile}
                         style={
                           {
-                            "--tile": e.tones[i % Math.max(e.tones.length, 1)] ??
+                            "--tile":
+                              e.grounds[i % Math.max(e.grounds.length, 1)] ??
+                              e.tones[i % Math.max(e.tones.length, 1)] ??
                               "var(--canvas-2)",
                             "--tile-photo": thumbBackground(
                               e.covers[i % Math.max(e.covers.length, 1)],

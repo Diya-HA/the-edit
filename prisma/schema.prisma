@@ -273,6 +273,20 @@ model Product {
   /// the product until curated sets exist.
   why      String?
   imageUrl String?
+
+  /// The photograph's own background, measured from the border of the image.
+  /// Painted behind the photograph so the card's field and the picture meet
+  /// without a seam. Null means unmeasured, and the card falls back to
+  /// colorHex — the tone of the cloth — which is what it did before.
+  bgHex           String?   @db.Char(7)
+  /// How packshot-like the photograph is, 0-100. High is a uniform light
+  /// ground with the garment isolated; low is a lifestyle shot. Chooses
+  /// between a brand's images at ingest, and prefers the calmer pictures on
+  /// the surfaces that mix aesthetics — trending, and search across
+  /// everything. Cohesion elsewhere is per-aesthetic, so it does not apply.
+  packshotScore   Int?
+  /// So a re-measure can find what is stale without re-scraping.
+  imageMeasuredAt DateTime?
   /// Where the affiliate click goes.
   productUrl String?
   inStock  Boolean  @default(true)

@@ -54,7 +54,7 @@ export default function OutfitList({
                   className={styles.thumb}
                   style={
                     {
-                      "--piece-tone": p.tone,
+                      "--piece-tone": p.ground ?? p.tone,
                       "--piece-photo": thumbBackground(p.image),
                     } as CSSProperties
                   }

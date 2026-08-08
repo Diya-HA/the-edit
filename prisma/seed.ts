@@ -32,6 +32,8 @@ type Catalogue = {
     slug: string; title: string; category: string; slot: string;
     price: number; colorName: string; colorToken: string; colorHex: string;
     line: string; why: string; imageUrl: string; productUrl: string;
+    bgHex: string | null; packshotScore: number | null;
+    imageMeasuredAt: string | null;
     brand: string; aesthetic: string;
   }[];
   outfits: OutfitInput[];
@@ -128,6 +130,9 @@ async function main() {
       colorToken: p.colorToken,
       colorHex: p.colorHex,
       imageUrl: p.imageUrl,
+      bgHex: p.bgHex,
+      packshotScore: p.packshotScore,
+      imageMeasuredAt: p.imageMeasuredAt ? new Date(p.imageMeasuredAt) : null,
       productUrl: p.productUrl,
       inStock: true,
       brandId,
@@ -167,10 +172,17 @@ async function main() {
 
   /* The trending row. Demo data: with one shopper there is no popularity
      signal to measure, so these are simply a spread across the four looks and
-     the app says as much on screen. */
+     the app says as much on screen.
+     Packshots first. Trending is one of the two places the app puts four
+     aesthetics side by side — cohesion everywhere else is per-aesthetic,
+     because home, outfits and sits-well-with are each filtered to one — so
+     this is where a calm picture earns its place. */
   await prisma.product.updateMany({ data: { trendingRank: null } });
   const trending = AESTHETICS.flatMap((a) =>
-    catalogue.products.filter((p) => p.aesthetic === a.slug).slice(0, 2),
+    catalogue.products
+      .filter((p) => p.aesthetic === a.slug)
+      .sort((x, y) => (y.packshotScore ?? 0) - (x.packshotScore ?? 0))
+      .slice(0, 2),
   );
   for (const [i, p] of trending.entries()) {
     await prisma.product.update({

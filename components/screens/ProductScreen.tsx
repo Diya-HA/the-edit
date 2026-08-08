@@ -38,6 +38,7 @@ export default function ProductScreen({
           <CanvasSwatch
             color={product.tone}
             image={product.image}
+            ground={product.ground}
             alt={`${product.title} — ${product.category} by ${product.brand}`}
             imageWidth={IMAGE_WIDTH.hero}
             height={296}
@@ -110,6 +111,7 @@ export default function ProductScreen({
                     <CanvasSwatch
                       color={p.tone}
                       image={p.image}
+                      ground={p.ground}
                       alt={`${p.title} — ${p.category} by ${p.brand}`}
                       height={108}
                       radius="var(--radius-md)"

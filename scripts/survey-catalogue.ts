@@ -141,6 +141,52 @@ for (const a of ORDER) {
   ]));
 }
 
+/* --- and what the seed actually plants ------------------------------------ */
+
+type Seeded = {
+  slug: string; brand: string; aesthetic: string; slot: string;
+  price: number; packshotScore: number | null;
+};
+const seeded: Seeded[] = JSON.parse(
+  readFileSync(new URL("../prisma/catalogue.json", import.meta.url), "utf8"),
+).products;
+
+const DB_SLOTS = ["TOP", "BOTTOM", "OUTER", "SHOES", "BAG", "ACCESSORY"] as const;
+
+lines.push("");
+lines.push("### What the seed plants");
+lines.push("");
+lines.push(`The survey above is what there is to curate from. This is the ${seeded.length}`);
+lines.push("pieces actually chosen for the app — up to six per slot per aesthetic, spread");
+lines.push("across brands and colour families. Dresses are stored as `TOP`.");
+lines.push("");
+lines.push(row(["Aesthetic", ...DB_SLOTS, "Labels", "Packshot"]));
+lines.push(row(new Array(DB_SLOTS.length + 3).fill("---")));
+for (const a of ORDER) {
+  const rs = seeded.filter((p) => p.aesthetic === a);
+  if (rs.length === 0) continue;
+  const packs = rs.filter((p) => (p.packshotScore ?? 0) >= 70).length;
+  lines.push(row([
+    NAMES[a] ?? a,
+    ...DB_SLOTS.map((s) => rs.filter((r) => r.slot === s).length || "—"),
+    new Set(rs.map((r) => r.brand)).size,
+    `${Math.round((100 * packs) / rs.length)}%`,
+  ]));
+}
+
+lines.push("");
+lines.push(row(["Aesthetic", "n", "min", "median", "max", "<$150", "<$300", "<$500"]));
+lines.push(row(new Array(8).fill("---")));
+for (const a of ORDER) {
+  const ps = seeded.filter((p) => p.aesthetic === a).map((p) => p.price);
+  if (ps.length === 0) continue;
+  lines.push(row([
+    NAMES[a] ?? a, ps.length,
+    money(Math.min(...ps)), money(median(ps)), money(Math.max(...ps)),
+    share(ps, 150), share(ps, 300), share(ps, 500),
+  ]));
+}
+
 const doc = readFileSync(DOC, "utf8");
 const start = doc.indexOf(BEGIN);
 const end = doc.indexOf(END);
