@@ -20,6 +20,34 @@ export const dynamic = "force-dynamic";
 /* Assembling an outfit does a few round trips inside one transaction. */
 export const maxDuration = 60;
 
+/* Writes are guarded. The deployed endpoint is on the public internet, so
+   without this anyone could POST an outfit into the production catalogue.
+   Set MCP_WRITE_TOKEN and every request must carry it; leave it unset and
+   production refuses writes while still answering reads. Locally, where
+   NODE_ENV is not production, writes are open so development stays simple. */
+const WRITE_TOKEN = process.env.MCP_WRITE_TOKEN;
+const IS_PROD = process.env.NODE_ENV === "production";
+
+const ok = (payload: unknown) => ({
+  content: [{ type: "text" as const, text: JSON.stringify({ ok: true, ...(payload as object) }, null, 2) }],
+});
+
+const fail = (error: string) => ({
+  isError: true,
+  content: [{ type: "text" as const, text: JSON.stringify({ ok: false, error }, null, 2) }],
+});
+
+/** Non-null when the caller may not write, with the reason. */
+function writeDenied() {
+  if (WRITE_TOKEN) return null; // the request already proved itself, see below
+  if (IS_PROD) {
+    return fail(
+      "writes are disabled: MCP_WRITE_TOKEN is not set on this deployment",
+    );
+  }
+  return null;
+}
+
 const handler = createMcpHandler(
   (server) => {
     server.registerTool(
@@ -105,6 +133,92 @@ const handler = createMcpHandler(
     );
 
     server.registerTool(
+      "upsert_products",
+      {
+        title: "Add or update products",
+        description:
+          "Put scraped garments into the catalogue. Idempotent on slug, so a " +
+          "repeated run updates rather than duplicating. Every piece needs a " +
+          "brand and an aesthetic that already exist. Returns the slugs, which " +
+          "create_outfit then takes.",
+        inputSchema: z.object({
+          brandSlug: z.string().min(1),
+          brandName: z.string().min(1),
+          brandMeta: z.string().optional(),
+          aestheticSlug: z.string().min(1),
+          products: z
+            .array(
+              z.object({
+                slug: z.string().regex(/^[a-z0-9-]+$/),
+                title: z.string().min(1),
+                category: z.string().min(1).describe("Garment noun, e.g. overshirt"),
+                price: z.number().nonnegative(),
+                colorName: z.string().min(1).describe("Palette family, e.g. Sage"),
+                colorToken: z.string().min(1).describe("e.g. --fabric-sage"),
+                colorHex: z.string().regex(/^#[0-9A-Fa-f]{6}$/),
+                line: z.string().optional(),
+                why: z.string().optional().describe("The skill's WHY line"),
+                imageUrl: z.string().optional(),
+                productUrl: z.string().optional(),
+              }),
+            )
+            .min(1),
+        }),
+      },
+      async (input) => {
+        const denied = writeDenied();
+        if (denied) return denied;
+
+        const aesthetic = await prisma.aesthetic.findUnique({
+          where: { slug: input.aestheticSlug },
+          select: { id: true },
+        });
+        if (!aesthetic) {
+          return fail(`no aesthetic "${input.aestheticSlug}"`);
+        }
+
+        const brand = await prisma.brand.upsert({
+          where: { slug: input.brandSlug },
+          update: { name: input.brandName, meta: input.brandMeta ?? undefined },
+          create: {
+            slug: input.brandSlug,
+            name: input.brandName,
+            meta: input.brandMeta ?? null,
+            colorToken: input.products[0]?.colorToken ?? "--fabric-neutral",
+          },
+        });
+
+        const written: string[] = [];
+        for (const p of input.products) {
+          const data = {
+            slug: p.slug,
+            title: p.title,
+            category: p.category,
+            price: p.price,
+            colorName: p.colorName,
+            colorToken: p.colorToken,
+            colorHex: p.colorHex,
+            line: p.line ?? null,
+            why: p.why ?? null,
+            imageUrl: p.imageUrl ?? null,
+            productUrl: p.productUrl ?? null,
+            inStock: true,
+            brandId: brand.id,
+            aestheticId: aesthetic.id,
+          };
+          await prisma.product.upsert({
+            where: { slug: p.slug },
+            update: data,
+            create: data,
+          });
+          written.push(p.slug);
+        }
+
+        return ok({ brand: brand.slug, count: written.length, slugs: written });
+      },
+    );
+
+    server.registerTool(
       "create_outfit",
       {
         title: "Create an outfit",
@@ -134,6 +248,8 @@ const handler = createMcpHandler(
         }),
       },
       async (input) => {
+        const denied = writeDenied();
+        if (denied) return denied;
         try {
           const result = await upsertOutfit(prisma, {
             ...input,
@@ -183,4 +299,21 @@ const handler = createMcpHandler(
   },
 );
 
-export { handler as GET, handler as POST, handler as DELETE };
+/* When a token is configured, every request must present it. Checked here
+   rather than per tool so tools/list is covered too — an open endpoint that
+   only enumerates is still an invitation. */
+async function guarded(request: Request): Promise<Response> {
+  if (WRITE_TOKEN) {
+    const header = request.headers.get("authorization") ?? "";
+    const presented = header.replace(/^Bearer\s+/i, "");
+    if (presented !== WRITE_TOKEN) {
+      return new Response(
+        JSON.stringify({ error: "unauthorized" }),
+        { status: 401, headers: { "content-type": "application/json" } },
+      );
+    }
+  }
+  return handler(request);
+}
+
+export { guarded as GET, guarded as POST, guarded as DELETE };
