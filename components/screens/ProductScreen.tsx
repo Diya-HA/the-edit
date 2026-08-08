@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { EditView, ProductView } from "@/lib/data";
 import { IMAGE_WIDTH } from "@/lib/images";
+import { formatPrice } from "@/lib/price";
 import Button from "../Button";
 import CanvasSwatch from "../CanvasSwatch";
 import Toast from "../Toast";
@@ -73,9 +74,9 @@ export default function ProductScreen({
           <h1 className={styles.title}>{product.title}</h1>
 
           <div className={styles.prices}>
-            <span className={styles.price}>${product.price}</span>
+            <span className={styles.price}>{formatPrice(product.price)}</span>
             {product.wasPrice && (
-              <span className={styles.was}>${product.wasPrice}</span>
+              <span className={styles.was}>{formatPrice(product.wasPrice)}</span>
             )}
           </div>
 
@@ -115,7 +116,7 @@ export default function ProductScreen({
                       label={p.category}
                     />
                     <span className={styles.railTitle}>{p.title}</span>
-                    <span className={styles.railPrice}>${p.price}</span>
+                    <span className={styles.railPrice}>{formatPrice(p.price)}</span>
                   </button>
                 ))}
               </div>

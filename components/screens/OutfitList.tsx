@@ -3,6 +3,7 @@
 import type { CSSProperties } from "react";
 import type { OutfitView } from "@/lib/data";
 import { thumbBackground } from "@/lib/images";
+import { formatPrice } from "@/lib/price";
 import Button from "../Button";
 import styles from "./OutfitList.module.css";
 
@@ -63,15 +64,15 @@ export default function OutfitList({
                   )}
                 </span>
                 <span className={styles.pieceTitle}>{p.title}</span>
-                <span className={styles.piecePrice}>${p.price}</span>
+                <span className={styles.piecePrice}>{formatPrice(p.price)}</span>
               </button>
             ))}
           </div>
 
           <footer className={styles.foot}>
             <span className={styles.total}>
-              {o.pieces.length} pieces · $
-              {o.pieces.reduce((n, p) => n + p.price, 0)}
+              {o.pieces.length} pieces ·{" "}
+              {formatPrice(o.pieces.reduce((n, p) => n + p.price, 0))}
             </span>
             <Button size="sm" onClick={() => onSave(o)}>
               Save this outfit

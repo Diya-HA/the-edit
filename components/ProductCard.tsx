@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
+import { formatPrice } from "@/lib/price";
 import Badge from "./Badge";
 import CanvasSwatch from "./CanvasSwatch";
 import styles from "./ProductCard.module.css";
@@ -61,8 +62,8 @@ export default function ProductCard({
 
   const prices = (
     <div className={styles.prices}>
-      <span className={styles.price}>${price}</span>
-      {was && <span className={styles.was}>${was}</span>}
+      <span className={styles.price}>{formatPrice(price)}</span>
+      {was && <span className={styles.was}>{formatPrice(was)}</span>}
     </div>
   );
 

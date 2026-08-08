@@ -35,7 +35,7 @@ the-edit/
 npm install
 docker compose up -d          # PostgreSQL on localhost:5432
 npx prisma migrate dev        # create the schema
-npx prisma db seed            # 6 brands, 4 aesthetics, 30 products
+npx prisma db seed            # 5 real brands, 4 aesthetics, 143 pieces
 npm run dev                   # http://localhost:3000
 ```
 
@@ -102,6 +102,47 @@ already in the edit, which is the part a generic prompt can't do.
 Playwright MCP reads real brand sites. Two are proven: Colorful Standard, whose
 listing page is server-rendered and whose colours are first-class in the data,
 and Uskees, whose range actually lands inside Quiet utility.
+
+## The catalogue
+
+Every piece in the app is real — a real photograph, a real price and a link to
+the shop that sells it. Five brands, one per aesthetic except Balletcore off
+duty, which has two.
+
+`scripts/build-catalogue.ts` fetches each brand's public `products.json`,
+classifies what comes back and writes `prisma/catalogue.json`. The seed plants
+that file and never touches the network, which is what lets it run on container
+start. It lives under `prisma/` for the same reason `prisma/outfits.ts` does —
+see the deployment rule below.
+
+```bash
+node --experimental-strip-types scripts/build-catalogue.ts   # refresh the catalogue
+node --experimental-strip-types scripts/survey-catalogue.ts  # refresh docs/catalogue-survey.md
+```
+
+This is not how the demo works, and deliberately so. The demo scrapes a real
+page with a real browser, because that is the thing worth showing. `products.json`
+is how the shelves get stocked behind it.
+
+`docs/catalogue-survey.md` has the coverage tables, regenerated rather than
+typed. Two things it records are worth knowing before touching the ingest:
+
+**Only Balletcore off duty can be dressed from more than one label**, which is
+why it is the demo aesthetic. An outfit assembled inside any other aesthetic is
+one brand's lookbook.
+
+**Repetto is the fragile brand.** It publishes no colour field at all — not an
+option, not a tag. Colour is recovered from the French URL handle, between the
+model name and the reference code:
+
+```
+boots-phoebe-camel-cuba-velours-v690vavld-387
+```
+
+It works for about three quarters of their catalogue. If Repetto ever changes
+that format it will fail *silently*: the ingest carries on, pieces quietly start
+being dropped for "no colour could be read", and the run still reports success.
+Nothing else in the pipeline depends on a URL being shaped a particular way.
 
 `app/api/[transport]/route.ts` is this app's own MCP server, so an agent can
 search the catalogue and create outfits through the same code the UI uses.
