@@ -1,5 +1,6 @@
 "use client";
 
+import type { CSSProperties } from "react";
 import type { ProductView } from "@/lib/data";
 import ProductCard from "../ProductCard";
 import styles from "./PieceGrid.module.css";
@@ -55,8 +56,19 @@ export default function PieceGrid({
     >
       {columns.map((column, i) => (
         <div key={i} className={styles.column}>
-          {column.map((p) => (
-            <div key={p.id} className={styles.item}>
+          {column.map((p, row) => (
+            <div
+              key={p.id}
+              className={styles.item}
+              /* Capped, so the twentieth card is not still waiting to appear
+                 half a second after the first. Both columns share the ramp so
+                 a row arrives together rather than left-then-right. */
+              style={
+                {
+                  "--stagger": `${Math.min(row, 6) * 45}ms`,
+                } as CSSProperties
+              }
+            >
               <ProductCard
                 brand={p.brand}
                 title={p.title}

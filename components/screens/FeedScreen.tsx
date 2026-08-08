@@ -15,6 +15,7 @@ import Button from "../Button";
 import Chip from "../Chip";
 import ColorDot from "../ColorDot";
 import Toast from "../Toast";
+import { useScrollMemory } from "../useScrollMemory";
 import { useToast } from "../useToast";
 import BudgetNote from "./BudgetNote";
 import PieceGrid from "./PieceGrid";
@@ -48,6 +49,8 @@ export default function FeedScreen({
   const router = useRouter();
   const { message: toast, run, pending } = useToast();
   const [saving, setSaving] = useState<SaveTarget | null>(null);
+  /* Keyed by look and tint, so each filtered view keeps its own place. */
+  const scroller = useScrollMemory(`feed:${activeSlug}:${activeTint ?? "all"}`);
 
   /* Filters live in the URL, so a filtered feed is shareable and the back
      button walks the looks you tried. */
@@ -100,7 +103,7 @@ export default function FeedScreen({
         </div>
       </div>
 
-      <div className={styles.scroll}>
+      <div className={styles.scroll} ref={scroller}>
         <div className={styles.feed}>
           {/* What the ceiling is hiding, before the feed rather than after it,
               so a short feed is explained instead of merely short. */}
