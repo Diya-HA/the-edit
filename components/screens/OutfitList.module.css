@@ -55,10 +55,30 @@
   margin: 0 calc(var(--space-4) * -1);
   padding: 0 var(--space-4);
   scrollbar-width: none;
+  /* Settles on a piece rather than mid-garment, so the row reads as a set of
+     things to move through rather than a pane that drifted. */
+  scroll-snap-type: x proximity;
+  overscroll-behavior-x: contain;
 }
 
 .pieces::-webkit-scrollbar {
   display: none;
+}
+
+/* The row always runs past the edge of the card and nothing said so — a piece
+   clipped at the boundary reads as a bug rather than an invitation. A fade
+   pinned to the right edge makes the clip deliberate. It is a flex item held
+   in place with sticky, so it stays at the edge while the pieces slide under
+   it, and it takes no space of its own. */
+.pieces::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex: 0 0 var(--space-6);
+  align-self: stretch;
+  margin-left: calc(var(--space-6) * -1);
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface-card) 85%);
 }
 
 .piece {
@@ -66,6 +86,7 @@
   flex-direction: column;
   flex: 0 0 auto;
   width: 86px;
+  scroll-snap-align: start;
   padding: 0;
   border: none;
   background: none;

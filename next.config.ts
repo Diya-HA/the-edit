@@ -6,6 +6,13 @@ const nextConfig: NextConfig = {
   // and the image build fails.
   output: "standalone",
 
+  // The dev-only route indicator, which sits bottom-left — exactly where the
+  // tab bar's first item is on a phone-width screen. It never ships to
+  // production, but it lands on top of the app in every screenshot taken from
+  // dev, which is how the app gets reviewed. Compile and runtime errors are
+  // still surfaced with this off.
+  devIndicators: false,
+
   images: {
     // Product photography is served straight from the brands' own CDNs to the
     // phone, rather than through Next's optimizer.

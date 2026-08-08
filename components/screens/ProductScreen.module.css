@@ -181,6 +181,18 @@
   display: none;
 }
 
+/* Same affordance as the outfit and trending rows. */
+.rail::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex: 0 0 var(--space-6);
+  align-self: stretch;
+  margin-left: calc(var(--space-6) * -1);
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface-app) 85%);
+}
+
 .railItem {
   display: flex;
   flex-direction: column;
