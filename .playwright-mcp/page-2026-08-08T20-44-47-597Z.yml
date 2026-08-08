@@ -1,0 +1,37 @@
+- generic [ref=f24e3]:
+  - generic [ref=f24e5]:
+    - generic [ref=f24e6]:
+      - img "Demi-Pointes - semelle entière — demi-pointes by Repetto" [ref=f24e8]
+      - generic [ref=f24e9]:
+        - button "Back" [ref=f24e10] [cursor=pointer]: ‹
+        - button "Save" [ref=f24e11] [cursor=pointer]: ♡
+    - generic [ref=f24e12]:
+      - generic [ref=f24e13]: Repetto
+      - heading "Demi-Pointes - semelle entière" [level=1] [ref=f24e14]
+      - generic [ref=f24e15]: $49
+      - paragraph [ref=f24e17]: The pair that survives the whole season. Wrap knits and flats, in a rose that keeps it off duty.
+      - generic [ref=f24e18]:
+        - button "Keep it ♡" [ref=f24e19] [cursor=pointer]
+        - button "Buy" [ref=f24e20] [cursor=pointer]
+      - generic [ref=f24e21]: Sits well with
+      - generic [ref=f24e22]:
+        - button "Boots d'échauffement — dance apparel by Repetto Boots d'échauffement $125" [ref=f24e23] [cursor=pointer]:
+          - img "Boots d'échauffement — dance apparel by Repetto" [ref=f24e25]
+          - generic [ref=f24e26]: Boots d'échauffement
+          - generic [ref=f24e27]: $125
+        - button "Brushed alpaca cardigan — tops by Nagnata Brushed alpaca cardigan $307" [ref=f24e28] [cursor=pointer]:
+          - img "Brushed alpaca cardigan — tops by Nagnata" [ref=f24e30]
+          - generic [ref=f24e31]: Brushed alpaca cardigan
+          - generic [ref=f24e32]: $307
+        - button "Cabas en nylon — sac by Repetto Cabas en nylon $191" [ref=f24e33] [cursor=pointer]:
+          - img "Cabas en nylon — sac by Repetto" [ref=f24e35]
+          - generic [ref=f24e36]: Cabas en nylon
+          - generic [ref=f24e37]: $191
+        - button "Cable knit wool cardigan — tops by Nagnata Cable knit wool cardigan $198" [ref=f24e38] [cursor=pointer]:
+          - img "Cable knit wool cardigan — tops by Nagnata" [ref=f24e40]
+          - generic [ref=f24e41]: Cable knit wool cardigan
+          - generic [ref=f24e42]: $198
+  - navigation [ref=f24e43]:
+    - button "Home" [ref=f24e44] [cursor=pointer]
+    - button "Search" [ref=f24e51] [cursor=pointer]
+    - button "Boards" [ref=f24e56] [cursor=pointer]

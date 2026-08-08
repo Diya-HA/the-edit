@@ -1,0 +1,17 @@
+[    2052ms] [LOG] [ProfitMetrics Pixel] init {api: Object, pixelConfig: Object, ctx: Object} @ https://uskees.com/web-pixels/strict/app/web-pixel-3741057399@07ed9284648ae0a460fcbb3b22fbc443.js:0
+[    2090ms] [WARNING] In a sandboxed environment, addEventListener may not behave as expected. @ https://uskees.com/cdn/wpm/s8b4bdd91w657eaa09pa445a201m797ba740m.js:0
+[    2155ms] [WARNING] In a sandboxed environment, addEventListener may not behave as expected. @ https://uskees.com/cdn/wpm/s8b4bdd91w657eaa09pa445a201m797ba740m.js:0
+[    2230ms] [INFO] k-web-pixel-version 1 @ https://uskees.com/web-pixels/strict/app/web-pixel-2430665079@524f6c1ee37bacdca7657a665bdca589.js:0
+[    2378ms] [LOG] 200 @ https://uskees.com/web-pixels/strict/app/web-pixel-3772088695@ff1cb5adf8c66f15aefd474481ee1647.js:0
+[    2389ms] [WARNING] [Meta Pixel] - Invalid parameter format for currency. Please refer https://developers.facebook.com/docs/meta-pixel/reference/ for valid parameter specifications. @ https://connect.facebook.net/en_US/fbevents.js:193
+[    2615ms] [INFO] Clear-Site-Data header on 'https://uskees.com/cart/update.js': Cleared data types: "prefetchCache", "prerenderCache". @ https://uskees.com/en-us/collections/all:0
+[    3491ms] [INFO] Clear-Site-Data header on 'https://uskees.com/cart/update.js': Cleared data types: "prefetchCache", "prerenderCache". @ https://uskees.com/en-us/collections/all:0
+[    3984ms] [INFO] Clear-Site-Data header on 'https://uskees.com/cart/update.js': Cleared data types: "prefetchCache", "prerenderCache". @ https://uskees.com/en-us/collections/all:0
+[    4595ms] [LOG] [script] restoring radius {container: 16px, splash: 16px} @ https://app.answerai.co.uk/widget/BpD4L6XHzfEjcS5ir5EXqyPEKKGB1duQ/script:670
+[    5574ms] [LOG] [klarna-osm] Current page type: collections @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[    5574ms] [LOG] [klarna-osm] Initializing Klarna On-Site Messaging @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[    5574ms] [LOG] [klarna-osm] Selected currency: USD @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[    5574ms] [LOG] [klarna-osm] Shop currency: GBP @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[    5574ms] [LOG] [klarna-osm] Selected currency not supported @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[    5574ms] [LOG] [klarna-osm] Exiting due to invalid configuration. @ https://s3.eu-west-1.amazonaws.com/production-klarna-il-shopify-osm/0b7fe7c4a98ef8166eeafee767bc667686567a25/uskees-eu-com.myshopify.com-1757580904658.js?shop=uskees-eu-com.myshopify.com:2
+[   27029ms] [INFO] Clear-Site-Data header on 'https://uskees.com/cart/update.js': Cleared data types: "prefetchCache", "prerenderCache". @ https://uskees.com/en-us/collections/all:0

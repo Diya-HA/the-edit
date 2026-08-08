@@ -157,8 +157,10 @@ export async function getFeed(opts: {
   userId: string;
   aestheticId: string;
   colorTokens?: string[];
+  /** What counts as a lot for one piece. Null is no ceiling. */
+  priceCeiling?: number | null;
 }): Promise<ProductView[]> {
-  const { userId, aestheticId, colorTokens = [] } = opts;
+  const { userId, aestheticId, colorTokens = [], priceCeiling = null } = opts;
 
   const [rows, savedIds] = await Promise.all([
     prisma.product.findMany({
@@ -166,6 +168,7 @@ export async function getFeed(opts: {
         aestheticId,
         inStock: true,
         ...(colorTokens.length ? { colorToken: { in: colorTokens } } : {}),
+        ...(priceCeiling ? { price: { lte: priceCeiling } } : {}),
       },
       orderBy: [{ wasPrice: { sort: "desc", nulls: "last" } }, { title: "asc" }],
       select: productSelect,
@@ -174,6 +177,72 @@ export async function getFeed(opts: {
   ]);
 
   return rows.map((r) => toView(r as ProductRow, savedIds));
+}
+
+export type BudgetReach = {
+  /** Pieces in this look the shopper can actually see. */
+  within: number;
+  /** Pieces in this look altogether. */
+  total: number;
+  /** The ceiling this was measured against. */
+  ceiling: number;
+  /** The look with the most within reach, when there is a better one. */
+  better?: { slug: string; name: string; within: number };
+};
+
+/**
+ * How much of a look a ceiling leaves standing, and where there is more.
+ *
+ * Choosing an aesthetic currently chooses a price bracket — the median piece
+ * in Whimsigoth is a fraction of the median piece in Soft romance — which the
+ * onboarding flow implies is not the case. Rather than quietly showing a thin
+ * feed, the app says so, in the numbers the catalogue actually holds.
+ *
+ * Returns null when nothing needs saying: no ceiling set, or the look is
+ * mostly within it anyway.
+ */
+export async function getBudgetReach(opts: {
+  aestheticId: string;
+  priceCeiling: number | null;
+}): Promise<BudgetReach | null> {
+  const { aestheticId, priceCeiling } = opts;
+  if (!priceCeiling) return null;
+
+  const [within, total] = await Promise.all([
+    prisma.product.count({
+      where: { aestheticId, inStock: true, price: { lte: priceCeiling } },
+    }),
+    prisma.product.count({ where: { aestheticId, inStock: true } }),
+  ]);
+
+  /* Only worth saying when the ceiling is hiding most of the look. Below that
+     the feed speaks for itself and a notice is just noise. */
+  if (total === 0 || within / total > 0.5) return null;
+
+  const others = await prisma.aesthetic.findMany({
+    where: { id: { not: aestheticId } },
+    select: {
+      slug: true,
+      name: true,
+      _count: {
+        select: {
+          products: { where: { inStock: true, price: { lte: priceCeiling } } },
+        },
+      },
+    },
+  });
+
+  const best = others
+    .map((a) => ({ slug: a.slug, name: a.name, within: a._count.products }))
+    .sort((a, b) => b.within - a.within)[0];
+
+  return {
+    within,
+    total,
+    ceiling: priceCeiling,
+    /* Only offered when it is genuinely better, not merely different. */
+    better: best && best.within > within ? best : undefined,
+  };
 }
 
 /** One piece, by its handle. */

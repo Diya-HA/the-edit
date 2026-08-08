@@ -287,6 +287,12 @@ model Product {
   packshotScore   Int?
   /// So a re-measure can find what is stale without re-scraping.
   imageMeasuredAt DateTime?
+
+  /// Where this piece came from. The seed plants SEED and an agent run writes
+  /// AGENT, which is what lets the seed clear out pieces that have left the
+  /// catalogue without deleting the ones the demo just created. Without it,
+  /// "not in catalogue.json" means both "retired" and "written a minute ago".
+  source Source @default(SEED)
   /// Where the affiliate click goes.
   productUrl String?
   inStock  Boolean  @default(true)

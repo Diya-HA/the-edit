@@ -1,0 +1,39 @@
+- generic [active] [ref=f10e1]:
+  - generic [ref=f10e3]:
+    - generic [ref=f10e5]:
+      - generic [ref=f10e6]:
+        - img "Essential t-shirt — t-shirts_jersey by Uskees" [ref=f10e8]
+        - generic [ref=f10e9]:
+          - button "Back" [ref=f10e10] [cursor=pointer]: ‹
+          - button "Unsave" [pressed] [ref=f10e11] [cursor=pointer]: ♥
+      - generic [ref=f10e12]:
+        - generic [ref=f10e13]: Uskees
+        - heading "Essential t-shirt" [level=1] [ref=f10e14]
+        - generic [ref=f10e15]: $32.50
+        - paragraph [ref=f10e17]: Plain enough to wear twice a week. Straight lines and green, which stays out of the way.
+        - generic [ref=f10e18]:
+          - button "Keep it ♡" [ref=f10e19] [cursor=pointer]
+          - button "Buy" [ref=f10e20] [cursor=pointer]
+        - generic [ref=f10e21]: Sits well with
+        - generic [ref=f10e22]:
+          - button "B-Boy Crew t-shirt — t-shirts_jersey by Uskees B-Boy Crew t-shirt $45" [ref=f10e23] [cursor=pointer]:
+            - img "B-Boy Crew t-shirt — t-shirts_jersey by Uskees" [ref=f10e25]
+            - generic [ref=f10e26]: B-Boy Crew t-shirt
+            - generic [ref=f10e27]: $45
+          - button "Canvas tote bag — accessories_canvas by Uskees Canvas tote bag $25" [ref=f10e28] [cursor=pointer]:
+            - img "Canvas tote bag — accessories_canvas by Uskees" [ref=f10e30]
+            - generic [ref=f10e31]: Canvas tote bag
+            - generic [ref=f10e32]: $25
+          - button "Casual shorts — shorts_waffle by Uskees Casual shorts $18" [ref=f10e33] [cursor=pointer]:
+            - img "Casual shorts — shorts_waffle by Uskees" [ref=f10e35]
+            - generic [ref=f10e36]: Casual shorts
+            - generic [ref=f10e37]: $18
+          - button "Champ shorts — shorts_cotton by Uskees Champ shorts $87.50" [ref=f10e38] [cursor=pointer]:
+            - img "Champ shorts — shorts_cotton by Uskees" [ref=f10e40]
+            - generic [ref=f10e41]: Champ shorts
+            - generic [ref=f10e42]: $87.50
+    - navigation [ref=f10e43]:
+      - button "Home" [ref=f10e44] [cursor=pointer]
+      - button "Search" [ref=f10e51] [cursor=pointer]
+      - button "Boards" [ref=f10e56] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f10e65] [cursor=pointer]

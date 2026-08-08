@@ -135,6 +135,7 @@ async function main() {
       imageMeasuredAt: p.imageMeasuredAt ? new Date(p.imageMeasuredAt) : null,
       productUrl: p.productUrl,
       inStock: true,
+      source: "SEED" as never,
       brandId,
       aestheticId,
     };
@@ -145,6 +146,19 @@ async function main() {
     });
     products.set(p.slug, row.id);
   }
+  /* Pieces that have left the catalogue — excluded as unwearable, gone out
+     of stock, or simply not chosen this time — are removed rather than left
+     behind. Scoped to source SEED, so anything an agent wrote survives: a
+     container restart must never delete what the demo just created. */
+  const departed = await prisma.product.deleteMany({
+    where: {
+      source: "SEED",
+      brand: { slug: { in: catalogue.brands.map((b) => b.slug) } },
+      slug: { notIn: [...products.keys()] },
+    },
+  });
+  if (departed.count > 0) console.log(`departed    ${departed.count} no longer in the catalogue`);
+
   console.log(`products    ${products.size}`);
 
   const user = await prisma.user.upsert({

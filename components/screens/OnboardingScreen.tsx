@@ -3,7 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
-import { adoptLook } from "@/app/actions";
+import { completeOnboarding } from "@/app/actions";
+import { CEILINGS, ceilingLabel } from "@/lib/budget";
 import type { AestheticView, PaletteEntry } from "@/lib/data";
 import Button from "../Button";
 import Chip from "../Chip";
@@ -16,15 +17,19 @@ export type OnboardingScreenProps = {
   tonesByLook: Record<string, string[]>;
 };
 
-const BUDGETS = ["$150", "$300", "$500", "No ceiling"];
+/* The rungs live in app/actions so the welcome and the settings row cannot
+   drift apart — a ceiling offered here but not there would be a bug nobody
+   sees until a feed empties. */
+const BUDGETS = CEILINGS;
 
 /**
  * Getting started — three washed screens, ending on home.
  *
- * Only the chosen look is written down; it becomes the look home opens on.
- * The colours and the budget shape the conversation but have nowhere to live
- * in the v1 schema, so they stay in the flow rather than inventing columns
- * for them.
+ * All three answers are written down now. The look becomes the one home opens
+ * on, the palette is kept for later, and the ceiling filters the feed — which
+ * matters more than it sounds, because the labels behind a look decide its
+ * price bracket, so a ceiling can quietly empty an aesthetic. When it does,
+ * home says so rather than just being short.
  */
 export default function OnboardingScreen({
   looks,
@@ -37,14 +42,20 @@ export default function OnboardingScreen({
   const [colours, setColours] = useState<string[]>(
     palette.slice(0, 3).map((p) => p.token),
   );
-  const [budget, setBudget] = useState("$300");
+  const [budget, setBudget] = useState<number | null>(300);
   const [busy, setBusy] = useState(false);
 
   const chosen = looks.find((l) => l.slug === look) ?? looks[0];
 
   const finish = async () => {
     setBusy(true);
-    if (chosen) await adoptLook(chosen.id);
+    if (chosen) {
+      await completeOnboarding({
+        aestheticId: chosen.id,
+        palette: colours,
+        priceCeiling: budget,
+      });
+    }
     router.push("/");
   };
 
@@ -157,7 +168,7 @@ export default function OnboardingScreen({
           <div className={styles.budgets}>
             {BUDGETS.map((b) => (
               <button
-                key={b}
+                key={String(b)}
                 type="button"
                 aria-pressed={budget === b}
                 className={[styles.budget, budget === b && styles.budgetOn]
@@ -165,7 +176,7 @@ export default function OnboardingScreen({
                   .join(" ")}
                 onClick={() => setBudget(b)}
               >
-                {b}
+                {ceilingLabel(b)}
               </button>
             ))}
           </div>
@@ -199,9 +210,9 @@ export default function OnboardingScreen({
             <div className={styles.lookName}>{chosen?.name}</div>
             <p className={styles.lookBlurb}>
               {chosen?.description}
-              {budget === "No ceiling"
+              {budget === null
                 ? ". No ceiling on price."
-                : `. Mostly under ${budget}.`}
+                : `. Mostly under ${ceilingLabel(budget)}.`}
             </p>
             <div className={styles.tones}>
               {(tonesByLook[chosen?.slug ?? ""] ?? []).map((tone, i) => (

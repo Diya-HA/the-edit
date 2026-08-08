@@ -170,3 +170,31 @@
   line-height: 1.5;
   color: var(--text-muted);
 }
+
+/* The budget rungs, in the sheet. Same shape as the onboarding question they
+   answer, so changing your mind later looks like the moment you were asked. */
+.ceilings {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-2);
+}
+
+.ceiling {
+  padding: var(--space-3) var(--space-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  font-family: var(--font-sans);
+  font-size: var(--fs-row);
+  color: var(--text-strong);
+  cursor: pointer;
+}
+
+.ceilingOn {
+  /* Ink-filled when chosen, as Chip does it — there is no --text-on token,
+     and an undefined variable here silently left black text on black. */
+  border-color: var(--ink-0);
+  background: var(--ink-0);
+  color: var(--canvas-1);
+  box-shadow: var(--shadow-pill-active);
+}

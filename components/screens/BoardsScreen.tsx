@@ -1,10 +1,14 @@
 "use client";
 
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import type { CSSProperties } from "react";
+import { setPriceCeiling } from "@/app/actions";
+import { CEILINGS, ceilingLabel } from "@/lib/budget";
 import type { EditView } from "@/lib/data";
 import { thumbBackground } from "@/lib/images";
 import Avatar from "../Avatar";
+import BottomSheet from "../BottomSheet";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
 import styles from "./BoardsScreen.module.css";
@@ -13,6 +17,8 @@ export type BoardsScreenProps = {
   edits: EditView[];
   displayName: string;
   initials: string;
+  /** What counts as a lot for one piece. Null is no ceiling. */
+  priceCeiling: number | null;
 };
 
 /**
@@ -23,9 +29,11 @@ export default function BoardsScreen({
   edits,
   displayName,
   initials,
+  priceCeiling,
 }: BoardsScreenProps) {
   const router = useRouter();
-  const { message: toast, say } = useToast();
+  const { message: toast, say, run } = useToast();
+  const [budgetOpen, setBudgetOpen] = useState(false);
 
   const pieces = edits.reduce((n, e) => n + e.count, 0);
 
@@ -101,17 +109,20 @@ export default function BoardsScreen({
               <span className={styles.rowValue}>S · 27 · 38 ›</span>
             </button>
 
+            {/* Real now that the answer has somewhere to live. Changing it
+                changes the feed, which is the whole point of having asked. */}
             <button
               type="button"
               className={styles.row}
-              onClick={() => say("Budget is coming")}
+              onClick={() => setBudgetOpen(true)}
             >
               <span className={styles.rowLabel}>What counts as a lot</span>
-              <span className={styles.rowValue}>$300 ›</span>
+              <span className={styles.rowValue}>
+                {ceilingLabel(priceCeiling)} ›
+              </span>
             </button>
 
-            {/* The one row here that does something. The others are
-                placeholders until there is somewhere to store the answer. */}
+            {/* Sizes is still a placeholder — there is nowhere to put it. */}
             <button
               type="button"
               className={styles.row}
@@ -131,6 +142,34 @@ export default function BoardsScreen({
           </div>
         </div>
       </div>
+
+      <BottomSheet
+        open={budgetOpen}
+        title="What counts as a lot?"
+        onClose={() => setBudgetOpen(false)}
+      >
+        <div className={styles.ceilings}>
+          {CEILINGS.map((c) => (
+            <button
+              key={String(c)}
+              type="button"
+              aria-pressed={priceCeiling === c}
+              className={[
+                styles.ceiling,
+                priceCeiling === c && styles.ceilingOn,
+              ]
+                .filter(Boolean)
+                .join(" ")}
+              onClick={() => {
+                setBudgetOpen(false);
+                run(() => setPriceCeiling(c));
+              }}
+            >
+              {ceilingLabel(c)}
+            </button>
+          ))}
+        </div>
+      </BottomSheet>
 
       <Toast message={toast} />
     </>

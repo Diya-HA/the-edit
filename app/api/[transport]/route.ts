@@ -244,6 +244,9 @@ const handler = createMcpHandler(
             imageMeasuredAt: bgHex === null ? null : new Date(),
             productUrl: p.productUrl ?? null,
             inStock: true,
+            /* Written by a run, not planted by the seed. This is what keeps a
+               container restart from sweeping away what the demo made. */
+            source: "AGENT" as const,
             brandId: brand.id,
             aestheticId: aesthetic.id,
           };

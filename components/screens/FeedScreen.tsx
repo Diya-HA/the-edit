@@ -2,9 +2,10 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { toggleStar } from "@/app/actions";
+import { raisePriceCeiling, toggleStar } from "@/app/actions";
 import type {
   AestheticView,
+  BudgetReach,
   EditView,
   PaletteEntry,
   ProductView,
@@ -15,6 +16,7 @@ import Chip from "../Chip";
 import ColorDot from "../ColorDot";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
+import BudgetNote from "./BudgetNote";
 import PieceGrid from "./PieceGrid";
 import SaveSheet from "./SaveSheet";
 import type { SaveTarget } from "./SaveSheet";
@@ -28,6 +30,8 @@ export type FeedScreenProps = {
   activeSlug: string;
   /** The one colour the feed is filtered to, if any. */
   activeTint?: string;
+  /** Set when the price ceiling is hiding most of this look. */
+  budget: BudgetReach | null;
   initials: string;
 };
 
@@ -38,6 +42,7 @@ export default function FeedScreen({
   edits,
   activeSlug,
   activeTint,
+  budget,
   initials,
 }: FeedScreenProps) {
   const router = useRouter();
@@ -97,6 +102,17 @@ export default function FeedScreen({
 
       <div className={styles.scroll}>
         <div className={styles.feed}>
+          {/* What the ceiling is hiding, before the feed rather than after it,
+              so a short feed is explained instead of merely short. */}
+          {budget && (
+            <BudgetNote
+              look={aesthetics.find((a) => a.slug === activeSlug)?.name ?? "This look"}
+              reach={budget}
+              onRaise={() => run(raisePriceCeiling)}
+              onSwitch={(slug) => navigate(slug, activeTint)}
+            />
+          )}
+
           {products.length === 0 ? (
             <div className={styles.empty}>
               <div className={styles.emptyTitle}>Nothing in this colour yet</div>

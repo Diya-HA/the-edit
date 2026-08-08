@@ -1,0 +1,45 @@
+- generic [ref=f29e1]:
+  - generic [ref=f29e3]:
+    - generic [ref=f29e4]:
+      - generic [ref=f29e5]: AL
+      - generic [ref=f29e6]:
+        - generic [ref=f29e7]: Aria Lane
+        - generic [ref=f29e8]: 4 boards · 14 pieces
+    - generic [ref=f29e10]:
+      - generic [ref=f29e11]:
+        - button "Soft romance 5 pieces" [ref=f29e12] [cursor=pointer]:
+          - generic [ref=f29e18]: Soft romance
+          - generic [ref=f29e19]: 5 pieces
+        - button "Desk to dinner 3 pieces" [ref=f29e20] [cursor=pointer]:
+          - generic [ref=f29e26]: Desk to dinner
+          - generic [ref=f29e27]: 3 pieces
+        - button "Linen summer 4 pieces" [ref=f29e28] [cursor=pointer]:
+          - generic [ref=f29e34]: Linen summer
+          - generic [ref=f29e35]: 4 pieces
+        - button "One day 2 pieces" [ref=f29e36] [cursor=pointer]:
+          - generic [ref=f29e42]: One day
+          - generic [ref=f29e43]: 2 pieces
+      - generic [ref=f29e44]:
+        - generic [ref=f29e45]: Settings
+        - button "Sizes S · 27 · 38 ›" [ref=f29e46] [cursor=pointer]:
+          - generic [ref=f29e47]: Sizes
+          - generic [ref=f29e48]: S · 27 · 38 ›
+        - button "What counts as a lot $300 ›" [active] [ref=f29e49] [cursor=pointer]:
+          - generic [ref=f29e50]: What counts as a lot
+          - generic [ref=f29e51]: $300 ›
+        - button "Redo the welcome ›" [ref=f29e52] [cursor=pointer]:
+          - generic [ref=f29e53]: Redo the welcome
+          - generic [ref=f29e54]: ›
+        - button "Sign out" [ref=f29e55] [cursor=pointer]
+    - button "Close" [ref=f29e74] [cursor=pointer]
+    - dialog "What counts as a lot?" [ref=f29e75]:
+      - generic [ref=f29e79]:
+        - button "$150" [ref=f29e80] [cursor=pointer]
+        - button "$300" [pressed] [ref=f29e81] [cursor=pointer]
+        - button "$500" [ref=f29e82] [cursor=pointer]
+        - button "No ceiling" [ref=f29e83] [cursor=pointer]
+    - navigation [ref=f29e56]:
+      - button "Home" [ref=f29e57] [cursor=pointer]
+      - button "Search" [ref=f29e64] [cursor=pointer]
+      - button "Boards" [ref=f29e69] [cursor=pointer]
+  - alert [ref=f29e73]
