@@ -30,6 +30,12 @@ export type CanvasSwatchProps = {
   /** Which width to ask the brand's CDN for. Cards by default. */
   imageWidth?: number;
   /**
+   * Load this one eagerly. For the piece a screen is about — the detail hero —
+   * which is the largest thing on it and the last to arrive if left to lazy
+   * loading. Everything in a feed should stay lazy.
+   */
+  priority?: boolean;
+  /**
    * Pointillist dab texture. Turn 3 keeps this for brand and look swatches
    * but takes it off product placeholders, which are now tinted to the
    * actual cloth rather than being decorative fields. Over a photograph it
@@ -58,6 +64,7 @@ export default function CanvasSwatch({
   alt,
   ground,
   imageWidth = IMAGE_WIDTH.card,
+  priority = false,
   texture = false,
   wash = false,
   children,
@@ -89,6 +96,7 @@ export default function CanvasSwatch({
           src={atWidth(image, imageWidth)}
           alt={alt ?? ""}
           fill
+          priority={priority}
           /* Cropped, never letterboxed, and centred — brand packshots put the
              garment in the middle of the frame, so the middle is what survives
              a 4:5 crop of a 1:1 source. */

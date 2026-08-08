@@ -41,6 +41,7 @@ export default function ProductScreen({
             ground={product.ground}
             alt={`${product.title} — ${product.category} by ${product.brand}`}
             imageWidth={IMAGE_WIDTH.hero}
+            priority
             height={296}
             radius="0"
             label={product.category}

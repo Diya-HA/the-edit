@@ -294,7 +294,7 @@
 
 .trendTitle {
   display: block;
-  margin-top: 4px;
+  margin-top: var(--space-1);
   font-family: var(--font-sans);
   font-size: 9px;
   line-height: 1.2;
