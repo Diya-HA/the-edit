@@ -73,6 +73,18 @@ const FOLLOWED = ["margaux", "ciel"];
 /** Looks she has starred. Starred looks sort first on the home strip. */
 const STARRED = ["soft-romance"];
 
+/* Canonical slot per garment noun used in this seed. */
+const SLOT_BY_CATEGORY: Record<string, string> = {
+  blouse: "TOP", shirt: "TOP", tee: "TOP", camisole: "TOP", knit: "TOP",
+  "wrap top": "TOP", overshirt: "TOP", crochet: "TOP", cardigan: "TOP",
+  trouser: "BOTTOM", denim: "BOTTOM", skirt: "BOTTOM", dress: "BOTTOM",
+  coat: "OUTER", jacket: "OUTER", blazer: "OUTER",
+  flat: "SHOES", shoe: "SHOES",
+  tote: "BAG",
+  scarf: "ACCESSORY", ribbon: "ACCESSORY", sock: "ACCESSORY",
+  belt: "ACCESSORY", earring: "ACCESSORY",
+};
+
 type ProductSeed = {
   slug: string;
   title: string;
@@ -139,63 +151,21 @@ const PRODUCTS: ProductSeed[] = [
    so the seed exercises the real write path rather than a private shortcut.
    The notes are WHY lines in the product voice, as the skill produces. */
 const OUTFITS: OutfitInput[] = [
-  {
-    slug: "sunday-in-warm-neutrals",
-    name: "Sunday in warm neutrals",
-    aestheticSlug: "soft-romance",
-    note: "Butter and cream layered soft, with one shine for the evening.",
-    items: [
-      { productSlug: "margaux-cotton-poplin-blouse", score: 92, note: "Warms the cream without competing." },
-      { productSlug: "leonie-silk-slip-skirt", score: 88, note: "The shine the neutrals were missing." },
-      { productSlug: "halle-lambswool-cardigan", score: 90, note: "The piece the rest gets chosen around." },
-      { productSlug: "ciel-satin-hair-ribbon", score: 84, note: "Makes the whole thing look deliberate." },
-    ],
-  },
-  {
-    slug: "the-long-dress-one",
-    name: "The long dress one",
-    aestheticSlug: "soft-romance",
-    note: "One dress doing the work, softened either side.",
-    items: [
-      { productSlug: "alder-slub-linen-dress", score: 94, note: "Everything here was chosen around it." },
-      { productSlug: "halle-cashmere-crew", score: 86, note: "Goes under it when it turns." },
-      { productSlug: "margaux-silk-scarf", score: 82, note: "A warm note against all that oatmeal." },
-    ],
-  },
+  /* Head-to-toe looks: one piece per slot, four to six pieces. Only two of
+     the four aesthetics can currently make one — Soft romance has no outer
+     layer or shoes, Balletcore no bottom or outer. That gap is a catalogue
+     problem, not a seed problem, and it is what Phase 1's new brands fill. */
   {
     slug: "monday-uniform",
     name: "Monday uniform",
     aestheticSlug: "quiet-utility",
     note: "Straight lines and pockets, nothing asking for attention.",
     items: [
-      { productSlug: "alder-washed-linen-trouser", score: 91, note: "Better creased, which helps by Friday." },
       { productSlug: "alder-oversized-poplin-shirt", score: 89, note: "Buttoned up or falling off, both work." },
+      { productSlug: "alder-washed-linen-trouser", score: 91, note: "Better creased, which helps by Friday." },
       { productSlug: "alder-boxy-canvas-jacket", score: 87, note: "Goes over the lot without swamping it." },
-      { productSlug: "paloma-utility-belt", score: 78, note: "Holds the looser trouser where you want it." },
-    ],
-  },
-  {
-    slug: "denim-and-canvas",
-    name: "Denim and canvas",
-    aestheticSlug: "quiet-utility",
-    note: "Indigo top to toe, broken with one plain layer.",
-    items: [
-      { productSlug: "paloma-raw-hem-denim", score: 90, note: "Stiff for a week, then yours." },
-      { productSlug: "paloma-indigo-overshirt", score: 88, note: "Fades exactly where you use it." },
-      { productSlug: "alder-undyed-cotton-tee", score: 83, note: "The plain layer holding it together." },
       { productSlug: "paloma-canvas-tote", score: 76, note: "Carries the week without trying." },
-    ],
-  },
-  {
-    slug: "studio-to-street",
-    name: "Studio to street",
-    aestheticSlug: "balletcore-off-duty",
-    note: "Wrap knits and flats, worn a long way from the studio.",
-    items: [
-      { productSlug: "halle-ballet-wrap-top", score: 93, note: "Crosses at the front and stays put." },
-      { productSlug: "ciel-wrap-knit-cardigan", score: 89, note: "Ties in where boxier knits do not." },
-      { productSlug: "ciel-ribbon-tie-ballet-flat", score: 91, note: "Quiet alone, lovely with a long skirt." },
-      { productSlug: "ciel-mesh-sock", score: 80, note: "Makes the flats look finished." },
+      { productSlug: "paloma-utility-belt", score: 78, note: "Holds the looser trouser where you want it." },
     ],
   },
   {
@@ -204,10 +174,10 @@ const OUTFITS: OutfitInput[] = [
     aestheticSlug: "whimsigoth",
     note: "Velvet and tarnished silver, romantic rather than heavy.",
     items: [
+      { productSlug: "halle-crochet-cardigan", score: 88, note: "Odd enough to be interesting." },
       { productSlug: "leonie-velvet-opera-coat", score: 95, note: "For the two nights that deserve it." },
-      { productSlug: "margaux-velvet-blazer", score: 88, note: "Theatrical without the effort." },
-      { productSlug: "leonie-crescent-drop-earring", score: 85, note: "Tarnished enough to sit with the rest." },
       { productSlug: "ciel-leather-mary-jane", score: 82, note: "Sturdy enough to walk home in." },
+      { productSlug: "leonie-crescent-drop-earring", score: 85, note: "Tarnished enough to sit with the rest." },
     ],
   },
 ];
@@ -293,6 +263,7 @@ async function main() {
       line: p.line,
       why: p.why,
       colorHex: p.tone,
+      slot: (SLOT_BY_CATEGORY[p.category] ?? null) as never,
       ...FAMILY[p.family],
       brandId,
       aestheticId,
