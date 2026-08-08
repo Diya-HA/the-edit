@@ -126,6 +126,23 @@ model Aesthetic {
   @@map("aesthetics")
 }
 
+/// Where a piece sits in a head-to-toe look.
+///
+/// `category` stays as the garment noun the brand uses — "overshirt", "mary
+/// jane" — because that is what the placeholder label shows. This is the
+/// canonical slot underneath it, so an assembler can insist on one top, one
+/// bottom, one outer layer and so on across brands that all name things
+/// differently. Nullable on purpose: a piece nobody has classified is left
+/// out of an outfit rather than guessed into the wrong slot.
+enum Slot {
+  TOP
+  BOTTOM
+  OUTER
+  SHOES
+  BAG
+  ACCESSORY
+}
+
 /// Where a row came from. Agent runs write AGENT; anything the seed puts
 /// there is SEED, which is also how the app knows to label demo content.
 enum Source {
@@ -212,6 +229,10 @@ model Product {
   title    String
   /// Kept as a string rather than its own table — see the header note.
   category String
+  /// Canonical slot in a head-to-toe look. Set at ingest by whatever scored
+  /// the piece; two colourways of one style share a title, so the assembler
+  /// dedupes on (brandId, title) and needs no separate style key.
+  slot     Slot?
 
   price    Decimal  @db.Decimal(10, 2)
   /// Prior price. Its presence is what draws the drop badge.
@@ -259,6 +280,7 @@ model Product {
   @@index([brandId])
   @@index([aestheticId])
   @@index([colorToken])
+  @@index([slot])
   @@map("products")
 }
 
