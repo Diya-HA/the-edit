@@ -57,6 +57,7 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
     }),
     getBudgetReach({
       aestheticId: active.id,
+      aestheticSlug: active.slug,
       priceCeiling: user.priceCeiling,
     }),
   ]);

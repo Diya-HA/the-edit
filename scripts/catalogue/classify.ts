@@ -210,7 +210,10 @@ function priceUsd(p: ShopifyProduct, currency: BrandConfig["currency"]): number 
  * keeps working without outfits.ts having to learn about brands.
  */
 function styleKey(display: string): string {
-  return display.toLowerCase();
+  /* Whitespace is normalised because storefronts are typed by hand: Repetto
+     publishes "Demi-Pointes - bi-semelles pro/ option moyenne" twice, once
+     with a double space, and without this they are two styles. */
+  return display.toLowerCase().replace(/\s+/g, " ").trim();
 }
 
 /**

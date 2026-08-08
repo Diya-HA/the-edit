@@ -1,4 +1,6 @@
 import { prisma } from "./prisma";
+import { neighboursOf } from "./aesthetics";
+import { spaceByStyle } from "./feed";
 
 /* Prisma returns Decimal for money and Date for timestamps, neither of which
    crosses the server/client boundary. Everything here returns plain data. */
@@ -176,7 +178,9 @@ export async function getFeed(opts: {
     getSavedProductIds(userId),
   ]);
 
-  return rows.map((r) => toView(r as ProductRow, savedIds));
+  /* Alphabetical order puts a brand's whole family of one thing together —
+     five Sac polochon bags, four Demi-Pointes. Spread them out. */
+  return spaceByStyle(rows.map((r) => toView(r as ProductRow, savedIds)));
 }
 
 export type BudgetReach = {
@@ -203,9 +207,10 @@ export type BudgetReach = {
  */
 export async function getBudgetReach(opts: {
   aestheticId: string;
+  aestheticSlug: string;
   priceCeiling: number | null;
 }): Promise<BudgetReach | null> {
-  const { aestheticId, priceCeiling } = opts;
+  const { aestheticId, aestheticSlug, priceCeiling } = opts;
   if (!priceCeiling) return null;
 
   const [within, total] = await Promise.all([
@@ -219,30 +224,40 @@ export async function getBudgetReach(opts: {
      the feed speaks for itself and a notice is just noise. */
   if (total === 0 || within / total > 0.5) return null;
 
-  const others = await prisma.aesthetic.findMany({
-    where: { id: { not: aestheticId } },
-    select: {
-      slug: true,
-      name: true,
-      _count: {
-        select: {
-          products: { where: { inStock: true, price: { lte: priceCeiling } } },
+  /* The nearest look that actually clears the ceiling, not the one with the
+     most in it. Suggesting whichever aesthetic happens to be cheapest measures
+     the catalogue rather than taste — see lib/aesthetics.ts. */
+  const neighbours = neighboursOf(aestheticSlug);
+  let better: BudgetReach["better"];
+
+  if (neighbours.length > 0) {
+    const rows = await prisma.aesthetic.findMany({
+      where: { slug: { in: neighbours } },
+      select: {
+        slug: true,
+        name: true,
+        _count: {
+          select: {
+            products: { where: { inStock: true, price: { lte: priceCeiling } } },
+          },
         },
       },
-    },
-  });
+    });
+    const bySlug = new Map(rows.map((r) => [r.slug, r]));
 
-  const best = others
-    .map((a) => ({ slug: a.slug, name: a.name, within: a._count.products }))
-    .sort((a, b) => b.within - a.within)[0];
+    for (const slug of neighbours) {
+      const row = bySlug.get(slug);
+      if (!row) continue;
+      /* "Clears the ceiling" means comfortably more to look at, not one piece
+         more — walking someone sideways for a marginal gain is not a nudge. */
+      if (row._count.products >= within * 2 && row._count.products >= 8) {
+        better = { slug: row.slug, name: row.name, within: row._count.products };
+        break;
+      }
+    }
+  }
 
-  return {
-    within,
-    total,
-    ceiling: priceCeiling,
-    /* Only offered when it is genuinely better, not merely different. */
-    better: best && best.within > within ? best : undefined,
-  };
+  return { within, total, ceiling: priceCeiling, better };
 }
 
 /** One piece, by its handle. */
