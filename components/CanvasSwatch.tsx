@@ -1,4 +1,6 @@
+import Image from "next/image";
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
+import { atWidth, IMAGE_WIDTH } from "@/lib/images";
 import styles from "./CanvasSwatch.module.css";
 
 export type CanvasSwatchProps = {
@@ -11,9 +13,22 @@ export type CanvasSwatchProps = {
   /** Mono label along the bottom naming the garment — "CARDIGAN". */
   label?: string;
   /**
+   * The brand's photograph. When set it fills the field and the colour
+   * becomes what shows underneath it while it loads — so the grid never
+   * flashes white and never shifts.
+   */
+  image?: string | null;
+  /** Describes the garment for anyone who can't see it. */
+  alt?: string;
+  /** Which width to ask the brand's CDN for. Cards by default. */
+  imageWidth?: number;
+  /**
    * Pointillist dab texture. Turn 3 keeps this for brand and look swatches
    * but takes it off product placeholders, which are now tinted to the
-   * actual cloth rather than being decorative fields.
+   * actual cloth rather than being decorative fields. Over a photograph it
+   * comes back automatically, at a fraction of the strength — the design
+   * system's rule is that photography replaces the fill and the texture
+   * stays as an overlay.
    */
   texture?: boolean;
   /** The gauzy multi-pigment wash. Welcome and milestones only. */
@@ -24,7 +39,7 @@ export type CanvasSwatchProps = {
 const len = (v: number | string) => (typeof v === "number" ? `${v}px` : v);
 
 /**
- * CanvasSwatch — the painted field standing in for photography.
+ * CanvasSwatch — the painted field, and the frame photography sits in.
  */
 export default function CanvasSwatch({
   color = "var(--fabric-neutral)",
@@ -32,6 +47,9 @@ export default function CanvasSwatch({
   aspect,
   radius = "var(--radius-xl)",
   label,
+  image,
+  alt,
+  imageWidth = IMAGE_WIDTH.card,
   texture = false,
   wash = false,
   children,
@@ -42,7 +60,9 @@ export default function CanvasSwatch({
   return (
     <div
       {...rest}
-      className={[styles.swatch, className].filter(Boolean).join(" ")}
+      className={[styles.swatch, image && styles.hasPhoto, className]
+        .filter(Boolean)
+        .join(" ")}
       style={
         {
           "--swatch-color": color,
@@ -53,9 +73,31 @@ export default function CanvasSwatch({
         } as CSSProperties
       }
     >
-      {texture && <div className={styles.pointillism} />}
+      {image && (
+        <Image
+          src={atWidth(image, imageWidth)}
+          alt={alt ?? ""}
+          fill
+          /* Cropped, never letterboxed, and centred — brand packshots put the
+             garment in the middle of the frame, so the middle is what survives
+             a 4:5 crop of a 1:1 source. */
+          className={styles.photo}
+        />
+      )}
+
+      {/* Over photography the stipple is an accent, not the subject. */}
+      {(texture || image) && (
+        <div
+          className={[styles.pointillism, image && styles.overPhoto]
+            .filter(Boolean)
+            .join(" ")}
+        />
+      )}
       {wash && <div className={styles.wash} />}
-      {label && (
+
+      {/* The garment noun is what a placeholder says instead of showing. A
+          photograph says it better, so it goes away when one arrives. */}
+      {label && !image && (
         <div
           className={[
             styles.label,

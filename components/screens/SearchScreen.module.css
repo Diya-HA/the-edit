@@ -273,6 +273,9 @@
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-md);
   background-color: var(--trend-tone);
+  background-image: var(--trend-photo, none);
+  background-size: cover;
+  background-position: center;
 }
 
 .trendTitle {

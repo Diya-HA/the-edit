@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import type { OutfitView } from "@/lib/data";
+import { thumbBackground } from "@/lib/images";
 import Button from "../Button";
 import styles from "./OutfitList.module.css";
 
@@ -50,9 +51,16 @@ export default function OutfitList({
               >
                 <span
                   className={styles.thumb}
-                  style={{ "--piece-tone": p.tone } as CSSProperties}
+                  style={
+                    {
+                      "--piece-tone": p.tone,
+                      "--piece-photo": thumbBackground(p.image),
+                    } as CSSProperties
+                  }
                 >
-                  <span className={styles.pieceLabel}>{p.category}</span>
+                  {!p.image && (
+                    <span className={styles.pieceLabel}>{p.category}</span>
+                  )}
                 </span>
                 <span className={styles.pieceTitle}>{p.title}</span>
                 <span className={styles.piecePrice}>${p.price}</span>

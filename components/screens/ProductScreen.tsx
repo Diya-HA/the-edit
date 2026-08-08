@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { EditView, ProductView } from "@/lib/data";
+import { IMAGE_WIDTH } from "@/lib/images";
 import Button from "../Button";
 import CanvasSwatch from "../CanvasSwatch";
 import Toast from "../Toast";
@@ -35,6 +36,9 @@ export default function ProductScreen({
         <div className={styles.hero}>
           <CanvasSwatch
             color={product.tone}
+            image={product.image}
+            alt={`${product.title} — ${product.category} by ${product.brand}`}
+            imageWidth={IMAGE_WIDTH.hero}
             height={296}
             radius="0"
             label={product.category}
@@ -104,6 +108,8 @@ export default function ProductScreen({
                   >
                     <CanvasSwatch
                       color={p.tone}
+                      image={p.image}
+                      alt={`${p.title} — ${p.category} by ${p.brand}`}
                       height={108}
                       radius="var(--radius-md)"
                       label={p.category}

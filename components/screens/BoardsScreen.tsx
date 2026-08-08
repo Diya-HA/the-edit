@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import type { EditView } from "@/lib/data";
+import { thumbBackground } from "@/lib/images";
 import Avatar from "../Avatar";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
@@ -68,6 +69,9 @@ export default function BoardsScreen({
                           {
                             "--tile": e.tones[i % Math.max(e.tones.length, 1)] ??
                               "var(--canvas-2)",
+                            "--tile-photo": thumbBackground(
+                              e.covers[i % Math.max(e.covers.length, 1)],
+                            ),
                           } as CSSProperties
                         }
                       />

@@ -12,8 +12,11 @@ export type ProductView = {
   category: string;
   price: number;
   wasPrice: number | null;
-  /** The tone of the cloth. Fills the placeholder. */
+  /** The tone of the cloth. Fills the field behind the photograph, and
+      stands in for it entirely when there is no photograph. */
   tone: string;
+  /** The brand's own photograph, when the catalogue has one. */
+  image: string | null;
   /** Palette family this groups into, for the filter row. */
   family: string;
   familyName: string;
@@ -44,6 +47,7 @@ const productSelect = {
   colorHex: true,
   line: true,
   why: true,
+  imageUrl: true,
   brand: { select: { name: true } },
 } as const;
 
@@ -59,6 +63,7 @@ type ProductRow = {
   colorHex: string;
   line: string | null;
   why: string | null;
+  imageUrl: string | null;
   brand: { name: string };
 };
 
@@ -72,6 +77,7 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     price: Number(p.price),
     wasPrice: p.wasPrice === null ? null : Number(p.wasPrice),
     tone: p.colorHex.trim(),
+    image: p.imageUrl,
     family: `var(${p.colorToken})`,
     familyName: p.colorName,
     line: p.line,
@@ -358,6 +364,8 @@ export type EditView = {
   count: number;
   /** Tones of the first three pieces, for the board cover. */
   tones: string[];
+  /** Their photographs, where they have one — same order as tones. */
+  covers: (string | null)[];
   holdsProduct?: boolean;
 };
 
@@ -372,7 +380,10 @@ export async function getEdits(
     include: {
       items: {
         orderBy: { addedAt: "asc" },
-        select: { productId: true, product: { select: { colorHex: true } } },
+        select: {
+          productId: true,
+          product: { select: { colorHex: true, imageUrl: true } },
+        },
       },
     },
   });
@@ -383,6 +394,7 @@ export async function getEdits(
     note: e.note,
     count: e.items.length,
     tones: e.items.slice(0, 4).map((i) => i.product.colorHex.trim()),
+    covers: e.items.slice(0, 4).map((i) => i.product.imageUrl),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
@@ -415,6 +427,7 @@ export async function getEdit(
       note: row.note,
       count: items.length,
       tones: items.slice(0, 3).map((p) => p.tone),
+      covers: items.slice(0, 3).map((p) => p.image),
     },
     items,
   };

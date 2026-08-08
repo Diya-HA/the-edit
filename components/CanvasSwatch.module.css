@@ -16,6 +16,23 @@
   overflow: hidden;
 }
 
+/* The brand's photograph. Fills the field the tone was standing in for; the
+   tone stays underneath, so the card holds its colour until the image lands
+   and never flashes white. Cropped rather than letterboxed — the frame's
+   ratio is the rule, whatever shape the source is. */
+.photo {
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Brand packshots are shot on white, and the app's canvas is white, so a
+   photographed card would otherwise have no edge at all. A hairline inside the
+   radius gives it one without adding a frame — it disappears the moment a
+   garment fills the field, and holds the card together when one doesn't. */
+.hasPhoto {
+  box-shadow: inset 0 0 0 1px var(--border-faint);
+}
+
 /* Seurat-style stipple. Brand and look swatches only. */
 .pointillism {
   position: absolute;
@@ -23,6 +40,13 @@
   background-image: var(--texture-pointillism);
   background-size: var(--texture-pointillism-size);
   pointer-events: none;
+}
+
+/* Over a photograph the same stipple would read as dirt at full strength.
+   Held at a fraction, it keeps the painted-canvas signature on real clothes. */
+.overPhoto {
+  opacity: 0.18;
+  mix-blend-mode: soft-light;
 }
 
 /* Gauzy multi-pigment wash — welcome, stylist, milestones. */

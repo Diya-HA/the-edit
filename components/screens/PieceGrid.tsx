@@ -44,6 +44,7 @@ export default function PieceGrid({
             price={p.price}
             was={p.wasPrice ?? undefined}
             color={p.tone}
+            image={p.image}
             category={p.category}
             aspect={shapeOf(p.slug)}
             saved={p.saved}

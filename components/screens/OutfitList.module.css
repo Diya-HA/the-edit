@@ -80,6 +80,9 @@
   aspect-ratio: 4 / 5;
   border-radius: var(--radius-md);
   background-color: var(--piece-tone);
+  background-image: var(--piece-photo, none);
+  background-size: cover;
+  background-position: center;
   overflow: hidden;
 }
 
