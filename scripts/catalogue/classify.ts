@@ -58,7 +58,9 @@ type ShopifyProduct = {
 const SLOT_RULES: [Slot, RegExp][] = [
   ["SHOES", /ballerines?\b|\bpointes?\b|\bbabies\b|mocassins?\b|sneakers?\b|bottines?\b|\bboots?\b|\bshoes?\b|sandals?\b|\bheels?\b|ballet flat|creepers?\b|loafers?\b|\bderby\b|\bclogs?\b|mary jane/],
   ["BAG", /\bsac\b|handbag|\bbag\b|tote|pouch|backpack|purse|clutch|satchel/],
-  ["ACCESSORY", /porte-cl|keyring|\bbelts?\b|harness|\bsocks?\b|collants?\b|tights?\b|\bhat\b|\bcap\b|beanie|scarf|glove|jewel|earring|necklace|choker|\bhair\b|ribbon|leg ?warmer|wristband|headband|sunglass|brooch/],
+  /* Worn, not merely owned. A keyring lived here for a while and reached the
+     catalogue as a piece of an outfit, which it is not. */
+  ["ACCESSORY", /\bbelts?\b|harness|\bsocks?\b|collants?\b|tights?\b|\bhat\b|\bcap\b|beanie|scarf|glove|jewel|earring|necklace|choker|\bhair\b|ribbon|leg ?warmer|wristband|headband|sunglass|brooch|\bgloves?\b/],
   ["OUTER", /jacket|coat|blazer|parka|trench|overshirt|cardigan|veste|manteau|shacket|gilet/],
   /* "short" must not catch "short-sleeve", which is a t-shirt. */
   ["BOTTOM", /trousers?\b|\bpants?\b|jeans?\b|denim|\bshorts\b|\bshort\b(?!\s*-?\s*sleeve)|skirts?\b|jupe|jupette|legging|culotte|chino/],
@@ -68,9 +70,34 @@ const SLOT_RULES: [Slot, RegExp][] = [
   ["TOP", /justaucorps|leotard|cache-c|bodysuit|bralet|corset|tunique|tunic|sweater|sweatshirt|hoodie|shirt|t-?shirt|\btop\b|blouse|knit|jumper|cami|tank|vest|crop|polo|one-?piece|unitard/],
 ];
 
-/** Anything that is not a garment, or not for the shopper this app has. */
-const EXCLUDE =
-  /gift ?card|e-gift|enfant|\bkids?\b|\bchild|sample sale|mystery|repair|care kit|gift wrap|donation|shipping protection|voucher|\bmen'?s\b/i;
+/**
+ * Anything that is not a garment, or not for the shopper this app has.
+ *
+ * Brands sell more than clothes, and a lifestyle label sells a lot more: a
+ * lunchbox, a water bottle, a candle, a keyring. None of it can be worn, so
+ * none of it can be part of a head-to-toe look, so none of it belongs in a
+ * feed about getting dressed. A piece that cannot fill a wearable slot is
+ * dropped at ingest rather than filtered later — the catalogue should not
+ * contain it in the first place.
+ */
+const EXCLUDE = new RegExp(
+  [
+    // Not a product
+    "gift ?card", "e-gift", "voucher", "donation", "shipping protection",
+    "sample sale", "mystery", "gift wrap",
+    // Not for this shopper
+    "enfant", "\\bkids?\\b", "\\bchild", "\\bmen'?s\\b",
+    // Homeware and objects
+    "lunchbox", "lunch box", "\\bbottle\\b", "flask", "\\bmug\\b", "tumbler",
+    "candle", "\\bposter\\b", "art print", "sticker", "\\bpatch\\b", "\\bbook\\b",
+    "\\btowel\\b", "blanket", "cushion", "\\brug\\b", "keyring", "key ?chain",
+    "porte-cl", "\\bmagnet\\b", "\\bbadge\\b", "\\bpin\\b", "lanyard",
+    "\\bposter\\b", "notebook", "\\bpen\\b", "\\bcard\\b",
+    // Care and service
+    "repair", "care kit", "detergent", "\\bspray\\b", "shoe ?tree", "insole",
+  ].join("|"),
+  "i",
+);
 
 /**
  * Costume rather than clothing. Repetto is a dance house, so its catalogue
