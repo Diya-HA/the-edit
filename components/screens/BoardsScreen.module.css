@@ -24,6 +24,7 @@
 }
 
 .summary {
+  font-variant-numeric: tabular-nums;
   margin-top: 2px;
   font-family: var(--font-sans);
   font-size: var(--fs-chip);
@@ -86,6 +87,7 @@
 }
 
 .boardCount {
+  font-variant-numeric: tabular-nums;
   display: block;
   margin-top: 1px;
   font-family: var(--font-sans);
@@ -130,6 +132,7 @@
 }
 
 .rowValue {
+  font-variant-numeric: tabular-nums;
   flex: none;
   font-family: var(--font-mono);
   font-size: var(--fs-chip);

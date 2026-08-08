@@ -17,6 +17,9 @@
   position: relative;
   display: flex;
   flex-direction: column;
+  /* Clears the notch. Paired with the tab bar's bottom inset, so the app owns
+     the whole screen without anything hiding under the hardware. */
+  padding-top: env(safe-area-inset-top, 0px);
   width: 100%;
   max-width: 420px;
   /* Fixed height, not min-height: the screen scrolls its own body so the

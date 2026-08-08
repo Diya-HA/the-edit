@@ -130,6 +130,7 @@
 }
 
 .price {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
@@ -137,6 +138,7 @@
 }
 
 .was {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -216,6 +218,7 @@
 }
 
 .railPrice {
+  font-variant-numeric: tabular-nums;
   display: block;
   margin-top: 2px;
   font-family: var(--font-mono);

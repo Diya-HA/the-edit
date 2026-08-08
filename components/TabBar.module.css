@@ -7,7 +7,12 @@
   flex: none;
   background: var(--surface-card);
   border-top: 1px solid var(--border);
-  padding-bottom: var(--space-3);
+  /* The home indicator sits over the bottom of the screen on a modern phone,
+     so the bar keeps its own padding and adds whatever the device asks for on
+     top. Zero everywhere else, so nothing changes on a desktop or an older
+     handset. viewport-fit=cover in app/layout.tsx is what makes this non-zero
+     at all. */
+  padding-bottom: calc(var(--space-3) + env(safe-area-inset-bottom, 0px));
 }
 
 .tab {
