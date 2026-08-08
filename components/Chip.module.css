@@ -32,3 +32,60 @@
   color: var(--text-body);
   box-shadow: none;
 }
+
+/* ---- Chip with a star ----
+   The two buttons read as one pill: the pill's border, fill and shadow move
+   onto the wrapper, and the chip itself goes transparent inside it. */
+.group {
+  display: inline-flex;
+  align-items: stretch;
+  flex: 0 0 auto;
+  border-radius: var(--radius-pill);
+  background: var(--surface-card);
+  border: 1px solid var(--border-faint);
+  box-shadow: var(--shadow-pill-idle);
+  transition: background var(--dur-fast) var(--ease-out);
+}
+
+.groupActive {
+  background: var(--ink-0);
+  border-color: var(--ink-0);
+  box-shadow: var(--shadow-pill-active);
+}
+
+.withStar {
+  background: none;
+  border: none;
+  box-shadow: none;
+  padding-right: 4px;
+}
+
+.groupActive .withStar {
+  background: none;
+}
+
+.star {
+  display: flex;
+  align-items: center;
+  padding: 0 10px 0 2px;
+  border: none;
+  background: none;
+  color: var(--ink-2);
+  font-size: var(--fs-sm);
+  line-height: 1;
+  cursor: pointer;
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.starOn {
+  color: var(--ink-0);
+}
+
+/* On an ink-filled chip the star has to invert to stay visible. */
+.groupActive .star {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.groupActive .starOn {
+  color: var(--white);
+}

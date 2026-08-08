@@ -148,7 +148,7 @@ enum Source {
 ///     the sentence a shopper reads under the outfit. Same rules as a WHY
 ///     line: sentence case, under 20 words, no hype.
 ///
-/// Write through `upsertOutfit` in lib/outfits.ts, which both the seed and
+/// Write through `upsertOutfit` in prisma/outfits.ts, which both the seed and
 /// the createOutfit server action use, so validation lives in one place.
 model Outfit {
   id     String @id @default(uuid()) @db.Uuid

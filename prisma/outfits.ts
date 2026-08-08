@@ -10,6 +10,12 @@ type Db = Pick<PrismaClient, "aesthetic" | "product" | "outfit" | "$transaction"
 /**
  * The write path for outfits.
  *
+ * It lives under prisma/ rather than lib/ because the deploy template's
+ * Dockerfile only copies .next/standalone, prisma/, node_modules/prisma and
+ * node_modules/@prisma into the runtime image. The seed imports this at
+ * container start, so anything it reaches has to sit inside one of those
+ * four paths — from lib/ it was simply absent, and the container died.
+ *
  * This exists so an agent, the seed and the app all reach the table the same
  * way. A non-interactive run scores garments with the aesthetic-fit skill and
  * calls this; nothing about it assumes a browser, a session or the UI.

@@ -3,8 +3,8 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
-import { upsertOutfit } from "@/lib/outfits";
-import type { OutfitInput } from "@/lib/outfits";
+import { upsertOutfit } from "@/prisma/outfits";
+import type { OutfitInput } from "@/prisma/outfits";
 
 export type SaveResult = { saved: boolean; message: string };
 
@@ -248,7 +248,7 @@ export async function saveOutfitToNewEdit(
  * This is the entry point for the agent run that scores garments with
  * .claude/skills/aesthetic-fit and assembles them: it needs no session and no
  * browser, and it is idempotent on slug so the job is safe to repeat. The
- * validation lives in lib/outfits.ts so the seed goes through the same door.
+ * validation lives in prisma/outfits.ts so the seed goes through the same door.
  */
 export async function createOutfit(input: OutfitInput) {
   const result = await upsertOutfit(prisma, { source: "AGENT", ...input });

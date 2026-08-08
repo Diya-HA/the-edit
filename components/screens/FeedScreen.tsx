@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { toggleStar } from "@/app/actions";
 import type {
   AestheticView,
   EditView,
@@ -70,6 +71,8 @@ export default function FeedScreen({
               key={a.id}
               label={a.name}
               active={a.slug === activeSlug}
+              starred={a.starred}
+              onStar={() => run(() => toggleStar(a.id))}
               onClick={() => navigate(a.slug, activeTint)}
             />
           ))}
