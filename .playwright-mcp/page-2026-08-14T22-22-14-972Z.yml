@@ -1,0 +1,920 @@
+- generic [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#MainContent"
+  - generic [ref=e8]:
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - paragraph [ref=e11]:
+          - strong [ref=e12]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e13]:
+        - paragraph [ref=e14]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e15]:
+        - paragraph [ref=e16]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e17]:
+        - paragraph [ref=e18]:
+          - strong [ref=e19]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e20]:
+        - paragraph [ref=e21]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e22]:
+        - paragraph [ref=e23]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e24]:
+        - paragraph [ref=e25]:
+          - strong [ref=e26]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e27]:
+        - paragraph [ref=e28]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e29]:
+        - paragraph [ref=e30]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e31]:
+        - paragraph [ref=e32]:
+          - strong [ref=e33]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e34]:
+        - paragraph [ref=e35]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e36]:
+        - paragraph [ref=e37]: ALL ORDERS DELIVERED DUTY PAID
+    - list [ref=e38]:
+      - listitem [ref=e39]:
+        - paragraph [ref=e40]:
+          - strong [ref=e41]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e42]:
+        - paragraph [ref=e43]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e44]:
+        - paragraph [ref=e45]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e46]:
+        - paragraph [ref=e47]:
+          - strong [ref=e48]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e49]:
+        - paragraph [ref=e50]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e51]:
+        - paragraph [ref=e52]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e53]:
+        - paragraph [ref=e54]:
+          - strong [ref=e55]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e56]:
+        - paragraph [ref=e57]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e58]:
+        - paragraph [ref=e59]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e60]:
+        - paragraph [ref=e61]:
+          - strong [ref=e62]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e63]:
+        - paragraph [ref=e64]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e65]:
+        - paragraph [ref=e66]: ALL ORDERS DELIVERED DUTY PAID
+  - banner [ref=e67]:
+    - generic [ref=e70]:
+      - navigation [ref=e71]:
+        - list [ref=e72]:
+          - listitem [ref=e73] [cursor=pointer]:
+            - link [ref=e74]:
+              - /url: /en-us#
+          - listitem [ref=e78] [cursor=pointer]:
+            - link [ref=e79]:
+              - /url: /en-us#
+          - listitem [ref=e83]:
+            - link "Journal" [ref=e84] [cursor=pointer]:
+              - /url: /en-us/blogs/news
+          - listitem [ref=e85] [cursor=pointer]:
+            - link [ref=e86]:
+              - /url: /en-us/pages/about-us
+          - listitem [ref=e90]:
+            - link "Sale" [ref=e91] [cursor=pointer]:
+              - /url: /en-us/pages/summer-sale
+      - link [ref=e93] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e94]
+      - navigation [ref=e95]:
+        - list [ref=e96]:
+          - listitem [ref=e97]:
+            - group [ref=e99]:
+              - button "Country" [ref=e100] [cursor=pointer]:
+                - generic [ref=e101]: USD | $
+              - option "Argentina (GBP|£)"
+              - option "Australia (AUD|$)"
+              - option "Austria (EUR|€)"
+              - option "Belgium (EUR|€)"
+              - option "Brazil (GBP|£)"
+              - option "Bulgaria (EUR|€)"
+              - option "Canada (CAD|$)"
+              - option "Croatia (EUR|€)"
+              - option "Czechia (CZK|Kč)"
+              - option "Denmark (DKK|kr.)"
+              - option "Estonia (EUR|€)"
+              - option "Finland (EUR|€)"
+              - option "France (EUR|€)"
+              - option "Germany (EUR|€)"
+              - option "Greece (EUR|€)"
+              - option "Guernsey (GBP|£)"
+              - option "Hong Kong SAR (HKD|$)"
+              - option "Hungary (HUF|Ft)"
+              - option "Iceland (ISK|kr)"
+              - option "Indonesia (IDR|Rp)"
+              - option "Ireland (EUR|€)"
+              - option "Isle of Man (GBP|£)"
+              - option "Italy (EUR|€)"
+              - option "Jamaica (JMD|$)"
+              - option "Japan (JPY|¥)"
+              - option "Jersey (GBP|£)"
+              - option "Latvia (EUR|€)"
+              - option "Lithuania (EUR|€)"
+              - option "Luxembourg (EUR|€)"
+              - option "Malaysia (MYR|RM)"
+              - option "Maldives (GBP|£)"
+              - option "Malta (EUR|€)"
+              - option "Mexico (GBP|£)"
+              - option "Netherlands (EUR|€)"
+              - option "New Zealand (NZD|$)"
+              - option "Norway (NOK|kr)"
+              - option "Philippines (PHP|₱)"
+              - option "Poland (PLN|zł)"
+              - option "Portugal (EUR|€)"
+              - option "Qatar (QAR|ر.ق)"
+              - option "Romania (RON|Lei)"
+              - option "Singapore (SGD|$)"
+              - option "Slovakia (EUR|€)"
+              - option "Slovenia (EUR|€)"
+              - option "South Korea (KRW|₩)"
+              - option "Spain (EUR|€)"
+              - option "Sweden (SEK|kr)"
+              - option "Switzerland (CHF|CHF)"
+              - option "Taiwan (TWD|$)"
+              - option "Thailand (THB|฿)"
+              - option "Türkiye (GBP|£)"
+              - option "United Arab Emirates (AED|د.إ)"
+              - option "United Kingdom (GBP|£)"
+              - option "United States (USD|$)" [selected]
+          - listitem [ref=e102]:
+            - group [ref=e104]:
+              - button "Search" [ref=e105] [cursor=pointer]
+          - listitem [ref=e107]:
+            - link "Log in" [ref=e108] [cursor=pointer]:
+              - /url: https://uskees.com/customer_authentication/redirect?locale=en&region_country=US
+          - listitem [ref=e110]:
+            - button "Cart" [ref=e111] [cursor=pointer]
+  - main [ref=e114]:
+    - heading [level=1] [ref=e119]:
+      - strong [ref=e120]: Products
+    - generic [ref=e122]:
+      - generic [ref=e125]:
+        - list [ref=e129]:
+          - listitem [ref=e130]:
+            - group [ref=e132]:
+              - button "Filters" [ref=e133] [cursor=pointer]
+        - list [ref=e141]:
+          - listitem [ref=e142]:
+            - button "Alphabetically, A-Z" [ref=e145] [cursor=pointer]
+      - generic [ref=e149]:
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - link [ref=e153] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-midnight-blue-zero-waste?variant=53496175722871
+              - img "Front flat shot of midnight blue, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label. Zero waste production." [ref=e155]
+            - generic [ref=e157]:
+              - heading "3001 Buttoned overshirt - discontinued midnight blue Sold out" [level=3] [ref=e158]:
+                - link "3001 Buttoned overshirt - discontinued midnight blue" [ref=e159] [cursor=pointer]:
+                  - /url: /en-us/products/3001-buttoned-overshirt-midnight-blue-zero-waste?variant=53496175722871
+                - generic [ref=e160]: Sold out
+              - generic [ref=e163]:
+                - generic [ref=e164]: $170.00
+                - generic [ref=e166]:
+                  - generic [ref=e167]: Regular price
+                  - text: $170.00
+          - generic [ref=e168]:
+            - link [ref=e170] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-discontinued-yellow?variant=55002626031991
+              - generic [ref=e171]:
+                - img "Yellow buttoned organic cotton overshirt from Uskees presented on hanger. Clear view of breast and hip pocket and corozo buttons." [ref=e172]
+                - 'img "Full-length rear view of #3001, yellow organic cotton over shirt with reinforced elbows." [ref=e173]'
+            - generic [ref=e175]:
+              - heading "3001 Buttoned overshirt - discontinued yellow Sold out" [level=3] [ref=e176]:
+                - link "3001 Buttoned overshirt - discontinued yellow" [ref=e177] [cursor=pointer]:
+                  - /url: /en-us/products/3001-buttoned-overshirt-discontinued-yellow?variant=55002626031991
+                - generic [ref=e178]: Sold out
+              - generic [ref=e181]:
+                - generic [ref=e182]: $49.00
+                - generic [ref=e184]:
+                  - generic [ref=e185]: Regular price
+                  - text: $49.00
+          - generic [ref=e186]:
+            - link [ref=e188] [cursor=pointer]:
+              - /url: /en-us/products/3001-charcoal-buttoned-cord-overshirt?variant=48853466513725
+              - generic [ref=e189]:
+                - img "3001 Cord overshirt - charcoal" [ref=e190]
+                - img "3001 Cord overshirt - charcoal" [ref=e191]
+            - generic [ref=e193]:
+              - heading "3001 Cord overshirt - charcoal 30% off Sold out" [level=3] [ref=e194]:
+                - link "3001 Cord overshirt - charcoal" [ref=e195] [cursor=pointer]:
+                  - /url: /en-us/products/3001-charcoal-buttoned-cord-overshirt?variant=48853466513725
+                - generic [ref=e196]:
+                  - generic [ref=e197]: 30% off
+                  - generic [ref=e198]: Sold out
+              - generic [ref=e200]:
+                - generic [ref=e201]: $112.00
+                - generic [ref=e204]:
+                  - generic [ref=e205]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e206]:
+                    - generic [ref=e207]: Minimum price
+                    - text: $112.00
+          - generic [ref=e208]:
+            - link [ref=e210] [cursor=pointer]:
+              - /url: /en-us/products/3001-cord-buttoned-overshirt-deep-indigo?variant=55399304757623
+              - generic [ref=e211]:
+                - img "Front flat shot of deep indigo, buttoned corduroy overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e212]
+                - img "Closer view of model wearing the 3001 Uskees button-down corduroy overshirt in deep indigo layered with various Uskees apparel." [ref=e213]
+            - generic [ref=e215]:
+              - heading "3001 Cord overshirt - deep indigo 50% off Sold out" [level=3] [ref=e216]:
+                - link "3001 Cord overshirt - deep indigo" [ref=e217] [cursor=pointer]:
+                  - /url: /en-us/products/3001-cord-buttoned-overshirt-deep-indigo?variant=55399304757623
+                - generic [ref=e218]:
+                  - generic [ref=e219]: 50% off
+                  - generic [ref=e220]: Sold out
+              - generic [ref=e222]:
+                - generic [ref=e223]: $80.00
+                - generic [ref=e226]:
+                  - generic [ref=e227]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e228]:
+                    - generic [ref=e229]: Minimum price
+                    - text: $80.00
+          - generic [ref=e230]:
+            - link [ref=e232] [cursor=pointer]:
+              - /url: /en-us/products/3001-midnight-blue-button-cord-overshirt?variant=43221986738410
+              - generic [ref=e233]:
+                - img "3001 Cord overshirt - midnight blue" [ref=e234]
+                - img "3001 Cord overshirt - midnight blue" [ref=e235]
+            - generic [ref=e237]:
+              - heading "3001 Cord overshirt - midnight blue 50% off Sold out" [level=3] [ref=e238]:
+                - link "3001 Cord overshirt - midnight blue" [ref=e239] [cursor=pointer]:
+                  - /url: /en-us/products/3001-midnight-blue-button-cord-overshirt?variant=43221986738410
+                - generic [ref=e240]:
+                  - generic [ref=e241]: 50% off
+                  - generic [ref=e242]: Sold out
+              - generic [ref=e244]:
+                - generic [ref=e245]: $80.00
+                - generic [ref=e248]:
+                  - generic [ref=e249]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e250]:
+                    - generic [ref=e251]: Minimum price
+                    - text: $80.00
+          - generic [ref=e252]:
+            - link [ref=e254] [cursor=pointer]:
+              - /url: /en-us/products/3001-petrol-blue-buttoned-cord-overshirt?variant=48853078245693
+              - generic [ref=e255]:
+                - img "Front flat shot of petrol blue, buttoned corduroy overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e256]
+                - img "Back view of petrol blue, buttoned corduroy overshirt with view of reinforced elbow area and boxy silhouette." [ref=e257]
+            - generic [ref=e259]:
+              - heading "3001 Cord overshirt - petrol blue 50% off Sold out" [level=3] [ref=e260]:
+                - link "3001 Cord overshirt - petrol blue" [ref=e261] [cursor=pointer]:
+                  - /url: /en-us/products/3001-petrol-blue-buttoned-cord-overshirt?variant=48853078245693
+                - generic [ref=e262]:
+                  - generic [ref=e263]: 50% off
+                  - generic [ref=e264]: Sold out
+              - generic [ref=e266]:
+                - generic [ref=e267]: $80.00
+                - generic [ref=e270]:
+                  - generic [ref=e271]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e272]:
+                    - generic [ref=e273]: Minimum price
+                    - text: $80.00
+          - generic [ref=e274]:
+            - link [ref=e276] [cursor=pointer]:
+              - /url: /en-us/products/3001-rust-buttoned-cord-overshirt?variant=48853080867133
+              - generic [ref=e277]:
+                - img "Front flat shot of rust-red, buttoned corduroy overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e278]
+                - img "Back view of rust-red, buttoned corduroy overshirt with view of reinforced elbow area and boxy silhouette." [ref=e279]
+            - generic [ref=e281]:
+              - heading "3001 Cord overshirt - rust 70% off Sold out" [level=3] [ref=e282]:
+                - link "3001 Cord overshirt - rust" [ref=e283] [cursor=pointer]:
+                  - /url: /en-us/products/3001-rust-buttoned-cord-overshirt?variant=48853080867133
+                - generic [ref=e284]:
+                  - generic [ref=e285]: 70% off
+                  - generic [ref=e286]: Sold out
+              - generic [ref=e288]:
+                - generic [ref=e289]: $57.00
+                - generic [ref=e292]:
+                  - generic [ref=e293]: Regular price
+                  - text: $190.00
+                  - insertion [ref=e294]:
+                    - generic [ref=e295]: Minimum price
+                    - text: $57.00
+          - generic [ref=e296]:
+            - link [ref=e298] [cursor=pointer]:
+              - /url: /en-us/products/3001-seaweed-buttoned-cord-overshirt?variant=48853080637757
+              - generic [ref=e299]:
+                - img "Front flat shot of green-brown (seaweed), buttoned corduroy overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e300]
+                - img "Back view of green-brown (seaweed), buttoned corduroy overshirt with view of reinforced elbow area and boxy silhouette." [ref=e301]
+            - generic [ref=e303]:
+              - heading "3001 Cord overshirt - seaweed 30% off Sold out" [level=3] [ref=e304]:
+                - link "3001 Cord overshirt - seaweed" [ref=e305] [cursor=pointer]:
+                  - /url: /en-us/products/3001-seaweed-buttoned-cord-overshirt?variant=48853080637757
+                - generic [ref=e306]:
+                  - generic [ref=e307]: 30% off
+                  - generic [ref=e308]: Sold out
+              - generic [ref=e310]:
+                - generic [ref=e311]: $112.00
+                - generic [ref=e314]:
+                  - generic [ref=e315]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e316]:
+                    - generic [ref=e317]: Minimum price
+                    - text: $112.00
+          - generic [ref=e318]:
+            - link [ref=e320] [cursor=pointer]:
+              - /url: /en-us/products/3001-cord-buttoned-overshirt-woodland-green?variant=55399369310583
+              - generic [ref=e321]:
+                - img "Front flat shot of woodland green, buttoned corduroy overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e322]
+                - img "Reverse of woodland green buttoned organic cotton corduroy overshirt from Uskees. Showing reinforced elbows and boxy silhouette." [ref=e323]
+            - generic [ref=e325]:
+              - heading "3001 Cord overshirt - woodland green 50% off Sold out" [level=3] [ref=e326]:
+                - link "3001 Cord overshirt - woodland green" [ref=e327] [cursor=pointer]:
+                  - /url: /en-us/products/3001-cord-buttoned-overshirt-woodland-green?variant=55399369310583
+                - generic [ref=e328]:
+                  - generic [ref=e329]: 50% off
+                  - generic [ref=e330]: Sold out
+              - generic [ref=e332]:
+                - generic [ref=e333]: $80.00
+                - generic [ref=e336]:
+                  - generic [ref=e337]: Regular price
+                  - text: $160.00
+                  - insertion [ref=e338]:
+                    - generic [ref=e339]: Minimum price
+                    - text: $80.00
+          - generic [ref=e340]:
+            - link [ref=e342] [cursor=pointer]:
+              - /url: /en-us/products/3001-blueberry-drill-button-overshirt?variant=45201334501693
+              - generic [ref=e343]:
+                - img "Front flat shot of dark blue (blueberry), buttoned drill overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e344]
+                - img "Reverse of dark blue (blueberry) buttoned organic cotton drill overshirt from Uskees. Showing reinforced elbows and boxy silhouette." [ref=e345]
+            - generic [ref=e347]:
+              - heading "3001 Drill overshirt - blueberry 50% off Sold out" [level=3] [ref=e348]:
+                - link "3001 Drill overshirt - blueberry" [ref=e349] [cursor=pointer]:
+                  - /url: /en-us/products/3001-blueberry-drill-button-overshirt?variant=45201334501693
+                - generic [ref=e350]:
+                  - generic [ref=e351]: 50% off
+                  - generic [ref=e352]: Sold out
+              - generic [ref=e354]:
+                - generic [ref=e355]: $92.50
+                - generic [ref=e358]:
+                  - generic [ref=e359]: Regular price
+                  - text: $185.00
+                  - insertion [ref=e360]:
+                    - generic [ref=e361]: Minimum price
+                    - text: $92.50
+          - generic [ref=e362]:
+            - link [ref=e364] [cursor=pointer]:
+              - /url: /en-us/products/3001-charcoal-drill-buttoned-overshirt?variant=48853142143293
+              - generic [ref=e365]:
+                - img "Front flat shot of charcoal-grey, buttoned drill overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e366]
+                - img "Reverse of charcoal-grey buttoned organic cotton drill overshirt from Uskees. Showing reinforced elbows and boxy silhouette." [ref=e367]
+            - generic [ref=e369]:
+              - heading "3001 drill overshirt - charcoal 50% off Sold out" [level=3] [ref=e370]:
+                - link "3001 drill overshirt - charcoal" [ref=e371] [cursor=pointer]:
+                  - /url: /en-us/products/3001-charcoal-drill-buttoned-overshirt?variant=48853142143293
+                - generic [ref=e372]:
+                  - generic [ref=e373]: 50% off
+                  - generic [ref=e374]: Sold out
+              - generic [ref=e376]:
+                - generic [ref=e377]: $92.50
+                - generic [ref=e380]:
+                  - generic [ref=e381]: Regular price
+                  - text: $185.00
+                  - insertion [ref=e382]:
+                    - generic [ref=e383]: Minimum price
+                    - text: $92.50
+          - generic [ref=e384]:
+            - link [ref=e386] [cursor=pointer]:
+              - /url: /en-us/products/3001-drill-buttoned-overshirt-chestnut?variant=55399546454391
+              - generic [ref=e387]:
+                - img "Front flat shot of chestnut-brown, buttoned drill overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e388]
+                - img "Reverse of chestnut-brown buttoned organic cotton drill overshirt from Uskees. Showing reinforced elbows and boxy silhouette." [ref=e389]
+            - generic [ref=e391]:
+              - heading "3001 drill overshirt - chestnut 30% off Sold out" [level=3] [ref=e392]:
+                - link "3001 drill overshirt - chestnut" [ref=e393] [cursor=pointer]:
+                  - /url: /en-us/products/3001-drill-buttoned-overshirt-chestnut?variant=55399546454391
+                - generic [ref=e394]:
+                  - generic [ref=e395]: 30% off
+                  - generic [ref=e396]: Sold out
+              - generic [ref=e398]:
+                - generic [ref=e399]: $129.50
+                - generic [ref=e402]:
+                  - generic [ref=e403]: Regular price
+                  - text: $185.00
+                  - insertion [ref=e404]:
+                    - generic [ref=e405]: Minimum price
+                    - text: $129.50
+          - generic [ref=e406]:
+            - link [ref=e408] [cursor=pointer]:
+              - /url: /en-us/products/3001-drill-buttoned-overshirt-vine-green?variant=55399468892535
+              - generic [ref=e409]:
+                - img "Front flat shot of vine green, buttoned drill overshirt. Clear view of corozo buttons, 3 pockets and Uskees branding label." [ref=e410]
+                - img "Reverse of vine green buttoned organic cotton drill overshirt from Uskees. Showing reinforced elbows and boxy silhouette." [ref=e411]
+            - generic [ref=e413]:
+              - heading "3001 drill overshirt - vine green 30% off Sold out" [level=3] [ref=e414]:
+                - link "3001 drill overshirt - vine green" [ref=e415] [cursor=pointer]:
+                  - /url: /en-us/products/3001-drill-buttoned-overshirt-vine-green?variant=55399468892535
+                - generic [ref=e416]:
+                  - generic [ref=e417]: 30% off
+                  - generic [ref=e418]: Sold out
+              - generic [ref=e420]:
+                - generic [ref=e421]: $108.50
+                - generic [ref=e424]:
+                  - generic [ref=e425]: Regular price
+                  - text: $155.00
+                  - insertion [ref=e426]:
+                    - generic [ref=e427]: Minimum price
+                    - text: $108.50
+          - generic [ref=e428]:
+            - link [ref=e430] [cursor=pointer]:
+              - /url: /en-us/products/3001-linen-overshirt-loam?variant=56868408525175
+              - generic [ref=e431]:
+                - img "Front flat shot of an Uskees brown linen overshirt for men showing the 3 front pockets." [ref=e432]
+                - img "3001 Linen blend overshirt - loam" [ref=e433]
+            - generic [ref=e434]:
+              - generic [ref=e435]:
+                - heading "3001 Linen blend overshirt - loam 20% off New" [level=3] [ref=e436]:
+                  - link "3001 Linen blend overshirt - loam" [ref=e437] [cursor=pointer]:
+                    - /url: /en-us/products/3001-linen-overshirt-loam?variant=56868408525175
+                  - generic [ref=e438]:
+                    - generic [ref=e439]: 20% off
+                    - generic [ref=e440]: New
+                - generic [ref=e442]:
+                  - generic [ref=e443]: $152.00
+                  - generic [ref=e446]:
+                    - generic [ref=e447]: Regular price
+                    - text: $190.00
+                    - insertion [ref=e448]:
+                      - generic [ref=e449]: Minimum price
+                      - text: $152.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e450]:
+            - link [ref=e452] [cursor=pointer]:
+              - /url: /en-us/products/3001-linen-overshirt-stone?variant=56868475437431
+              - generic [ref=e453]:
+                - img "Front flat view of an Uskees cream shirt jacket for men showing the front pockets and Corozo buttons." [ref=e454]
+                - img "3001 Linen blend overshirt - marble" [ref=e455]
+            - generic [ref=e456]:
+              - generic [ref=e457]:
+                - heading "3001 Linen blend overshirt - marble 20% off New" [level=3] [ref=e458]:
+                  - link "3001 Linen blend overshirt - marble" [ref=e459] [cursor=pointer]:
+                    - /url: /en-us/products/3001-linen-overshirt-stone?variant=56868475437431
+                  - generic [ref=e460]:
+                    - generic [ref=e461]: 20% off
+                    - generic [ref=e462]: New
+                - generic [ref=e464]:
+                  - generic [ref=e465]: $152.00
+                  - generic [ref=e468]:
+                    - generic [ref=e469]: Regular price
+                    - text: $190.00
+                    - insertion [ref=e470]:
+                      - generic [ref=e471]: Minimum price
+                      - text: $152.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e472]:
+            - link [ref=e474] [cursor=pointer]:
+              - /url: /en-us/products/3001-linen-overshirt-woodland-green?variant=56868541432183
+              - generic [ref=e475]:
+                - img "Front flat view of an Uskees green linen overshirt for men showing the 3 front pockets and Corozo buttons." [ref=e476]
+                - img "3001 Linen blend overshirt - woodland green" [ref=e477]
+            - generic [ref=e478]:
+              - generic [ref=e479]:
+                - heading "3001 Linen blend overshirt - woodland green 20% off New" [level=3] [ref=e480]:
+                  - link "3001 Linen blend overshirt - woodland green" [ref=e481] [cursor=pointer]:
+                    - /url: /en-us/products/3001-linen-overshirt-woodland-green?variant=56868541432183
+                  - generic [ref=e482]:
+                    - generic [ref=e483]: 20% off
+                    - generic [ref=e484]: New
+                - generic [ref=e486]:
+                  - generic [ref=e487]: $152.00
+                  - generic [ref=e490]:
+                    - generic [ref=e491]: Regular price
+                    - text: $190.00
+                    - insertion [ref=e492]:
+                      - generic [ref=e493]: Minimum price
+                      - text: $152.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e494]:
+            - link [ref=e496] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-aqua?variant=55395774431607
+              - generic [ref=e497]:
+                - img "Front flat shot of aqua-blue, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e498]
+                - img "Back view of aqua-blue, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e499]
+            - generic [ref=e500]:
+              - generic [ref=e501]:
+                - heading "3001 Overshirt - aqua 70% off" [level=3] [ref=e502]:
+                  - link "3001 Overshirt - aqua" [ref=e503] [cursor=pointer]:
+                    - /url: /en-us/products/3001-buttoned-overshirt-aqua?variant=55395774431607
+                  - generic [ref=e504]: 70% off
+                - generic [ref=e507]:
+                  - generic [ref=e508]: $51.00
+                  - generic [ref=e511]:
+                    - generic [ref=e512]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e513]:
+                      - generic [ref=e514]: Minimum price
+                      - text: $51.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e515]:
+            - link [ref=e517] [cursor=pointer]:
+              - /url: /en-us/products/3001-army-green-button-overshirt?variant=31368831795340
+              - generic [ref=e518]:
+                - img "Front flat shot of an Uskees army green shirt jacket for men with brown Corozo buttons on a light gray background" [ref=e519]
+                - img "Back view of a green Uskees overshirt on a light gray background" [ref=e520]
+            - generic [ref=e521]:
+              - generic [ref=e522]:
+                - heading "3001 overshirt - army green 30% off" [level=3] [ref=e523]:
+                  - link "3001 overshirt - army green" [ref=e524] [cursor=pointer]:
+                    - /url: /en-us/products/3001-army-green-button-overshirt?variant=31368831795340
+                  - generic [ref=e525]: 30% off
+                - generic [ref=e528]:
+                  - generic [ref=e529]: $119.00
+                  - generic [ref=e532]:
+                    - generic [ref=e533]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e534]:
+                      - generic [ref=e535]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e536]:
+            - link [ref=e538] [cursor=pointer]:
+              - /url: /en-us/products/3001-berry-red-buttoned-overshirt?variant=48938225762621
+              - generic [ref=e539]:
+                - img "Front flat shot of berry red, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and simple, boxy shape." [ref=e540]
+                - img "Back view of berry red, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e541]
+            - generic [ref=e542]:
+              - generic [ref=e543]:
+                - heading [level=3] [ref=e544]:
+                  - link "3001 Overshirt - berry red" [ref=e545] [cursor=pointer]:
+                    - /url: /en-us/products/3001-berry-red-buttoned-overshirt?variant=48938225762621
+                - generic [ref=e547]:
+                  - generic [ref=e548]: $170.00
+                  - generic [ref=e550]:
+                    - generic [ref=e551]: Regular price
+                    - text: $170.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e552]:
+            - link [ref=e554] [cursor=pointer]:
+              - /url: /en-us/products/3001-bright-blue-button-overshirt?variant=47735386308925
+              - generic [ref=e555]:
+                - img "Front flat shot of bright blue, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e556]
+                - img "Back view of bright blue, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e557]
+            - generic [ref=e559]:
+              - heading "3001 Overshirt - bright blue 70% off Sold out" [level=3] [ref=e560]:
+                - link "3001 Overshirt - bright blue" [ref=e561] [cursor=pointer]:
+                  - /url: /en-us/products/3001-bright-blue-button-overshirt?variant=47735386308925
+                - generic [ref=e562]:
+                  - generic [ref=e563]: 70% off
+                  - generic [ref=e564]: Sold out
+              - generic [ref=e566]:
+                - generic [ref=e567]: $51.00
+                - generic [ref=e570]:
+                  - generic [ref=e571]: Regular price
+                  - text: $170.00
+                  - insertion [ref=e572]:
+                    - generic [ref=e573]: Minimum price
+                    - text: $51.00
+          - generic [ref=e574]:
+            - link [ref=e576] [cursor=pointer]:
+              - /url: /en-us/products/3001-brown-button-overshirt?variant=31827303956620
+              - generic [ref=e577]:
+                - img "Front flat shot of brown, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e578]
+                - img "Back view of brown, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e579]
+            - generic [ref=e580]:
+              - generic [ref=e581]:
+                - heading "3001 Overshirt - brown 30% off" [level=3] [ref=e582]:
+                  - link "3001 Overshirt - brown" [ref=e583] [cursor=pointer]:
+                    - /url: /en-us/products/3001-brown-button-overshirt?variant=31827303956620
+                  - generic [ref=e584]: 30% off
+                - generic [ref=e587]:
+                  - generic [ref=e588]: $119.00
+                  - generic [ref=e591]:
+                    - generic [ref=e592]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e593]:
+                      - generic [ref=e594]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e595]:
+            - link [ref=e597] [cursor=pointer]:
+              - /url: /en-us/products/3001-overshirt-burst-grape?variant=56375629349239
+              - generic [ref=e598]:
+                - img "Front flat shot of purple, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and simple, boxy shape." [ref=e599]
+                - img "Back view of purple, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e600]
+            - generic [ref=e601]:
+              - generic [ref=e602]:
+                - heading "3001 Overshirt - burst grape 30% off" [level=3] [ref=e603]:
+                  - link "3001 Overshirt - burst grape" [ref=e604] [cursor=pointer]:
+                    - /url: /en-us/products/3001-overshirt-burst-grape?variant=56375629349239
+                  - generic [ref=e605]: 30% off
+                - generic [ref=e608]:
+                  - generic [ref=e609]: $119.00
+                  - generic [ref=e612]:
+                    - generic [ref=e613]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e614]:
+                      - generic [ref=e615]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e616]:
+            - link [ref=e618] [cursor=pointer]:
+              - /url: /en-us/products/3001-charcoal-button-overshirt?variant=44694678339901
+              - generic [ref=e619]:
+                - img "Front flat shot of charcoal-grey, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e620]
+                - img "Back view of charcoal-grey, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e621]
+            - generic [ref=e622]:
+              - generic [ref=e623]:
+                - heading [level=3] [ref=e624]:
+                  - link "3001 Overshirt - charcoal" [ref=e625] [cursor=pointer]:
+                    - /url: /en-us/products/3001-charcoal-button-overshirt?variant=44694678339901
+                - generic [ref=e627]:
+                  - generic [ref=e628]: $170.00
+                  - generic [ref=e630]:
+                    - generic [ref=e631]: Regular price
+                    - text: $170.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e632]:
+            - link [ref=e634] [cursor=pointer]:
+              - /url: /en-us/products/3001-clay-button-overshirt?variant=42949629575402
+              - generic [ref=e635]:
+                - img "Front flat view of Uskees shirt jacket for men in clay red colour." [ref=e636]
+                - img "Clay Red Uskees shirt for men (back view) on a white background" [ref=e637]
+            - generic [ref=e638]:
+              - generic [ref=e639]:
+                - heading "3001 overshirt - clay 30% off" [level=3] [ref=e640]:
+                  - link "3001 overshirt - clay" [ref=e641] [cursor=pointer]:
+                    - /url: /en-us/products/3001-clay-button-overshirt?variant=42949629575402
+                  - generic [ref=e642]: 30% off
+                - generic [ref=e645]:
+                  - generic [ref=e646]: $119.00
+                  - generic [ref=e649]:
+                    - generic [ref=e650]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e651]:
+                      - generic [ref=e652]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e653]:
+            - link [ref=e655] [cursor=pointer]:
+              - /url: /en-us/products/3001-coriander-button-overshirt?variant=45131146658109
+              - generic [ref=e656]:
+                - img "Front flat shot of coriander-green, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e657]
+                - img "Back view of coriander-green, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e658]
+            - generic [ref=e659]:
+              - generic [ref=e660]:
+                - heading [level=3] [ref=e661]:
+                  - link "3001 Overshirt - coriander" [ref=e662] [cursor=pointer]:
+                    - /url: /en-us/products/3001-coriander-button-overshirt?variant=45131146658109
+                - generic [ref=e664]:
+                  - generic [ref=e665]: $170.00
+                  - generic [ref=e667]:
+                    - generic [ref=e668]: Regular price
+                    - text: $170.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e669]:
+            - link [ref=e671] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-dark-taupe?variant=55395978019191
+              - generic [ref=e672]:
+                - img "Front flat shot of dark taupe, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e673]
+                - img "Male model wearing an Uskees brown shacket, loam brown sweater, and beanie with sunglasses." [ref=e674]
+            - generic [ref=e675]:
+              - generic [ref=e676]:
+                - heading "3001 Overshirt - dark taupe 30% off" [level=3] [ref=e677]:
+                  - link "3001 Overshirt - dark taupe" [ref=e678] [cursor=pointer]:
+                    - /url: /en-us/products/3001-buttoned-overshirt-dark-taupe?variant=55395978019191
+                  - generic [ref=e679]: 30% off
+                - generic [ref=e682]:
+                  - generic [ref=e683]: $119.00
+                  - generic [ref=e686]:
+                    - generic [ref=e687]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e688]:
+                      - generic [ref=e689]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e690]:
+            - link [ref=e692] [cursor=pointer]:
+              - /url: /en-us/products/3001-deep-indigo-buttoned-overshirt?variant=48938097705277
+              - generic [ref=e693]:
+                - img "Front flat shot of deep indigo, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and simple, boxy shape." [ref=e694]
+                - img "Male model wearing a blue overshirt, gray cardigan, light blue shirt, and brown pants with a cream cap featuring 'USK' on a plain background." [ref=e695]
+            - generic [ref=e696]:
+              - generic [ref=e697]:
+                - heading [level=3] [ref=e698]:
+                  - link "3001 Overshirt - deep indigo" [ref=e699] [cursor=pointer]:
+                    - /url: /en-us/products/3001-deep-indigo-buttoned-overshirt?variant=48938097705277
+                - generic [ref=e701]:
+                  - generic [ref=e702]: $170.00
+                  - generic [ref=e704]:
+                    - generic [ref=e705]: Regular price
+                    - text: $170.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e706]:
+            - link [ref=e708] [cursor=pointer]:
+              - /url: /en-us/products/3001-overshirt-dijon?variant=56375758324087
+              - generic [ref=e709]:
+                - img "Front flat shot of mustard-yellow, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and simple, boxy shape." [ref=e710]
+                - img "Back view of mustard-yellow, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e711]
+            - generic [ref=e712]:
+              - generic [ref=e713]:
+                - heading "3001 Overshirt - dijon 30% off" [level=3] [ref=e714]:
+                  - link "3001 Overshirt - dijon" [ref=e715] [cursor=pointer]:
+                    - /url: /en-us/products/3001-overshirt-dijon?variant=56375758324087
+                  - generic [ref=e716]: 30% off
+                - generic [ref=e719]:
+                  - generic [ref=e720]: $119.00
+                  - generic [ref=e723]:
+                    - generic [ref=e724]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e725]:
+                      - generic [ref=e726]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+        - navigation "Pagination" [ref=e728]:
+          - list [ref=e729]:
+            - listitem [ref=e730]:
+              - generic "Page 1" [ref=e731]: "1"
+            - listitem [ref=e732]:
+              - link "2" [ref=e733] [cursor=pointer]:
+                - /url: /en-us/collections/all?page=2
+            - listitem [ref=e734]:
+              - link "3" [ref=e735] [cursor=pointer]:
+                - /url: /en-us/collections/all?page=3
+            - listitem [ref=e736]:
+              - generic [ref=e737]: …
+            - listitem [ref=e738]:
+              - link "11" [ref=e739] [cursor=pointer]:
+                - /url: /en-us/collections/all?page=11
+            - listitem [ref=e740]:
+              - link "Next page" [ref=e741] [cursor=pointer]:
+                - /url: /en-us/collections/all?page=2
+  - contentinfo [ref=e745]:
+    - generic [ref=e749]:
+      - generic [ref=e752]:
+        - heading "Newsletter" [level=3] [ref=e753]
+        - paragraph [ref=e755]: Sign up for the latest news, offers and releases.
+        - generic [ref=e757]:
+          - generic [ref=e758] [cursor=pointer]: Email
+          - generic [ref=e759]:
+            - textbox "Email" [ref=e760]:
+              - /placeholder: Email address
+            - button "Subscribe" [ref=e761] [cursor=pointer]
+      - generic [ref=e764]:
+        - heading "About" [level=4] [ref=e765]
+        - list [ref=e766]:
+          - listitem [ref=e767]:
+            - link "About" [ref=e768] [cursor=pointer]:
+              - /url: /en-us/pages/about-us
+          - listitem [ref=e769]:
+            - link "Core Fabrics" [ref=e770] [cursor=pointer]:
+              - /url: /en-us/pages/materials
+          - listitem [ref=e771]:
+            - link "Repair Service" [ref=e772] [cursor=pointer]:
+              - /url: /en-us/pages/repairs
+          - listitem [ref=e773]:
+            - link "Re-up Scheme" [ref=e774] [cursor=pointer]:
+              - /url: /en-us/pages/buy-back-scheme
+          - listitem [ref=e775]:
+            - link "Become a Member" [ref=e776] [cursor=pointer]:
+              - /url: /en-us/pages/members
+          - listitem [ref=e777]:
+            - link "Stockists" [ref=e778] [cursor=pointer]:
+              - /url: /en-us/pages/stockists
+      - generic [ref=e781]:
+        - heading "Help" [level=4] [ref=e782]
+        - list [ref=e783]:
+          - listitem [ref=e784]:
+            - link "Returns Policy" [ref=e785] [cursor=pointer]:
+              - /url: /en-us/pages/refund-policy
+          - listitem [ref=e786]:
+            - link "Shipping Policy" [ref=e787] [cursor=pointer]:
+              - /url: /en-us/pages/shipping-policy
+          - listitem [ref=e788]:
+            - link "FAQs" [ref=e789] [cursor=pointer]:
+              - /url: /en-us/pages/faqs
+          - listitem [ref=e790]:
+            - link "Wholesale + Uniforms" [ref=e791] [cursor=pointer]:
+              - /url: /en-us/pages/wholesale-enquiry
+          - listitem [ref=e792]:
+            - link "Gift cards" [ref=e793] [cursor=pointer]:
+              - /url: /en-us/products/giftcard
+          - listitem [ref=e794]:
+            - link "eGift Cards" [ref=e795] [cursor=pointer]:
+              - /url: /en-us/products/gift-card
+          - listitem [ref=e796]:
+            - link "Cookie Policy" [ref=e797] [cursor=pointer]:
+              - /url: /en-us/pages/cookie-policy
+          - listitem [ref=e798]:
+            - link "Cookie Settings" [ref=e799] [cursor=pointer]:
+              - /url: /en-us#reopenBanner
+      - generic [ref=e802]:
+        - heading "Info" [level=4] [ref=e803]
+        - list [ref=e804]:
+          - listitem [ref=e805]:
+            - link "Reviews" [ref=e806] [cursor=pointer]:
+              - /url: /en-us/pages/reviews
+          - listitem [ref=e807]:
+            - link "Klarna" [ref=e808] [cursor=pointer]:
+              - /url: /en-us/pages/klarna-pay-later
+          - listitem [ref=e809]:
+            - link "Privacy Policy" [ref=e810] [cursor=pointer]:
+              - /url: /en-us/pages/privacy-policy
+          - listitem [ref=e811]:
+            - link "Terms of Service" [ref=e812] [cursor=pointer]:
+              - /url: /en-us/pages/terms-of-service
+          - listitem [ref=e813]:
+            - link "Swap Protect" [ref=e814] [cursor=pointer]:
+              - /url: /en-us/pages/swap-protect
+          - listitem [ref=e815]:
+            - link "Company Information" [ref=e816] [cursor=pointer]:
+              - /url: /en-us/pages/company-information
+          - listitem [ref=e817]:
+            - link "Contact" [ref=e818] [cursor=pointer]:
+              - /url: /en-us/pages/contact-us
+    - generic [ref=e822]:
+      - link [ref=e825] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e826]
+      - list [ref=e829]:
+        - listitem [ref=e830]:
+          - link "Instagram" [ref=e831] [cursor=pointer]:
+            - /url: https://www.instagram.com/uskees.co/
+    - generic [ref=e837]:
+      - link [ref=e840] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e841]
+      - paragraph [ref=e844]: Copyright © 2025 Uskees. All rights reserved.
+      - generic [ref=e846]:
+        - generic [ref=e847]: Payment methods
+        - list [ref=e848]:
+          - listitem [ref=e849]:
+            - img "American Express" [ref=e850]
+          - listitem [ref=e855]:
+            - img "Apple Pay" [ref=e856]
+          - listitem [ref=e867]:
+            - img "Bancontact" [ref=e868]
+          - listitem [ref=e875]:
+            - img "Diners Club" [ref=e876]
+          - listitem [ref=e880]:
+            - img "Discover" [ref=e881]
+          - listitem [ref=e890]:
+            - img "Google Pay" [ref=e891]
+          - listitem [ref=e899]:
+            - img "iDEAL Wero" [ref=e900]
+          - listitem [ref=e915]:
+            - img "Maestro" [ref=e916]
+          - listitem [ref=e922]:
+            - img "Mastercard" [ref=e923]
+          - listitem [ref=e930]:
+            - img "PayPal" [ref=e931]
+          - listitem [ref=e937]:
+            - img "Shop Pay" [ref=e938]
+          - listitem [ref=e942]:
+            - img "Union Pay" [ref=e943]
+          - listitem [ref=e949]:
+            - img "Visa" [ref=e950]
+      - button [ref=e959] [cursor=pointer]:
+        - generic [ref=e964]:
+          - text: Follow on
+          - img "Shop" [ref=e965]
+  - region "Cookie consent" [active]:
+    - dialog "We respect your privacy" [ref=e967]:
+      - generic [ref=e968]:
+        - heading "We respect your privacy" [level=2] [ref=e970]
+        - generic [ref=e974]:
+          - text: This website uses cookies to ensure you get the best experience.
+          - link "Learn more" [ref=e976] [cursor=pointer]:
+            - /url: /policies/privacy-policy
+        - generic [ref=e977]:
+          - button "Accept" [ref=e979] [cursor=pointer]
+          - button "Preferences" [ref=e981] [cursor=pointer]
+  - iframe [ref=e982]:
+    - button "" [ref=f5e3] [cursor=pointer]: 

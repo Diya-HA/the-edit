@@ -1,0 +1,863 @@
+- generic [ref=e1]:
+  - link "Skip to content" [ref=e2] [cursor=pointer]:
+    - /url: "#MainContent"
+  - generic [ref=e8]:
+    - list [ref=e9]:
+      - listitem [ref=e10]:
+        - paragraph [ref=e11]:
+          - strong [ref=e12]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e13]:
+        - paragraph [ref=e14]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e15]:
+        - paragraph [ref=e16]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e17]:
+        - paragraph [ref=e18]:
+          - strong [ref=e19]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e20]:
+        - paragraph [ref=e21]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e22]:
+        - paragraph [ref=e23]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e24]:
+        - paragraph [ref=e25]:
+          - strong [ref=e26]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e27]:
+        - paragraph [ref=e28]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e29]:
+        - paragraph [ref=e30]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e31]:
+        - paragraph [ref=e32]:
+          - strong [ref=e33]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e34]:
+        - paragraph [ref=e35]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e36]:
+        - paragraph [ref=e37]: ALL ORDERS DELIVERED DUTY PAID
+    - list [ref=e38]:
+      - listitem [ref=e39]:
+        - paragraph [ref=e40]:
+          - strong [ref=e41]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e42]:
+        - paragraph [ref=e43]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e44]:
+        - paragraph [ref=e45]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e46]:
+        - paragraph [ref=e47]:
+          - strong [ref=e48]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e49]:
+        - paragraph [ref=e50]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e51]:
+        - paragraph [ref=e52]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e53]:
+        - paragraph [ref=e54]:
+          - strong [ref=e55]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e56]:
+        - paragraph [ref=e57]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e58]:
+        - paragraph [ref=e59]: ALL ORDERS DELIVERED DUTY PAID
+      - listitem [ref=e60]:
+        - paragraph [ref=e61]:
+          - strong [ref=e62]: FREE SHIPPING ON ORDERS OVER $200
+      - listitem [ref=e63]:
+        - paragraph [ref=e64]: DUTIES + TAXES INCLUDED IN PRICE
+      - listitem [ref=e65]:
+        - paragraph [ref=e66]: ALL ORDERS DELIVERED DUTY PAID
+  - banner [ref=e67]:
+    - generic [ref=e70]:
+      - navigation [ref=e71]:
+        - list [ref=e72]:
+          - listitem [ref=e73] [cursor=pointer]:
+            - link [ref=e74]:
+              - /url: /en-us#
+          - listitem [ref=e78] [cursor=pointer]:
+            - link [ref=e79]:
+              - /url: /en-us#
+          - listitem [ref=e83]:
+            - link "Journal" [ref=e84] [cursor=pointer]:
+              - /url: /en-us/blogs/news
+          - listitem [ref=e85] [cursor=pointer]:
+            - link [ref=e86]:
+              - /url: /en-us/pages/about-us
+          - listitem [ref=e90]:
+            - link "Sale" [ref=e91] [cursor=pointer]:
+              - /url: /en-us/pages/summer-sale
+      - link [ref=e93] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e94]
+      - navigation [ref=e95]:
+        - list [ref=e96]:
+          - listitem [ref=e97]:
+            - group [ref=e99]:
+              - button "Country" [ref=e100] [cursor=pointer]:
+                - generic [ref=e101]: USD | $
+              - option "Argentina (GBP|£)"
+              - option "Australia (AUD|$)"
+              - option "Austria (EUR|€)"
+              - option "Belgium (EUR|€)"
+              - option "Brazil (GBP|£)"
+              - option "Bulgaria (EUR|€)"
+              - option "Canada (CAD|$)"
+              - option "Croatia (EUR|€)"
+              - option "Czechia (CZK|Kč)"
+              - option "Denmark (DKK|kr.)"
+              - option "Estonia (EUR|€)"
+              - option "Finland (EUR|€)"
+              - option "France (EUR|€)"
+              - option "Germany (EUR|€)"
+              - option "Greece (EUR|€)"
+              - option "Guernsey (GBP|£)"
+              - option "Hong Kong SAR (HKD|$)"
+              - option "Hungary (HUF|Ft)"
+              - option "Iceland (ISK|kr)"
+              - option "Indonesia (IDR|Rp)"
+              - option "Ireland (EUR|€)"
+              - option "Isle of Man (GBP|£)"
+              - option "Italy (EUR|€)"
+              - option "Jamaica (JMD|$)"
+              - option "Japan (JPY|¥)"
+              - option "Jersey (GBP|£)"
+              - option "Latvia (EUR|€)"
+              - option "Lithuania (EUR|€)"
+              - option "Luxembourg (EUR|€)"
+              - option "Malaysia (MYR|RM)"
+              - option "Maldives (GBP|£)"
+              - option "Malta (EUR|€)"
+              - option "Mexico (GBP|£)"
+              - option "Netherlands (EUR|€)"
+              - option "New Zealand (NZD|$)"
+              - option "Norway (NOK|kr)"
+              - option "Philippines (PHP|₱)"
+              - option "Poland (PLN|zł)"
+              - option "Portugal (EUR|€)"
+              - option "Qatar (QAR|ر.ق)"
+              - option "Romania (RON|Lei)"
+              - option "Singapore (SGD|$)"
+              - option "Slovakia (EUR|€)"
+              - option "Slovenia (EUR|€)"
+              - option "South Korea (KRW|₩)"
+              - option "Spain (EUR|€)"
+              - option "Sweden (SEK|kr)"
+              - option "Switzerland (CHF|CHF)"
+              - option "Taiwan (TWD|$)"
+              - option "Thailand (THB|฿)"
+              - option "Türkiye (GBP|£)"
+              - option "United Arab Emirates (AED|د.إ)"
+              - option "United Kingdom (GBP|£)"
+              - option "United States (USD|$)" [selected]
+          - listitem [ref=e102]:
+            - group [ref=e104]:
+              - button "Search" [ref=e105] [cursor=pointer]
+          - listitem [ref=e107]:
+            - link "Log in" [ref=e108] [cursor=pointer]:
+              - /url: https://uskees.com/customer_authentication/redirect?locale=en&region_country=US
+          - listitem [ref=e110]:
+            - button "Cart" [ref=e111] [cursor=pointer]
+  - main [ref=e114]:
+    - heading [level=1] [ref=e119]:
+      - strong [ref=e120]: All clothing
+    - generic [ref=e122]:
+      - generic [ref=e125]:
+        - list [ref=e129]:
+          - listitem [ref=e130]:
+            - group [ref=e132]:
+              - button "Filters" [ref=e133] [cursor=pointer]
+        - list [ref=e141]:
+          - listitem [ref=e142]:
+            - button "Date, new to old" [ref=e145] [cursor=pointer]
+      - generic [ref=e149]:
+        - generic [ref=e150]:
+          - generic [ref=e151]:
+            - link [ref=e153] [cursor=pointer]:
+              - /url: /en-us/products/7014-workout-vest-white?variant=56479929827703
+              - generic [ref=e154]:
+                - img "Front view of Uskees white premium cotton workout vest showing slim-fit silhouette." [ref=e155]
+                - img "Back view of Uskees white premium cotton workout vest showing slim-fit, sleeveless design." [ref=e156]
+            - generic [ref=e157]:
+              - generic [ref=e158]:
+                - heading "7014 Workout Vest - white 3 for 2" [level=3] [ref=e159]:
+                  - link "7014 Workout Vest - white" [ref=e160] [cursor=pointer]:
+                    - /url: /en-us/products/7014-workout-vest-white?variant=56479929827703
+                  - generic [ref=e161]: 3 for 2
+                - generic [ref=e164]:
+                  - generic [ref=e165]: $50.00
+                  - generic [ref=e167]:
+                    - generic [ref=e168]: Regular price
+                    - text: $50.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e169]:
+            - link [ref=e171] [cursor=pointer]:
+              - /url: /en-us/products/7014-workout-vest-grey-marl?variant=56479895159159
+              - generic [ref=e172]:
+                - img "Front view of Uskees grey marl premium cotton workout vest showing slim-fit silhouette." [ref=e173]
+                - img "Back view of Uskees grey marl premium cotton workout vest showing slim-fit, sleeveless design." [ref=e174]
+            - generic [ref=e175]:
+              - generic [ref=e176]:
+                - heading "7014 Workout Vest - grey marl 3 for 2" [level=3] [ref=e177]:
+                  - link "7014 Workout Vest - grey marl" [ref=e178] [cursor=pointer]:
+                    - /url: /en-us/products/7014-workout-vest-grey-marl?variant=56479895159159
+                  - generic [ref=e179]: 3 for 2
+                - generic [ref=e182]:
+                  - generic [ref=e183]: $50.00
+                  - generic [ref=e185]:
+                    - generic [ref=e186]: Regular price
+                    - text: $50.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e187]:
+            - link [ref=e189] [cursor=pointer]:
+              - /url: /en-us/products/7014-workout-vest-black?variant=56479788073335
+              - generic [ref=e190]:
+                - img "Front view of Uskees black premium cotton workout vest showing slim-fit silhouette." [ref=e191]
+                - img "Back view of Uskees black premium cotton workout vest showing slim-fit, sleeveless design." [ref=e192]
+            - generic [ref=e193]:
+              - generic [ref=e194]:
+                - heading "7014 Workout Vest - black 3 for 2" [level=3] [ref=e195]:
+                  - link "7014 Workout Vest - black" [ref=e196] [cursor=pointer]:
+                    - /url: /en-us/products/7014-workout-vest-black?variant=56479788073335
+                  - generic [ref=e197]: 3 for 2
+                - generic [ref=e200]:
+                  - generic [ref=e201]: $50.00
+                  - generic [ref=e203]:
+                    - generic [ref=e204]: Regular price
+                    - text: $50.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e205]:
+            - link [ref=e207] [cursor=pointer]:
+              - /url: /en-us/products/5021-twill-painter-pants-khaki?variant=56479640617335
+              - generic [ref=e208]:
+                - img "Front flat view of 5021 Uskees men's organic twill khaki painter pants with view of YKK zip fly and Corozo buttons." [ref=e209]
+                - img "Close-up front view modelling 5021 Uskees men's organic twill khaki painter pants highlighting relaxed, flattering fit." [ref=e210]
+            - generic [ref=e211]:
+              - generic [ref=e212]:
+                - heading [level=3] [ref=e213]:
+                  - link "5021 Twill painter pants - khaki" [ref=e214] [cursor=pointer]:
+                    - /url: /en-us/products/5021-twill-painter-pants-khaki?variant=56479640617335
+                - generic [ref=e216]:
+                  - generic [ref=e217]: $200.00
+                  - generic [ref=e219]:
+                    - generic [ref=e220]: Regular price
+                    - text: $200.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e221]:
+            - link [ref=e223] [cursor=pointer]:
+              - /url: /en-us/products/5021-twill-painter-pants-coriander?variant=56479580455287
+              - generic [ref=e224]:
+                - img "Front flat view of 5021 Uskees men's organic twill coriander-green painter pants with view of YKK zip fly and Corozo buttons." [ref=e225]
+                - img "Close-up front view modelling 5021 Uskees men's organic twill coriander-green painter pants highlighting relaxed, flattering fit." [ref=e226]
+            - generic [ref=e227]:
+              - generic [ref=e228]:
+                - heading [level=3] [ref=e229]:
+                  - link "5021 Twill painter pants - coriander" [ref=e230] [cursor=pointer]:
+                    - /url: /en-us/products/5021-twill-painter-pants-coriander?variant=56479580455287
+                - generic [ref=e232]:
+                  - generic [ref=e233]: $200.00
+                  - generic [ref=e235]:
+                    - generic [ref=e236]: Regular price
+                    - text: $200.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e237]:
+            - link [ref=e239] [cursor=pointer]:
+              - /url: /en-us/products/3001-ripstop-overshirt-blueberry?variant=56389925765495
+              - generic [ref=e240]:
+                - img "3001 Ripstop Overshirt - blueberry" [ref=e241]
+                - img "3001 Ripstop Overshirt - blueberry" [ref=e242]
+            - generic [ref=e243]:
+              - generic [ref=e244]:
+                - heading "3001 Ripstop Overshirt - blueberry New" [level=3] [ref=e245]:
+                  - link "3001 Ripstop Overshirt - blueberry" [ref=e246] [cursor=pointer]:
+                    - /url: /en-us/products/3001-ripstop-overshirt-blueberry?variant=56389925765495
+                  - generic [ref=e247]: New
+                - generic [ref=e250]:
+                  - generic [ref=e251]: $190.00
+                  - generic [ref=e253]:
+                    - generic [ref=e254]: Regular price
+                    - text: $190.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e255]:
+            - link [ref=e257] [cursor=pointer]:
+              - /url: /en-us/products/3001-ripstop-overshirt-ivy-green?variant=56389873369463
+              - generic [ref=e258]:
+                - img "Front flat shot of olive green, buttoned ripstop overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e259]
+                - img "3001 Ripstop Overshirt - ivy green" [ref=e260]
+            - generic [ref=e261]:
+              - generic [ref=e262]:
+                - heading "3001 Ripstop Overshirt - ivy green New" [level=3] [ref=e263]:
+                  - link "3001 Ripstop Overshirt - ivy green" [ref=e264] [cursor=pointer]:
+                    - /url: /en-us/products/3001-ripstop-overshirt-ivy-green?variant=56389873369463
+                  - generic [ref=e265]: New
+                - generic [ref=e268]:
+                  - generic [ref=e269]: $190.00
+                  - generic [ref=e271]:
+                    - generic [ref=e272]: Regular price
+                    - text: $190.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e273]:
+            - link [ref=e275] [cursor=pointer]:
+              - /url: /en-us/products/3001-ripstop-overshirt-black?variant=56389665554807
+              - generic [ref=e276]:
+                - img "Front flat shot of black, buttoned ripstop overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e277]
+                - img "3001 Ripstop Overshirt - black" [ref=e278]
+            - generic [ref=e280]:
+              - heading "3001 Ripstop Overshirt - black last few New Sold out" [level=3] [ref=e281]:
+                - link "3001 Ripstop Overshirt - black" [ref=e282] [cursor=pointer]:
+                  - /url: /en-us/products/3001-ripstop-overshirt-black?variant=56389665554807
+                - generic [ref=e283]:
+                  - generic [ref=e284]: last few
+                  - generic [ref=e285]: New
+                  - generic [ref=e286]: Sold out
+              - generic [ref=e288]:
+                - generic [ref=e289]: $190.00
+                - generic [ref=e291]:
+                  - generic [ref=e292]: Regular price
+                  - text: $190.00
+          - generic [ref=e293]:
+            - link [ref=e295] [cursor=pointer]:
+              - /url: /en-us/products/6013-long-sleeve-oxford-shirt-baby-blue-pinstripe?variant=55843089383799
+              - generic [ref=e296]:
+                - img "Front view of Uskees light blue and white striped men's Oxford shirt." [ref=e297]
+                - img "Upper body view wearing Uskees light blue and white striped men's Oxford shirt." [ref=e298]
+            - generic [ref=e299]:
+              - generic [ref=e300]:
+                - heading [level=3] [ref=e301]:
+                  - link "6013 Advanced Oxford shirt - baby blue pinstripe" [ref=e302] [cursor=pointer]:
+                    - /url: /en-us/products/6013-long-sleeve-oxford-shirt-baby-blue-pinstripe?variant=55843089383799
+                - generic [ref=e304]:
+                  - generic [ref=e305]: $155.00
+                  - generic [ref=e307]:
+                    - generic [ref=e308]: Regular price
+                    - text: $155.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e309]:
+            - link [ref=e311] [cursor=pointer]:
+              - /url: /en-us/products/6013-long-sleeve-oxford-shirt-white?variant=55843032727927
+              - generic [ref=e312]:
+                - img "Front view of Uskees white men's Oxford shirt." [ref=e313]
+                - img "Upper body view wearing Uskees white men's Oxford shirt." [ref=e314]
+            - generic [ref=e315]:
+              - generic [ref=e316]:
+                - heading [level=3] [ref=e317]:
+                  - link "6013 Advanced Oxford shirt - white" [ref=e318] [cursor=pointer]:
+                    - /url: /en-us/products/6013-long-sleeve-oxford-shirt-white?variant=55843032727927
+                - generic [ref=e320]:
+                  - generic [ref=e321]: $155.00
+                  - generic [ref=e323]:
+                    - generic [ref=e324]: Regular price
+                    - text: $155.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e325]:
+            - link [ref=e327] [cursor=pointer]:
+              - /url: /en-us/products/6013-long-sleeve-oxford-shirt-daydream-blue?variant=55842918334839
+              - generic [ref=e328]:
+                - img "Front view of Uskees light blue men's Oxford shirt." [ref=e329]
+                - img "Upper body view wearing Uskees light blue men's Oxford shirt." [ref=e330]
+            - generic [ref=e331]:
+              - generic [ref=e332]:
+                - heading [level=3] [ref=e333]:
+                  - link "6013 Advanced Oxford shirt - daydream blue" [ref=e334] [cursor=pointer]:
+                    - /url: /en-us/products/6013-long-sleeve-oxford-shirt-daydream-blue?variant=55842918334839
+                - generic [ref=e336]:
+                  - generic [ref=e337]: $155.00
+                  - generic [ref=e339]:
+                    - generic [ref=e340]: Regular price
+                    - text: $155.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e341]:
+            - link [ref=e343] [cursor=pointer]:
+              - /url: /en-us/products/3049-evo-shell-coat-army-green?variant=55798751756663
+              - generic [ref=e344]:
+                - img "Front view of Uskees army green Evo shell coat showing the two welt and two cargo pockets and hood." [ref=e345]
+                - img "Front view of Uskees army green Evo shell coat. Unzipped showing the inner lining, pocket and brand label." [ref=e346]
+            - generic [ref=e347]:
+              - generic [ref=e348]:
+                - heading [level=3] [ref=e349]:
+                  - link "3049 Evo shell coat - army green" [ref=e350] [cursor=pointer]:
+                    - /url: /en-us/products/3049-evo-shell-coat-army-green?variant=55798751756663
+                - generic [ref=e352]:
+                  - generic [ref=e353]: $380.00
+                  - generic [ref=e355]:
+                    - generic [ref=e356]: Regular price
+                    - text: $380.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e357]:
+            - link [ref=e359] [cursor=pointer]:
+              - /url: /en-us/products/3049-evo-shell-coat-midnight-blue?variant=55767761551735
+              - generic [ref=e360]:
+                - img "Front view of Uskees midnight blue Evo shell coat showing the two welt and two cargo pockets and hood." [ref=e361]
+                - img "Front view of Uskees midnight blue Evo shell coat. Unzipped showing the inner lining, pocket and brand label." [ref=e362]
+            - generic [ref=e363]:
+              - generic [ref=e364]:
+                - heading [level=3] [ref=e365]:
+                  - link "3049 Evo shell coat - midnight blue" [ref=e366] [cursor=pointer]:
+                    - /url: /en-us/products/3049-evo-shell-coat-midnight-blue?variant=55767761551735
+                - generic [ref=e368]:
+                  - generic [ref=e369]: $380.00
+                  - generic [ref=e371]:
+                    - generic [ref=e372]: Regular price
+                    - text: $380.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e373]:
+            - link [ref=e375] [cursor=pointer]:
+              - /url: /en-us/products/5021-twill-painter-pants-midnight-blue?variant=55462327058807
+              - generic [ref=e376]:
+                - img "Front flat view of 5021 Uskees men's organic twill midnight blue painter pants with view of YKK zip fly and Corozo buttons." [ref=e377]
+                - img "Close-up front view modelling 5021 Uskees men's organic twill midnight blue painter pants highlighting relaxed, flattering fit." [ref=e378]
+            - generic [ref=e379]:
+              - generic [ref=e380]:
+                - heading [level=3] [ref=e381]:
+                  - link "5021 Twill painter pants - midnight blue" [ref=e382] [cursor=pointer]:
+                    - /url: /en-us/products/5021-twill-painter-pants-midnight-blue?variant=55462327058807
+                - generic [ref=e384]:
+                  - generic [ref=e385]: $200.00
+                  - generic [ref=e387]:
+                    - generic [ref=e388]: Regular price
+                    - text: $200.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e389]:
+            - link [ref=e391] [cursor=pointer]:
+              - /url: /en-us/products/5021-twill-painter-pants-charcoal?variant=55462318211447
+              - generic [ref=e392]:
+                - img "Front flat view of 5021 Uskees men's organic twill charcoal grey painter pants with view of YKK zip fly and Corozo buttons." [ref=e393]
+                - img "Close-up front view modelling 5021 Uskees men's organic twill charcoal grey painter pants highlighting relaxed, flattering fit." [ref=e394]
+            - generic [ref=e395]:
+              - generic [ref=e396]:
+                - heading [level=3] [ref=e397]:
+                  - link "5021 Twill painter pants - charcoal" [ref=e398] [cursor=pointer]:
+                    - /url: /en-us/products/5021-twill-painter-pants-charcoal?variant=55462318211447
+                - generic [ref=e400]:
+                  - generic [ref=e401]: $200.00
+                  - generic [ref=e403]:
+                    - generic [ref=e404]: Regular price
+                    - text: $200.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e405]:
+            - link [ref=e407] [cursor=pointer]:
+              - /url: /en-us/products/5021-twill-painter-pants-black?variant=55462291767671
+              - generic [ref=e408]:
+                - img "Front flat view of 5021 Uskees men's organic twill black painter pants with view of YKK zip fly and Corozo buttons." [ref=e409]
+                - img "Close-up front view modelling 5021 Uskees men's organic twill black painter pants highlighting relaxed, flattering fit." [ref=e410]
+            - generic [ref=e411]:
+              - generic [ref=e412]:
+                - heading [level=3] [ref=e413]:
+                  - link "5021 Twill painter pants - black" [ref=e414] [cursor=pointer]:
+                    - /url: /en-us/products/5021-twill-painter-pants-black?variant=55462291767671
+                - generic [ref=e416]:
+                  - generic [ref=e417]: $200.00
+                  - generic [ref=e419]:
+                    - generic [ref=e420]: Regular price
+                    - text: $200.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e421]:
+            - link [ref=e423] [cursor=pointer]:
+              - /url: /en-us/products/7006-signature-t-shirt-faded-white-25?variant=55435273208183
+              - img "Full flat view of white organic cotton signature T-shirt for men, showing the dark green varsity inspired 'USK' logo on the chest and the Uskees branding labels on the neck and hem." [ref=e425]
+            - generic [ref=e427]:
+              - heading "7006 Signature t-shirt - white Sold out" [level=3] [ref=e428]:
+                - link "7006 Signature t-shirt - white" [ref=e429] [cursor=pointer]:
+                  - /url: /en-us/products/7006-signature-t-shirt-faded-white-25?variant=55435273208183
+                - generic [ref=e430]: Sold out
+              - generic [ref=e433]:
+                - generic [ref=e434]: $85.00
+                - generic [ref=e436]:
+                  - generic [ref=e437]: Regular price
+                  - text: $85.00
+          - generic [ref=e438]:
+            - link [ref=e440] [cursor=pointer]:
+              - /url: /en-us/products/7006-plain-t-shirt-chestnut?variant=55429316903287
+              - generic [ref=e441]:
+                - img "Full flat view of chestnut-brown organic cotton Uskees T-shirt for men, indicating the loose silhouette." [ref=e442]
+                - img "Back view of chestnut-brown organic cotton Uskees short-sleeved T-shirt." [ref=e443]
+            - generic [ref=e445]:
+              - heading "7006 Essential t-shirt - chestnut Sold out" [level=3] [ref=e446]:
+                - link "7006 Essential t-shirt - chestnut" [ref=e447] [cursor=pointer]:
+                  - /url: /en-us/products/7006-plain-t-shirt-chestnut?variant=55429316903287
+                - generic [ref=e448]: Sold out
+              - generic [ref=e451]:
+                - generic [ref=e452]: $65.00
+                - generic [ref=e454]:
+                  - generic [ref=e455]: Regular price
+                  - text: $65.00
+          - generic [ref=e456]:
+            - link [ref=e458] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-rust?variant=55396043293047
+              - generic [ref=e459]:
+                - img "Front flat shot of rust-red, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e460]
+                - img "Back view of rust-red, buttoned organic cotton overshirt with view of reinforced elbow area and boxy silhouette." [ref=e461]
+            - generic [ref=e462]:
+              - generic [ref=e463]:
+                - heading [level=3] [ref=e464]:
+                  - link "3001 Overshirt - rust" [ref=e465] [cursor=pointer]:
+                    - /url: /en-us/products/3001-buttoned-overshirt-rust?variant=55396043293047
+                - generic [ref=e467]:
+                  - generic [ref=e468]: $170.00
+                  - generic [ref=e470]:
+                    - generic [ref=e471]: Regular price
+                    - text: $170.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e472]:
+            - link [ref=e474] [cursor=pointer]:
+              - /url: /en-us/products/3001-buttoned-overshirt-dark-taupe?variant=55395978019191
+              - generic [ref=e475]:
+                - img "Front flat shot of dark taupe, buttoned organic cotton overshirt. Clear view of chest and hip pockets, corozo buttons and Uskees branding label." [ref=e476]
+                - img "Male model wearing an Uskees brown shacket, loam brown sweater, and beanie with sunglasses." [ref=e477]
+            - generic [ref=e478]:
+              - generic [ref=e479]:
+                - heading "3001 Overshirt - dark taupe 30% off" [level=3] [ref=e480]:
+                  - link "3001 Overshirt - dark taupe" [ref=e481] [cursor=pointer]:
+                    - /url: /en-us/products/3001-buttoned-overshirt-dark-taupe?variant=55395978019191
+                  - generic [ref=e482]: 30% off
+                - generic [ref=e485]:
+                  - generic [ref=e486]: $119.00
+                  - generic [ref=e489]:
+                    - generic [ref=e490]: Regular price
+                    - text: $170.00
+                    - insertion [ref=e491]:
+                      - generic [ref=e492]: Minimum price
+                      - text: $119.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e493]:
+            - link [ref=e495] [cursor=pointer]:
+              - /url: /en-us/products/7013-crew-knit-jumper-midnight-blue?variant=55233735295351
+              - generic [ref=e496]:
+                - img "Male model wearing an Uskees midnight blue ribbed sweater, green wool beanie, and blue trousers against a plain background." [ref=e497]
+                - img "Front flat view Uskees midnight blue fisherman’s sweater for men." [ref=e498]
+            - generic [ref=e499]:
+              - generic [ref=e500]:
+                - heading [level=3] [ref=e501]:
+                  - link "7013 Crew knit jumper - midnight blue" [ref=e502] [cursor=pointer]:
+                    - /url: /en-us/products/7013-crew-knit-jumper-midnight-blue?variant=55233735295351
+                - generic [ref=e504]:
+                  - generic [ref=e505]: $335.00
+                  - generic [ref=e507]:
+                    - generic [ref=e508]: Regular price
+                    - text: $335.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e509]:
+            - link [ref=e511] [cursor=pointer]:
+              - /url: /en-us/products/5024-ivy-green-ripstop-utility-shorts?variant=54905094046071
+              - generic [ref=e512]:
+                - img "Front view of ivy green 5024 men's ripstop utility shorts by Uskees. Clear view of drawstring waist and deep utility front patch pockets." [ref=e513]
+                - img "Back view of ivy green 5024 men's ripstop utility shorts by Uskees. Clear view of the two jetted pockets, elasticated waist and relaxed fit." [ref=e514]
+            - generic [ref=e515]:
+              - generic [ref=e516]:
+                - heading [level=3] [ref=e517]:
+                  - link "5024 Ripstop utility shorts - ivy green" [ref=e518] [cursor=pointer]:
+                    - /url: /en-us/products/5024-ivy-green-ripstop-utility-shorts?variant=54905094046071
+                - generic [ref=e520]:
+                  - generic [ref=e521]: $140.00
+                  - generic [ref=e523]:
+                    - generic [ref=e524]: Regular price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e525]:
+            - link [ref=e527] [cursor=pointer]:
+              - /url: /en-us/products/5024-blueberry-ripstop-utility-shorts?variant=54905068061047
+              - generic [ref=e528]:
+                - img "Front view of blueberry 5024 men's ripstop utility shorts by Uskees. Clear view of drawstring waist and deep utility front patch pockets." [ref=e529]
+                - img "5024 Ripstop utility shorts - blueberry" [ref=e530]
+            - generic [ref=e531]:
+              - generic [ref=e532]:
+                - heading [level=3] [ref=e533]:
+                  - link "5024 Ripstop utility shorts - blueberry" [ref=e534] [cursor=pointer]:
+                    - /url: /en-us/products/5024-blueberry-ripstop-utility-shorts?variant=54905068061047
+                - generic [ref=e536]:
+                  - generic [ref=e537]: $140.00
+                  - generic [ref=e539]:
+                    - generic [ref=e540]: Regular price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e541]:
+            - link [ref=e543] [cursor=pointer]:
+              - /url: /en-us/products/5024-black-ripstop-utility-shorts?variant=54904992563575
+              - generic [ref=e544]:
+                - img "Front view of black 5024 men's ripstop utility shorts by Uskees. Clear view of drawstring waist and deep utility front patch pockets." [ref=e545]
+                - img "Back view of black 5024 men's ripstop utility shorts by Uskees. Clear view of the two jetted pockets, elasticated waist and relaxed fit." [ref=e546]
+            - generic [ref=e547]:
+              - generic [ref=e548]:
+                - heading [level=3] [ref=e549]:
+                  - link "5024 Ripstop utility shorts - black" [ref=e550] [cursor=pointer]:
+                    - /url: /en-us/products/5024-black-ripstop-utility-shorts?variant=54904992563575
+                - generic [ref=e552]:
+                  - generic [ref=e553]: $140.00
+                  - generic [ref=e555]:
+                    - generic [ref=e556]: Regular price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e557]:
+            - link [ref=e559] [cursor=pointer]:
+              - /url: /en-us/products/5023-ivy-green-ripstop-cargo-shorts?variant=54904439701879
+              - generic [ref=e560]:
+                - img "Front view of ivy green 5023 men's ripstop cargo shorts by Uskees. Clear view of belt loops, side pockets and deep cargo pockets." [ref=e561]
+                - img "5023 Ripstop cargo shorts - ivy green" [ref=e562]
+            - generic [ref=e563]:
+              - generic [ref=e564]:
+                - heading [level=3] [ref=e565]:
+                  - link "5023 Ripstop cargo shorts - ivy green" [ref=e566] [cursor=pointer]:
+                    - /url: /en-us/products/5023-ivy-green-ripstop-cargo-shorts?variant=54904439701879
+                - generic [ref=e568]:
+                  - generic [ref=e569]: $81.00
+                  - generic [ref=e571]:
+                    - generic [ref=e572]: Minimum price
+                    - text: $81.00 -
+                    - generic [ref=e573]: Maximum price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e574]:
+            - link [ref=e576] [cursor=pointer]:
+              - /url: /en-us/products/5023-blueberry-ripstop-cargo-shorts?variant=54904415125879
+              - generic [ref=e577]:
+                - img "Front view of blueberry 5023 men's ripstop cargo shorts by Uskees. Clear view of belt loops, side pockets and deep cargo pockets." [ref=e578]
+                - img "5023 Ripstop cargo shorts - blueberry" [ref=e579]
+            - generic [ref=e580]:
+              - generic [ref=e581]:
+                - heading [level=3] [ref=e582]:
+                  - link "5023 Ripstop cargo shorts - blueberry" [ref=e583] [cursor=pointer]:
+                    - /url: /en-us/products/5023-blueberry-ripstop-cargo-shorts?variant=54904415125879
+                - generic [ref=e585]:
+                  - generic [ref=e586]: $81.00
+                  - generic [ref=e588]:
+                    - generic [ref=e589]: Minimum price
+                    - text: $81.00 -
+                    - generic [ref=e590]: Maximum price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e591]:
+            - link [ref=e593] [cursor=pointer]:
+              - /url: /en-us/products/5023-black-ripstop-cargo-shorts?variant=54902262694263
+              - generic [ref=e594]:
+                - img "Front view of black 5023 men's ripstop cargo shorts by Uskees. Clear view of belt loops, side pockets and deep cargo pockets." [ref=e595]
+                - img "5023 Ripstop cargo shorts - black" [ref=e596]
+            - generic [ref=e597]:
+              - generic [ref=e598]:
+                - heading [level=3] [ref=e599]:
+                  - link "5023 Ripstop cargo shorts - black" [ref=e600] [cursor=pointer]:
+                    - /url: /en-us/products/5023-black-ripstop-cargo-shorts?variant=54902262694263
+                - generic [ref=e602]:
+                  - generic [ref=e603]: $81.00
+                  - generic [ref=e605]:
+                    - generic [ref=e606]: Minimum price
+                    - text: $81.00 -
+                    - generic [ref=e607]: Maximum price
+                    - text: $140.00
+              - generic:
+                - generic:
+                  - list
+          - generic [ref=e608]:
+            - link [ref=e610] [cursor=pointer]:
+              - /url: /en-us/products/5005-black-twill-workwear-pants?variant=54882298855799
+              - generic [ref=e611]:
+                - img "Full-length front view of Uskees twill workwear pants in black. Showing Corozo button fastening and tapered leg fit." [ref=e612]
+                - img "Full-length back view of Uskees 5005 twill workwear pants in black showing belt loops, back pockets (one with flap) and simple silhouette." [ref=e613]
+            - generic [ref=e614]:
+              - generic [ref=e615]:
+                - heading [level=3] [ref=e616]:
+                  - link "5005 Twill workwear pants - black" [ref=e617] [cursor=pointer]:
+                    - /url: /en-us/products/5005-black-twill-workwear-pants?variant=54882298855799
+                - generic [ref=e619]:
+                  - generic [ref=e620]: $185.00
+                  - generic [ref=e622]:
+                    - generic [ref=e623]: Regular price
+                    - text: $185.00
+              - generic:
+                - generic:
+                  - list
+        - navigation "Pagination" [ref=e625]:
+          - list [ref=e626]:
+            - listitem [ref=e627]:
+              - generic "Page 1" [ref=e628]: "1"
+            - listitem [ref=e629]:
+              - link "2" [ref=e630] [cursor=pointer]:
+                - /url: /en-us/collections/all-clothing?page=2
+            - listitem [ref=e631]:
+              - link "3" [ref=e632] [cursor=pointer]:
+                - /url: /en-us/collections/all-clothing?page=3
+            - listitem [ref=e633]:
+              - link "Next page" [ref=e634] [cursor=pointer]:
+                - /url: /en-us/collections/all-clothing?page=2
+  - contentinfo [ref=e638]:
+    - generic [ref=e642]:
+      - generic [ref=e645]:
+        - heading "Newsletter" [level=3] [ref=e646]
+        - paragraph [ref=e648]: Sign up for the latest news, offers and releases.
+        - generic [ref=e650]:
+          - generic [ref=e651] [cursor=pointer]: Email
+          - generic [ref=e652]:
+            - textbox "Email" [ref=e653]:
+              - /placeholder: Email address
+            - button "Subscribe" [ref=e654] [cursor=pointer]
+      - generic [ref=e657]:
+        - heading "About" [level=4] [ref=e658]
+        - list [ref=e659]:
+          - listitem [ref=e660]:
+            - link "About" [ref=e661] [cursor=pointer]:
+              - /url: /en-us/pages/about-us
+          - listitem [ref=e662]:
+            - link "Core Fabrics" [ref=e663] [cursor=pointer]:
+              - /url: /en-us/pages/materials
+          - listitem [ref=e664]:
+            - link "Repair Service" [ref=e665] [cursor=pointer]:
+              - /url: /en-us/pages/repairs
+          - listitem [ref=e666]:
+            - link "Re-up Scheme" [ref=e667] [cursor=pointer]:
+              - /url: /en-us/pages/buy-back-scheme
+          - listitem [ref=e668]:
+            - link "Become a Member" [ref=e669] [cursor=pointer]:
+              - /url: /en-us/pages/members
+          - listitem [ref=e670]:
+            - link "Stockists" [ref=e671] [cursor=pointer]:
+              - /url: /en-us/pages/stockists
+      - generic [ref=e674]:
+        - heading "Help" [level=4] [ref=e675]
+        - list [ref=e676]:
+          - listitem [ref=e677]:
+            - link "Returns Policy" [ref=e678] [cursor=pointer]:
+              - /url: /en-us/pages/refund-policy
+          - listitem [ref=e679]:
+            - link "Shipping Policy" [ref=e680] [cursor=pointer]:
+              - /url: /en-us/pages/shipping-policy
+          - listitem [ref=e681]:
+            - link "FAQs" [ref=e682] [cursor=pointer]:
+              - /url: /en-us/pages/faqs
+          - listitem [ref=e683]:
+            - link "Wholesale + Uniforms" [ref=e684] [cursor=pointer]:
+              - /url: /en-us/pages/wholesale-enquiry
+          - listitem [ref=e685]:
+            - link "Gift cards" [ref=e686] [cursor=pointer]:
+              - /url: /en-us/products/giftcard
+          - listitem [ref=e687]:
+            - link "eGift Cards" [ref=e688] [cursor=pointer]:
+              - /url: /en-us/products/gift-card
+          - listitem [ref=e689]:
+            - link "Cookie Policy" [ref=e690] [cursor=pointer]:
+              - /url: /en-us/pages/cookie-policy
+          - listitem [ref=e691]:
+            - link "Cookie Settings" [ref=e692] [cursor=pointer]:
+              - /url: /en-us#reopenBanner
+      - generic [ref=e695]:
+        - heading "Info" [level=4] [ref=e696]
+        - list [ref=e697]:
+          - listitem [ref=e698]:
+            - link "Reviews" [ref=e699] [cursor=pointer]:
+              - /url: /en-us/pages/reviews
+          - listitem [ref=e700]:
+            - link "Klarna" [ref=e701] [cursor=pointer]:
+              - /url: /en-us/pages/klarna-pay-later
+          - listitem [ref=e702]:
+            - link "Privacy Policy" [ref=e703] [cursor=pointer]:
+              - /url: /en-us/pages/privacy-policy
+          - listitem [ref=e704]:
+            - link "Terms of Service" [ref=e705] [cursor=pointer]:
+              - /url: /en-us/pages/terms-of-service
+          - listitem [ref=e706]:
+            - link "Swap Protect" [ref=e707] [cursor=pointer]:
+              - /url: /en-us/pages/swap-protect
+          - listitem [ref=e708]:
+            - link "Company Information" [ref=e709] [cursor=pointer]:
+              - /url: /en-us/pages/company-information
+          - listitem [ref=e710]:
+            - link "Contact" [ref=e711] [cursor=pointer]:
+              - /url: /en-us/pages/contact-us
+    - generic [ref=e715]:
+      - link [ref=e718] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e719]
+      - list [ref=e722]:
+        - listitem [ref=e723]:
+          - link "Instagram" [ref=e724] [cursor=pointer]:
+            - /url: https://www.instagram.com/uskees.co/
+    - generic [ref=e730]:
+      - link [ref=e733] [cursor=pointer]:
+        - /url: /en-us
+        - img "Uskees" [ref=e734]
+      - paragraph [ref=e737]: Copyright © 2025 Uskees. All rights reserved.
+      - generic [ref=e739]:
+        - generic [ref=e740]: Payment methods
+        - list [ref=e741]:
+          - listitem [ref=e742]:
+            - img "American Express" [ref=e743]
+          - listitem [ref=e748]:
+            - img "Apple Pay" [ref=e749]
+          - listitem [ref=e760]:
+            - img "Bancontact" [ref=e761]
+          - listitem [ref=e768]:
+            - img "Diners Club" [ref=e769]
+          - listitem [ref=e773]:
+            - img "Discover" [ref=e774]
+          - listitem [ref=e783]:
+            - img "Google Pay" [ref=e784]
+          - listitem [ref=e792]:
+            - img "iDEAL Wero" [ref=e793]
+          - listitem [ref=e808]:
+            - img "Maestro" [ref=e809]
+          - listitem [ref=e815]:
+            - img "Mastercard" [ref=e816]
+          - listitem [ref=e823]:
+            - img "PayPal" [ref=e824]
+          - listitem [ref=e830]:
+            - img "Shop Pay" [ref=e831]
+          - listitem [ref=e835]:
+            - img "Union Pay" [ref=e836]
+          - listitem [ref=e842]:
+            - img "Visa" [ref=e843]
+      - button [ref=e852] [cursor=pointer]:
+        - generic [ref=e857]:
+          - text: Follow on
+          - img "Shop" [ref=e858]
+  - region "Cookie consent" [active]:
+    - dialog "We respect your privacy" [ref=e860]:
+      - generic [ref=e861]:
+        - heading "We respect your privacy" [level=2] [ref=e863]
+        - generic [ref=e867]:
+          - text: This website uses cookies to ensure you get the best experience.
+          - link "Learn more" [ref=e869] [cursor=pointer]:
+            - /url: /policies/privacy-policy
+        - generic [ref=e870]:
+          - button "Accept" [ref=e872] [cursor=pointer]
+          - button "Preferences" [ref=e874] [cursor=pointer]
+  - iframe [ref=e875]:
+    - button "" [ref=f6e3] [cursor=pointer]: 
+  - button [ref=e878] [cursor=pointer]:
+    - paragraph [ref=e882]:
+      - strong [ref=e884]: 10% OFF
