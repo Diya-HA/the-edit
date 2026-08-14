@@ -152,6 +152,9 @@ const handler = createMcpHandler(
                 slug: z.string().regex(/^[a-z0-9-]+$/),
                 title: z.string().min(1),
                 category: z.string().min(1).describe("Garment noun, e.g. overshirt"),
+                slot: z
+                  .enum(["TOP", "BOTTOM", "OUTER", "SHOES", "BAG", "ACCESSORY"])
+                  .describe("Where it sits in a head-to-toe look"),
                 price: z.number().nonnegative(),
                 colorName: z.string().min(1).describe("Palette family, e.g. Sage"),
                 colorToken: z.string().min(1).describe("e.g. --fabric-sage"),
@@ -194,6 +197,7 @@ const handler = createMcpHandler(
             slug: p.slug,
             title: p.title,
             category: p.category,
+            slot: p.slot,
             price: p.price,
             colorName: p.colorName,
             colorToken: p.colorToken,
@@ -223,7 +227,8 @@ const handler = createMcpHandler(
       {
         title: "Create an outfit",
         description:
-          "Assemble two or more pieces from a single aesthetic into an outfit, " +
+          "Assemble a head-to-toe look: four to six pieces from one aesthetic, " +
+          "one per slot — never two tops, never two colourways of one style. " +
           "which appears in the app immediately. Idempotent on slug: calling " +
           "again with the same slug updates that outfit rather than adding a " +
           "duplicate. The note is the one line a shopper reads under it — " +
@@ -244,7 +249,8 @@ const handler = createMcpHandler(
                 note: z.string().optional(),
               }),
             )
-            .min(2, "an outfit needs at least two pieces"),
+            .min(4, "a look needs at least four pieces")
+            .max(6, "a look is at most six pieces"),
         }),
       },
       async (input) => {

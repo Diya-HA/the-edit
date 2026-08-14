@@ -25,6 +25,15 @@ type Db = Pick<PrismaClient, "aesthetic" | "product" | "outfit" | "$transaction"
  * repeat on a schedule.
  */
 
+/** The slots a head-to-toe look is built from. */
+export const SLOTS = ["TOP", "BOTTOM", "OUTER", "SHOES", "BAG", "ACCESSORY"] as const;
+export type Slot = (typeof SLOTS)[number];
+
+/* What makes a set a look rather than a pile. Four is the smallest thing that
+   reads as head-to-toe; past six it stops being an outfit. */
+export const OUTFIT_MIN = 4;
+export const OUTFIT_MAX = 6;
+
 export type OutfitItemInput = {
   /** Product handle. The product must already exist. */
   productSlug: string;
@@ -62,9 +71,12 @@ function validate(input: OutfitInput) {
   if (!input.name?.trim()) fail("name is required");
   if (!input.aestheticSlug?.trim()) fail("aestheticSlug is required");
 
-  /* An outfit is pieces that work together, so one piece is not an outfit. */
-  if (!input.items || input.items.length < 2) {
-    fail("an outfit needs at least two pieces");
+  /* An outfit is a head-to-toe look, not a rail of one garment. */
+  if (!input.items || input.items.length < OUTFIT_MIN) {
+    fail(`needs at least ${OUTFIT_MIN} pieces, got ${input.items?.length ?? 0}`);
+  }
+  if (input.items.length > OUTFIT_MAX) {
+    fail(`at most ${OUTFIT_MAX} pieces, got ${input.items.length}`);
   }
 
   const slugs = input.items.map((i) => i.productSlug);
@@ -108,7 +120,10 @@ export async function upsertOutfit(
 
   const products = await db.product.findMany({
     where: { slug: { in: input.items.map((i) => i.productSlug) } },
-    select: { id: true, slug: true, aestheticId: true },
+    select: {
+      id: true, slug: true, aestheticId: true,
+      slot: true, title: true, brandId: true,
+    },
   });
   const bySlug = new Map(products.map((p) => [p.slug, p]));
 
@@ -119,6 +134,43 @@ export async function upsertOutfit(
     throw new OutfitInputError(
       `${input.slug}: no such pieces — ${missing.join(", ")}`,
     );
+  }
+
+  /* One piece per slot. Thirteen overshirts is a colourway rail, not a look,
+     and it undercuts the whole point — one aesthetic across many brands. */
+  const bySlot = new Map<string, string[]>();
+  for (const p of products) {
+    if (!p.slot) {
+      throw new OutfitInputError(
+        `${input.slug}: ${p.slug} has no slot, so it cannot be placed in a look`,
+      );
+    }
+    const seen = bySlot.get(p.slot) ?? [];
+    seen.push(p.slug);
+    bySlot.set(p.slot, seen);
+  }
+  for (const [slot, slugs] of bySlot) {
+    if (slugs.length > 1) {
+      throw new OutfitInputError(
+        `${input.slug}: ${slugs.length} pieces in ${slot} (${slugs.join(", ")}) — one per slot`,
+      );
+    }
+  }
+
+  /* Two colourways of one style share a title within a brand. */
+  const styles = new Map<string, string[]>();
+  for (const p of products) {
+    const key = `${p.brandId}::${p.title.toLowerCase()}`;
+    const seen = styles.get(key) ?? [];
+    seen.push(p.slug);
+    styles.set(key, seen);
+  }
+  for (const [, slugs] of styles) {
+    if (slugs.length > 1) {
+      throw new OutfitInputError(
+        `${input.slug}: ${slugs.join(" and ")} are colourways of one style`,
+      );
+    }
   }
 
   /* An outfit is pieces from one aesthetic; a piece from elsewhere is a
