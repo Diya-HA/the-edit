@@ -1,0 +1,51 @@
+/* Centred in the frame, on the app's own canvas. Deliberately quiet — the
+   design system keeps its washed fields for the welcome and the milestones,
+   and a missing piece is neither a celebration nor a disaster. */
+
+.screen {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-6) var(--space-5);
+  background: var(--surface-app);
+}
+
+.inner {
+  max-width: 30ch;
+  text-align: center;
+}
+
+.eyebrow {
+  margin-bottom: var(--space-3);
+  font-family: var(--font-mono);
+  font-size: var(--fs-eyebrow);
+  letter-spacing: var(--ls-kicker);
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--fs-xl);
+  font-weight: var(--fw-black);
+  font-stretch: 88%;
+  letter-spacing: -0.03em;
+  color: var(--text-strong);
+}
+
+.body {
+  margin: var(--space-3) 0 0;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-body);
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-5);
+}

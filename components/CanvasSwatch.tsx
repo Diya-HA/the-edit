@@ -1,6 +1,6 @@
-import Image from "next/image";
 import type { ComponentPropsWithoutRef, CSSProperties, ReactNode } from "react";
-import { atWidth, IMAGE_WIDTH } from "@/lib/images";
+import { IMAGE_WIDTH } from "@/lib/images";
+import ProductImage from "./ProductImage";
 import styles from "./CanvasSwatch.module.css";
 
 export type CanvasSwatchProps = {
@@ -91,16 +91,18 @@ export default function CanvasSwatch({
         } as CSSProperties
       }
     >
+      {/* Cropped, never letterboxed, and centred — brand packshots put the
+          garment in the middle of the frame, so the middle is what survives a
+          4:5 crop of a 1:1 source. Falls back to the field and the garment
+          noun if the brand's CDN no longer has it. */}
       {image && (
-        <Image
-          src={atWidth(image, imageWidth)}
+        <ProductImage
+          src={image}
           alt={alt ?? ""}
-          fill
+          width={imageWidth}
           priority={priority}
-          /* Cropped, never letterboxed, and centred — brand packshots put the
-             garment in the middle of the frame, so the middle is what survives
-             a 4:5 crop of a 1:1 source. */
-          className={styles.photo}
+          label={label}
+          labelLarge={typeof height === "number" && height >= 160}
         />
       )}
 

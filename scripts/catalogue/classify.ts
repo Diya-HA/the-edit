@@ -115,6 +115,72 @@ const COSTUME = /\btutu\b|r[ée]p[ée]tition|competition|stage costume/i;
 /** Children's ranges that are only distinguishable by their sizes. */
 const KID_SIZE = /^\d+\s*(ans|yrs?|years?|m)$/i;
 
+/**
+ * The garment noun, as a person would say it.
+ *
+ * A brand's product_type is written for its own merchandising, not for a
+ * shopper: Uskees files an overshirt as `OVERSHIRTS_COTTON` and a t-shirt as
+ * `T-SHIRTS_JERSEY`. Lowercasing that verbatim put "overshirts_cotton" on the
+ * card and into the alt text, which is only invisible while a photograph is
+ * covering the label — it appeared the moment an image failed.
+ *
+ * The fabric is a real word about the garment, just not part of its name, so
+ * known fabric tokens come off the end and the rest becomes the noun.
+ */
+const FABRIC_WORDS = new Set([
+  "cotton", "cottonmix", "cottonblend", "wool", "drill", "cord", "linen",
+  "blend", "mix", "ripstop", "polyester", "recycled", "jersey", "twill",
+  "herringbone", "wax", "canvas", "lyocell", "nylon", "waffle", "oxford",
+  "oxfordchambray", "seersucker", "chambray", "metal", "wood", "denim",
+  "silk", "cashmere", "leather", "velvet", "mesh", "satin",
+]);
+
+/* Garments that are only ever plural. "A pant" is not a thing. */
+const ALWAYS_PLURAL = new Set([
+  "pants", "shorts", "socks", "tights", "jeans", "trousers", "leggings",
+  "sunglasses", "gloves", "pointes", "demi-pointes", "boots", "heels",
+  "sandals", "creepers", "ballerines", "collants",
+  /* French, and singular as it stands — a leotard is "un justaucorps". */
+  "justaucorps", "salomes", "babies",
+]);
+
+/* Types that name a department rather than a garment. Worse than nothing on a
+   card, so the slot stands in instead. */
+const NOT_A_NOUN = new Set([
+  "other", "apparel", "clothing", "new", "sale", "all", "dance apparel",
+]);
+
+export function garmentNoun(productType: string, fallback: string): string {
+  /* A slash means the brand could not decide — "NECKLACES/CHOKERS" is one
+     thing filed under two names. Take the first; one noun is enough. */
+  const parts = productType
+    .toLowerCase()
+    .split("/")[0]
+    .split(/[_]+/)
+    .map((s) => s.trim())
+    .filter(Boolean);
+
+  /* Trim fabric words from the end only. Taking them from anywhere would turn
+     "tank top cotton" into "tank", and a leading fabric is sometimes the name
+     — a "cord overshirt" is not an overshirt that happens to be cord. */
+  while (parts.length > 1 && FABRIC_WORDS.has(parts[parts.length - 1])) {
+    parts.pop();
+  }
+
+  /* One garment, so one noun — the card says OVERSHIRT, not OVERSHIRTS.
+     Except where the plural is the word: nobody wears a pant. */
+  const last = parts[parts.length - 1];
+  if (last && !ALWAYS_PLURAL.has(last)) {
+    /* "accessories" is not "accessorie". */
+    if (/ies$/.test(last)) parts[parts.length - 1] = `${last.slice(0, -3)}y`;
+    else if (/[^s]s$/.test(last)) parts[parts.length - 1] = last.slice(0, -1);
+  }
+
+  const noun = parts.join(" ").replace(/\s+/g, " ").trim();
+  if (!noun || /^\d/.test(noun) || NOT_A_NOUN.has(noun)) return fallback;
+  return noun;
+}
+
 export function slotOf(...texts: (string | undefined)[]): Slot | null {
   const blob = texts.filter(Boolean).join(" ").toLowerCase();
   for (const [slot, pattern] of SLOT_RULES) {
@@ -306,12 +372,14 @@ export function classify(
       aesthetic: brand.aesthetic,
       handle,
       title: title_,
-      /* The brand's own noun, lowercased for the mono label. Falls back to the
-         slot when the type is a season rather than a garment. */
-      category: (ptype && !/^\s*$/.test(ptype) && !/^(spring|summer|fall|winter|holiday|core|\d)/i.test(ptype)
-        ? ptype
-        : slot
-      ).toLowerCase(),
+      /* The brand's own noun, cleaned for the mono label and the alt text.
+         Falls back to the slot when the type is a season rather than a
+         garment, which is how Dôen files everything. */
+      category:
+        ptype.trim() &&
+        !/^(spring|summer|fall|winter|holiday|core|\d)/i.test(ptype)
+          ? garmentNoun(ptype, slot.toLowerCase())
+          : slot.toLowerCase(),
       slot,
       price,
       colourWord: fam.word,
