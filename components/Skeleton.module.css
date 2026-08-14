@@ -1,0 +1,169 @@
+/* Waiting shapes.
+
+   The pulse is a slow opacity breath rather than the sweeping highlight most
+   skeleton libraries use. A sweep is a second kind of motion the app does not
+   otherwise have, and it draws the eye to the loading state, which is the one
+   thing on screen that is not the point. This just softly says "not yet". */
+
+.pulse,
+.field,
+.line,
+.brand,
+.title,
+.price,
+.heading,
+.paragraph,
+.paragraphShort,
+.button,
+.cover,
+.hero {
+  background: var(--surface-sunken);
+  animation: teBreathe 1.6s var(--ease-inout) infinite;
+}
+
+@keyframes teBreathe {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.55;
+  }
+}
+
+/* Someone who has asked for less movement gets a still shape, not a pulsing
+   one. globals.css shortens durations globally, which on an infinite
+   animation would make it flicker rather than stop. */
+@media (prefers-reduced-motion: reduce) {
+  .pulse,
+  .field,
+  .line,
+  .brand,
+  .title,
+  .price,
+  .heading,
+  .paragraph,
+  .paragraphShort,
+  .button,
+  .cover,
+  .hero {
+    animation: none;
+  }
+}
+
+/* ---- the masonry, matching PieceGrid exactly ---- */
+
+.grid {
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 0;
+  min-width: 0;
+  gap: var(--space-4);
+}
+
+.card {
+  width: 100%;
+}
+
+.field {
+  width: 100%;
+  border-radius: var(--radius-xl);
+}
+
+/* ---- the type under a card, at the real sizes ---- */
+
+.brand {
+  width: 38%;
+  height: 7px;
+  margin-top: 9px;
+  border-radius: var(--radius-sm);
+}
+
+.title {
+  width: 76%;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.price {
+  width: 26%;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.line {
+  height: 10px;
+  border-radius: var(--radius-sm);
+}
+
+/* ---- product detail ---- */
+
+.product {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.hero {
+  flex: none;
+  width: 100%;
+  height: 296px;
+}
+
+.body {
+  padding: var(--space-4);
+}
+
+.heading {
+  width: 62%;
+  height: 22px;
+  margin-top: 10px;
+  border-radius: var(--radius-sm);
+}
+
+.paragraph {
+  width: 100%;
+  height: 10px;
+  margin-top: var(--space-4);
+  border-radius: var(--radius-sm);
+}
+
+.paragraphShort {
+  width: 70%;
+  height: 10px;
+  margin-top: 6px;
+  border-radius: var(--radius-sm);
+}
+
+.button {
+  width: 100%;
+  height: 46px;
+  margin-top: var(--space-4);
+  border-radius: var(--radius-pill);
+}
+
+/* ---- boards ---- */
+
+.boards {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+.board {
+  width: 100%;
+}
+
+.cover {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  border-radius: var(--radius-xl);
+}

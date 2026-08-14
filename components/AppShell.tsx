@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import AppNav from "./AppNav";
+import OfflineNotice from "./OfflineNotice";
 import styles from "./AppShell.module.css";
 
 /**
@@ -13,6 +14,8 @@ export default function AppShell({ children }: { children: ReactNode }) {
       <div className={styles.screen}>
         {children}
         <AppNav />
+        {/* Sits over the tab bar when the network goes, and only then. */}
+        <OfflineNotice />
       </div>
     </div>
   );
