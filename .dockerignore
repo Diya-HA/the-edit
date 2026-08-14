@@ -1,0 +1,35 @@
+# Everything the image builds for itself, or has no business carrying.
+#
+# Without this, `COPY . .` in the Dockerfile drops the host's node_modules on
+# top of the one `npm ci` just installed on alpine. It happens to work today —
+# both sets of platform binaries end up present and sharp picks the right one
+# at runtime — but it is accidental rather than intended, and it is the same
+# class of problem as the Prisma pin: a host artefact deciding what runs in the
+# container.
+node_modules
+.next
+
+# Local state and secrets. DATABASE_URL comes from the platform in production.
+.env
+.env.*
+!.env.example
+docker-compose.yml
+
+# Nothing here is reachable from the running app.
+.git
+.github
+.claude
+.playwright-mcp
+docs
+deck
+design
+prototypes
+build
+_to_delete
+*.md
+!AGENTS.md
+
+# Editor and OS litter.
+.DS_Store
+*.log
+tsconfig.tsbuildinfo
