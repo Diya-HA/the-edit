@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { EditView, ProductView } from "@/lib/data";
+import { IMAGE_WIDTH } from "@/lib/images";
+import { formatPrice } from "@/lib/price";
 import Button from "../Button";
 import CanvasSwatch from "../CanvasSwatch";
 import Toast from "../Toast";
@@ -35,6 +37,11 @@ export default function ProductScreen({
         <div className={styles.hero}>
           <CanvasSwatch
             color={product.tone}
+            image={product.image}
+            ground={product.ground}
+            alt={`${product.title} — ${product.category} by ${product.brand}`}
+            imageWidth={IMAGE_WIDTH.hero}
+            priority
             height={296}
             radius="0"
             label={product.category}
@@ -69,9 +76,9 @@ export default function ProductScreen({
           <h1 className={styles.title}>{product.title}</h1>
 
           <div className={styles.prices}>
-            <span className={styles.price}>${product.price}</span>
+            <span className={styles.price}>{formatPrice(product.price)}</span>
             {product.wasPrice && (
-              <span className={styles.was}>${product.wasPrice}</span>
+              <span className={styles.was}>{formatPrice(product.wasPrice)}</span>
             )}
           </div>
 
@@ -104,12 +111,15 @@ export default function ProductScreen({
                   >
                     <CanvasSwatch
                       color={p.tone}
+                      image={p.image}
+                      ground={p.ground}
+                      alt={`${p.title} — ${p.category} by ${p.brand}`}
                       height={108}
                       radius="var(--radius-md)"
                       label={p.category}
                     />
                     <span className={styles.railTitle}>{p.title}</span>
-                    <span className={styles.railPrice}>${p.price}</span>
+                    <span className={styles.railPrice}>{formatPrice(p.price)}</span>
                   </button>
                 ))}
               </div>

@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { prisma } from "@/lib/prisma";
 import { getCurrentUser } from "@/lib/session";
+import { CEILINGS, nextCeiling } from "@/lib/budget";
 import { upsertOutfit } from "@/prisma/outfits";
 import type { OutfitInput } from "@/prisma/outfits";
 
@@ -254,4 +255,66 @@ export async function createOutfit(input: OutfitInput) {
   const result = await upsertOutfit(prisma, { source: "AGENT", ...input });
   revalidatePath("/", "layout");
   return result;
+}
+
+/** Set what counts as a lot for one piece. Null is no ceiling at all. */
+export async function setPriceCeiling(
+  value: number | null,
+): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  if (value !== null && !CEILINGS.includes(value)) {
+    throw new Error("Not one of the offered ceilings.");
+  }
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: { priceCeiling: value },
+  });
+
+  revalidatePath("/", "layout");
+  return {
+    saved: true,
+    message:
+      value === null
+        ? "No ceiling. Everything is in the feed"
+        : `Under $${value} from now on`,
+  };
+}
+
+/** Lift the ceiling to the next rung up, which is what the feed note offers. */
+export async function raisePriceCeiling(): Promise<SaveResult> {
+  const user = await getCurrentUser();
+  return setPriceCeiling(nextCeiling(user.priceCeiling));
+}
+
+/**
+ * Write down what the welcome asked. Until now it recorded only the chosen
+ * look and let the colours and the budget go, which made two of its three
+ * questions decorative.
+ */
+export async function completeOnboarding(input: {
+  aestheticId: string;
+  palette: string[];
+  priceCeiling: number | null;
+}): Promise<SaveResult> {
+  const user = await getCurrentUser();
+
+  const look = await prisma.aesthetic.findUnique({
+    where: { id: input.aestheticId },
+  });
+  if (!look) throw new Error("No such look.");
+
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      activeAestheticId: input.aestheticId,
+      palette: input.palette,
+      priceCeiling: input.priceCeiling,
+      onboardedAt: new Date(),
+    },
+  });
+
+  revalidatePath("/", "layout");
+  return { saved: true, message: `${look.name} it is ♥` };
 }

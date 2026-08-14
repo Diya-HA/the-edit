@@ -1,6 +1,12 @@
 import AppShell from "@/components/AppShell";
 import FeedScreen from "@/components/screens/FeedScreen";
-import { getAesthetics, getEdits, getFeed, getPalette } from "@/lib/data";
+import {
+  getAesthetics,
+  getBudgetReach,
+  getEdits,
+  getFeed,
+  getPalette,
+} from "@/lib/data";
 import { getCurrentUser } from "@/lib/session";
 
 /* Every screen reads the database per request. Without this Next would try to
@@ -39,11 +45,22 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
   const raw = typeof params.tint === "string" ? params.tint : undefined;
   const activeTint = palette.some((p) => p.token === raw) ? raw : undefined;
 
-  const products = await getFeed({
-    userId: user.id,
-    aestheticId: active.id,
-    colorTokens: activeTint ? [activeTint] : [],
-  });
+  /* The feed honours what counts as a lot for one piece. When that leaves
+     most of the look out of reach, the note above it says so rather than
+     letting the feed just be short. */
+  const [products, budget] = await Promise.all([
+    getFeed({
+      userId: user.id,
+      aestheticId: active.id,
+      colorTokens: activeTint ? [activeTint] : [],
+      priceCeiling: user.priceCeiling,
+    }),
+    getBudgetReach({
+      aestheticId: active.id,
+      aestheticSlug: active.slug,
+      priceCeiling: user.priceCeiling,
+    }),
+  ]);
 
   return (
     <AppShell>
@@ -54,6 +71,7 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
         edits={edits}
         activeSlug={active.slug}
         activeTint={activeTint}
+        budget={budget}
         initials={user.initials}
       />
     </AppShell>

@@ -62,6 +62,23 @@ model User {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
+  /// When onboarding was completed. Its absence is what separates someone who
+  /// has never been asked from someone who answered "no ceiling" — without it
+  /// both are a null priceCeiling and the app cannot tell them apart.
+  onboardedAt DateTime?
+
+  /// What counts as a lot for one piece, in whole dollars. Null once
+  /// onboardedAt is set means the answer was "no ceiling"; null before it
+  /// means the question has not been put yet.
+  priceCeiling Int?
+
+  /// Palette families chosen at onboarding, as design tokens —
+  /// ["--fabric-sage", "--fabric-cream"]. An array rather than a join table
+  /// for the same reason COLOR was dropped from v1: the palette is a fixed
+  /// set of design tokens, not user data, so a table would only ever be read
+  /// as a lookup. Empty means no preference, which is not the same as none.
+  palette String[]
+
   activeAestheticId String?    @db.Uuid
   activeAesthetic   Aesthetic? @relation(fields: [activeAestheticId], references: [id], onDelete: SetNull)
 
@@ -256,6 +273,26 @@ model Product {
   /// the product until curated sets exist.
   why      String?
   imageUrl String?
+
+  /// The photograph's own background, measured from the border of the image.
+  /// Painted behind the photograph so the card's field and the picture meet
+  /// without a seam. Null means unmeasured, and the card falls back to
+  /// colorHex — the tone of the cloth — which is what it did before.
+  bgHex           String?   @db.Char(7)
+  /// How packshot-like the photograph is, 0-100. High is a uniform light
+  /// ground with the garment isolated; low is a lifestyle shot. Chooses
+  /// between a brand's images at ingest, and prefers the calmer pictures on
+  /// the surfaces that mix aesthetics — trending, and search across
+  /// everything. Cohesion elsewhere is per-aesthetic, so it does not apply.
+  packshotScore   Int?
+  /// So a re-measure can find what is stale without re-scraping.
+  imageMeasuredAt DateTime?
+
+  /// Where this piece came from. The seed plants SEED and an agent run writes
+  /// AGENT, which is what lets the seed clear out pieces that have left the
+  /// catalogue without deleting the ones the demo just created. Without it,
+  /// "not in catalogue.json" means both "retired" and "written a minute ago".
+  source Source @default(SEED)
   /// Where the affiliate click goes.
   productUrl String?
   inStock  Boolean  @default(true)

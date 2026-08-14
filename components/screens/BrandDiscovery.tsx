@@ -4,6 +4,7 @@ import type { CSSProperties } from "react";
 import { toggleFollow } from "@/app/actions";
 import type { BrandCard } from "@/lib/data";
 import { BANDS } from "@/lib/brands";
+import { formatPrice } from "@/lib/price";
 import type { BrandSort } from "@/lib/brands";
 import Chip from "../Chip";
 import styles from "./BrandDiscovery.module.css";
@@ -125,7 +126,7 @@ export default function BrandDiscovery({
                 </div>
 
                 <div className={styles.stats}>
-                  {b.pieceCount} pieces · ${b.priceFrom}–${b.priceTo}
+                  {b.pieceCount} pieces · {formatPrice(b.priceFrom)}–{formatPrice(b.priceTo)}
                 </div>
               </div>
             </article>

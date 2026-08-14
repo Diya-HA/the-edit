@@ -1,6 +1,7 @@
 "use client";
 
 import type { CSSProperties, MouseEvent } from "react";
+import { formatPrice } from "@/lib/price";
 import Badge from "./Badge";
 import CanvasSwatch from "./CanvasSwatch";
 import styles from "./ProductCard.module.css";
@@ -10,8 +11,12 @@ export type ProductCardProps = {
   title: string;
   price: number;
   was?: number;
-  /** The fabric tone that fills the placeholder. */
+  /** The fabric tone. Fills the field, and shows under a loading photograph. */
   color?: string;
+  /** The brand's photograph, when the catalogue has one. */
+  image?: string | null;
+  /** The photograph's measured background, painted as the field. */
+  ground?: string | null;
   /** Garment noun, named along the bottom of the placeholder. */
   category?: string;
   height?: number | string;
@@ -36,6 +41,8 @@ export default function ProductCard({
   price,
   was,
   color = "var(--fabric-neutral)",
+  image,
+  ground,
   category,
   height,
   aspect,
@@ -58,8 +65,8 @@ export default function ProductCard({
 
   const prices = (
     <div className={styles.prices}>
-      <span className={styles.price}>${price}</span>
-      {was && <span className={styles.was}>${was}</span>}
+      <span className={styles.price}>{formatPrice(price)}</span>
+      {was && <span className={styles.was}>{formatPrice(was)}</span>}
     </div>
   );
 
@@ -73,6 +80,9 @@ export default function ProductCard({
       <div className={styles.frame} onClick={onOpen}>
         <CanvasSwatch
           color={color}
+          image={image}
+          ground={ground}
+          alt={category ? `${title} — ${category} by ${brand}` : `${title} by ${brand}`}
           height={fieldHeight}
           aspect={aspect}
           radius="var(--radius-xl)"

@@ -84,10 +84,21 @@ looser at small. No widows on headings or two-line product titles. Consistent
 truncation: a product title that overflows should ellipsis on a fixed line count,
 never reflow the card.
 
-**Spacing rhythm.** Audit every screen against the 4px grid and the `--gutter`.
-Vertical rhythm between sections should be consistent, not incidental. Optical
-alignment matters more than mathematical — a mono price and a sans title on the
-same baseline usually need a nudge.
+**Spacing rhythm.** ~~Audit every screen against the 4px grid and the
+`--gutter`.~~ **Corrected 14 August.** This asked for the wrong thing, and it
+would have made the app disagree with its own source of truth.
+
+The design is not on a 4px grid and never was. The turn 3 file uses 10px 26
+times, 9px 23 times, 11px 21 times and 6px 25 times, and `--gutter` is itself
+18px. Auditing the app onto a 4px scale would have meant rewriting spacing
+*away* from the design this brief names as the source of truth two sections
+above.
+
+The rhythm is optical, and optical wins. So: rhythm between sections should be
+consistent rather than incidental, and every value should come from a token —
+but the scale is the design's, not an arithmetic one imposed on top of it. If a
+true 4px system is ever wanted, it is a change to make in `design/` first and
+transcribe from there, never the other way round.
 
 **Imagery treatment.** Consistent corner radius per surface type. No image
 touching a screen edge unless it's meant to be full-bleed. Blur-up or dominant-

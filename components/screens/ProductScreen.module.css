@@ -130,6 +130,7 @@
 }
 
 .price {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-md);
   font-weight: var(--fw-bold);
@@ -137,6 +138,7 @@
 }
 
 .was {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-xs);
   color: var(--text-muted);
@@ -181,6 +183,18 @@
   display: none;
 }
 
+/* Same affordance as the outfit and trending rows. */
+.rail::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex: 0 0 var(--space-6);
+  align-self: stretch;
+  margin-left: calc(var(--space-6) * -1);
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface-app) 85%);
+}
+
 .railItem {
   display: flex;
   flex-direction: column;
@@ -204,6 +218,7 @@
 }
 
 .railPrice {
+  font-variant-numeric: tabular-nums;
   display: block;
   margin-top: 2px;
   font-family: var(--font-mono);

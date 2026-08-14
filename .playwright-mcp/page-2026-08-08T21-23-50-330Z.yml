@@ -1,0 +1,39 @@
+- generic [active] [ref=f39e1]:
+  - alert [ref=f39e559]
+  - generic [ref=f39e561]:
+    - generic [ref=f39e563]:
+      - generic [ref=f39e564]:
+        - img "Dancing With The Damned Blazer — blazer by Killstar" [ref=f39e566]
+        - generic [ref=f39e567]:
+          - button "Back" [ref=f39e568] [cursor=pointer]: ‹
+          - button "Save" [ref=f39e569] [cursor=pointer]: ♡
+      - generic [ref=f39e570]:
+        - generic [ref=f39e571]: Killstar
+        - heading "Dancing With The Damned Blazer" [level=1] [ref=f39e572]
+        - generic [ref=f39e573]: $30
+        - paragraph [ref=f39e575]: Cut short so it clears everything underneath. Velvet and moons, grounded by black.
+        - generic [ref=f39e576]:
+          - button "Keep it ♡" [ref=f39e577] [cursor=pointer]
+          - button "Buy" [ref=f39e578] [cursor=pointer]
+        - generic [ref=f39e579]: Sits well with
+        - generic [ref=f39e580]:
+          - button "All Caught Up Fishnet Tights [B] — leggings by Killstar All Caught Up Fishnet Tights [B] $19" [ref=f39e581] [cursor=pointer]:
+            - img "All Caught Up Fishnet Tights [B] — leggings by Killstar" [ref=f39e583]
+            - generic [ref=f39e584]: All Caught Up Fishnet Tights [B]
+            - generic [ref=f39e585]: $19
+          - button "Ardinea Footless Tights — leggings by Killstar Ardinea Footless Tights $19" [ref=f39e586] [cursor=pointer]:
+            - img "Ardinea Footless Tights — leggings by Killstar" [ref=f39e588]
+            - generic [ref=f39e589]: Ardinea Footless Tights
+            - generic [ref=f39e590]: $19
+          - button "Batty Blaze Cardigan — cardigan by Killstar Batty Blaze Cardigan $34" [ref=f39e591] [cursor=pointer]:
+            - img "Batty Blaze Cardigan — cardigan by Killstar" [ref=f39e593]
+            - generic [ref=f39e594]: Batty Blaze Cardigan
+            - generic [ref=f39e595]: $34
+          - button "Blood Lusted Sweater — sweater by Killstar Blood Lusted Sweater $15" [ref=f39e596] [cursor=pointer]:
+            - img "Blood Lusted Sweater — sweater by Killstar" [ref=f39e598]
+            - generic [ref=f39e599]: Blood Lusted Sweater
+            - generic [ref=f39e600]: $15
+    - navigation [ref=f39e601]:
+      - button "Home" [ref=f39e602] [cursor=pointer]
+      - button "Search" [ref=f39e609] [cursor=pointer]
+      - button "Boards" [ref=f39e614] [cursor=pointer]

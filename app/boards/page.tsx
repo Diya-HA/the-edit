@@ -15,6 +15,7 @@ export default async function BoardsPage() {
         edits={edits}
         displayName={user.displayName}
         initials={user.initials}
+        priceCeiling={user.priceCeiling}
       />
     </AppShell>
   );

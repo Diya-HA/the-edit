@@ -1,6 +1,7 @@
 import { createMcpHandler } from "mcp-handler";
 import { z } from "zod";
 import { prisma } from "@/lib/prisma";
+import { measureImage } from "@/lib/measure";
 import { OutfitInputError, upsertOutfit } from "@/prisma/outfits";
 
 /**
@@ -162,6 +163,21 @@ const handler = createMcpHandler(
                 line: z.string().optional(),
                 why: z.string().optional().describe("The skill's WHY line"),
                 imageUrl: z.string().optional(),
+                bgHex: z
+                  .string()
+                  .regex(/^#[0-9A-Fa-f]{6}$/)
+                  .optional()
+                  .describe(
+                    "The photograph's own background colour. Measured here from imageUrl when omitted.",
+                  ),
+                packshotScore: z
+                  .number()
+                  .min(0)
+                  .max(100)
+                  .optional()
+                  .describe(
+                    "How packshot-like the photograph is, 0-100. Measured here from imageUrl when omitted.",
+                  ),
                 productUrl: z.string().optional(),
               }),
             )
@@ -193,6 +209,24 @@ const handler = createMcpHandler(
 
         const written: string[] = [];
         for (const p of input.products) {
+          /* Photography measurement travels with the piece rather than being
+             backfilled afterwards. The agent that writes here scrapes image
+             URLs, not pixels, so it usually cannot supply these — and a piece
+             written mid-demo with no measurement would render on its tint
+             while everything around it sits on a matched ground, which is a
+             visible seam in the one moment that matters. Measuring here costs
+             one small request per piece and needs no second command.
+             It is allowed to fail: null falls back to the tint. */
+          let bgHex = p.bgHex ?? null;
+          let packshotScore = p.packshotScore ?? null;
+          if (p.imageUrl && (bgHex === null || packshotScore === null)) {
+            const m = await measureImage(p.imageUrl);
+            if (m) {
+              bgHex = bgHex ?? m.bgHex;
+              packshotScore = packshotScore ?? m.packshotScore;
+            }
+          }
+
           const data = {
             slug: p.slug,
             title: p.title,
@@ -205,6 +239,9 @@ const handler = createMcpHandler(
             line: p.line ?? null,
             why: p.why ?? null,
             imageUrl: p.imageUrl ?? null,
+            bgHex,
+            packshotScore,
+            imageMeasuredAt: bgHex === null ? null : new Date(),
             productUrl: p.productUrl ?? null,
             inStock: true,
             brandId: brand.id,
@@ -212,8 +249,14 @@ const handler = createMcpHandler(
           };
           await prisma.product.upsert({
             where: { slug: p.slug },
+            /* Provenance is set when a piece is created and never rewritten.
+               A run legitimately updates pieces the seed planted — it is the
+               same garment under the same handle, with today's price — and
+               stamping those AGENT would both exempt them from the seed's own
+               cleanup and make "remove what the run added" delete part of the
+               catalogue. What the run *introduced* is what carries AGENT. */
             update: data,
-            create: data,
+            create: { ...data, source: "AGENT" as const },
           });
           written.push(p.slug);
         }

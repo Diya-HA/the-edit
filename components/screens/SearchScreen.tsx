@@ -9,6 +9,7 @@ import type {
   OutfitView,
   ProductView,
 } from "@/lib/data";
+import { thumbBackground } from "@/lib/images";
 import Chip from "../Chip";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
@@ -129,7 +130,12 @@ export default function SearchScreen({
                 >
                   <span
                     className={styles.trendThumb}
-                    style={{ "--trend-tone": p.tone } as CSSProperties}
+                    style={
+                      {
+                        "--trend-tone": p.ground ?? p.tone,
+                        "--trend-photo": thumbBackground(p.image),
+                      } as CSSProperties
+                    }
                   />
                   <span className={styles.trendTitle}>{p.title}</span>
                 </button>
