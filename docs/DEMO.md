@@ -94,6 +94,32 @@ scraper dressed up as one.
 
 ---
 
+## Step 1b — the beat straight after · ~20s
+
+Go to **Home → Balletcore off duty**.
+
+Say: *"That look was one brand, because Uskees is the only label we have in
+Quiet utility. Here's what it looks like when there are two."*
+
+Scroll a few cards. Repetto and Nagnata sit side by side — ballet flats from a
+Paris dance house next to Australian ribbed knit — on the same palette, reading
+as one wardrobe. Then **Search → Outfits → Balletcore off duty** and open
+either look: every piece is a different label.
+
+**Why this beat matters.** The run can only show one aesthetic, and Quiet
+utility has one brand in it, so the outfit it builds is Uskees plus the shelf.
+The claim of the product is *one aesthetic, every brand* — and Balletcore is
+the aesthetic where that is literally true. It is the only one of the four that
+more than one label can dress, which is why it was chosen as the demo
+aesthetic. The run proves the pipeline; this screen proves the point.
+
+If someone asks why the run didn't use Balletcore: the scrape is proven against
+Uskees, and swapping a brand's listing page under a live demo is the kind of
+thing that fails on stage. The catalogue behind Balletcore was built by the
+same pipeline, on a different day.
+
+---
+
 ## Step 2 — show it is real · ~30s
 
 1. **Open the new outfit's pieces.** The prices are today's, several of them
@@ -140,6 +166,71 @@ one, anyone who finds the URL can write outfits into your production
 catalogue. With `MCP_WRITE_TOKEN` set, every request must present it; with it
 unset, the deployed app refuses writes but still answers reads. Either way you
 are safe — you just can't do the production demo until you set it.
+
+### Rehearsing it against production, then putting it back
+
+Do this once before the day, not on it.
+
+**1. Check the deploy actually landed.** Before anything else, open the live
+site and confirm it is this app and not the old one:
+
+- **Home** shows photographs of clothes, not flat colour rectangles
+- Brand names under the cards read **Uskees, Dôen, Repetto, Nagnata,
+  Killstar** — if you see Margaux, Ciel, Leonie or Halle, the deploy has not
+  landed and everything below will write into the wrong catalogue
+- **Search → Outfits** shows **8**
+
+If the site still shows the invented brands, wait for the Action to finish and
+give the container a minute to seed, then reload.
+
+**2. Run it.**
+
+```bash
+export MCP_WRITE_TOKEN="the-same-string"
+TARGET=production ./scripts/demo.sh
+```
+
+Same 2m30s. The header block will say `target production` — check that before
+you let it run.
+
+**3. Put production back.** A container restart will *not* do it. The seed is
+all upserts and it deliberately leaves anything an agent wrote alone, so the
+demo's outfit survives a restart. That is correct behaviour, and it is why
+there is a script:
+
+```bash
+# The production connection string, from the Azure portal — the Container App's
+# environment variables. Set it for this one command only.
+DATABASE_URL="postgresql://…" node --experimental-strip-types scripts/reset-demo.ts
+```
+
+That is a **dry run**. It prints which database it is pointed at, what it would
+remove, and what it will leave alone. Read that list. Then:
+
+```bash
+DATABASE_URL="postgresql://…" node --experimental-strip-types scripts/reset-demo.ts --confirm
+```
+
+It removes only what a run introduced — pieces and outfits stamped `AGENT` when
+they were created. Everything the seed planted is untouched, including pieces
+the run updated with today's price.
+
+**Do not put the production URL in `.env`.** The next local command you run
+would pick it up, and `prisma migrate reset` against production would drop the
+site's database.
+
+**4. Confirm the reset on the live site.** Four things, all visible:
+
+| Where | What you should see |
+|---|---|
+| **Search → Outfits** | **8** outfits, and the one the run created is gone — it was named in the run's last line |
+| **Home → Quiet utility** | **25** pieces. Scroll to the bottom and count if you like; the run adds two or three |
+| **Home → Balletcore off duty** | **36** pieces, unchanged — nothing the run does should touch another aesthetic |
+| **Boards** | `4 boards · 14 pieces` under Aria Lane, unchanged |
+
+The other three aesthetics should read **40** for Soft romance and **42** for
+Whimsigoth. If Quiet utility is 27 and Outfits is 9, the reset did not run —
+check you passed `--confirm`.
 
 ---
 

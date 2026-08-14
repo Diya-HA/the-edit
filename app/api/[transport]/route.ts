@@ -244,16 +244,19 @@ const handler = createMcpHandler(
             imageMeasuredAt: bgHex === null ? null : new Date(),
             productUrl: p.productUrl ?? null,
             inStock: true,
-            /* Written by a run, not planted by the seed. This is what keeps a
-               container restart from sweeping away what the demo made. */
-            source: "AGENT" as const,
             brandId: brand.id,
             aestheticId: aesthetic.id,
           };
           await prisma.product.upsert({
             where: { slug: p.slug },
+            /* Provenance is set when a piece is created and never rewritten.
+               A run legitimately updates pieces the seed planted — it is the
+               same garment under the same handle, with today's price — and
+               stamping those AGENT would both exempt them from the seed's own
+               cleanup and make "remove what the run added" delete part of the
+               catalogue. What the run *introduced* is what carries AGENT. */
             update: data,
-            create: data,
+            create: { ...data, source: "AGENT" as const },
           });
           written.push(p.slug);
         }
