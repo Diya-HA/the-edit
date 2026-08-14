@@ -1,0 +1,59 @@
+/* The one moment the app is honest with someone about what it cannot show
+   them, so it should sound like the app rather than like a system.
+
+   A washed tint field, not grey: the same warm pigment the welcome and the
+   milestones use, at the lightest step, so it reads as the stylist talking
+   rather than a validation message. No icon, no border, no amber. */
+
+.note {
+  position: relative;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-4);
+  border-radius: var(--radius-xl);
+  /* The tint at a little over half strength against the canvas. At full it
+     reads as a pink alert; softened it reads as a washed field, which is what
+     the welcome and the milestones use. */
+  background: color-mix(in srgb, var(--tint-rose) 55%, var(--canvas-0));
+  overflow: hidden;
+}
+
+/* The pointillist stipple the design system puts on painted fields, held
+   right down. It is what stops the tint reading as a flat alert box. */
+.note::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: var(--texture-pointillism);
+  background-size: var(--texture-pointillism-size);
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.body {
+  position: relative;
+  z-index: 1;
+  margin: 0;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: var(--fs-md);
+  line-height: 1.4;
+  color: var(--ink-0);
+}
+
+/* The count is the fact in the sentence, so it is set in the same mono the
+   prices use and stops being a word in a paragraph. */
+.count {
+  font-family: var(--font-mono);
+  font-style: normal;
+  font-size: 0.85em;
+  font-variant-numeric: tabular-nums;
+}
+
+.actions {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+}

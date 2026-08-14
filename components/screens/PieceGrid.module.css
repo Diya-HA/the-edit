@@ -1,18 +1,60 @@
 /* Two-column masonry. Cards keep their natural height, so the columns
-   stagger the way the reference feed does. */
+   stagger the way the reference feed does.
+
+   Two flex columns rather than CSS `columns: 2`: that balances by height,
+   which cuts the list in half and puts item i beside item i + n/2 — see the
+   note in PieceGrid.tsx. Dealing alternately makes placement predictable, and
+   fixes a reading order that otherwise runs down one side and back up. */
 
 .grid {
-  columns: 2;
-  column-gap: 11px;
+  display: flex;
+  align-items: flex-start;
+  gap: 11px;
   transition: opacity var(--dur-med) var(--ease-out),
     filter var(--dur-med) var(--ease-out);
 }
 
+.column {
+  display: flex;
+  flex-direction: column;
+  /* Equal widths whatever the cards inside do; min-width:0 stops a long
+     unbroken title from pushing one column wider than the other. */
+  flex: 1 1 0;
+  min-width: 0;
+  gap: var(--space-4);
+}
+
 .item {
-  break-inside: avoid;
-  display: inline-block;
   width: 100%;
-  margin-bottom: var(--space-4);
+  /* Cards arrive rather than appear: a short rise and fade, staggered so the
+     grid fills like a hand dealing rather than a page snapping on.
+
+     Staggered on mount, not on entering the viewport. The faithful reading of
+     the brief is an IntersectionObserver, but its failure mode is a card that
+     never becomes visible — if the observer does not fire, the content is
+     simply gone. On a feed this size a capped mount stagger reads the same and
+     cannot fail that way. */
+  animation: teCardIn var(--dur-med) var(--ease-out) both;
+  animation-delay: var(--stagger, 0ms);
+}
+
+@keyframes teCardIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Anyone who has asked for less movement gets none of this — globals.css
+   shortens the duration, and `both` would otherwise hold the start frame. */
+@media (prefers-reduced-motion: reduce) {
+  .item {
+    animation: none;
+  }
 }
 
 /* Filters being applied — the grid softens rather than jumping. */

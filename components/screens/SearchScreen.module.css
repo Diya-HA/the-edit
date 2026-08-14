@@ -255,6 +255,20 @@
   display: none;
 }
 
+/* Same affordance as the outfit row: the rail runs past the edge, so a fade
+   pinned there makes the clipped piece read as an invitation rather than a
+   bug. Sticky, so it holds the edge while the pieces slide under it. */
+.trendingRow::after {
+  content: "";
+  position: sticky;
+  right: 0;
+  flex: 0 0 var(--space-6);
+  align-self: stretch;
+  margin-left: calc(var(--space-6) * -1);
+  pointer-events: none;
+  background: linear-gradient(to right, transparent, var(--surface-app) 85%);
+}
+
 .trend {
   display: flex;
   flex-direction: column;
@@ -273,11 +287,14 @@
   aspect-ratio: 1 / 1;
   border-radius: var(--radius-md);
   background-color: var(--trend-tone);
+  background-image: var(--trend-photo, none);
+  background-size: cover;
+  background-position: center;
 }
 
 .trendTitle {
   display: block;
-  margin-top: 4px;
+  margin-top: var(--space-1);
   font-family: var(--font-sans);
   font-size: 9px;
   line-height: 1.2;

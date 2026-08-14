@@ -57,7 +57,7 @@
   background: none;
   border: none;
   box-shadow: none;
-  padding-right: 4px;
+  padding-right: var(--space-1);
 }
 
 .groupActive .withStar {

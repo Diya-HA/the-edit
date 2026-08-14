@@ -1,0 +1,39 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - generic [ref=f5e4]:
+      - generic [ref=f5e5]: AL
+      - generic [ref=f5e6]:
+        - generic [ref=f5e7]: Aria Lane
+        - generic [ref=f5e8]: 4 boards · 14 pieces
+    - generic [ref=f5e10]:
+      - generic [ref=f5e11]:
+        - button "Soft romance 5 pieces" [ref=f5e12] [cursor=pointer]:
+          - generic [ref=f5e18]: Soft romance
+          - generic [ref=f5e19]: 5 pieces
+        - button "Desk to dinner 3 pieces" [ref=f5e20] [cursor=pointer]:
+          - generic [ref=f5e26]: Desk to dinner
+          - generic [ref=f5e27]: 3 pieces
+        - button "Linen summer 4 pieces" [ref=f5e28] [cursor=pointer]:
+          - generic [ref=f5e34]: Linen summer
+          - generic [ref=f5e35]: 4 pieces
+        - button "One day 2 pieces" [ref=f5e36] [cursor=pointer]:
+          - generic [ref=f5e42]: One day
+          - generic [ref=f5e43]: 2 pieces
+      - generic [ref=f5e44]:
+        - generic [ref=f5e45]: Settings
+        - button "Sizes S · 27 · 38 ›" [ref=f5e46] [cursor=pointer]:
+          - generic [ref=f5e47]: Sizes
+          - generic [ref=f5e48]: S · 27 · 38 ›
+        - button "What counts as a lot $300 ›" [ref=f5e49] [cursor=pointer]:
+          - generic [ref=f5e50]: What counts as a lot
+          - generic [ref=f5e51]: $300 ›
+        - button "Redo the welcome ›" [ref=f5e52] [cursor=pointer]:
+          - generic [ref=f5e53]: Redo the welcome
+          - generic [ref=f5e54]: ›
+        - button "Sign out" [ref=f5e55] [cursor=pointer]
+    - navigation [ref=f5e56]:
+      - button "Home" [ref=f5e57] [cursor=pointer]
+      - button "Search" [ref=f5e64] [cursor=pointer]
+      - button "Boards" [ref=f5e69] [cursor=pointer]
+  - button "Open Next.js Dev Tools" [ref=f5e78] [cursor=pointer]
+  - alert [ref=f5e82]

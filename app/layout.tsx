@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import {
   Archivo,
   Instrument_Sans,
@@ -47,6 +47,28 @@ const newsreader = Newsreader({
 export const metadata: Metadata = {
   title: "The Edit",
   description: "One aesthetic, every brand.",
+  applicationName: "The Edit",
+  /* The URL gets shared, so the unfurl is part of the product. The image
+     itself is app/opengraph-image.tsx. */
+  openGraph: {
+    title: "The Edit",
+    description: "One aesthetic, every brand.",
+    siteName: "The Edit",
+    type: "website",
+  },
+  twitter: { card: "summary_large_image" },
+  /* Standalone, so "Add to Home Screen" opens without browser chrome. */
+  appleWebApp: { capable: true, title: "The Edit", statusBarStyle: "default" },
+};
+
+export const viewport: Viewport = {
+  /* viewport-fit=cover is what makes the safe-area insets non-zero; without
+     it the notch and the home indicator simply overlap the app. globals.css
+     spends them on the shell. */
+  viewportFit: "cover",
+  width: "device-width",
+  initialScale: 1,
+  themeColor: "#0E0E10",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

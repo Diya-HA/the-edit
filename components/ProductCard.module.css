@@ -91,6 +91,18 @@
   font-weight: var(--fw-medium);
   line-height: 1.25;
   color: var(--text-strong);
+  /* Two lines, then an ellipsis. Real titles run from "Overshirt" to
+     "Vassago's Revenge Long Sleeve Top", and without this a long one grows the
+     card and shunts everything below it down the column. The height is fixed
+     whatever the title does. */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  /* Never break a word mid-way; wrap at spaces and let the ellipsis do the
+     rest. `balance` keeps a two-word title from leaving one word alone. */
+  overflow-wrap: break-word;
+  text-wrap: balance;
 }
 
 .prices {
@@ -101,6 +113,7 @@
 }
 
 .price {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-price);
   font-weight: var(--fw-bold);
@@ -108,6 +121,7 @@
 }
 
 .was {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-mono);
   font-size: var(--fs-meta);
   color: var(--text-muted);

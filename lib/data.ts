@@ -1,4 +1,6 @@
 import { prisma } from "./prisma";
+import { neighboursOf } from "./aesthetics";
+import { spaceByStyle } from "./feed";
 
 /* Prisma returns Decimal for money and Date for timestamps, neither of which
    crosses the server/client boundary. Everything here returns plain data. */
@@ -12,8 +14,18 @@ export type ProductView = {
   category: string;
   price: number;
   wasPrice: number | null;
-  /** The tone of the cloth. Fills the placeholder. */
+  /** The tone of the cloth. Fills the field behind the photograph, and
+      stands in for it entirely when there is no photograph. */
   tone: string;
+  /** The brand's own photograph, when the catalogue has one. */
+  image: string | null;
+  /**
+   * The photograph's own background, measured at ingest. Painted behind
+   * the picture so the field and the image meet without a seam — which is
+   * what lets five brands shooting on five different whites read as one
+   * edit. Null when unmeasured, and then the tone stands in as before.
+   */
+  ground: string | null;
   /** Palette family this groups into, for the filter row. */
   family: string;
   familyName: string;
@@ -44,6 +56,9 @@ const productSelect = {
   colorHex: true,
   line: true,
   why: true,
+  imageUrl: true,
+  bgHex: true,
+  packshotScore: true,
   brand: { select: { name: true } },
 } as const;
 
@@ -59,6 +74,9 @@ type ProductRow = {
   colorHex: string;
   line: string | null;
   why: string | null;
+  imageUrl: string | null;
+  bgHex: string | null;
+  packshotScore: number | null;
   brand: { name: string };
 };
 
@@ -72,6 +90,8 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     price: Number(p.price),
     wasPrice: p.wasPrice === null ? null : Number(p.wasPrice),
     tone: p.colorHex.trim(),
+    image: p.imageUrl,
+    ground: p.bgHex ? p.bgHex.trim() : null,
     family: `var(${p.colorToken})`,
     familyName: p.colorName,
     line: p.line,
@@ -139,8 +159,10 @@ export async function getFeed(opts: {
   userId: string;
   aestheticId: string;
   colorTokens?: string[];
+  /** What counts as a lot for one piece. Null is no ceiling. */
+  priceCeiling?: number | null;
 }): Promise<ProductView[]> {
-  const { userId, aestheticId, colorTokens = [] } = opts;
+  const { userId, aestheticId, colorTokens = [], priceCeiling = null } = opts;
 
   const [rows, savedIds] = await Promise.all([
     prisma.product.findMany({
@@ -148,6 +170,7 @@ export async function getFeed(opts: {
         aestheticId,
         inStock: true,
         ...(colorTokens.length ? { colorToken: { in: colorTokens } } : {}),
+        ...(priceCeiling ? { price: { lte: priceCeiling } } : {}),
       },
       orderBy: [{ wasPrice: { sort: "desc", nulls: "last" } }, { title: "asc" }],
       select: productSelect,
@@ -155,7 +178,86 @@ export async function getFeed(opts: {
     getSavedProductIds(userId),
   ]);
 
-  return rows.map((r) => toView(r as ProductRow, savedIds));
+  /* Alphabetical order puts a brand's whole family of one thing together —
+     five Sac polochon bags, four Demi-Pointes. Spread them out. */
+  return spaceByStyle(rows.map((r) => toView(r as ProductRow, savedIds)));
+}
+
+export type BudgetReach = {
+  /** Pieces in this look the shopper can actually see. */
+  within: number;
+  /** Pieces in this look altogether. */
+  total: number;
+  /** The ceiling this was measured against. */
+  ceiling: number;
+  /** The look with the most within reach, when there is a better one. */
+  better?: { slug: string; name: string; within: number };
+};
+
+/**
+ * How much of a look a ceiling leaves standing, and where there is more.
+ *
+ * Choosing an aesthetic currently chooses a price bracket — the median piece
+ * in Whimsigoth is a fraction of the median piece in Soft romance — which the
+ * onboarding flow implies is not the case. Rather than quietly showing a thin
+ * feed, the app says so, in the numbers the catalogue actually holds.
+ *
+ * Returns null when nothing needs saying: no ceiling set, or the look is
+ * mostly within it anyway.
+ */
+export async function getBudgetReach(opts: {
+  aestheticId: string;
+  aestheticSlug: string;
+  priceCeiling: number | null;
+}): Promise<BudgetReach | null> {
+  const { aestheticId, aestheticSlug, priceCeiling } = opts;
+  if (!priceCeiling) return null;
+
+  const [within, total] = await Promise.all([
+    prisma.product.count({
+      where: { aestheticId, inStock: true, price: { lte: priceCeiling } },
+    }),
+    prisma.product.count({ where: { aestheticId, inStock: true } }),
+  ]);
+
+  /* Only worth saying when the ceiling is hiding most of the look. Below that
+     the feed speaks for itself and a notice is just noise. */
+  if (total === 0 || within / total > 0.5) return null;
+
+  /* The nearest look that actually clears the ceiling, not the one with the
+     most in it. Suggesting whichever aesthetic happens to be cheapest measures
+     the catalogue rather than taste — see lib/aesthetics.ts. */
+  const neighbours = neighboursOf(aestheticSlug);
+  let better: BudgetReach["better"];
+
+  if (neighbours.length > 0) {
+    const rows = await prisma.aesthetic.findMany({
+      where: { slug: { in: neighbours } },
+      select: {
+        slug: true,
+        name: true,
+        _count: {
+          select: {
+            products: { where: { inStock: true, price: { lte: priceCeiling } } },
+          },
+        },
+      },
+    });
+    const bySlug = new Map(rows.map((r) => [r.slug, r]));
+
+    for (const slug of neighbours) {
+      const row = bySlug.get(slug);
+      if (!row) continue;
+      /* "Clears the ceiling" means comfortably more to look at, not one piece
+         more — walking someone sideways for a marginal gain is not a nudge. */
+      if (row._count.products >= within * 2 && row._count.products >= 8) {
+        better = { slug: row.slug, name: row.name, within: row._count.products };
+        break;
+      }
+    }
+  }
+
+  return { within, total, ceiling: priceCeiling, better };
 }
 
 /** One piece, by its handle. */
@@ -232,7 +334,14 @@ export async function searchPieces(opts: {
             }
           : {}),
       },
-      orderBy: { title: "asc" },
+      /* Packshots first. Searching across everything is one of only two
+          places the app puts four aesthetics side by side — cohesion is
+          per-aesthetic everywhere else — so this is where a calm picture
+          earns its place. Title breaks the tie, as before. */
+      orderBy: [
+        { packshotScore: { sort: "desc", nulls: "last" } },
+        { title: "asc" },
+      ],
       take,
       select: productSelect,
     }),
@@ -358,6 +467,10 @@ export type EditView = {
   count: number;
   /** Tones of the first three pieces, for the board cover. */
   tones: string[];
+  /** Their photographs, where they have one — same order as tones. */
+  covers: (string | null)[];
+  /** Each photograph's measured background, same order again. */
+  grounds: (string | null)[];
   holdsProduct?: boolean;
 };
 
@@ -372,7 +485,10 @@ export async function getEdits(
     include: {
       items: {
         orderBy: { addedAt: "asc" },
-        select: { productId: true, product: { select: { colorHex: true } } },
+        select: {
+          productId: true,
+          product: { select: { colorHex: true, imageUrl: true, bgHex: true } },
+        },
       },
     },
   });
@@ -383,6 +499,8 @@ export async function getEdits(
     note: e.note,
     count: e.items.length,
     tones: e.items.slice(0, 4).map((i) => i.product.colorHex.trim()),
+    covers: e.items.slice(0, 4).map((i) => i.product.imageUrl),
+    grounds: e.items.slice(0, 4).map((i) => i.product.bgHex?.trim() ?? null),
     holdsProduct: productId
       ? e.items.some((i) => i.productId === productId)
       : undefined,
@@ -415,6 +533,8 @@ export async function getEdit(
       note: row.note,
       count: items.length,
       tones: items.slice(0, 3).map((p) => p.tone),
+      covers: items.slice(0, 3).map((p) => p.image),
+      grounds: items.slice(0, 3).map((p) => p.ground),
     },
     items,
   };

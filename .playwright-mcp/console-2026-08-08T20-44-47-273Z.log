@@ -1,0 +1,336 @@
+[     188ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[     208ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[     646ms] [WARNING] Image with src "https://cdn.shopify.com/s/files/1/0761/6564/4616/products/t228-047-p1_1.jpg?v=1703247060&width=900" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  515134ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  515189ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS = [150, 300, 500, null] as const;
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  515343ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS = [150, 300, 500, null] as const;
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  515427ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  522507ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  522567ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  530348ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  530408ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  558612ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  558676ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  570660ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  590084ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[  590193ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  590193ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  590193ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  601241ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  601241ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  601241ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  627781ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  627781ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  627781ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  627781ms] [ERROR] ./components/screens/OnboardingScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useRouter } from "next/navigation";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, completeOnboarding } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AestheticView, PaletteEntry } from "@/lib/data";
+  8 | import Button from "../Button";
+  9 | import Chip from "../Chip";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/OnboardingScreen.tsx
+    ./app/welcome/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  627781ms] [ERROR] ./components/screens/OnboardingScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useRouter } from "next/navigation";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, completeOnboarding } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AestheticView, PaletteEntry } from "@/lib/data";
+  8 | import Button from "../Button";
+  9 | import Chip from "../Chip";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/OnboardingScreen.tsx
+    ./app/welcome/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  643627ms] [ERROR] ./app/actions.ts:267:17
+Error: Server Actions must be async functions.
+  265 | export const CEILINGS: (number | null)[] = [150, 300, 500, null];
+  266 |
+> 267 | export function ceilingLabel(value: number | null): string {
+      |                 ^^^^^^^^^^^^
+  268 |   return value === null ? "No ceiling" : `$${value}`;
+  269 | }
+  270 |
+
+Ecmascript file had an error @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  643627ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  643627ms] [ERROR] ./components/screens/BoardsScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useState } from "react";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, setPriceCeiling } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { EditView } from "@/lib/data";
+  8 | import { thumbBackground } from "@/lib/images";
+  9 | import Avatar from "../Avatar";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/BoardsScreen.tsx
+    ./app/boards/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  643627ms] [ERROR] ./components/screens/OnboardingScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useRouter } from "next/navigation";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, completeOnboarding } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AestheticView, PaletteEntry } from "@/lib/data";
+  8 | import Button from "../Button";
+  9 | import Chip from "../Chip";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-client] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/OnboardingScreen.tsx
+    ./app/welcome/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
+[  643627ms] [ERROR] ./components/screens/OnboardingScreen.tsx:6:1
+Error: Export ceilingLabel doesn't exist in target module
+  4 | import { useRouter } from "next/navigation";
+  5 | import type { CSSProperties } from "react";
+> 6 | import { CEILINGS, ceilingLabel, completeOnboarding } from "@/app/actions";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  7 | import type { AestheticView, PaletteEntry } from "@/lib/data";
+  8 | import Button from "../Button";
+  9 | import Chip from "../Chip";
+
+The export ceilingLabel was not found in module [project]/app/actions.ts [app-ssr] (ecmascript).
+Did you mean to import completeOnboarding?
+All exports of the module are statically known (It doesn't have dynamic exports). So it's known statically that the requested export doesn't exist.
+
+Import trace:
+  Server Component:
+    ./components/screens/OnboardingScreen.tsx
+    ./app/welcome/page.tsx @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:1052
