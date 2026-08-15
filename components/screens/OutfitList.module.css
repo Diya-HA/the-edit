@@ -109,15 +109,35 @@
 
 .pieceLabel {
   position: absolute;
-  left: 0;
-  right: 0;
+  /* Centred on its own width rather than stretched across the field: with
+     left and right both zero the chip would span the whole card. */
+  left: 50%;
+  transform: translateX(-50%);
   bottom: 6px;
-  text-align: center;
   font-family: var(--font-mono);
   font-size: 6px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--label-on-fabric);
+
+  /* A chip, not tinted text.
+
+     This label names the garment on a field whose colour comes from the
+     catalogue — a fabric tone, or a photograph's measured ground — so there is
+     no colour it can be that clears AA on all of them. Measured across the 96
+     grounds in the catalogue, the old rgba(14,14,16,0.34) ran from 1.11:1 to
+     2.24:1 and passed on none: 34% alpha caps the contrast at about 2.2
+     whatever sits behind it.
+
+     So it carries its own background, which is what Badge and the save heart
+     already do over imagery. Ink on white is ~19:1 and cannot be undone by a
+     re-ingest bringing different photographs. */
+  display: inline-block;
+  padding: 3px 7px;
+  border-radius: 7px;
+  background: var(--white);
+  color: var(--ink-0);
+  box-shadow: var(--shadow-badge);
+
 }
 
 .pieceTitle {

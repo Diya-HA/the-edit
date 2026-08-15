@@ -40,3 +40,7 @@ next-env.d.ts
 
 # vercel
 .vercel
+
+# Playwright MCP scratch — console logs and page snapshots from driving
+# the app. Regenerated constantly; it has blocked three branch switches.
+.playwright-mcp/

@@ -23,7 +23,12 @@
   --fabric-sage:    #C9D2C3;
   --fabric-ink:     #3A3A3C;
 
-  /* Mono label sitting on a fabric placeholder — "CARDIGAN". */
+  /* Mono label sitting on a fabric placeholder — "CARDIGAN".
+     UNUSED, and deliberately so. Measured across the 96 grounds the catalogue
+     puts behind this label, it ran 1.11:1 to 2.24:1 and cleared AA on none of
+     them — 34% alpha cannot exceed about 2.2:1 whatever sits behind it. The
+     label carries a white chip instead. Kept here only so the value is not
+     reinstated from the design file without this note. */
   --label-on-fabric: rgba(14, 14, 16, 0.34);
 
   /* ---- Color ---- */

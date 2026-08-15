@@ -2,6 +2,7 @@
    ink ring when it is the active filter. */
 
 .dot {
+  position: relative;
   flex: 0 0 auto;
   display: block;
   width: var(--dot-size);
@@ -18,4 +19,19 @@
 
 .active {
   box-shadow: var(--ring-active);
+}
+
+/* ---- Touch target -------------------------------------------------------
+   The visual size is the design's; the *tappable* size is not, and the two do
+   not have to match. An invisible ::after stretches the hit area without
+   moving a pixel on screen or changing layout.
+   -------------------------------------------------------------------------- */
+
+.dot::after {
+  content: "";
+  position: absolute;
+  /* 44px tall, which is free — nothing sits above or below the row. Only as
+     wide as the 9px gap allows: two 44px-wide targets on a 31px pitch would
+     overlap by 13px, and the overlap would decide which colour you got. */
+  inset: -11px -4.5px;
 }
