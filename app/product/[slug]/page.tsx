@@ -20,6 +20,8 @@ export default async function ProductPage({
       userId: user.id,
       aestheticId: product.aestheticId,
       excludeId: product.id,
+      slot: product.slot,
+      familyName: product.familyName,
     }),
     getEdits(user.id, product.id),
   ]);

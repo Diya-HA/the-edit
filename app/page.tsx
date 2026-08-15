@@ -46,7 +46,27 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
      stale or hand-typed URL cannot empty the feed with a filter that could
      never match. */
   const raw = typeof params.tint === "string" ? params.tint : undefined;
-  const activeTint = palette.some((p) => p.token === raw) ? raw : undefined;
+  const fromUrl = palette.some((p) => p.token === raw) ? raw : undefined;
+  /* An explicit "off", so turning the swatch off is distinguishable from
+     never having touched it — otherwise clearing the colour would fall
+     straight back to the welcome's and could not be cleared at all. */
+  const clearedByHand = raw === "none";
+
+  /* Nothing in the URL: fall back to a colour they chose at the welcome.
+     Those answers were being written down and never read, which made the
+     question decorative in a quieter way than the budget one — at least the
+     budget did nothing visibly. This makes the answer show up the moment they
+     land, which is the only reason to have asked.
+
+     Only the first of their colours, because the feed filters one at a time,
+     and only if this look actually has it — Quiet utility holds no rose, and
+     someone who picked rose should still see Quiet utility rather than an
+     empty screen. Tapping the swatch off clears it for the rest of the
+     session, since that puts an explicit choice in the URL. */
+  const fromWelcome = user.palette.find((token) =>
+    palette.some((p) => p.token === token),
+  );
+  const activeTint = clearedByHand ? undefined : (fromUrl ?? fromWelcome);
 
   /* The feed honours what counts as a lot for one piece. When that leaves
      most of the look out of reach, the note above it says so rather than

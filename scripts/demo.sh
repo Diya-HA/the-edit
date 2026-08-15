@@ -19,6 +19,23 @@ OFFLINE="${OFFLINE:-0}"
 COLLECTION="${COLLECTION:-https://uskees.com/en-us/collections/all-clothing}"
 AESTHETIC="${AESTHETIC:-quiet-utility}"
 THRESHOLD="${THRESHOLD:-85}"
+# Fewer garments than this and the scrape is treated as having failed, whatever
+# it says. A page that returns nothing is obvious and already handled; a page
+# that returns eight because its markup moved is the failure that looks like
+# success — the run carries on, scores eight things, and builds a thin outfit
+# in front of an audience. Twenty is what the listing holds, so twelve is a bad
+# day rather than a broken one.
+MIN_GARMENTS="${MIN_GARMENTS:-12}"
+# How many products to take off the listing. The guard has to sit below this:
+# asking for more than the cap allows makes every healthy run look broken, and
+# the first thing a test of the guard did was exactly that.
+TAKE="${TAKE:-20}"
+
+if [ "$MIN_GARMENTS" -ge "$TAKE" ]; then
+  echo "✗ MIN_GARMENTS ($MIN_GARMENTS) must be below TAKE ($TAKE)." >&2
+  echo "  Above the cap, a healthy scrape trips the fallback on every run." >&2
+  exit 1
+fi
 
 if [ "$TARGET" = "production" ]; then
   APP_URL="${PROD_URL:-https://theedit.apps.human-angle.com}"
@@ -42,7 +59,7 @@ if [ "$OFFLINE" = "1" ]; then
 else
   echo " collection  $COLLECTION"
 fi
-echo " aesthetic   $AESTHETIC   threshold $THRESHOLD"
+echo " aesthetic   $AESTHETIC   threshold $THRESHOLD   min $MIN_GARMENTS"
 echo "─────────────────────────────────────────────"
 echo
 
@@ -87,10 +104,19 @@ else
    image URL, and the product URL — its last path segment is the handle, which
    step 4 needs for the slug. The colour is the part of the card title after
    the last \" - \".
-   Take the first 20 products. Print \"scraped N garments\" when done, then one
+   Take the first ${TAKE} products. Print \"scraped N garments\" when done, then one
    line naming the garment kinds you saw, so it is clear whether the page gave
-   a spread or twenty colourways of one thing."
-  TOOLS="mcp__playwright,mcp__the-edit,Skill"
+   a spread or twenty colourways of one thing.
+
+   THEN CHECK THE COUNT. If you have fewer than ${MIN_GARMENTS} garments, the
+   page has changed under us and what you have is not a scrape. Do not carry
+   on with it. Say so plainly, then read scripts/fixtures/uskees-sample.json
+   and use its garments instead, printing
+   \"scrape returned N, falling back to the offline capture\".
+   Everything after this step is unchanged. A thin outfit built from a broken
+   scrape is worse than saying the scrape broke."
+  # Read is allowed here so the fallback above can actually reach the fixture.
+  TOOLS="mcp__playwright,mcp__the-edit,Skill,Read"
 fi
 
 PROMPTFILE="$(mktemp -t the-edit-prompt)"

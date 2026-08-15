@@ -12,6 +12,8 @@ export type ProductView = {
   title: string;
   /** Garment noun, shown uppercase on the placeholder. */
   category: string;
+  /** Where it sits in a head-to-toe look. Null when ingest could not tell. */
+  slot: string | null;
   price: number;
   wasPrice: number | null;
   /** The tone of the cloth. Fills the field behind the photograph, and
@@ -53,6 +55,7 @@ const productSelect = {
   slug: true,
   title: true,
   category: true,
+  slot: true,
   price: true,
   wasPrice: true,
   colorName: true,
@@ -72,6 +75,7 @@ type ProductRow = {
   slug: string;
   title: string;
   category: string;
+  slot: string | null;
   price: unknown;
   wasPrice: unknown;
   colorName: string;
@@ -93,6 +97,7 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     brand: p.brand.name,
     title: p.title,
     category: p.category,
+    slot: p.slot,
     price: Number(p.price),
     wasPrice: p.wasPrice === null ? null : Number(p.wasPrice),
     tone: p.colorHex.trim(),
@@ -304,28 +309,86 @@ export async function getProduct(
 }
 
 /**
- * "Sits well with" — other pieces from the same look. Cohesion across brands
- * is the product, so this deliberately does not filter to one brand.
+ * "Sits well with" — the pieces that would actually go with this one.
+ *
+ * It used to take the first four in the aesthetic alphabetically, which is the
+ * one place in the app that claims a judgement and exercised none. Two things
+ * decide it now, and neither needs a model.
+ *
+ * Slot first. A top sits well with a bottom, a layer, shoes — not with another
+ * top. So the four are drawn from four *different* slots, none of them the one
+ * the piece on screen already fills, which means the row is a look being
+ * assembled rather than a shelf of similar things.
+ *
+ * Then colour. Within each slot, a piece in the same family reads as a tonal
+ * outfit and a neutral goes with anything; a third colour is the one that
+ * makes a look busy, so it sorts last.
+ *
+ * Cohesion across brands is the product, so this deliberately does not filter
+ * to one brand.
  */
 export async function getSitsWellWith(opts: {
   userId: string;
   aestheticId: string;
   excludeId: string;
+  /** The piece being looked at, so the row can complement it. */
+  slot?: string | null;
+  familyName?: string;
   take?: number;
 }): Promise<ProductView[]> {
-  const { userId, aestheticId, excludeId, take = 4 } = opts;
+  const { userId, aestheticId, excludeId, slot, familyName, take = 4 } = opts;
 
   const [rows, savedIds] = await Promise.all([
     prisma.product.findMany({
       where: { aestheticId, inStock: true, id: { not: excludeId } },
-      orderBy: { title: "asc" },
-      take,
       select: productSelect,
     }),
     getSavedProductIds(userId),
   ]);
 
-  return rows.map((r) => toView(r as ProductRow, savedIds));
+  const all = rows.map((r) => toView(r as ProductRow, savedIds));
+
+  /* Neutral, cream and ink sit under anything, which is what makes them
+     neutral. Anything else is a colour with an opinion. */
+  const QUIET = new Set(["Neutral", "Cream", "Ink"]);
+  const colourScore = (p: ProductView) => {
+    if (familyName && p.familyName === familyName) return 3;
+    if (QUIET.has(p.familyName)) return 2;
+    return 1;
+  };
+
+  const bySlot = new Map<string, ProductView[]>();
+  for (const p of all) {
+    if (slot && p.slot === slot) continue; // not another of what they are looking at
+    const key = p.slot ?? "other";
+    const list = bySlot.get(key) ?? [];
+    list.push(p);
+    bySlot.set(key, list);
+  }
+
+  /* Dress the rest of the body in the order someone would think about it. */
+  const ORDER = ["TOP", "BOTTOM", "OUTER", "SHOES", "BAG", "ACCESSORY", "other"];
+  const picked: ProductView[] = [];
+  for (const key of ORDER) {
+    if (picked.length >= take) break;
+    const best = (bySlot.get(key) ?? [])
+      .sort((a, b) => colourScore(b) - colourScore(a) || a.title.localeCompare(b.title))[0];
+    if (best) picked.push(best);
+  }
+
+  /* A thin aesthetic may not cover four slots. Fill from what is left rather
+     than showing three, still preferring colours that work. */
+  if (picked.length < take) {
+    const used = new Set(picked.map((p) => p.id));
+    picked.push(
+      ...all
+        .filter((p) => !used.has(p.id) && (!slot || p.slot !== slot))
+        .sort((a, b) => colourScore(b) - colourScore(a) || a.title.localeCompare(b.title))
+        .slice(0, take - picked.length),
+    );
+  }
+
+  return picked.slice(0, take);
 }
 
 /** Everything in the catalogue, for the Pieces tab of search. */
