@@ -1,0 +1,14 @@
+- generic [active] [ref=f19e1]:
+  - generic [ref=f19e85]:
+    - generic [ref=f19e86]: ♥
+    - heading "Nice eye. It’s all yours." [level=1] [ref=f19e87]: Nice eye.It’s all yours.
+    - paragraph [ref=f19e88]: Everything in here was picked to sit next to everything else. Keep what you love and it gets sharper by the day.
+    - generic [ref=f19e89]:
+      - paragraph [ref=f19e90]:
+        - text: "You said:"
+        - generic [ref=f19e91]: velvet and moons, a bit witchy, lots of black mesh
+      - generic [ref=f19e92]: Your first look
+      - generic [ref=f19e93]: Whimsigoth
+      - paragraph [ref=f19e94]: Velvet and crochet and moons. Mostly under $300.
+    - button "Take me in" [ref=f19e99] [cursor=pointer]
+  - alert [ref=f19e56]

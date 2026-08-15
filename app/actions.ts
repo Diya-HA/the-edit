@@ -297,6 +297,8 @@ export async function completeOnboarding(input: {
   aestheticId: string;
   palette: string[];
   priceCeiling: number | null;
+  /** What they typed, in their own words. Null when they typed nothing. */
+  moodNote?: string | null;
 }): Promise<SaveResult> {
   const user = await getCurrentUser();
 
@@ -311,6 +313,7 @@ export async function completeOnboarding(input: {
       activeAestheticId: input.aestheticId,
       palette: input.palette,
       priceCeiling: input.priceCeiling,
+      moodNote: input.moodNote ?? null,
       onboardedAt: new Date(),
     },
   });
