@@ -48,7 +48,7 @@ Worth deciding on these first, because two of them are not copy fixes at all.
 | 1 | Welcome, step 1 ★ | **Being built as a real input, not reworded.** |
 | 1b | (was) | "Type it however it comes out. Half formed is completely fine and rambling is encouraged." There is **nothing to type into** — the box below it is a `<p>` holding an example, not an input. The first thing the app says to a stranger is an invitation it cannot honour. |
 | 2 | Search ★ | ~~"Everything in your size".~~ **Fixed** — now "Everything in the edit". |
-| 3 | Boards | ~~`S · 27 · 38`.~~ **Fixed** — now "Not set". |
+| 3 | Boards | ~~`S · 27 · 38`.~~ **Removed.** First changed to "Not set", then taken out altogether: onboarding never asks for a size, so the row could never say anything else. A settings row that can only ever read "Not set" is still a claim that something exists. |
 | 4 | Product | ~~"Buy" goes nowhere.~~ **Fixed** — Buy is now a real link to the brand's page, opening in a new tab, keeping the toast. |
 
 **1 and 2 I would fix in copy today** — proposed wording below. **3 and 4 are
@@ -156,8 +156,8 @@ The first screen. Every string here is in the first ten seconds.
 |---|---|---|
 | {n} boards · {n} pieces | Keep | |
 | Settings | Keep | |
-| ⚠ Sizes — S · 27 · 38 | **Sizes — Not set** | Invented data presented as the shopper's own. |
-| Sizes are coming | Keep | Honest about it. |
+| ~~Sizes — S · 27 · 38~~ | **Removed** | Invented data presented as the shopper's own, and nothing collects a size, so the row could never become true. |
+| ~~Sizes are coming~~ | **Removed** | Went with the row. |
 | What counts as a lot — $300 | Keep | Real now. |
 | What counts as a lot? | Keep | Sheet title. |
 | Redo the welcome | Keep | |

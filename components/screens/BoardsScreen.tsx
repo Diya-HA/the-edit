@@ -116,15 +116,6 @@ export default function BoardsScreen({
           <div className={styles.settings}>
             <div className={styles.eyebrow}>Settings</div>
 
-            <button
-              type="button"
-              className={styles.row}
-              onClick={() => say("Sizes are coming")}
-            >
-              <span className={styles.rowLabel}>Sizes</span>
-              <span className={styles.rowValue}>Not set ›</span>
-            </button>
-
             {/* Real now that the answer has somewhere to live. Changing it
                 changes the feed, which is the whole point of having asked. */}
             <button
@@ -138,7 +129,6 @@ export default function BoardsScreen({
               </span>
             </button>
 
-            {/* Sizes is still a placeholder — there is nowhere to put it. */}
             <button
               type="button"
               className={styles.row}
