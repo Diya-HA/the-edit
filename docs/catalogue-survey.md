@@ -22,17 +22,17 @@ through only makes the feed look broken.
 
 <!-- BEGIN GENERATED -->
 
-Taken on 2026-08-08 from each brand's public
+Taken on 2026-08-15 from each brand's public
 `products.json`. 3,500 products,
-1,066 distinct styles once colourways are collapsed.
+1,146 distinct styles once colourways are collapsed.
 
 | Brand | Aesthetic | Locale | Prices in | Styles |
 | --- | --- | --- | --- | --- |
-| Uskees | Quiet utility | `/en-us` | USD | 75 |
-| Dôen | Soft romance | root | USD | 192 |
+| Uskees | Quiet utility | `/en-us` | USD | 67 |
+| Dôen | Soft romance | root | USD | 213 |
 | Nagnata | Balletcore off duty | root | AUD → USD ×0.66 | 71 |
-| Repetto | Balletcore off duty | `/en-us` | EUR → USD ×1.09 | 202 |
-| Killstar | Whimsigoth | root | GBP → USD ×1.27 | 526 |
+| Repetto | Balletcore off duty | `/en-us` | EUR → USD ×1.09 | 186 |
+| Killstar | Whimsigoth | root | GBP → USD ×1.27 | 609 |
 
 ### Slot coverage
 
@@ -42,10 +42,10 @@ underneath it; the schema stores it as `TOP`.
 
 | Aesthetic | TOP | DRESS | BOTTOM | OUTER | SHOES | BAG | ACCESSORY | Labels |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Quiet utility | 23 | — | 16 | 22 | — | 1 | 13 | 1 |
-| Soft romance | 53 | 61 | 39 | 19 | 7 | 4 | 9 | 1 |
-| Balletcore off duty | 109 | — | 45 | 7 | 85 | 16 | 11 | 2 |
-| Whimsigoth | 142 | 170 | 45 | 27 | 26 | 37 | 79 | 1 |
+| Quiet utility | 20 | — | 16 | 17 | — | 1 | 13 | 1 |
+| Soft romance | 58 | 71 | 42 | 20 | 7 | 3 | 12 | 1 |
+| Balletcore off duty | 102 | — | 45 | 7 | 76 | 16 | 11 | 2 |
+| Whimsigoth | 164 | 204 | 57 | 29 | 31 | 38 | 86 | 1 |
 
 Slots more than one label can fill — the ones where an assembled look is
 curation rather than a single brand's lookbook:
@@ -63,39 +63,39 @@ ceiling.
 
 | Aesthetic | n | min | median | max | <$150 | <$300 | <$500 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Quiet utility | 75 | $18 | $95 | $380 | 76% | 99% | 100% |
-| Soft romance | 192 | $32 | $298 | $2,998 | 8% | 55% | 83% |
-| Balletcore off duty | 273 | $17 | $153 | $872 | 47% | 76% | 86% |
-| Whimsigoth | 526 | $8 | $44 | $171 | 99% | 100% | 100% |
+| Quiet utility | 67 | $18 | $70 | $380 | 82% | 99% | 100% |
+| Soft romance | 213 | $23 | $298 | $2,998 | 8% | 54% | 83% |
+| Balletcore off duty | 257 | $17 | $153 | $872 | 49% | 77% | 87% |
+| Whimsigoth | 609 | $8 | $44 | $171 | 99% | 100% | 100% |
 
 Median per slot, which is where the shape of it shows:
 
 | Aesthetic | TOP | DRESS | BOTTOM | OUTER | SHOES | BAG | ACCESSORY |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Quiet utility | $85 | — | $98 | $152 | — | $25 | $60 |
-| Soft romance | $268 | $498 | $248 | $348 | $298 | $298 | $68 |
+| Quiet utility | $75 | — | $61 | $125 | — | $25 | $60 |
+| Soft romance | $268 | $498 | $278 | $353 | $298 | $298 | $68 |
 | Balletcore off duty | $147 | — | $147 | $307 | $463 | $180 | $40 |
-| Whimsigoth | $42 | $57 | $51 | $83 | $114 | $64 | $38 |
+| Whimsigoth | $38 | $44 | $49 | $83 | $102 | $64 | $38 |
 
 ### What the seed plants
 
-The survey above is what there is to curate from. This is the 143
+The survey above is what there is to curate from. This is the 142
 pieces actually chosen for the app — up to six per slot per aesthetic, spread
 across brands and colour families. Dresses are stored as `TOP`.
 
 | Aesthetic | TOP | BOTTOM | OUTER | SHOES | BAG | ACCESSORY | Labels | Packshot |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Quiet utility | 6 | 6 | 6 | — | 1 | 6 | 1 | 100% |
-| Soft romance | 12 | 6 | 6 | 6 | 4 | 6 | 1 | 18% |
-| Balletcore off duty | 6 | 6 | 6 | 6 | 6 | 6 | 2 | 64% |
-| Whimsigoth | 12 | 6 | 6 | 6 | 6 | 6 | 1 | 40% |
+| Soft romance | 12 | 6 | 6 | 6 | 3 | 6 | 1 | 13% |
+| Balletcore off duty | 6 | 6 | 6 | 6 | 6 | 6 | 2 | 61% |
+| Whimsigoth | 12 | 6 | 6 | 6 | 6 | 6 | 1 | 45% |
 
 | Aesthetic | n | min | median | max | <$150 | <$300 | <$500 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Quiet utility | 25 | $18 | $45 | $141 | 100% | 100% | 100% |
-| Soft romance | 40 | $32 | $253 | $778 | 30% | 85% | 95% |
-| Balletcore off duty | 36 | $17 | $95 | $383 | 78% | 89% | 100% |
-| Whimsigoth | 42 | $8 | $25 | $146 | 100% | 100% | 100% |
+| Quiet utility | 25 | $18 | $49 | $95 | 100% | 100% | 100% |
+| Soft romance | 39 | $23 | $248 | $498 | 31% | 87% | 100% |
+| Balletcore off duty | 36 | $17 | $98 | $383 | 78% | 89% | 100% |
+| Whimsigoth | 42 | $6 | $25 | $146 | 100% | 100% | 100% |
 
 <!-- END GENERATED -->
 
