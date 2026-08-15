@@ -21,6 +21,8 @@ export type ProductCardProps = {
   category?: string;
   /** What the photograph shows — see lib/alt.ts. */
   alt?: string;
+  /** Load eagerly. For the cards already in view when the feed opens. */
+  priority?: boolean;
   height?: number | string;
   /** Feed shape. Squares and portraits only — never landscape. */
   aspect?: string;
@@ -47,6 +49,7 @@ export default function ProductCard({
   ground,
   category,
   alt,
+  priority = false,
   height,
   aspect,
   saved = false,
@@ -85,6 +88,7 @@ export default function ProductCard({
           color={color}
           image={image}
           ground={ground}
+          priority={priority}
           alt={alt ?? title}
           height={fieldHeight}
           aspect={aspect}

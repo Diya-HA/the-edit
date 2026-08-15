@@ -49,6 +49,13 @@ export default function PieceGrid({
   const columns: ProductView[][] = [[], []];
   products.forEach((p, i) => columns[i % 2].push(p));
 
+  /* The top card of each column is what Lighthouse measures as the Largest
+     Contentful Paint, and both were lazy-loaded — waiting on an intersection
+     observer for an image already in view. Two eager loads, no more: making
+     the rest eager would have twenty images competing for the connection and
+     move the problem rather than fix it. */
+  const EAGER_PER_COLUMN = 1;
+
   return (
     <div
       className={[styles.grid, pending && styles.pending]
@@ -87,6 +94,7 @@ export default function PieceGrid({
                   packshotScore: p.packshot,
                 })}
                 aspect={shapeOf(p.slug)}
+                priority={row < EAGER_PER_COLUMN}
                 saved={p.saved}
                 onOpen={() => onOpen(p)}
                 onSave={onSave ? () => onSave(p) : undefined}

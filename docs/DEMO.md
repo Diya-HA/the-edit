@@ -7,8 +7,8 @@ it doesn't.
 `theedit.apps.human-angle.com` — the demo just adds a live-scraped outfit to
 it. If the run fails, the site is still there and still works.
 
-Last rehearsed end to end on **14 August 2026**, against the five-brand
-catalogue. Timings below are from that rehearsal, not estimates.
+Last rehearsed end to end on **15 August 2026**, against the deployed app after
+Phases 3, 4 and 5. Timings below are from that rehearsal, not estimates.
 
 ---
 
@@ -21,8 +21,9 @@ catalogue. Timings below are from that rehearsal, not estimates.
 - [ ] Second browser tab at `localhost:3000`
 - [ ] Wifi working — if not, jump to **Offline fallback**
 
-Time: about **4 minutes** total. The run itself is **2m30s**, and a repeat run
-is the same.
+Time: about **3m30s** total. The run itself is **2m10s**. A repeat run takes
+longer, around **2m50s**, because the second pass has more of the catalogue to
+compare against.
 
 ---
 
@@ -54,7 +55,7 @@ and building a look that did not exist. Which is the more honest claim anyway.
 
 ---
 
-## Step 1 — the composed run · 2m30s
+## Step 1 — the composed run · 2m10s
 
 Open a **second terminal tab** (leave `npm run dev` alone).
 
@@ -71,7 +72,7 @@ cd ~/Development/App_Building/the-edit
 | 0:10 | A Chrome window opens by itself and loads the Uskees all-clothing page |
 | 0:40 | `scraped 20 garments`, then a line naming the kinds it saw |
 | 0:50 | Scores print, one line per garment |
-| 1:40 | `11 of 20 above 85`, then a line of slot counts |
+| 1:30 | `11 of 20 above 85`, then a line of slot counts |
 | 2:00 | Two or three tool calls to `the-edit` — products, a catalogue search, the outfit |
 | 2:20 | The outfit name, which pieces came from the scrape and which from the shelf, and a URL |
 | — | `finished in NNNs` |
@@ -130,8 +131,14 @@ same pipeline, on a different day.
    ./scripts/demo.sh
    ```
 
-   Still **9 outfits**, not 10, and the products update rather than duplicate.
-   That's idempotency — the thing that makes it safe to run on a schedule.
+   Still **9 outfits**, not 10. That is the part that matters: the outfit is
+   keyed on its slug, so a second run updates it rather than making another.
+
+   **The piece count will go up slightly, and that is correct.** The listing is
+   live, so a second pass sees a slightly different twenty products and keeps
+   any that are new. Nothing duplicates — slugs come from each garment's own
+   handle, so a piece already in the catalogue is updated in place. Checked
+   after two runs: 25 Uskees rows, 25 distinct titles.
 
 ---
 
@@ -332,7 +339,8 @@ npm run dev                       # separate tab
 OFFLINE=1 ./scripts/demo.sh
 ```
 
-This needs **no internet at all**, and takes about **1m45s**.
+This needs **no internet at all**, and takes about **1m45s** — measured at
+1m44s on 15 August.
 
 The fixture at `scripts/fixtures/uskees-sample.json` is 19 real Uskees
 garments taken from their own product feed, chosen to span tops, bottoms,
