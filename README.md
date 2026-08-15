@@ -35,7 +35,7 @@ the-edit/
 npm install
 docker compose up -d          # PostgreSQL on localhost:5432
 npx prisma migrate dev        # create the schema
-npx prisma db seed            # 5 real brands, 4 aesthetics, 143 pieces
+npx prisma db seed            # 5 real brands, 4 aesthetics, 142 pieces
 npm run dev                   # http://localhost:3000
 ```
 
