@@ -61,9 +61,12 @@ export default function FeedScreen({
     router.push(`/?${params}`, { scroll: false });
   };
 
-  /* One colour at a time. Tapping the one already on clears it. */
+  /* One colour at a time. Tapping the one already on clears it — as an
+     explicit "none" rather than an absent parameter, so the feed can tell
+     "they turned it off" from "they have not chosen", which is what the
+     welcome's own palette answer fills. */
   const pickTint = (token: string) =>
-    navigate(activeSlug, token === activeTint ? undefined : token);
+    navigate(activeSlug, token === activeTint ? "none" : token);
 
   return (
     <>

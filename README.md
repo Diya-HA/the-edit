@@ -230,6 +230,32 @@ Kept for reference. These predate the real app and no longer describe it.
 
 ---
 
+## After the demo
+
+Things known to be worth doing, parked deliberately rather than forgotten.
+
+**Tests.** There are none. `lib/mood.ts`, `lib/price.ts`, `lib/alt.ts` and
+`scripts/catalogue/classify.ts` are pure functions with real edge cases that
+were found by hand and can regress silently — the classifier alone has had four
+bugs of the same shape, where a word matched inside a longer word and filed a
+garment in the wrong slot. A modest suite around those four would have caught
+every one of them. This is the first thing to do with a clear week.
+
+**Sizes.** The settings row says "Not set" honestly, but nothing collects a
+size, so it can never say anything else. Either ask at the welcome and show the
+answer back, or take the row out.
+
+**Image weight.** The feed loads 25 photographs, about 700 KiB, and on a
+throttled connection that is what holds Largest Contentful Paint near five
+seconds — not the loading strategy, which is already right. Paginating the feed
+or turning Next's optimizer back on would both help; the second is the trade
+documented in `next.config.ts` and worth revisiting once someone can watch a
+deploy properly.
+
+**`User.moodNote` is stored and only read back at the welcome.** The words
+someone types are the best signal in the app about what they want and nothing
+downstream uses them.
+
 ## Open decisions
 
 - **Product name.** "The Edit" is a placeholder. Net-a-Porter already runs an editorial brand called The Edit, so it would be hard to own.
