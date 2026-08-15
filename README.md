@@ -256,6 +256,130 @@ deploy properly.
 someone types are the best signal in the app about what they want and nothing
 downstream uses them.
 
+### A real first run — name-only entry
+
+**The problem.** Onboarding only fires for a user who has never been onboarded,
+and the deployed app has one shopper who was onboarded long ago. So anyone
+opening the link lands on home and never sees the welcome, and everyone shares
+Aria's boards. The "Redo the welcome" settings row is a workaround, not the
+intent.
+
+**The shape.** Someone opens the link, gets a short screen — "Who's shopping?",
+one field, no password and no email — which creates that person or resumes them
+if they have been before, then runs the existing three-step welcome. They come
+out with their own boards.
+
+**Why not an anonymous per-browser session.** It was the obvious cheaper
+alternative and it fails the actual goal. Same browser means same session, so
+handing someone your phone gives them *your* boards, which is the specific
+thing this is meant to stop. It only wins when someone opens the link on their
+own device, and it can never tell two people apart on one.
+
+**What passwordless means here, said plainly.** Anyone who types your name gets
+your boards, and two people typing "Sarah" share an account. That is not a flaw
+to be fixed later; it is what no password means. Worth saying in the UI rather
+than leaving to be discovered.
+
+#### Schema
+
+```prisma
+model User {
+  email  String? @unique   // was required
+  handle String  @unique   // "aria-lane" — the display name, normalised
+}
+```
+
+```sql
+ALTER TABLE "users" ALTER COLUMN "email" DROP NOT NULL;
+ALTER TABLE "users" ADD COLUMN "handle" TEXT;
+UPDATE "users" SET "handle" = 'aria-lane' WHERE "email" = 'aria@theedit.test';
+ALTER TABLE "users" ALTER COLUMN "handle" SET NOT NULL;
+CREATE UNIQUE INDEX "users_handle_key" ON "users"("handle");
+```
+
+**Existing rows survive completely.** There is exactly one, and nothing keyed on
+`userId` moves — Aria keeps her id, her four boards, her fourteen saves, her
+follows and her starred look. She gains the handle `aria-lane`.
+
+That is the useful accident: **typing "Aria Lane" at the entry screen resumes
+the seeded shopper**, so the new screen becomes the demo's way back to the known
+state rather than a thing in its way.
+
+#### Sessions
+
+A cookie holding the user id — `httpOnly`, `sameSite=lax`, `secure` in
+production, year-long expiry so nobody re-types. Writing it needs a Server
+Action, because Next cannot set cookies from a server component: the entry form
+posts, creates or resumes, sets the cookie, redirects into the existing welcome.
+`getCurrentUser()` reads the cookie; no cookie or a dead id redirects to the
+entry screen.
+
+**This adds identity, not authentication.** The cookie is a bearer token,
+whoever holds it is that person, and a UUID is unguessable in practice but not
+secret. No passwords, no email, nothing personal beyond a display name. The
+MCP write token is a separate mechanism and is unaffected.
+
+#### What it does to the demo
+
+Checked rather than assumed:
+
+| | Affected |
+|---|---|
+| `scripts/demo.sh` | No — writes through MCP, which never touches `User` |
+| `scripts/reset-demo.ts` | No — removes AGENT products and outfits, user-independent |
+| Verification table, products and outfits | No — per-aesthetic counts are user-independent |
+| Verification table, **Boards 4 · 14** | **Yes** — the only user-dependent row |
+
+Two new ways the demo's "before" could go ambiguous, both real:
+
+- **Browser state decides what Boards shows.** A window carrying a visitor
+  cookie shows their empty boards, not Aria's, and the verification table reads
+  wrong through no fault of the reset.
+- **Visitors accumulate.** Everyone who tries it adds a user and their boards.
+
+**The runbook change.** Its clean state stops being *"Boards shows 4 · 14"* and
+becomes *"enter Aria Lane, then Boards shows 4 · 14"* — a deliberate, checkable
+step instead of an assumption. Plus a `scripts/reset-demo.ts --visitors` flag to
+remove everyone who is not the seeded shopper, not run by default because it
+deletes other people's saves.
+
+#### Design
+
+`design/screens/the-edit-FINAL-turn3.dc.html` has **nothing** for this. It has
+the three washed "Getting started" screens, "Sign out" in settings and Aria Lane
+as the account, but no entry screen, no name field and nothing about identity.
+
+So it is a new screen and wants looking at before it ships. Build it as a fourth
+washed screen in front of the existing three, reusing the field treatment from
+the mood box and the same progress bars, so it extends the established pattern
+rather than introducing a second visual language for the same moment.
+
+#### Cost, and what to cut
+
+**About a full day.** Schema and migration 1h; session helper and the
+`getCurrentUser` rewrite 2h; entry screen and action 2h; routing across the call
+sites and the error paths 2h; demo reconciliation and runbook 1.5h; re-rehearsal
+of both demo paths 1h.
+
+Cut in this order if it runs over: the `--visitors` cleanup (do it with SQL by
+hand), then Sign out, then the "welcome back" versus new-person copy
+distinction. **The last thing to cut is the routing**, because a half-wired gate
+does not break one screen, it breaks all of them.
+
+#### The honest note
+
+`getCurrentUser` has **25 call sites** and is the most load-bearing function in
+the app. Every screen goes through it. A mistake there is not one broken screen,
+it is every screen — and the change introduces a genuinely new failure mode:
+what you see now depends on which browser window you opened.
+
+This wants a clear working day for the build **plus a full re-rehearsal and a
+deploy after it**. It is sound work and the reasoning holds; the only real
+question is runway. With a week it is worth doing. The night before a demo it is
+not, and the smaller flaw — everyone is Aria — is easier to live with than a
+broken welcome.
+
+
 ## Open decisions
 
 - **Product name.** "The Edit" is a placeholder. Net-a-Porter already runs an editorial brand called The Edit, so it would be hard to own.
