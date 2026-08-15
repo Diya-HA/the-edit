@@ -32,8 +32,8 @@ export type Measurement = {
  */
 const MIN_COVERAGE = 0.1;
 
-/** At or above this, a picture is a packshot for every purpose here. */
-export const PACKSHOT = 70;
+export { PACKSHOT } from "./images";
+import { PACKSHOT } from "./images";
 
 /** Ask the CDN for a small copy — the border does not need resolution. */
 function atWidth(url: string, width: number): string {

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import type { EditView, ProductView } from "@/lib/data";
 import { IMAGE_WIDTH } from "@/lib/images";
+import { describeProduct } from "@/lib/alt";
 import { formatPrice } from "@/lib/price";
 import Button from "../Button";
 import CanvasSwatch from "../CanvasSwatch";
@@ -39,7 +40,13 @@ export default function ProductScreen({
             color={product.tone}
             image={product.image}
             ground={product.ground}
-            alt={`${product.title} — ${product.category} by ${product.brand}`}
+            alt={describeProduct({
+              title: product.title,
+              brand: product.brand,
+              category: product.category,
+              colorName: product.familyName,
+              packshotScore: product.packshot,
+            })}
             imageWidth={IMAGE_WIDTH.hero}
             priority
             height={296}
@@ -88,11 +95,15 @@ export default function ProductScreen({
             <Button full onClick={() => setSheet(true)}>
               Keep it ♡
             </Button>
+            {/* A real link now. It opens the brand's own page in a new tab,
+                so the app — and everything saved in it — is still there when
+                someone comes back, which is the whole point of a board.
+                rel="noreferrer" because these are third-party shops.
+                The toast stays: it says where you are going before you go. */}
             <Button
               variant="secondary"
-              onClick={() =>
-                say(`Off to ${product.brand} to finish up`)
-              }
+              asLink={product.productUrl ?? undefined}
+              onClick={() => say(`Off to ${product.brand} to finish up`)}
             >
               Buy
             </Button>
@@ -113,7 +124,13 @@ export default function ProductScreen({
                       color={p.tone}
                       image={p.image}
                       ground={p.ground}
-                      alt={`${p.title} — ${p.category} by ${p.brand}`}
+                      alt={describeProduct({
+                        title: p.title,
+                        brand: p.brand,
+                        category: p.category,
+                        colorName: p.familyName,
+                        packshotScore: p.packshot,
+                      })}
                       height={108}
                       radius="var(--radius-md)"
                       label={p.category}

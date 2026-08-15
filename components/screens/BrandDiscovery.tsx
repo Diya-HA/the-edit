@@ -44,8 +44,7 @@ export default function BrandDiscovery({
   return (
     <>
       <p className={styles.intro}>
-        Follow a label and its new pieces turn up first. Browse by what it
-        stocks, what it costs, or what has just landed.
+        Follow a label and its new pieces turn up first.
       </p>
 
       <div className={styles.sorts}>

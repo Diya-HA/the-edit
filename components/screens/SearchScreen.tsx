@@ -167,7 +167,7 @@ export default function SearchScreen({
           {tab === "pieces" && (
             <>
               <div className={styles.eyebrow}>
-                {query ? `Matching “${query}”` : "Everything in your size"}
+                {query ? `Matching “${query}”` : "Everything in the edit"}
               </div>
               {pieces.length === 0 ? (
                 <EmptyState

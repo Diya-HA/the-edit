@@ -49,7 +49,7 @@ export async function toggleFollow(brandId: string): Promise<SaveResult> {
   revalidatePath("/", "layout");
   return {
     saved: true,
-    message: "Following. You’ll know before they announce it",
+    message: "Following. Their new pieces come up first",
   };
 }
 
@@ -80,7 +80,7 @@ export async function toggleStar(aestheticId: string): Promise<SaveResult> {
 
   await prisma.favouriteLook.create({ data: { userId: user.id, aestheticId } });
   revalidatePath("/", "layout");
-  return { saved: true, message: "Noted! More of that on the way" };
+  return { saved: true, message: "Noted. More of that on the way" };
 }
 
 /** "Put this on my home" — the look the feed opens on from now on. */

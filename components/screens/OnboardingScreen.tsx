@@ -113,7 +113,7 @@ export default function OnboardingScreen({
             </p>
           </div>
 
-          <div className={styles.eyebrow}>Or pinch one to start</div>
+          <div className={styles.eyebrow}>Or start from one of these</div>
           <div className={styles.chips}>
             {looks.map((l) => (
               <Chip
@@ -145,7 +145,7 @@ export default function OnboardingScreen({
         <div className={styles.content}>
           {bars}
           <h1 className={styles.heading}>
-            Which colours
+            Which colours pull you in?
             <br />
             do you wear?
           </h1>
@@ -208,7 +208,7 @@ export default function OnboardingScreen({
         <div className={`${styles.content} ${styles.centred}`}>
           <div className={styles.heart}>♥</div>
           <h1 className={styles.heading}>
-            Nice eye!
+            Nice eye.
             <br />
             It’s all yours.
           </h1>

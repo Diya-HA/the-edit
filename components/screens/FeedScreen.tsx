@@ -119,7 +119,7 @@ export default function FeedScreen({
           {products.length === 0 ? (
             <EmptyState
               title="Nothing in this colour yet"
-              body="Bit of a niche request. Try another swatch, or clear it and see the whole look."
+              body="Try another swatch, or clear it and see the whole look."
               action={{
                 label: "Clear the palette",
                 onClick: () => navigate(activeSlug),

@@ -1,8 +1,14 @@
 # Copy list
 
-Every user-facing string in the app, current and proposed. **Nothing here has
-been applied.** Read it, strike out what you disagree with, and I will change
-only what survives.
+Every user-facing string in the app, current and proposed.
+
+**Reviewed and applied on 15 August.** All nine wording changes went in, plus
+the alt text pattern with the packshot upgrade, and a fifth honesty problem
+Diya caught that this list had missed — "Following. You'll know before they
+announce it" promised notifications the app cannot send.
+
+Kept as the record of what was checked and why. The "current" column is now
+history for the rows that changed.
 
 ## How to read it
 
@@ -39,10 +45,11 @@ Worth deciding on these first, because two of them are not copy fixes at all.
 
 | # | Where | The problem |
 |---|---|---|
-| 1 | Welcome, step 1 ★ | "Type it however it comes out. Half formed is completely fine and rambling is encouraged." There is **nothing to type into** — the box below it is a `<p>` holding an example, not an input. The first thing the app says to a stranger is an invitation it cannot honour. |
-| 2 | Search ★ | "Everything in your size" heads the results. The app holds **no size data** and filters nothing by size. |
-| 3 | Boards | The Sizes row reads `S · 27 · 38 ›` as though those are yours. They are hardcoded, and tapping says "Sizes are coming". |
-| 4 | Product | "Buy" goes nowhere — it toasts "Off to {brand} to finish up" and stays put. `productUrl` is in the database and unused. |
+| 1 | Welcome, step 1 ★ | **Being built as a real input, not reworded.** |
+| 1b | (was) | "Type it however it comes out. Half formed is completely fine and rambling is encouraged." There is **nothing to type into** — the box below it is a `<p>` holding an example, not an input. The first thing the app says to a stranger is an invitation it cannot honour. |
+| 2 | Search ★ | ~~"Everything in your size".~~ **Fixed** — now "Everything in the edit". |
+| 3 | Boards | ~~`S · 27 · 38`.~~ **Fixed** — now "Not set". |
+| 4 | Product | ~~"Buy" goes nowhere.~~ **Fixed** — Buy is now a real link to the brand's page, opening in a new tab, keeping the toast. |
 
 **1 and 2 I would fix in copy today** — proposed wording below. **3 and 4 are
 features pretending to exist**, and the honest options are to build them or
@@ -343,3 +350,19 @@ work out which nav is real.
 Nine wording changes proposed, of which two are exclamation marks and two are
 statements that are not true. Everything else holds up — the copy was written
 carefully and most of it needs nothing.
+
+
+---
+
+## The fifth, which this list missed
+
+**"Following. You'll know before they announce it"** promises notifications the
+app cannot send — the same category as the other four, and I did not flag it.
+Now **"Following. Their new pieces come up first"**, which is what following
+actually does.
+
+Worth noting how it slipped through: I checked every string against the voice
+rules, and that line passes all of them. It is warm, short, declarative, no
+hype. What it fails is a test I was not applying — whether the app can do the
+thing the sentence says. That test caught four strings when I went looking for
+it deliberately and missed the fifth because it reads so well.
