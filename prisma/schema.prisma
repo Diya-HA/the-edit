@@ -72,6 +72,14 @@ model User {
   /// means the question has not been put yet.
   priceCeiling Int?
 
+  /// What they typed at the welcome, in their own words.
+  ///
+  /// Kept because it is the only place in the app where someone describes a
+  /// mood rather than picking one from a list, and that description is the
+  /// product's whole premise. It also lets the last welcome step say the words
+  /// back to them, so the guess the app made is visible rather than magic.
+  moodNote String?
+
   /// Palette families chosen at onboarding, as design tokens —
   /// ["--fabric-sage", "--fabric-cream"]. An array rather than a join table
   /// for the same reason COLOR was dropped from v1: the palette is a fixed

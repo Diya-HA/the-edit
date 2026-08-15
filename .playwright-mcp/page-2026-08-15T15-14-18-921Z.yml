@@ -1,0 +1,23 @@
+- generic [active] [ref=f19e1]:
+  - generic [ref=f19e60]:
+    - heading "Which colours pull you in? do you wear?" [level=1] [ref=f19e65]: Which colours pull you in?do you wear?
+    - paragraph [ref=f19e66]: Pick a few. Nothing is permanent and taste wanders.
+    - generic [ref=f19e67]:
+      - button "Butter" [pressed] [ref=f19e68] [cursor=pointer]
+      - button "Cream" [pressed] [ref=f19e69] [cursor=pointer]
+      - button "Indigo" [pressed] [ref=f19e70] [cursor=pointer]
+      - button "Ink" [ref=f19e71] [cursor=pointer]
+      - button "Neutral" [ref=f19e72] [cursor=pointer]
+      - button "Rose" [ref=f19e73] [cursor=pointer]
+      - button "Rust" [ref=f19e74] [cursor=pointer]
+      - button "Sage" [ref=f19e75] [cursor=pointer]
+    - generic [ref=f19e76]: What counts as a lot for one piece?
+    - generic [ref=f19e77]:
+      - button "$150" [ref=f19e78] [cursor=pointer]
+      - button "$300" [pressed] [ref=f19e79] [cursor=pointer]
+      - button "$500" [ref=f19e80] [cursor=pointer]
+      - button "No ceiling" [ref=f19e81] [cursor=pointer]
+    - generic [ref=f19e82]:
+      - button "Back" [ref=f19e83] [cursor=pointer]
+      - button "Next" [ref=f19e84] [cursor=pointer]
+  - alert [ref=f19e56]
