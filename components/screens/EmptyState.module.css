@@ -1,0 +1,26 @@
+/* Lifted from FeedScreen, which was the only one of the six that had a title,
+   a line and something to press. The other five are now this too. */
+
+.empty {
+  padding: 52px var(--space-5);
+  text-align: center;
+}
+
+.title {
+  margin-bottom: var(--space-2);
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: var(--fw-bold);
+  font-stretch: 90%;
+  letter-spacing: -0.02em;
+  color: var(--text-strong);
+}
+
+.body {
+  margin: 0 auto var(--space-4);
+  max-width: 34ch;
+  font-family: var(--font-sans);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  color: var(--text-muted);
+}

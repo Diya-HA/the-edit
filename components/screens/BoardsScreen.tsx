@@ -10,6 +10,7 @@ import { thumbBackground } from "@/lib/images";
 import Avatar from "../Avatar";
 import BottomSheet from "../BottomSheet";
 import Toast from "../Toast";
+import EmptyState from "./EmptyState";
 import { useToast } from "../useToast";
 import styles from "./BoardsScreen.module.css";
 
@@ -53,12 +54,14 @@ export default function BoardsScreen({
       <div className={styles.scroll}>
         <div className={styles.body}>
           {edits.length === 0 ? (
-            <div className={styles.empty}>
-              <div className={styles.emptyTitle}>No boards yet</div>
-              <p className={styles.emptyBody}>
-                Heart something you like and it will start one for you.
-              </p>
-            </div>
+            <EmptyState
+              title="No boards yet"
+              body="Heart something you like and it will start one for you."
+              action={{
+                label: "Find something to keep",
+                onClick: () => router.push("/"),
+              }}
+            />
           ) : (
             <div className={styles.grid}>
               {edits.map((e) => (
@@ -68,20 +71,33 @@ export default function BoardsScreen({
                   className={styles.board}
                   onClick={() => router.push(`/boards/${e.id}`)}
                 >
-                  <span className={styles.cover}>
-                    {[0, 1, 2, 3].map((i) => (
+                  {/* One piece fills the cover, two split it, three or more
+                      make the quartered grid. Cycling a short list to fill
+                      four tiles showed the same photograph four times, which
+                      reads as a rendering fault rather than a small board. */}
+                  <span
+                    className={[
+                      styles.cover,
+                      e.covers.length === 1 && styles.coverOne,
+                      e.covers.length === 2 && styles.coverTwo,
+                    ]
+                      .filter(Boolean)
+                      .join(" ")}
+                  >
+                    {(e.covers.length === 0
+                      ? [null, null, null, null]
+                      : e.covers.slice(0, 4)
+                    ).map((cover, i) => (
                       <span
                         key={i}
                         className={styles.tile}
                         style={
                           {
                             "--tile":
-                              e.grounds[i % Math.max(e.grounds.length, 1)] ??
-                              e.tones[i % Math.max(e.tones.length, 1)] ??
+                              e.grounds[i] ??
+                              e.tones[i] ??
                               "var(--canvas-2)",
-                            "--tile-photo": thumbBackground(
-                              e.covers[i % Math.max(e.covers.length, 1)],
-                            ),
+                            "--tile-photo": thumbBackground(cover),
                           } as CSSProperties
                         }
                       />

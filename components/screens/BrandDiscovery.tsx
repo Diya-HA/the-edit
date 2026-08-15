@@ -8,6 +8,7 @@ import { formatPrice } from "@/lib/price";
 import type { BrandSort } from "@/lib/brands";
 import Chip from "../Chip";
 import styles from "./BrandDiscovery.module.css";
+import EmptyState from "./EmptyState";
 
 export type BrandDiscoveryProps = {
   brands: BrandCard[];
@@ -88,9 +89,15 @@ export default function BrandDiscovery({
 
       <div className={styles.brands}>
         {brands.length === 0 ? (
-          <p className={styles.empty}>
-            No labels match that. Try a wider price or another look.
-          </p>
+          <EmptyState
+            title="No labels here"
+            body="Nothing matches that price in that look. A wider price usually finds them."
+            action={{
+              label: "Clear the filters",
+              onClick: () =>
+                onChange({ sort: "new", look: undefined, band: undefined }),
+            }}
+          />
         ) : (
           brands.map((b) => (
             <article key={b.id} className={styles.brand}>

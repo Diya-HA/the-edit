@@ -140,9 +140,19 @@ export async function getAesthetics(userId: string): Promise<AestheticView[]> {
 /**
  * The palette filter row. Derived from the catalogue rather than hardcoded,
  * so it only ever offers colours that will return something.
+ *
+ * Scoped to one look when the feed is showing one, which is what makes that
+ * promise true. Globally there is a piece in every family, but inside a look
+ * there may not be: Quiet utility has no rose in it, and offering the swatch
+ * anyway sends someone to an empty screen for no reason. Someone trying the
+ * app for the first time taps every colour, so a dead end is not a rare path.
+ *
+ * Called without an aesthetic for the welcome, which asks about colour in
+ * general rather than within a look.
  */
-export async function getPalette(): Promise<PaletteEntry[]> {
+export async function getPalette(aestheticId?: string): Promise<PaletteEntry[]> {
   const rows = await prisma.product.findMany({
+    where: { inStock: true, ...(aestheticId ? { aestheticId } : {}) },
     distinct: ["colorToken"],
     orderBy: { colorName: "asc" },
     select: { colorName: true, colorToken: true },

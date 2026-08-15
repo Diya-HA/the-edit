@@ -1,0 +1,6 @@
+- generic [active] [ref=f9e1]:
+  - navigation [ref=f9e39]:
+    - button "Home" [ref=f9e40] [cursor=pointer]
+    - button "Search" [ref=f9e47] [cursor=pointer]
+    - button "Boards" [ref=f9e52] [cursor=pointer]
+  - alert [ref=f9e56]

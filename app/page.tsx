@@ -19,9 +19,8 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
 
   /* Aesthetics need the user, so starred looks can climb the strip. */
   const user = await getCurrentUser();
-  const [aesthetics, palette, edits] = await Promise.all([
+  const [aesthetics, edits] = await Promise.all([
     getAesthetics(user.id),
-    getPalette(),
     getEdits(user.id),
   ]);
 
@@ -39,9 +38,13 @@ export default async function FeedPage({ searchParams }: PageProps<"/">) {
     );
   }
 
-  /* One colour at a time. Only honour a tint the catalogue actually offers,
-     so a stale or hand-typed URL cannot empty the feed with a filter that
-     could never match. */
+  /* The palette this look actually contains, so every swatch returns
+     something — which needs the look resolved first. */
+  const palette = await getPalette(active.id);
+
+  /* One colour at a time. Only honour a tint this look actually offers, so a
+     stale or hand-typed URL cannot empty the feed with a filter that could
+     never match. */
   const raw = typeof params.tint === "string" ? params.tint : undefined;
   const activeTint = palette.some((p) => p.token === raw) ? raw : undefined;
 

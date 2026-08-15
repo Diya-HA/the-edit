@@ -1,0 +1,62 @@
+- generic [active] [ref=f5e1]:
+  - generic [ref=f5e3]:
+    - generic [ref=f5e4]:
+      - generic [ref=f5e5]:
+        - generic [ref=f5e6]: The Edit
+        - generic [ref=f5e7]: AL
+      - generic [ref=f5e8]:
+        - generic [ref=f5e9]:
+          - button "Soft romance" [ref=f5e10] [cursor=pointer]
+          - button "Unstar Soft romance" [pressed] [ref=f5e11] [cursor=pointer]: ★
+        - generic [ref=f5e12]:
+          - button "Balletcore off duty" [ref=f5e13] [cursor=pointer]
+          - button "Star Balletcore off duty" [ref=f5e14] [cursor=pointer]: ☆
+        - generic [ref=f5e15]:
+          - button "Quiet utility" [pressed] [ref=f5e16] [cursor=pointer]
+          - button "Star Quiet utility" [ref=f5e17] [cursor=pointer]: ☆
+        - generic [ref=f5e18]:
+          - button "Whimsigoth" [ref=f5e19] [cursor=pointer]
+          - button "Star Whimsigoth" [ref=f5e20] [cursor=pointer]: ☆
+        - button "＋ Write your own" [ref=f5e21] [cursor=pointer]
+      - generic [ref=f5e22]:
+        - generic [ref=f5e23]: PALETTE
+        - generic [ref=f5e24]:
+          - button "Butter" [ref=f5e25] [cursor=pointer]
+          - button "Cream" [ref=f5e26] [cursor=pointer]
+          - button "Indigo" [ref=f5e27] [cursor=pointer]
+          - button "Ink" [ref=f5e28] [cursor=pointer]
+          - button "Neutral" [ref=f5e29] [cursor=pointer]
+          - button "Rose" [ref=f5e30] [cursor=pointer]
+          - button "Rust" [ref=f5e31] [cursor=pointer]
+          - button "Sage" [ref=f5e32] [cursor=pointer]
+    - generic [ref=f5e35]:
+      - generic [ref=f5e36]:
+        - generic [ref=f5e38]:
+          - generic [ref=f5e39] [cursor=pointer]:
+            - img "Overshirt — overshirt by Uskees" [ref=f5e41]
+            - button "Unsave Overshirt" [pressed] [ref=f5e42]: ♥
+          - generic [ref=f5e44] [cursor=pointer]:
+            - generic [ref=f5e45]: Uskees
+            - generic [ref=f5e46]: Overshirt
+            - generic [ref=f5e47]: $51
+        - generic [ref=f5e50]:
+          - generic [ref=f5e51] [cursor=pointer]:
+            - img "buttoned workshirt — workshirt by Uskees" [ref=f5e53]
+            - button "Save buttoned workshirt" [ref=f5e54]: ♡
+          - generic [ref=f5e56] [cursor=pointer]:
+            - generic [ref=f5e57]: Uskees
+            - generic [ref=f5e58]: buttoned workshirt
+            - generic [ref=f5e59]: $49
+      - generic [ref=f5e63]:
+        - generic [ref=f5e64] [cursor=pointer]:
+          - img "Unions cord blazer — blazer by Uskees" [ref=f5e66]
+          - button "Save Unions cord blazer" [ref=f5e67]: ♡
+        - generic [ref=f5e69] [cursor=pointer]:
+          - generic [ref=f5e70]: Uskees
+          - generic [ref=f5e71]: Unions cord blazer
+          - generic [ref=f5e72]: $72
+    - navigation [ref=f5e74]:
+      - button "Home" [ref=f5e75] [cursor=pointer]
+      - button "Search" [ref=f5e82] [cursor=pointer]
+      - button "Boards" [ref=f5e87] [cursor=pointer]
+  - alert [ref=f5e91]

@@ -9,6 +9,7 @@ import PieceGrid from "./PieceGrid";
 import SaveSheet from "./SaveSheet";
 import type { SaveTarget } from "./SaveSheet";
 import styles from "./BoardDetailScreen.module.css";
+import EmptyState from "./EmptyState";
 
 export type BoardDetailScreenProps = {
   edit: EditView;
@@ -48,9 +49,14 @@ export default function BoardDetailScreen({
           <div className={styles.meta}>{meta}</div>
 
           {items.length === 0 ? (
-            <p className={styles.empty}>
-              Nothing in here yet. Keep something and it lands on this board.
-            </p>
+            <EmptyState
+              title="Nothing on this board"
+              body="Keep something you like and it lands here."
+              action={{
+                label: "Find something to keep",
+                onClick: () => router.push("/"),
+              }}
+            />
           ) : (
             <PieceGrid
               products={items}
