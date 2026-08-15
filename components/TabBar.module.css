@@ -21,7 +21,9 @@
   flex-direction: column;
   align-items: center;
   gap: 3px;
-  padding: 7px 0 5px;
+  /* 40px tall was under the 44 minimum. Two pixels top and bottom, which the
+     bar has room for and nothing else in the layout depends on. */
+  padding: 9px 0 7px;
   border: none;
   background: none;
   cursor: pointer;

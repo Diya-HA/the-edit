@@ -172,3 +172,16 @@
   line-height: 1.45;
   color: var(--text-body);
 }
+
+/* ---- Touch target -------------------------------------------------------
+   The visual size is the design's; the *tappable* size is not, and the two do
+   not have to match. An invisible ::after stretches the hit area without
+   moving a pixel on screen or changing layout.
+   -------------------------------------------------------------------------- */
+
+.heart::after {
+  content: "";
+  position: absolute;
+  /* 26px becomes 44px. Free in every direction — the corner is empty. */
+  inset: -9px;
+}

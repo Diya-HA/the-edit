@@ -31,7 +31,13 @@
   --canvas-2:  #F3F4F6;   /* sunken / inset wells, inputs, chips    */
   --ink-0:     #0E0E10;   /* primary cool near-black text           */
   --ink-1:     #43454A;   /* secondary text                         */
-  --ink-2:     #86888F;   /* muted / meta text                      */
+  /* Darkened from #86888F on 15 August. Measured on every surface muted text
+     actually sits on, it ran 3.14:1 to 3.54:1 and cleared AA on none of them
+     — the eyebrow labels, the brand name on a card and the tab labels are all
+     small text needing 4.5:1. #6C6C76 is the lightest value that passes on the
+     darkest of those grounds (--surface-sunken, 4.61:1) and reads as muted
+     still. */
+  --ink-2:     #6C6C76;   /* muted / meta text                      */
   --line-0:    rgba(14,14,16,0.12);  /* hairline borders            */
   --line-1:    rgba(14,14,16,0.06);  /* faint dividers              */
   --white:     #FFFFFF;
