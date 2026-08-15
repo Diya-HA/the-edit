@@ -7,8 +7,9 @@ it doesn't.
 `theedit.apps.human-angle.com` — the demo just adds a live-scraped outfit to
 it. If the run fails, the site is still there and still works.
 
-Last rehearsed end to end on **15 August 2026**, against the deployed app after
-Phases 3, 4 and 5. Timings below are from that rehearsal, not estimates.
+Last rehearsed end to end on **15 August 2026** — full dress rehearsal, both
+paths, from a clean state. Timings below are from that rehearsal, not
+estimates, and the app has not been touched since.
 
 ---
 
@@ -21,9 +22,15 @@ Phases 3, 4 and 5. Timings below are from that rehearsal, not estimates.
 - [ ] Second browser tab at `localhost:3000`
 - [ ] Wifi working — if not, jump to **Offline fallback**
 
-Time: about **3m30s** total. The run itself is **2m10s**. A repeat run takes
-longer, around **2m50s**, because the second pass has more of the catalogue to
-compare against.
+Time: about **3m** total. Measured on the day:
+
+| | |
+|---|---|
+| Reset and start the app | 6s |
+| The composed run, live | **2m23s** |
+| A repeat run | 2m30s |
+| The offline fallback | **1m42s** |
+| Putting it back afterwards | under 1s |
 
 ---
 
@@ -55,7 +62,7 @@ and building a look that did not exist. Which is the more honest claim anyway.
 
 ---
 
-## Step 1 — the composed run · 2m10s
+## Step 1 — the composed run · 2m23s
 
 Open a **second terminal tab** (leave `npm run dev` alone).
 
@@ -283,7 +290,12 @@ OFFLINE=1 ./scripts/demo.sh
 
 Skips the browser and reads a real capture of their catalogue. Scoring, writing
 and the app are all still live — only the network hop is replaced. Say so out
-loud; it's a stronger look than pretending. It takes about **1m45s**.
+loud; it's a stronger look than pretending. It takes **1m42s**.
+
+**It may do this by itself.** If the listing returns fewer than twelve
+garments, the run says so and falls back to the fixture without being asked —
+a page that has changed under us returns eight, not zero, and eight would
+otherwise be scored and built into a thin outfit in front of everyone.
 
 ### The run hangs
 
@@ -339,8 +351,7 @@ npm run dev                       # separate tab
 OFFLINE=1 ./scripts/demo.sh
 ```
 
-This needs **no internet at all**, and takes about **1m45s** — measured at
-1m44s on 15 August.
+This needs **no internet at all**, and takes **1m42s**.
 
 The fixture at `scripts/fixtures/uskees-sample.json` is 19 real Uskees
 garments taken from their own product feed, chosen to span tops, bottoms,
