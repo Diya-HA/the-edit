@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import type { CSSProperties } from "react";
 import { completeOnboarding } from "@/app/actions";
 import { CEILINGS, ceilingLabel } from "@/lib/budget";
+import { matchLook } from "@/lib/mood";
 import type { AestheticView, PaletteEntry } from "@/lib/data";
 import Button from "../Button";
 import Chip from "../Chip";
@@ -45,7 +46,19 @@ export default function OnboardingScreen({
   const [budget, setBudget] = useState<number | null>(300);
   const [busy, setBusy] = useState(false);
 
-  const chosen = looks.find((l) => l.slug === look) ?? looks[0];
+  /* What they typed, and whether they have since picked a chip themselves.
+     Once someone has chosen, their choice stands and typing stops moving it —
+     an app that keeps overriding you is worse than one that never guessed. */
+  const [mood, setMood] = useState("");
+  const [chosenByHand, setChosenByHand] = useState(false);
+
+  const guess = mood.trim() ? matchLook(mood, looks.map((l) => l.slug)) : null;
+
+  /* The guess wins while they are still typing; their own tap wins after. A
+     sentence the matcher does not recognise returns null and changes nothing,
+     which is the common case and has to feel like nothing happening. */
+  const activeSlug = !chosenByHand && guess ? guess.slug : look;
+  const chosen = looks.find((l) => l.slug === activeSlug) ?? looks[0];
 
   /**
    * Finish, or decline to.
@@ -66,6 +79,8 @@ export default function OnboardingScreen({
         aestheticId: chosen.id,
         palette: skipped ? [] : colours,
         priceCeiling: skipped ? null : budget,
+        /* Kept even when they skip the rest — they still said it. */
+        moodNote: mood.trim() || null,
       });
     }
     router.push("/");
@@ -107,11 +122,24 @@ export default function OnboardingScreen({
           </p>
 
           <div className={styles.card}>
-            <p className={styles.quote}>
-              “Soft and a bit undone. Lots of layers in warm neutrals with one
-              thing that’s butter yellow.”
-            </p>
+            <textarea
+              className={styles.quote}
+              value={mood}
+              onChange={(e) => setMood(e.target.value)}
+              rows={3}
+              maxLength={280}
+              aria-label="Describe what you are into"
+              placeholder="Soft and a bit undone. Lots of layers in warm neutrals with one thing that’s butter yellow."
+            />
           </div>
+
+          {/* Says what it heard, as it hears it. A guess nobody can see is
+              indistinguishable from a default. */}
+          {guess && !chosenByHand && (
+            <p className={styles.guess} role="status">
+              Sounds like {chosen?.name.toLowerCase()}.
+            </p>
+          )}
 
           <div className={styles.eyebrow}>Or start from one of these</div>
           <div className={styles.chips}>
@@ -119,8 +147,11 @@ export default function OnboardingScreen({
               <Chip
                 key={l.id}
                 label={l.name}
-                active={l.slug === look}
-                onClick={() => setLook(l.slug)}
+                active={l.slug === activeSlug}
+                onClick={() => {
+                  setChosenByHand(true);
+                  setLook(l.slug);
+                }}
               />
             ))}
           </div>
@@ -218,6 +249,16 @@ export default function OnboardingScreen({
           </p>
 
           <div className={styles.card}>
+            {/* Their words, back to them. The point of letting someone
+                describe a mood is that they are heard, and it makes the guess
+                visible — when it lands it looks clever, and when it misses
+                they can see why rather than wondering. */}
+            {mood.trim() && (
+              <p className={styles.echo}>
+                You said: <span className={styles.echoWords}>{mood.trim()}</span>
+              </p>
+            )}
+
             <div className={styles.eyebrow}>Your first look</div>
             <div className={styles.lookName}>{chosen?.name}</div>
             <p className={styles.lookBlurb}>
