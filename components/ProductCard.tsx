@@ -19,6 +19,8 @@ export type ProductCardProps = {
   ground?: string | null;
   /** Garment noun, named along the bottom of the placeholder. */
   category?: string;
+  /** What the photograph shows — see lib/alt.ts. */
+  alt?: string;
   height?: number | string;
   /** Feed shape. Squares and portraits only — never landscape. */
   aspect?: string;
@@ -44,6 +46,7 @@ export default function ProductCard({
   image,
   ground,
   category,
+  alt,
   height,
   aspect,
   saved = false,
@@ -82,7 +85,7 @@ export default function ProductCard({
           color={color}
           image={image}
           ground={ground}
-          alt={category ? `${title} — ${category} by ${brand}` : `${title} by ${brand}`}
+          alt={alt ?? title}
           height={fieldHeight}
           aspect={aspect}
           radius="var(--radius-xl)"

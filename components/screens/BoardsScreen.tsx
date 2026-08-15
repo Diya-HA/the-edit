@@ -122,7 +122,7 @@ export default function BoardsScreen({
               onClick={() => say("Sizes are coming")}
             >
               <span className={styles.rowLabel}>Sizes</span>
-              <span className={styles.rowValue}>S · 27 · 38 ›</span>
+              <span className={styles.rowValue}>Not set ›</span>
             </button>
 
             {/* Real now that the answer has somewhere to live. Changing it

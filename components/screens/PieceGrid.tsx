@@ -2,6 +2,7 @@
 
 import type { CSSProperties } from "react";
 import type { ProductView } from "@/lib/data";
+import { describeProduct } from "@/lib/alt";
 import ProductCard from "../ProductCard";
 import styles from "./PieceGrid.module.css";
 
@@ -78,6 +79,13 @@ export default function PieceGrid({
                 image={p.image}
                 ground={p.ground}
                 category={p.category}
+                alt={describeProduct({
+                  title: p.title,
+                  brand: p.brand,
+                  category: p.category,
+                  colorName: p.familyName,
+                  packshotScore: p.packshot,
+                })}
                 aspect={shapeOf(p.slug)}
                 saved={p.saved}
                 onOpen={() => onOpen(p)}

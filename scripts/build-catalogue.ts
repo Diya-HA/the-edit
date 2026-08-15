@@ -44,35 +44,134 @@ const DB_SLOT: Record<Slot, string> = {
 
 /* Lines are generated, so they have to be true of anything they are attached
    to: what the piece is and what colour it is, never what the shopper has been
-   doing. Invented familiarity is worse than none. */
-const LINE_BY_SLOT: Record<Slot, string[]> = {
-  TOP: ["Works on its own and under everything else.", "The layer the rest gets chosen around.", "Plain enough to wear twice a week."],
-  DRESS: ["One decision, whole outfit.", "Moves well, which is most of the work.", "The piece everything else answers to."],
-  BOTTOM: ["Cut straight and worn loose.", "Gets better the more it creases.", "Holds its shape all week."],
-  OUTER: ["Goes over the lot without swamping it.", "Thrown on, and the outfit is finished.", "Cut short so it clears everything underneath."],
-  SHOES: ["Quiet on their own, loud with a long skirt.", "Sturdy enough to walk home in.", "The pair that survives the whole season."],
-  BAG: ["Carries the week without trying.", "Big enough for the days that need it.", "Nothing about it asks for attention."],
-  ACCESSORY: ["The small thing that changes the outfit.", "Cheap in the best way.", "Makes the rest look deliberate."],
+   doing. Invented familiarity is worse than none.
+
+   A line can carry a condition. "Cut short so it clears everything underneath"
+   is true of a cropped jacket and false of a long coat, and OUTER holds both,
+   so it only fires when the garment says it is short. */
+type Line = { text: string; when?: (p: Piece) => boolean };
+
+const CROPPED = /crop|bomber|shrunken|short|boxy|bolero/i;
+
+const LINE_BY_SLOT: Record<Slot, Line[]> = {
+  TOP: [
+    { text: "Works on its own and under everything else." },
+    { text: "The layer the rest gets chosen around." },
+    { text: "Plain enough to wear twice a week." },
+  ],
+  DRESS: [
+    { text: "One decision, whole outfit." },
+    { text: "Moves well, which is most of the work." },
+    { text: "The piece everything else answers to." },
+  ],
+  BOTTOM: [
+    { text: "Cut straight and worn loose." },
+    { text: "Gets better the more it creases." },
+    { text: "Holds its shape all week." },
+  ],
+  OUTER: [
+    { text: "Goes over the lot without swamping it." },
+    { text: "Thrown on, and the outfit is finished." },
+    {
+      text: "Cut short so it clears everything underneath.",
+      when: (p) => CROPPED.test(`${p.title} ${p.category}`),
+    },
+  ],
+  SHOES: [
+    { text: "Quiet on their own, loud with a long skirt." },
+    { text: "Sturdy enough to walk home in." },
+    { text: "The pair that survives the whole season." },
+  ],
+  BAG: [
+    { text: "Carries the week without trying." },
+    { text: "Big enough for the days that need it." },
+    { text: "Nothing about it asks for attention." },
+  ],
+  ACCESSORY: [
+    { text: "The small thing that changes the outfit." },
+    /* Was "Cheap in the best way", which landed on a $44 Repetto accessory as
+       readily as a $17 headband and read as a misjudgement on the dearer one. */
+    { text: "Small, and it changes everything." },
+    { text: "Makes the rest look deliberate." },
+  ],
 };
 
-const WHY_BY_AESTHETIC: Record<string, (colour: string) => string[]> = {
-  "quiet-utility": (c) => [
-    `Straight lines and ${c}, which stays out of the way.`,
-    `Workwear cut clean, in a ${c} that ages well.`,
-  ],
-  "soft-romance": (c) => [
-    `Warm neutrals and one soft colour — here it is ${c}.`,
-    `${c.charAt(0).toUpperCase() + c.slice(1)}, soft enough to sit under everything.`,
-  ],
-  "balletcore-off-duty": (c) => [
-    `Wrap knits and flats, in a ${c} that keeps it off duty.`,
-    `Built to move in, and ${c} keeps it quiet.`,
-  ],
-  whimsigoth: (c) => [
-    `Velvet and moons, grounded by ${c}.`,
-    `Dark and a bit theatrical, in ${c}.`,
-  ],
+/**
+ * Words that read as a colour inside a sentence.
+ *
+ * The colour word comes from the brand's own vocabulary, and brands name
+ * colours after things: marble, champagne, salt, ristretto, paon. Those are
+ * fine on a swatch and wrong in a sentence — "Straight lines and marble, which
+ * stays out of the way" is not a sentence about clothes. French words are out
+ * for the same reason: this copy is read in English.
+ *
+ * Anything not on this list falls back to a line that does not name the colour
+ * at all, which is always true and never strange.
+ */
+const PLAIN_COLOURS = new Set([
+  "black", "white", "grey", "gray", "charcoal", "ink",
+  "navy", "indigo", "blue", "midnight", "teal", "aqua",
+  "green", "olive", "sage", "khaki", "forest",
+  "brown", "tan", "camel", "rust", "chestnut", "clay", "terracotta",
+  "red", "burgundy", "wine", "plum", "berry",
+  "pink", "rose", "blush", "lilac", "lavender", "purple", "violet",
+  "yellow", "gold", "mustard", "ochre", "butter",
+  "cream", "ivory", "bone", "sand", "stone", "taupe", "beige", "silver",
+]);
+
+/* Two banks per aesthetic: one that names the colour, one that does not. */
+const WHY_BY_AESTHETIC: Record<
+  string,
+  { withColour: (c: string) => string[]; plain: string[] }
+> = {
+  "quiet-utility": {
+    withColour: (c) => [
+      `Straight lines and ${c}, which stays out of the way.`,
+      `Workwear cut clean, in a ${c} that ages well.`,
+    ],
+    plain: [
+      "Straight lines, and nothing about the colour asking for attention.",
+      "Workwear cut clean, in a shade that ages well.",
+    ],
+  },
+  "soft-romance": {
+    withColour: (c) => [
+      `Warm neutrals and one soft colour — here it is ${c}.`,
+      `${c.charAt(0).toUpperCase() + c.slice(1)}, soft enough to sit under everything.`,
+    ],
+    plain: [
+      "Warm neutrals and one soft colour, which is this one.",
+      "Soft enough to sit under everything else.",
+    ],
+  },
+  "balletcore-off-duty": {
+    withColour: (c) => [
+      `Wrap knits and flats, in a ${c} that keeps it off duty.`,
+      `Built to move in, and ${c} keeps it quiet.`,
+    ],
+    plain: [
+      "Wrap knits and flats, kept quiet enough for daylight.",
+      "Built to move in, and quiet enough to wear anywhere.",
+    ],
+  },
+  whimsigoth: {
+    withColour: (c) => [
+      `Velvet and moons, grounded by ${c}.`,
+      `Dark and a bit theatrical, in ${c}.`,
+    ],
+    plain: [
+      "Velvet and moons, grounded by something plainer.",
+      "Dark and a bit theatrical, and entirely wearable.",
+    ],
+  },
 };
+
+/** The why lines available for a piece, colour-naming only when it reads. */
+function whyLines(aesthetic: string, colourWord: string): string[] {
+  const bank = WHY_BY_AESTHETIC[aesthetic];
+  const word = colourWord.trim().toLowerCase();
+  return PLAIN_COLOURS.has(word) ? bank.withColour(word) : bank.plain;
+}
 
 /** Stable pick — the same piece gets the same line on every rebuild. */
 function pick<T>(list: T[], key: string): T {
@@ -263,8 +362,11 @@ for (const aesthetic of AESTHETICS) {
       colorName: p.colorName,
       colorToken: p.colorToken,
       colorHex: p.colorHex,
-      line: pick(LINE_BY_SLOT[p.slot], p.handle),
-      why: pick(WHY_BY_AESTHETIC[aesthetic](p.colourWord), p.handle + "w"),
+      line: pick(
+        LINE_BY_SLOT[p.slot].filter((l) => !l.when || l.when(p)).map((l) => l.text),
+        p.handle,
+      ),
+      why: pick(whyLines(aesthetic, p.colourWord), p.handle + "w"),
       imageUrl: chosen.url || p.imageUrl,
       bgHex: chosen.measurement?.bgHex ?? null,
       packshotScore: chosen.measurement?.packshotScore ?? null,

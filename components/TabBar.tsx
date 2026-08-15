@@ -44,12 +44,6 @@ export const ICONS: Record<string, ReactNode> = {
       strokeLinejoin="round"
     />,
   ),
-  shelf: svg(
-    <>
-      <path d="M3 4.5h6l11 11-5 5-11-11v-5z" strokeLinejoin="round" />
-      <circle cx="7" cy="8.5" r="1.4" fill="currentColor" stroke="none" />
-    </>,
-  ),
   you: svg(
     <>
       <circle cx="12" cy="8.5" r="3.8" />
@@ -71,17 +65,13 @@ export type TabItem = {
 export type TabBarProps = {
   active?: string;
   onChange?: (key: string) => void;
-  items?: TabItem[];
+  /* Required: there is no sensible default. The list used to fall back to
+     one including Feed and Shelf, tabs the app stopped having — nobody saw
+     them, because both call sites pass their own, which is the point. */
+  items: TabItem[];
   className?: string;
   style?: CSSProperties;
 };
-
-const DEFAULT_ITEMS: TabItem[] = [
-  { key: "feed", label: "Feed" },
-  { key: "search", label: "Search" },
-  { key: "boards", label: "Boards" },
-  { key: "shelf", label: "Shelf" },
-];
 
 /**
  * TabBar — the app's bottom navigation.
@@ -89,7 +79,7 @@ const DEFAULT_ITEMS: TabItem[] = [
 export default function TabBar({
   active = "feed",
   onChange,
-  items = DEFAULT_ITEMS,
+  items,
   className,
   style,
 }: TabBarProps) {

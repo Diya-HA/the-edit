@@ -33,6 +33,17 @@ export function atWidth(url: string, width: number): string {
   return parsed.toString();
 }
 
+/**
+ * At or above this, a photograph is a packshot for every purpose here.
+ *
+ * Lives in this module rather than in lib/measure.ts, which is where it is
+ * computed, because measure.ts imports sharp and anything that touches it is
+ * server-only. Alt text needs the threshold and is rendered in the browser, so
+ * importing it from there pulled sharp into the client bundle and broke every
+ * page. A constant with no dependencies belongs somewhere with none.
+ */
+export const PACKSHOT = 70;
+
 /** Widths the app asks for, one per surface rather than one per breakpoint —
     without the Next optimizer there is no srcset, so these are chosen for a
     2x phone and shared across every card of that kind so the cache hits. */

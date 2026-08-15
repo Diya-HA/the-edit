@@ -29,8 +29,12 @@ export type ProductView = {
   /** Palette family this groups into, for the filter row. */
   family: string;
   familyName: string;
+  /** How packshot-like the photograph is. Used to describe it in alt text. */
+  packshot: number | null;
   line: string | null;
   why: string | null;
+  /** Where Buy goes — the brand's own page for this piece. */
+  productUrl: string | null;
   saved: boolean;
 };
 
@@ -59,6 +63,7 @@ const productSelect = {
   imageUrl: true,
   bgHex: true,
   packshotScore: true,
+  productUrl: true,
   brand: { select: { name: true } },
 } as const;
 
@@ -77,6 +82,7 @@ type ProductRow = {
   imageUrl: string | null;
   bgHex: string | null;
   packshotScore: number | null;
+  productUrl: string | null;
   brand: { name: string };
 };
 
@@ -94,8 +100,10 @@ function toView(p: ProductRow, savedIds: Set<string>): ProductView {
     ground: p.bgHex ? p.bgHex.trim() : null,
     family: `var(${p.colorToken})`,
     familyName: p.colorName,
+    packshot: p.packshotScore,
     line: p.line,
     why: p.why,
+    productUrl: p.productUrl,
     saved: savedIds.has(p.id),
   };
 }

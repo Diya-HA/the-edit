@@ -1,0 +1,9 @@
+[     122ms] [INFO] %cDownload the React DevTools for a better development experience: https://react.dev/link/react-devtools font-weight:bold @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[     136ms] [LOG] [HMR] connected @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[     471ms] [WARNING] Image with src "https://cdn.shopify.com/s/files/1/0047/6921/8632/files/3003-charcoal-button-workshirt-front.jpg?v=1719515017&width=400" was detected as the Largest Contentful Paint (LCP). Please add the `loading="eager"` property if this image is above the fold.
+Read more: https://nextjs.org/docs/app/api-reference/components/image#loading @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[    3915ms] [WARNING] The resource http://localhost:3000/_next/static/chunks/components_1gqtm3t._.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/?look=quiet-utility:0
+[   25554ms] [LOG] [Fast Refresh] rebuilding @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[   25672ms] [LOG] [Fast Refresh] done in 80ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[   25762ms] [LOG] [Fast Refresh] done in 80ms @ http://localhost:3000/_next/static/chunks/node_modules_next_dist_1e8vcs8._.js:776
+[   28814ms] [WARNING] The resource http://localhost:3000/_next/static/chunks/components_1gqtm3t._.css was preloaded using link preload but not used within a few seconds from the window's load event. Please make sure it has an appropriate `as` value and it is preloaded intentionally. @ http://localhost:3000/?look=quiet-utility:0
