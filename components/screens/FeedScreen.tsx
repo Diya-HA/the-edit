@@ -11,13 +11,13 @@ import type {
   ProductView,
 } from "@/lib/data";
 import Avatar from "../Avatar";
-import Button from "../Button";
 import Chip from "../Chip";
 import ColorDot from "../ColorDot";
 import Toast from "../Toast";
 import { useScrollMemory } from "../useScrollMemory";
 import { useToast } from "../useToast";
 import BudgetNote from "./BudgetNote";
+import EmptyState from "./EmptyState";
 import PieceGrid from "./PieceGrid";
 import SaveSheet from "./SaveSheet";
 import type { SaveTarget } from "./SaveSheet";
@@ -117,16 +117,14 @@ export default function FeedScreen({
           )}
 
           {products.length === 0 ? (
-            <div className={styles.empty}>
-              <div className={styles.emptyTitle}>Nothing in this colour yet</div>
-              <p className={styles.emptyBody}>
-                Bit of a niche request. Try another swatch or clear it and see
-                the whole look.
-              </p>
-              <Button size="sm" onClick={() => navigate(activeSlug)}>
-                Clear the palette
-              </Button>
-            </div>
+            <EmptyState
+              title="Nothing in this colour yet"
+              body="Bit of a niche request. Try another swatch, or clear it and see the whole look."
+              action={{
+                label: "Clear the palette",
+                onClick: () => navigate(activeSlug),
+              }}
+            />
           ) : (
             <PieceGrid
               products={products}

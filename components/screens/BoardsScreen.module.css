@@ -201,3 +201,14 @@
   color: var(--canvas-1);
   box-shadow: var(--shadow-pill-active);
 }
+
+/* A board with one piece shows that piece, not four of it. Two split the
+   cover down the middle. Three or more fall back to the quartered grid, where
+   a missing fourth simply leaves its tone. */
+.coverOne {
+  grid-template-columns: 1fr;
+}
+
+.coverTwo {
+  grid-template-rows: 1fr;
+}

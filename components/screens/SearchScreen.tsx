@@ -14,6 +14,7 @@ import Chip from "../Chip";
 import Toast from "../Toast";
 import { useToast } from "../useToast";
 import BrandDiscovery from "./BrandDiscovery";
+import EmptyState from "./EmptyState";
 import type { BrandSort } from "@/lib/brands";
 import OutfitList from "./OutfitList";
 import PieceGrid from "./PieceGrid";
@@ -169,10 +170,14 @@ export default function SearchScreen({
                 {query ? `Matching “${query}”` : "Everything in your size"}
               </div>
               {pieces.length === 0 ? (
-                <p className={styles.empty}>
-                  Nothing matched that. Try fewer words, or have a look through
-                  the outfits instead.
-                </p>
+                <EmptyState
+                  title="Nothing matched that"
+                  body="Try fewer words. The outfits are a good way in when a search comes up short."
+                  action={{
+                    label: "Show the outfits",
+                    onClick: () => go({ tab: "outfits", q: undefined }),
+                  }}
+                />
               ) : (
                 <PieceGrid
                   products={pieces}
@@ -208,6 +213,9 @@ export default function SearchScreen({
                 outfits={outfits}
                 onOpenPiece={(slug) => router.push(`/product/${slug}`)}
                 onSave={(o) => setSaving({ kind: "outfit", outfit: o })}
+                onClearLook={
+                  outfitLook ? () => go({ look: undefined }) : undefined
+                }
               />
             </>
           )}

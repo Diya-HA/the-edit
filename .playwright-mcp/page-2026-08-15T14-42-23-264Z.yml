@@ -1,0 +1,4 @@
+- navigation [ref=e39]:
+  - button "Home" [ref=e40] [cursor=pointer]
+  - button "Search" [ref=e47] [cursor=pointer]
+  - button "Boards" [ref=e52] [cursor=pointer]

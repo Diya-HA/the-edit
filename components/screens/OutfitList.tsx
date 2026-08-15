@@ -5,12 +5,15 @@ import type { OutfitView } from "@/lib/data";
 import { thumbBackground } from "@/lib/images";
 import { formatPrice } from "@/lib/price";
 import Button from "../Button";
+import EmptyState from "./EmptyState";
 import styles from "./OutfitList.module.css";
 
 export type OutfitListProps = {
   outfits: OutfitView[];
   onOpenPiece: (slug: string) => void;
   onSave: (outfit: OutfitView) => void;
+  /** Drop the look filter, when one is on. The empty state's way out. */
+  onClearLook?: () => void;
 };
 
 /**
@@ -23,12 +26,19 @@ export default function OutfitList({
   outfits,
   onOpenPiece,
   onSave,
+  onClearLook,
 }: OutfitListProps) {
   if (outfits.length === 0) {
     return (
-      <p className={styles.empty}>
-        No outfits in this look yet. They arrive as the pieces do.
-      </p>
+      <EmptyState
+        title="No outfits in this look"
+        body="They arrive as the pieces do. The other looks have some already."
+        action={
+          onClearLook
+            ? { label: "See every look", onClick: onClearLook }
+            : undefined
+        }
+      />
     );
   }
 

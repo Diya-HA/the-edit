@@ -47,13 +47,25 @@ export default function OnboardingScreen({
 
   const chosen = looks.find((l) => l.slug === look) ?? looks[0];
 
-  const finish = async () => {
+  /**
+   * Finish, or decline to.
+   *
+   * Skipping used to run the same path as answering, which quietly recorded
+   * the defaults — a $300 ceiling and three palette colours nobody had
+   * chosen. A ceiling filters the feed, so that is a preference invented on
+   * someone's behalf and then acted on.
+   *
+   * Declining still records the look, because home has to open on something,
+   * and still stamps onboardedAt, because the question *was* put. What it does
+   * not do is answer for them: no ceiling, no palette.
+   */
+  const finish = async (skipped = false) => {
     setBusy(true);
     if (chosen) {
       await completeOnboarding({
         aestheticId: chosen.id,
-        palette: colours,
-        priceCeiling: budget,
+        palette: skipped ? [] : colours,
+        priceCeiling: skipped ? null : budget,
       });
     }
     router.push("/");
@@ -120,7 +132,7 @@ export default function OnboardingScreen({
             <button
               type="button"
               className={styles.skip}
-              onClick={finish}
+              onClick={() => finish(true)}
               disabled={busy}
             >
               Skip
@@ -225,7 +237,7 @@ export default function OnboardingScreen({
             </div>
           </div>
 
-          <Button full onClick={finish} disabled={busy}>
+          <Button full onClick={() => finish(false)} disabled={busy}>
             Take me in
           </Button>
         </div>
